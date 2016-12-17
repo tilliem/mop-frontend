@@ -4,9 +4,9 @@ This is the browser-based, JavaScript implementation of the MoveOn Petitions pla
 
 # Install
 
-1) Install NPM.
-2) $ `npm install`
+* Install NPM.
+* $ `npm install`
 
 # Compile JavaScript
 
-1) $ `./node_modules/.bin/webpack -d`
+* $ `./node_modules/.bin/webpack -d`
