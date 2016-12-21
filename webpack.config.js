@@ -8,11 +8,12 @@ var config = {
   entry: APP_DIR + '/main.js',
   output: {
     path: BUILD_DIR,
+    publicPath: '/Users/scott/Sites/general.dev/mop-frontend/js/',
     filename: 'main.js'
   },
   externals: {
-    "react": "React",
-    "react-dom": "ReactDOM",
+    'react': 'React',
+    'react-dom': 'ReactDOM',
   },
   module : {
     loaders : [

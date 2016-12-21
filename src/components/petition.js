@@ -1,10 +1,16 @@
-import Helmet from "react-helmet";
-import SignatureCount from "./signature-count.js";
+import PetitionLoader from '../loaders/petition.js';
 
 class Petition extends React.Component {
   constructor(props) {
     super(props);
     this.state = {tite: '', summary: '', target: ''};
+  }
+
+  componentWillMount() {
+    this.props.petitionLoader().then((deps) => {
+      this.SignatureCount = deps.SignatureCount.default;
+      this.forceUpdate();
+    });
   }
 
   componentDidMount() {
@@ -30,73 +36,117 @@ class Petition extends React.Component {
   }
 
   render() {
-    return (
-      <div className="row row-fluid">
-        <Helmet
-          htmlAttributes={{"lang": "en"}}
-          title={this.state.title}
-          titleTemplate="MoveOn Petitions - %s"
-          meta={[
-            {"name": "twitter:card", "content": "summary"},
-            {"name": "twitter:site", "content": "@moveon"},
-            {"name": "twitter:title", "content": this.state.title},
-            {"name": "twitter:description", "content": "I just signed a petition to " + this.state.target + ": " + this.state.summary},
-            {"property": "og:title", "content": this.state.title}
-          ]}
-          link={[
-            {"rel": "apple-touch-icon", "href": "//s3.amazonaws.com/s3.moveon.org/images/with_dims/moveon_iphone_icon_57x57.png"},
-            {"rel": "shortcut icon", "href": "//s3.amazonaws.com/s3.moveon.org/favicon.ico"}
-          ]}
-        />
-        <div className="span8 pull-right petition-info-top">
-          <div className="form-wrapper responsive">
-            <div className="petition-top hidden-phone">
-              <h1 id="petition-title" className="moveon-bright-red big-title">{this.state.title}</h1>
-            </div>
-
-            <div id="pet-statement-box" className="lh-36 blockquote hidden-phone">
-              <h3 className="visible-phone moveon-bright-red">Petition Statement</h3>
-              <div id="pet-statement">{this.state.summary}</div>
-            </div>
-
-            <SignatureCount current={this.state.signatureCount} goal={this.state.signatureGoal} />
-          </div>
-
-          <div className="petition-top">
-            <p id="to-target" className="lh-14 bump-top-1 bump-bottom-1 margin-0 disclaimer">To be delivered to <span className="all-targets"><strong>{this.state.target}</strong></span></p>
-            <p id="by" className="byline lh-20">Petition by <a href="/contact_creator.html?petition_id=95935" className="underline">Jo Comerford</a></p>
-          </div>
-
-          <div className="clear"></div>
-
-          <div id="pet-explain" className="background-moveon-white bump-top-1">
-            <div className="widget">
-              <div className="widget-top">
-                <h3 className="moveon-bright-red">Petition Background</h3>
+    if (this.SignatureCount) {
+      return (
+        <div className="row row-fluid">
+          <div className="span8 pull-right petition-info-top">
+            <div className="form-wrapper responsive">
+              <div className="petition-top hidden-phone">
+                <h1 id="petition-title" className="moveon-bright-red big-title">{this.state.title}</h1>
               </div>
-              <div dangerouslySetInnerHTML={{__html: this.state.background}}></div>
+
+              <div id="pet-statement-box" className="lh-36 blockquote hidden-phone">
+                <h3 className="visible-phone moveon-bright-red">Petition Statement</h3>
+                <div id="pet-statement">{this.state.summary}</div>
+              </div>
+
+              <this.SignatureCount current={this.state.signatureCount} goal={this.state.signatureGoal} />
             </div>
 
-            <div className="widget">
-              <div className="widget-top">
-                <h3 className="moveon-bright-red">Current petition signers</h3>
-              </div>
-              <div id="pet-signers-loading" className="bump-top-1"><b>Loading...</b></div>
+            <div className="petition-top">
+              <p id="to-target" className="lh-14 bump-top-1 bump-bottom-1 margin-0 disclaimer">To be delivered to <span className="all-targets"><strong>{this.state.target}</strong></span></p>
+              <p id="by" className="byline lh-20">Petition by <a href="/contact_creator.html?petition_id=95935" className="underline">Jo Comerford</a></p>
+            </div>
 
-              <div>
-                <div id="pet-signers" className="bump-top-1">
+            <div className="clear"></div>
+
+            <div id="pet-explain" className="background-moveon-white bump-top-1">
+              <div className="widget">
+                <div className="widget-top">
+                  <h3 className="moveon-bright-red">Petition Background</h3>
                 </div>
-                <form id="flag-comment-form" action="/flag_comment.html" method="POST">
-                  <input id="flag-comment-user-id" type="hidden" name="user_id" value=""/>
-                </form>
+                <div dangerouslySetInnerHTML={{__html: this.state.background}}></div>
+              </div>
+
+              <div className="widget">
+                <div className="widget-top">
+                  <h3 className="moveon-bright-red">Current petition signers</h3>
+                </div>
+                <div id="pet-signers-loading" className="bump-top-1"><b>Loading...</b></div>
+
+                <div>
+                  <div id="pet-signers" className="bump-top-1">
+                  </div>
+                  <form id="flag-comment-form" action="/flag_comment.html" method="POST">
+                    <input id="flag-comment-user-id" type="hidden" name="user_id" value=""/>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
+    else {
+      return (
+        <div className="row row-fluid">
+          <div className="span8 pull-right petition-info-top">
+            <div className="form-wrapper responsive">
+              <div className="petition-top hidden-phone">
+                <h1 id="petition-title" className="moveon-bright-red big-title">{this.state.title}</h1>
+              </div>
+
+              <div id="pet-statement-box" className="lh-36 blockquote hidden-phone">
+                <h3 className="visible-phone moveon-bright-red">Petition Statement</h3>
+                <div id="pet-statement">{this.state.summary}</div>
+              </div>
+
+            </div>
+
+            <div className="petition-top">
+              <p id="to-target" className="lh-14 bump-top-1 bump-bottom-1 margin-0 disclaimer">To be delivered to <span className="all-targets"><strong>{this.state.target}</strong></span></p>
+              <p id="by" className="byline lh-20">Petition by <a href="/contact_creator.html?petition_id=95935" className="underline">Jo Comerford</a></p>
+            </div>
+
+            <div className="clear"></div>
+
+            <div id="pet-explain" className="background-moveon-white bump-top-1">
+              <div className="widget">
+                <div className="widget-top">
+                  <h3 className="moveon-bright-red">Petition Background</h3>
+                </div>
+                <div dangerouslySetInnerHTML={{__html: this.state.background}}></div>
+              </div>
+
+              <div className="widget">
+                <div className="widget-top">
+                  <h3 className="moveon-bright-red">Current petition signers</h3>
+                </div>
+                <div id="pet-signers-loading" className="bump-top-1"><b>Loading...</b></div>
+
+                <div>
+                  <div id="pet-signers" className="bump-top-1">
+                  </div>
+                  <form id="flag-comment-form" action="/flag_comment.html" method="POST">
+                    <input id="flag-comment-user-id" type="hidden" name="user_id" value=""/>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
   }
 
 }
+
+Petition.propTypes = {
+  petitionLoader: React.PropTypes.func.isRequired
+};
+
+Petition.defaultProps = {
+  petitionLoader: PetitionLoader
+};
 
 export default Petition;
