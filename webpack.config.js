@@ -8,8 +8,10 @@ var config = {
   entry: APP_DIR + '/main.js',
   output: {
     path: BUILD_DIR,
-    publicPath: '/Users/scott/Sites/general.dev/mop-frontend/js/',
-    filename: 'main.js'
+    publicPath: process.env.STATIC_ROOT || "/static/",
+    filename: ((process.env.PROD)
+     ? 'main.min.js'
+     : 'main.js'),
   },
   externals: {
     'react': 'React',
@@ -23,7 +25,12 @@ var config = {
         loader : 'babel'
       }
     ]
-  }
+  },
+  plugins : [
+    ((process.env.PROD)
+     ? new webpack.optimize.UglifyJsPlugin()
+     : new webpack.HotModuleReplacementPlugin()),
+  ]
 };
 
 module.exports = config;

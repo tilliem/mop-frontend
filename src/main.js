@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Petition from './components/petition.js';
+import App from './app.js';
 
 document.addEventListener("DOMContentLoaded", function() {
 
   ReactDOM.render(
-    <Petition/>,
-    document.getElementById('petition')
+    <App />,
+    document.getElementById('root')
   );
 
 });
