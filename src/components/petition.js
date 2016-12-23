@@ -6,18 +6,18 @@ class Petition extends React.Component {
     this.state = {tite: '', summary: '', target: ''};
   }
 
-  componentWillMount() {
-    this.props.petitionLoader().then((deps) => {
-      this.SignatureCount = deps.SignatureCount.default;
-      this.forceUpdate();
-    });
-  }
-
   componentDidMount() {
     this.timer = setTimeout(
       () => this.setStateFromAPI(),
       500
     );
+    //after we show the petition, THEN we can load Signature Count
+    // for patterns where we need the SignatureCount module first, then this should
+    // be in componentWillMount
+    this.props.petitionLoader().then((deps) => {
+      this.SignatureCount = deps.SignatureCount.default;
+      this.forceUpdate();
+    });
   }
 
   setStateFromAPI() {
