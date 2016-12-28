@@ -8,30 +8,27 @@ let API_URI = process.env.API_URI;
 class SignPetition extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {petition:null};
   }
 
   componentWillMount() {
     console.log(this.props.params);
-    let loadData = function(response) {
-        // console.log(response);
-        // this.setProp();
-    };
     let urlKey = 'petitions/' + this.props.params.petition_slug;
     if (window.preloadObjects && window.preloadObjects[urlKey]) {
       console.log('using preloadedData');
-      loadData(window.preloadObjects[urlKey]);
+        this.setState({'petition': window.preloadObjects[urlKey]});
     } else {
-      fetch(API_URI+'/api/v1/' + urlKey).then(loadData);
+      fetch(API_URI+'/api/v1/' + urlKey).then(function(remoteData) {
+        this.setState({'petition': remoteData});
+      });
     }
   }
-
 
   render() {
     return (
       <div>
         <Nav />
-        <Petition />
+        <Petition petition={this.state.petition} />
         <Footer />
       </div>
     );
