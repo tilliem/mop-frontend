@@ -1,5 +1,7 @@
-import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router';
+import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
 import SignPetition from './pages/sign-petition.js';
+
+let base_app_path = process.env.BASE_APP_PATH || "/";
 
 class App extends React.Component {
   constructor(props) {
@@ -9,8 +11,10 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router history={hashHistory}>
-        <Route path="/" component={SignPetition}/>
+      <Router history={browserHistory}>
+        <Route path={base_app_path} >
+          <Route path="sign/:petition_slug" component={SignPetition}/>
+        </Route>
       </Router>
     );
   }

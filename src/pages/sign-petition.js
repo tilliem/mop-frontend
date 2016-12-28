@@ -3,6 +3,8 @@ import Footer from '../components/footer.js';
 import Petition from '../components/petition.js';
 import 'whatwg-fetch';
 
+let API_URI = process.env.API_URI;
+
 class SignPetition extends React.Component {
   constructor(props) {
     super(props);
@@ -10,11 +12,18 @@ class SignPetition extends React.Component {
   }
 
   componentWillMount() {
-    fetch('https://testpet2.moveon.org/petitions/economic-disparity-campaign')
-      .then(function(response) {
+    console.log(this.props.params);
+    let loadData = function(response) {
         // console.log(response);
         // this.setProp();
-      });
+    };
+    let urlKey = 'petitions/' + this.props.params.petition_slug;
+    if (window.preloadObjects && window.preloadObjects[urlKey]) {
+      console.log('using preloadedData');
+      loadData(window.preloadObjects[urlKey]);
+    } else {
+      fetch(API_URI+'/api/v1/' + urlKey).then(loadData);
+    }
   }
 
 
