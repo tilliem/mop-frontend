@@ -50,7 +50,9 @@ class Petition extends React.Component {
               </div>
 
               <div className="petition-top">
-                <p id="to-target" className="lh-14 bump-top-1 bump-bottom-1 margin-0 disclaimer">To be delivered to <span className="all-targets"><strong>{p.target}</strong></span></p>
+                <p id="to-target" className="lh-14 bump-top-1 bump-bottom-1 margin-0 disclaimer">To be delivered to <span className="all-targets"><strong>
+                      {p.target.map((t) => t.name).join(', ')}
+                </strong></span></p>
                 <p id="by" className="byline lh-20">Petition by <a href="/contact_creator.html?petition_id=95935" className="underline">{p.contact_name}</a></p>
               </div>
 
