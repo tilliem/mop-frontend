@@ -2,7 +2,7 @@ import Nav from '../components/nav.js';
 import Footer from '../components/footer.js';
 import Petition from '../components/petition.js';
 import React from 'react';
-import fetch from 'whatwg-fetch';
+import 'whatwg-fetch';
 
 let API_URI = process.env.API_URI;
 
