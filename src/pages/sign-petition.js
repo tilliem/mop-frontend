@@ -13,26 +13,40 @@ class SignPetition extends React.Component {
   }
 
   componentWillMount () {
-    console.log(this.props.params);
     let urlKey = 'petitions/' + this.props.params.petition_slug;
+    let component = this;
     if (window.preloadObjects && window.preloadObjects[urlKey]) {
       console.log('using preloadedData');
       this.setState({'petition': window.preloadObjects[urlKey]});
     } else {
-      fetch(API_URI + '/api/v1/' + urlKey).then(function (remoteData) {
-        this.setState({'petition': remoteData});
+      fetch(API_URI + '/api/v1/' + urlKey)
+      .then((response) => {
+        return response.json();
+      })
+      .then((json) => {
+        component.setState({'petition': json});
       });
     }
   }
 
   render () {
-    return (
-      <div>
-        <Nav />
-        <Petition petition={this.state.petition} />
-        <Footer />
-      </div>
-    );
+    if (this.state.petition == null) {
+      return (
+        <div>
+          <Nav />
+          <Footer />
+        </div>
+      );
+    }
+    else {
+      return (
+        <div>
+          <Nav />
+          <Petition petition={this.state.petition} />
+          <Footer />
+        </div>
+      );
+    }
   }
 
 }
