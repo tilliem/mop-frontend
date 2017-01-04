@@ -4,9 +4,13 @@ This is the browser-based, JavaScript implementation of the MoveOn Petitions pla
 
 # Install
 
-* Install NPM.
+* Install NPM. Recommended versions: NPM v3.10.10, Node v6.9.3 LTS.
 * $ `npm install`
 
 # Compile JavaScript
 
 * $ `./node_modules/.bin/webpack -d`
+
+# Lint JavaScript
+
+* $ `./node_modules/.bin/eslint src/**.js`

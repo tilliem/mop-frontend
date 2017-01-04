@@ -1,0 +1,12 @@
+{
+    "extends": "standard",
+    "plugins": [
+        "standard",
+        "react"
+    ],
+    "rules": {
+      "semi": [2, "always"],
+      "react/jsx-uses-react": "error",
+      "react/jsx-uses-vars": "error"
+    }
+}
