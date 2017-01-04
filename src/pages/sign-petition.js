@@ -1,30 +1,31 @@
 import Nav from '../components/nav.js';
 import Footer from '../components/footer.js';
 import Petition from '../components/petition.js';
-import 'whatwg-fetch';
+import React from 'react';
+import fetch from 'whatwg-fetch';
 
 let API_URI = process.env.API_URI;
 
 class SignPetition extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
-    this.state = {petition:null};
+    this.state = { petition: null };
   }
 
-  componentWillMount() {
+  componentWillMount () {
     console.log(this.props.params);
     let urlKey = 'petitions/' + this.props.params.petition_slug;
     if (window.preloadObjects && window.preloadObjects[urlKey]) {
       console.log('using preloadedData');
-        this.setState({'petition': window.preloadObjects[urlKey]});
+      this.setState({'petition': window.preloadObjects[urlKey]});
     } else {
-      fetch(API_URI+'/api/v1/' + urlKey).then(function(remoteData) {
+      fetch(API_URI + '/api/v1/' + urlKey).then(function (remoteData) {
         this.setState({'petition': remoteData});
       });
     }
   }
 
-  render() {
+  render () {
     return (
       <div>
         <Nav />

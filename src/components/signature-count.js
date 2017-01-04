@@ -1,13 +1,12 @@
+import React from 'react';
+
 class SignatureCount extends React.Component {
-  constructor(props) {
-    super(props);
+
+  formatted (number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
-  formatted(number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
-
-  percent() {
+  percent () {
     var number = 0;
     if (this.props.goal > 0) {
       number = 100 * (this.props.current / this.props.goal);
@@ -18,7 +17,7 @@ class SignatureCount extends React.Component {
     return number.toFixed(2).toString() + '%';
   }
 
-  render() {
+  render () {
     if (typeof this.props.current !== 'undefined') {
       return (
         <div id="therm" className="bump-top-2">

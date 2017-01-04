@@ -4,7 +4,7 @@ export default () => {
   return new Promise(resolve => {
     require.ensure([], () => {
       resolve({
-        SignatureCount: require('../components/signature-count.js'),
+        SignatureCount: require('../components/signature-count.js')
       });
     });
   });

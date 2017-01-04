@@ -1,5 +1,7 @@
+import React from 'react';
+
 class Nav extends React.Component {
-  render() {
+  render () {
     return (
       <nav className="header cleafix">
         <div className="container" id="header">

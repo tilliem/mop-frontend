@@ -13,4 +13,4 @@ This is the browser-based, JavaScript implementation of the MoveOn Petitions pla
 
 # Lint JavaScript
 
-* $ `./node_modules/.bin/eslint src/**.js`
+* $ `./node_modules/.bin/eslint src/*`

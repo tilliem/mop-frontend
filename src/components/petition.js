@@ -1,20 +1,21 @@
+import React from 'react';
 import PetitionLoader from '../loaders/petition.js';
 
-function text2paras(str) {
+function text2paras (str) {
   return str.split(/\n+/);
 }
 
 class Petition extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {};
   }
 
-  componentDidMount() {
-    this.timer = setTimeout(function() {
+  componentDidMount () {
+    this.timer = setTimeout(function () {
       // do non-blocking things while loader is called
-    },500);
-    //after we show the petition, THEN we can load Signature Count
+    }, 500);
+    // after we show the petition, THEN we can load Signature Count
     // for patterns where we need the SignatureCount module first, then this should
     // be in componentWillMount
     this.props.petitionLoader().then((deps) => {
@@ -23,7 +24,7 @@ class Petition extends React.Component {
     });
   }
 
-  render() {
+  render () {
     let p = this.props.petition;
 
     return (
@@ -43,9 +44,9 @@ class Petition extends React.Component {
                     )}
                   </div>
                 </div>
-                { ((this.SignatureCount) ?
-                <this.SignatureCount current={p.signatureCount} goal={p.signatureGoal} />
-                  : '')
+                { ((this.SignatureCount)
+                ? <this.SignatureCount current={p.signatureCount} goal={p.signatureGoal} />
+                : '')
                 }
               </div>
 
@@ -84,7 +85,7 @@ class Petition extends React.Component {
             </div>
           </div>
         </div>
-      );
+    );
   }
 }
 
