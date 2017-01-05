@@ -37,8 +37,7 @@ class SignPetition extends React.Component {
           <Footer />
         </div>
       );
-    }
-    else {
+    } else {
       return (
         <div>
           <Nav />

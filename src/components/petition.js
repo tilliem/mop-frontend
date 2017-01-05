@@ -1,9 +1,6 @@
 import React from 'react';
 import PetitionLoader from '../loaders/petition.js';
-
-function text2paras (str) {
-  return str.split(/\n+/);
-}
+import SignatureAddForm from './signature-add-form.js';
 
 class Petition extends React.Component {
   constructor (props) {
@@ -24,12 +21,17 @@ class Petition extends React.Component {
     });
   }
 
+  text2paras (str) {
+    return str.split(/\n+/);
+  }
+
   render () {
     let p = this.props.petition;
 
     return (
         <div className="container background-moveon-white" role="main">
           <div className="row row-fluid">
+            <SignatureAddForm petition={this.props.petition} text2paras={this.text2paras} />
             <div className="span8 pull-right petition-info-top">
               <div className="form-wrapper responsive">
                 <div className="petition-top hidden-phone">
@@ -38,7 +40,7 @@ class Petition extends React.Component {
 
                 <div id="pet-statement-box" className="lh-36 blockquote hidden-phone">
                   <h3 className="visible-phone moveon-bright-red">Petition Statement</h3>
-                  <div id="pet-statement">{text2paras(p.summary).map(
+                  <div id="pet-statement">{this.text2paras(p.summary).map(
                     (para) =>
                     <p>{para}</p>
                     )}
