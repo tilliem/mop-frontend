@@ -8,7 +8,7 @@ class Nav extends React.Component {
           <div className="row">
             <div className="navbar-header">
               <button type="button" className="navbar-toggle" aria-expanded="false" aria-controls="navbar">Toggle navigation</button>
-              <a className="navbar-brand" href="http://moveon.org/"></a>
+              <a className="navbar-brand" href="http://petitions.moveon.org/"></a>
             </div>
             <div id="navbar" className="navbar-collapse">
               <ul className="nav navbar-nav navbar-right nav-primary">
