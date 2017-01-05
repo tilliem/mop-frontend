@@ -158,7 +158,7 @@
       box-shadow: none; }
 
 .icon-flag {
-  background-image: url("/static/img/icon-flag.svg");
+  background-image: url("https://s3.amazonaws.com/actionkit.moveon.org/static/img/assets/icon-flag.svg");
   background-position: 50% 50%;
   background-repeat: no-repeat;
   display: block;
@@ -250,7 +250,7 @@ button.xl {
   .btn-facebook:active {
     background-color: #2e4581; }
   .btn-facebook:before {
-    background-image: url("/static/img/icon-facebook-reversed.svg"); }
+    background-image: url("https://s3.amazonaws.com/actionkit.moveon.org/static/img/assets/icon-facebook-reversed.svg"); }
 
 .btn-twitter {
   background-color: #1DA8E2; }
@@ -259,7 +259,7 @@ button.xl {
   .btn-twitter:active {
     background-color: #1795dc; }
   .btn-twitter:before {
-    background-image: url("/static/img/icon-twitter-reversed.svg"); }
+    background-image: url("https://s3.amazonaws.com/actionkit.moveon.org/static/img/assets/icon-twitter-reversed.svg"); }
 
 .btn-email {
   background-color: #C22326; }
@@ -268,7 +268,7 @@ button.xl {
   .btn-email:active {
     background-color: #b51b1e; }
   .btn-email:before {
-    background-image: url("/static/img/icon-email-reversed.svg"); }
+    background-image: url("https://s3.amazonaws.com/actionkit.moveon.org/static/img/assets/icon-email-reversed.svg"); }
 
 .btn-toggle {
   background-color: #FFFFFF;
@@ -377,7 +377,7 @@ body.confirm input[type="text"] {
 
 body.sign select,
 body.confirm select {
-  background-image: url("/static/img/icon-arrow.svg");
+  background-image: url("https://s3.amazonaws.com/actionkit.moveon.org/static/img/assets/icon-arrow.svg");
   background-position: 100% 50%;
   background-repeat: no-repeat;
   border-left-color: #CCCCCC;
@@ -389,7 +389,7 @@ body.confirm select {
   body.confirm select:hover,
   body.confirm select:active,
   body.confirm select:focus {
-    background-image: url("/static/img/icon-arrow-hover.svg"); }
+    background-image: url("https://s3.amazonaws.com/actionkit.moveon.org/static/img/assets/icon-arrow-hover.svg"); }
 
 body.sign .checkbox,
 body.confirm .checkbox {
@@ -573,13 +573,13 @@ a.navbar-brand {
   text-align: left;
   text-indent: 100%;
   white-space: nowrap;
-  background: url("/static/img/icon-menu.svg") 50% 50% no-repeat; }
+  background: url("https://s3.amazonaws.com/actionkit.moveon.org/static/img/assets/icon-menu.svg") 50% 50% no-repeat; }
   .navbar-toggle:hover {
     top: auto;
     left: auto;
     border-left: 1px solid #D8D8D8; }
   .nav-expanded .navbar-toggle {
-    background-image: url("/static/img/icon-close.svg"); }
+    background-image: url("https://s3.amazonaws.com/actionkit.moveon.org/static/img/assets/icon-close.svg"); }
   .navbar-toggle .icon-bar {
     margin-left: auto;
     margin-right: auto; }
@@ -702,24 +702,24 @@ div.row div.visible-phone {
   .pager .previous a {
     padding-left: 60px; }
     .pager .previous a:after {
-      background-image: url("/static/img/icon-back.svg");
+      background-image: url("https://s3.amazonaws.com/actionkit.moveon.org/static/img/assets/icon-back.svg");
       border-right: 1px solid #E3E3E3;
       left: 0; }
   .pager .next a {
     padding-right: 60px; }
     .pager .next a:after {
-      background-image: url("/static/img/icon-next.svg");
+      background-image: url("https://s3.amazonaws.com/actionkit.moveon.org/static/img/assets/icon-next.svg");
       border-left: 1px solid #E3E3E3;
       right: 0; }
 
 .icon-start {
-  background: url("/static/img/icon-start-petition.svg"); }
+  background: url("https://s3.amazonaws.com/actionkit.moveon.org/static/img/assets/icon-start-petition.svg"); }
 
 .icon-managepetitions {
-  background: url("/static/img/icon-manage-petition.svg"); }
+  background: url("https://s3.amazonaws.com/actionkit.moveon.org/static/img/assets/icon-manage-petition.svg"); }
 
 .icon-donate {
-  background: url("/static/img/icon-donate.svg"); }
+  background: url("https://s3.amazonaws.com/actionkit.moveon.org/static/img/assets/icon-donate.svg"); }
 
 #header .nav-primary,
 .footer .nav-primary {
@@ -957,11 +957,11 @@ body.has-page-footer {
     .footer .social .icon:before {
       content: none; }
   .footer .social .icon-fb {
-    background-image: url("/static/img/icon-facebook.svg"); }
+    background-image: url("https://s3.amazonaws.com/actionkit.moveon.org/static/img/assets/icon-facebook.svg"); }
   .footer .social .icon-twitter {
-    background-image: url("/static/img/icon-twitter.svg"); }
+    background-image: url("https://s3.amazonaws.com/actionkit.moveon.org/static/img/assets/icon-twitter.svg"); }
   .footer .social .icon-join {
-    background-image: url("/static/img/icon-newsletter.svg"); }
+    background-image: url("https://s3.amazonaws.com/actionkit.moveon.org/static/img/assets/icon-newsletter.svg"); }
 
 p {
   font-size: 14px;
