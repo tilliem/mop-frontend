@@ -2,6 +2,41 @@ import React from 'react';
 
 class SignatureAddForm extends React.Component {
 
+  constructor (props) {
+    super(props);
+    this.state = {
+      'name': false,
+      'email': false,
+      'state': false,
+      'zip': false
+    };
+  }
+
+  validationError (key) {
+    let required = {
+      'name': 'Name is required.',
+      'email': 'Email address is required.',
+      'state': 'State is required.',
+      'zip': 'Zip code is required.'
+    };
+
+    if (Object.keys(required).indexOf(key) > -1) {
+      if (this.state[key] != null && this.state[key].length == 0) {
+        return (
+          <div className="alert alert-danger" role="alert">{ required[key] }</div>
+        );
+      }
+    }
+
+    return null;
+  }
+
+  updateStateFromValue(field) {
+    return (event) => {
+      this.setState({[field]: event.target.value});
+    }
+  };
+
   render () {
     return (
       <div className="span4 widget clearfix" id="sign-here">
@@ -33,16 +68,18 @@ class SignatureAddForm extends React.Component {
               <input type="hidden" name="show_optin_checkbox" value="0" />
               <div className="unrecognized">
                 <div className="form-group">
-                  <label for="name">Name<span className="ak-required-flag">*</span></label>
-                  <input type="text" name="name" id="name" className="moveon-track-click"/>
+                  <label htmlFor="name">Name<span className="ak-required-flag">*</span></label>
+                  <input type="text" name="name" id="name" className="moveon-track-click" onChange={ this.updateStateFromValue('name') } />
+                  { this.validationError('name') }
                 </div>
                 <div className="form-group">
-                  <label for="email">Email<span className="ak-required-flag">*</span></label>
-                  <input type="text" name="email" id="email" className="moveon-track-click"/>
+                  <label htmlFor="email">Email<span className="ak-required-flag">*</span></label>
+                  <input type="text" name="email" id="email" className="moveon-track-click" onChange={ this.updateStateFromValue('email') } />
+                  { this.validationError('email') }
                 </div>
                 <div className="form-group">
-                  <label for="country">Country</label>
-                  <select name="country" id="country" class='country_select moveon-track-click' onchange='changed_country()'>
+                  <label htmlFor="country">Country</label>
+                  <select name="country" id="country" className='country_select moveon-track-click'>
                     <option>United States</option>
                     <option>Afghanistan</option>
                     <option>Albania</option>
@@ -273,19 +310,19 @@ class SignatureAddForm extends React.Component {
                   </select>
                 </div>
                 <div className="form-group">
-                  <label for="address1">Address</label>
-                  <input type="text" name="address1" id="address1" className="moveon-track-click"/>
+                  <label htmlFor="address1">Address</label>
+                  <input type="text" name="address1" id="address1" className="moveon-track-click" />
                 </div>
                 <div className="form-group">
-                  <label for="address2">Address (cont.)</label>
-                  <input type="text" name="address2" id="address2" className="moveon-track-click"/>
+                  <label htmlFor="address2">Address (cont.)</label>
+                  <input type="text" name="address2" id="address2" className="moveon-track-click" />
                 </div>
                 <div className="form-group">
-                  <label for="city">City</label>
-                  <input type="text" name="city" id="city" className="moveon-track-click"/>
+                  <label htmlFor="city">City</label>
+                  <input type="text" name="city" id="city" className="moveon-track-click" />
                 </div>
                 <div className="form-group state moveon-track-click">
-                  <label for="state_id">State<span className="ak-required-flag">*</span></label>
+                  <label htmlFor="state_id">State<span className="ak-required-flag">*</span></label>
                   <select name="state" id="state_id">
                     <option value="">State*</option>
                     <option value="AL">Alabama</option>
@@ -356,21 +393,22 @@ class SignatureAddForm extends React.Component {
                   </select>
                 </div>
                 <div className="form-group region moveon-track-click">
-                  <label for="region">Region</label>
-                  <input type="text" name="region" id="region"/>
+                  <label htmlFor="region">Region</label>
+                  <input type="text" name="region" id="region" />
                 </div>
                 <div className="form-group zip moveon-track-click">
-                  <label for="zip">Zip Code<span className="ak-required-flag">*</span></label>
-                  <input type="text" name="zip" id="zip"/>
+                  <label htmlFor="zip">Zip Code<span className="ak-required-flag">*</span></label>
+                  <input type="text" name="zip" id="zip" onChange={ this.updateStateFromValue('zip') } />
+                  { this.validationError('zip') }
                 </div>
                 <div className="form-group postal moveon-track-click">
-                  <label for="postal">Region</label>
-                  <input type="text" name="postal" id="postal"/>
+                  <label htmlFor="postal">Region</label>
+                  <input type="text" name="postal" id="postal" />
                 </div>
               </div>
               <div className="form-group">
-                <label for="comment">Comment</label>
-                <textarea className="moveon-track-click" rows="3" cols="20" name="comment" id="comment" autocomplete="off"></textarea>
+                <label htmlFor="comment">Comment</label>
+                <textarea className="moveon-track-click" rows="3" cols="20" name="comment" id="comment" autoComplete="off"></textarea>
               </div>
               <div className="form-group form-group--submit">
                 <button type="submit" className="xl percent-100 moveon-track-click background-moveon-bright-red" id="sign-here-button" value="Sign the petition!">Sign the petition</button>
