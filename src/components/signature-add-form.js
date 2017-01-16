@@ -7,6 +7,7 @@ class SignatureAddForm extends React.Component {
     this.state = {
       'name': false,
       'email': false,
+      'country': 'United States',
       'state': false,
       'zip': false
     };
@@ -21,7 +22,7 @@ class SignatureAddForm extends React.Component {
     };
 
     if (Object.keys(required).indexOf(key) > -1) {
-      if (this.state[key] != null && this.state[key].length == 0) {
+      if (this.state[key] != null && this.state[key].length === 0) {
         return (
           <div className="alert alert-danger" role="alert">{ required[key] }</div>
         );
@@ -31,9 +32,96 @@ class SignatureAddForm extends React.Component {
     return null;
   }
 
-  updateStateFromValue(field) {
+  updateStateFromValue (field) {
     return (event) => {
       this.setState({[field]: event.target.value});
+    };
+  };
+
+  renderStateOrRegion () {
+
+    if (this.state.country == 'United States') {
+
+      return (
+        <div className="form-group state moveon-track-click">
+          <label htmlFor="state_id">State<span className="ak-required-flag">*</span></label>
+          <select name="state" id="state_id" value={ this.state.state } onChange={ this.updateStateFromValue('state') }>
+            <option value="">State*</option>
+            <option value="AL">Alabama</option>
+            <option value="AK">Alaska</option>
+            <option value="AS">American Samoa</option>
+            <option value="AZ">Arizona</option>
+            <option value="AR">Arkansas</option>
+            <option value="CA">California</option>
+            <option value="CO">Colorado</option>
+            <option value="CT">Connecticut</option>
+            <option value="DE">Delaware</option>
+            <option value="DC">District Of Columbia</option>
+            <option value="FL">Florida</option>
+            <option value="FM">Federated States of Micronesia</option>
+            <option value="GA">Georgia</option>
+            <option value="GU">Guam</option>
+            <option value="HI">Hawaii</option>
+            <option value="ID">Idaho</option>
+            <option value="IL">Illinois</option>
+            <option value="IN">Indiana</option>
+            <option value="IA">Iowa</option>
+            <option value="KS">Kansas</option>
+            <option value="KY">Kentucky</option>
+            <option value="LA">Louisiana</option>
+            <option value="ME">Maine</option>
+            <option value="MD">Maryland</option>
+            <option value="MA">Massachusetts</option>
+            <option value="MH">Marshall Islands</option>
+            <option value="MI">Michigan</option>
+            <option value="MN">Minnesota</option>
+            <option value="MS">Mississippi</option>
+            <option value="MO">Missouri</option>
+            <option value="MT">Montana</option>
+            <option value="NE">Nebraska</option>
+            <option value="MP">Northern Mariana Islands</option>
+            <option value="NV">Nevada</option>
+            <option value="NH">New Hampshire</option>
+            <option value="NJ">New Jersey</option>
+            <option value="NM">New Mexico</option>
+            <option value="NY">New York</option>
+            <option value="NC">North Carolina</option>
+            <option value="ND">North Dakota</option>
+            <option value="OH">Ohio</option>
+            <option value="OK">Oklahoma</option>
+            <option value="OR">Oregon</option>
+            <option value="PW">Palau</option>
+            <option value="PA">Pennsylvania</option>
+            <option value="PR">Puerto Rico</option>
+            <option value="RI">Rhode Island</option>
+            <option value="SC">South Carolina</option>
+            <option value="SD">South Dakota</option>
+            <option value="TN">Tennessee</option>
+            <option value="TX">Texas</option>
+            <option value="UT">Utah</option>
+            <option value="VT">Vermont</option>
+            <option value="VA">Virginia</option>
+            <option value="VI">U.S. Virgin Islands</option>
+            <option value="WA">Washington</option>
+            <option value="WV">West Virginia</option>
+            <option value="WI">Wisconsin</option>
+            <option value="WY">Wyoming</option>
+            <option value="AE">Armed Forces Africa</option>
+            <option value="AA">Armed Forces America</option>
+            <option value="AE">Armed Forces Canada</option>
+            <option value="AE">Armed Forces Europe</option>
+            <option value="AE">Armed Forces Middle East</option>
+            <option value="AP">Armed Forces Pacific</option>
+          </select>
+        </div>
+      );
+    } else {
+      return (
+        <div className="form-group region moveon-track-click">
+          <label htmlFor="region">Region</label>
+          <input type="text" name="region" id="region" />
+        </div>
+      );
     }
   };
 
@@ -79,7 +167,8 @@ class SignatureAddForm extends React.Component {
                 </div>
                 <div className="form-group">
                   <label htmlFor="country">Country</label>
-                  <select name="country" id="country" className='country_select moveon-track-click'>
+                  <select name="country" id="country" className='country_select moveon-track-click' value={ this.state.country } onChange={ (event) =>
+                    this.setState({'country': event.target.value}) }>
                     <option>United States</option>
                     <option>Afghanistan</option>
                     <option>Albania</option>
@@ -321,81 +410,7 @@ class SignatureAddForm extends React.Component {
                   <label htmlFor="city">City</label>
                   <input type="text" name="city" id="city" className="moveon-track-click" />
                 </div>
-                <div className="form-group state moveon-track-click">
-                  <label htmlFor="state_id">State<span className="ak-required-flag">*</span></label>
-                  <select name="state" id="state_id">
-                    <option value="">State*</option>
-                    <option value="AL">Alabama</option>
-                    <option value="AK">Alaska</option>
-                    <option value="AS">American Samoa</option>
-                    <option value="AZ">Arizona</option>
-                    <option value="AR">Arkansas</option>
-                    <option value="CA">California</option>
-                    <option value="CO">Colorado</option>
-                    <option value="CT">Connecticut</option>
-                    <option value="DE">Delaware</option>
-                    <option value="DC">District Of Columbia</option>
-                    <option value="FL">Florida</option>
-                    <option value="FM">Federated States of Micronesia</option>
-                    <option value="GA">Georgia</option>
-                    <option value="GU">Guam</option>
-                    <option value="HI">Hawaii</option>
-                    <option value="ID">Idaho</option>
-                    <option value="IL">Illinois</option>
-                    <option value="IN">Indiana</option>
-                    <option value="IA">Iowa</option>
-                    <option value="KS">Kansas</option>
-                    <option value="KY">Kentucky</option>
-                    <option value="LA">Louisiana</option>
-                    <option value="ME">Maine</option>
-                    <option value="MD">Maryland</option>
-                    <option value="MA">Massachusetts</option>
-                    <option value="MH">Marshall Islands</option>
-                    <option value="MI">Michigan</option>
-                    <option value="MN">Minnesota</option>
-                    <option value="MS">Mississippi</option>
-                    <option value="MO">Missouri</option>
-                    <option value="MT">Montana</option>
-                    <option value="NE">Nebraska</option>
-                    <option value="MP">Northern Mariana Islands</option>
-                    <option value="NV">Nevada</option>
-                    <option value="NH">New Hampshire</option>
-                    <option value="NJ">New Jersey</option>
-                    <option value="NM">New Mexico</option>
-                    <option value="NY">New York</option>
-                    <option value="NC">North Carolina</option>
-                    <option value="ND">North Dakota</option>
-                    <option value="OH">Ohio</option>
-                    <option value="OK">Oklahoma</option>
-                    <option value="OR">Oregon</option>
-                    <option value="PW">Palau</option>
-                    <option value="PA">Pennsylvania</option>
-                    <option value="PR">Puerto Rico</option>
-                    <option value="RI">Rhode Island</option>
-                    <option value="SC">South Carolina</option>
-                    <option value="SD">South Dakota</option>
-                    <option value="TN">Tennessee</option>
-                    <option value="TX">Texas</option>
-                    <option value="UT">Utah</option>
-                    <option value="VT">Vermont</option>
-                    <option value="VA">Virginia</option>
-                    <option value="VI">U.S. Virgin Islands</option>
-                    <option value="WA">Washington</option>
-                    <option value="WV">West Virginia</option>
-                    <option value="WI">Wisconsin</option>
-                    <option value="WY">Wyoming</option>
-                    <option value="AE">Armed Forces Africa</option>
-                    <option value="AA">Armed Forces America</option>
-                    <option value="AE">Armed Forces Canada</option>
-                    <option value="AE">Armed Forces Europe</option>
-                    <option value="AE">Armed Forces Middle East</option>
-                    <option value="AP">Armed Forces Pacific</option>
-                  </select>
-                </div>
-                <div className="form-group region moveon-track-click">
-                  <label htmlFor="region">Region</label>
-                  <input type="text" name="region" id="region" />
-                </div>
+                { this.renderStateOrRegion() }
                 <div className="form-group zip moveon-track-click">
                   <label htmlFor="zip">Zip Code<span className="ak-required-flag">*</span></label>
                   <input type="text" name="zip" id="zip" onChange={ this.updateStateFromValue('zip') } />
