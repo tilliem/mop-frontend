@@ -113,6 +113,7 @@ class SignatureAddForm extends React.Component {
             <option value="AE">Armed Forces Middle East</option>
             <option value="AP">Armed Forces Pacific</option>
           </select>
+          { this.validationError('state') }
         </div>
       );
     } else {
