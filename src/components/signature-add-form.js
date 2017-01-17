@@ -8,40 +8,79 @@ class SignatureAddForm extends React.Component {
       'name': false,
       'email': false,
       'country': 'United States',
+      'address1': false,
+      'address2': false,
+      'city': false,
       'state': false,
-      'zip': false
+      'region': false,
+      'zip': false,
+      'postal': false,
+      'comment': false
     };
-  }
-
-  validationError (key) {
-    let required = {
+    this.required = {
       'name': 'Name is required.',
       'email': 'Email address is required.',
       'state': 'State is required.',
       'zip': 'Zip code is required.'
     };
+  }
 
-    if (Object.keys(required).indexOf(key) > -1) {
+  validationError (key) {
+    if (Object.keys(this.required).indexOf(key) > -1) {
       if (this.state[key] != null && this.state[key].length === 0) {
         return (
-          <div className="alert alert-danger" role="alert">{ required[key] }</div>
+          <div className="alert alert-danger" role="alert">{ this.required[key] }</div>
         );
       }
     }
-
     return null;
+  }
+
+  formIsValid () {
+    return Object.keys(this.required).map(key => this.state[key] != null && this.state[key].length > 0).reduce((a, b) => a && b);
   }
 
   updateStateFromValue (field) {
     return (event) => {
       this.setState({[field]: event.target.value});
     };
-  };
+  }
+
+  submit () {
+    return (event) => {
+      if (this.formIsValid()) {
+        var odsiSignature = {
+          'person': {
+            'origin_system': 'petitions.moveon.org',
+            'full_name': this.state.name,
+            'email_addresses': [
+              {
+                'address': this.state.email
+              }
+            ],
+            'postal_addresses': [
+              {
+                'address_lines': [
+                  this.state.address1,
+                  this.state.address2
+                ],
+                'locality': this.state.city,
+                'region': (this.state.country === 'United States') ? this.state.state : this.state.region,
+                'postal_code': (this.state.country === 'United States') ? this.state.zip : this.state.postal,
+                'country_name': this.state.country
+              }
+            ]
+          },
+          'comments': this.state.comment
+        };
+        console.log(odsiSignature);
+      }
+      event.preventDefault();
+    };
+  }
 
   renderStateOrRegion () {
-
-    if (this.state.country == 'United States') {
-
+    if (this.state.country === 'United States') {
       return (
         <div className="form-group state moveon-track-click">
           <label htmlFor="state_id">State<span className="ak-required-flag">*</span></label>
@@ -120,11 +159,30 @@ class SignatureAddForm extends React.Component {
       return (
         <div className="form-group region moveon-track-click">
           <label htmlFor="region">Region</label>
-          <input type="text" name="region" id="region" />
+          <input type="text" name="region" id="region" onChange={ this.updateStateFromValue('region') } onBlur={ this.updateStateFromValue('region') } />
         </div>
       );
     }
-  };
+  }
+
+  renderZipOrPostal () {
+    if (this.state.country === 'United States') {
+      return (
+        <div className="form-group zip moveon-track-click">
+          <label htmlFor="zip">Zip Code<span className="ak-required-flag">*</span></label>
+          <input type="text" name="zip" id="zip" onChange={ this.updateStateFromValue('zip') } onBlur={ this.updateStateFromValue('zip') } />
+          { this.validationError('zip') }
+        </div>
+      );
+    } else {
+      return (
+        <div className="form-group postal moveon-track-click">
+          <label htmlFor="postal">Postal</label>
+          <input type="text" name="postal" id="postal" onChange={ this.updateStateFromValue('postal') } onBlur={ this.updateStateFromValue('postal') } />
+        </div>
+      );
+    }
+  }
 
   render () {
     return (
@@ -143,8 +201,8 @@ class SignatureAddForm extends React.Component {
             <div className="widget-top">
               <h3>Sign this petition</h3>
             </div>
-            <form name="sign_form" id="sign" method="post" action="/sign_petition.html">
-              <input type="hidden" name="petition_id" value="95935" />
+            <form name="sign_form" id="sign" method="post" action="." onSubmit={this.submit()}>
+              <input type="hidden" name="petition_id" value="" />
               <input type="hidden" name="source" value="none" />
               <input type="hidden" name="r_by" value="" />
               <input type="hidden" name="mailing_id" value="" />
@@ -401,30 +459,22 @@ class SignatureAddForm extends React.Component {
                 </div>
                 <div className="form-group">
                   <label htmlFor="address1">Address</label>
-                  <input type="text" name="address1" id="address1" className="moveon-track-click" />
+                  <input type="text" name="address1" id="address1" className="moveon-track-click" onChange={ this.updateStateFromValue('address1') } onBlur={ this.updateStateFromValue('address1') } />
                 </div>
                 <div className="form-group">
                   <label htmlFor="address2">Address (cont.)</label>
-                  <input type="text" name="address2" id="address2" className="moveon-track-click" />
+                  <input type="text" name="address2" id="address2" className="moveon-track-click" onChange={ this.updateStateFromValue('address2') } onBlur={ this.updateStateFromValue('address2') } />
                 </div>
                 <div className="form-group">
                   <label htmlFor="city">City</label>
-                  <input type="text" name="city" id="city" className="moveon-track-click" />
+                  <input type="text" name="city" id="city" className="moveon-track-click" onChange={ this.updateStateFromValue('city') } onBlur={ this.updateStateFromValue('city') }/>
                 </div>
                 { this.renderStateOrRegion() }
-                <div className="form-group zip moveon-track-click">
-                  <label htmlFor="zip">Zip Code<span className="ak-required-flag">*</span></label>
-                  <input type="text" name="zip" id="zip" onChange={ this.updateStateFromValue('zip') } onBlur={ this.updateStateFromValue('zip') } />
-                  { this.validationError('zip') }
-                </div>
-                <div className="form-group postal moveon-track-click">
-                  <label htmlFor="postal">Region</label>
-                  <input type="text" name="postal" id="postal" />
-                </div>
+                { this.renderZipOrPostal() }
               </div>
               <div className="form-group">
                 <label htmlFor="comment">Comment</label>
-                <textarea className="moveon-track-click" rows="3" cols="20" name="comment" id="comment" autoComplete="off"></textarea>
+                <textarea className="moveon-track-click" rows="3" cols="20" name="comment" id="comment" autoComplete="off" onChange={ this.updateStateFromValue('comment') } onBlur={ this.updateStateFromValue('comment') }></textarea>
               </div>
               <div className="form-group form-group--submit">
                 <button type="submit" className="xl percent-100 moveon-track-click background-moveon-bright-red" id="sign-here-button" value="Sign the petition!">Sign the petition</button>
@@ -436,6 +486,7 @@ class SignatureAddForm extends React.Component {
       </div>
     );
   }
+
 }
 
 export default SignatureAddForm;
