@@ -15,6 +15,10 @@ This is the browser-based, JavaScript implementation of the MoveOn Petitions pla
 
 * $ `./node_modules/.bin/eslint src/*`
 
+# Test JavaScript
+
+* $ `npm test`
+
 # Standalone dev env (certain to change)
 
 Your react app needs a containing html file of some sort to start up the react JS app. Until we formalize this more, you can use these steps:
@@ -78,4 +82,3 @@ then recompile your JS with:
 $ `./node_modules/.bin/webpack -d`
 
 then load up that html file in your browser, by pasting a link like this: file:///[YOUR_MOP-FRONTEND-PATH]/local/sign/economic-disparity-campaign
-
