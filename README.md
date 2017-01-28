@@ -19,66 +19,26 @@ This is the browser-based, JavaScript implementation of the MoveOn Petitions pla
 
 * $ `npm test`
 
-# Standalone dev env (certain to change)
+# Local development environment
 
-Your react app needs a containing html file of some sort to start up the react JS app. Until we formalize this more, you can use these steps:
+Local development requires both the JavaScript and HTML pages loading that JavaScript. The relevant HTML is rendered by Django in the https://github.com/MoveOnOrg/mop project (mop). There are two ways to combine mop's HTML with mop-frontend's JavaScript:
 
-make a local folder with some HTML file:
+## 1. Copy the HTML from mop to mop-frontend
 
-``` cd [YOUR_MOP-FRONTEND]; mkdir -p local/sign; touch local/sign/economic-disparity-campaign```
-
-and then in that new html file, which in our example is "economic-disparity-campaign", put this template content:
+The static HTML files in /local/ are copied from mop and edited with local paths. They can be loaded directly in a browser, but you'll need to configure webpack to compile the JS with local file paths, by setting environment variables to something like this:
 
 ```
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>MoveOn Petitions - Economic Disparity &amp; Campaign Contributions</title>
-    <link rel='stylesheet' href="https://s3.amazonaws.com/mop-static/css/moui.css" type='text/css' media='all' />
-    <link href="../../css/petition.css" rel="stylesheet">
-
-
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="@moveon">
-    <meta name="twitter:title" content="Economic Disparity &amp; Campaign Contributions">
-    <meta name="twitter:description" content="I just signed a petition to : Reverse the Supreme Court&#39;s &quot;Citizens United&quot; decision by way of amendment and  demand a legislative review of the serious and ever increasing economic disparity between the wealthy and the poor in America.  This review would include an investigation into subsidies and tax breaks which mostly benefit the wealthy and proposals to eliminate these subsidies and tax breaks, thereby creating resources to increase funding for education and opportunities to help the poor and middle class.">
-    <meta name="twitter:creator" content="@moveon">
-    <meta name="twitter:image:src" content="http://static.petitions.moveon.org/images/moveon-petitions-logo-square.png">
-    <meta name="twitter:domain" content="petitions.moveon.org">
-
-    <meta property="og:title" content="Sign the petition: Economic Disparity &amp; Campaign Contributions" />
-    <meta property="og:site_name" content="MoveOn Petitions" />
-    <meta property="og:type" content="cause" />
-
-
-  </head>
-  <body class="moveon-petitions sign petition-84176">
-
-
-
-    <div id="root"></div>
-    <script src="https://unpkg.com/react@15.4.1/dist/react.js"></script>
-    <script src="https://unpkg.com/react-dom@15.4.1/dist/react-dom.js"></script>
-    <script src="../../js/main.js"></script>
-
-
-
-
-  </body>
-</html>
-
+export API_URI="https://testpet2.moveon.org"
+export BASE_APP_PATH="/Users/yourusername/Sites/mop-frontend/local/"
+export STATIC_ROOT="../../js/"
 ```
 
-Then set your BASE_APP_PATH with the directory you created the HTML file in:
+`API_URI` can either point at a hosted version of the API (as in the example), or a local instance of mop (something like `http://0.0.0.0:8000`).
 
-``` export BASE_APP_PATH="[YOUR_MOP-FRONTEND]/local/" ```
+`BASE_APP_PATH` is everything that comes after `file://` in your browser's local file URL, up to and including `/local/`.
 
-Then point to your local server for APIs:
+`STATIC_ROOT` is the path from the HTML file you're testing to the compiled JavaScript. e.g. for `/local/thanks.html`, the relative path is `../js/`, but for `/local/sign/economic-disparity-campaign`, the relative path is one more step away, `../../js/`
 
-``` export API_URI="http://0.0.0.0:8000" ```
+## 2. Copy the JS from mop-frontend to mop
 
-then recompile your JS with:
-
-$ `./node_modules/.bin/webpack -d`
-
-then load up that html file in your browser, by pasting a link like this: file:///[YOUR_MOP-FRONTEND-PATH]/local/sign/economic-disparity-campaign
+To use live HTML from a local mop install, you can also copy your compiled mop-frontend JS into Django to serve as static files.
