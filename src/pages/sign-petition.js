@@ -19,7 +19,7 @@ class SignPetition extends React.Component {
       console.log('using preloadedData');
       this.setState({'petition': window.preloadObjects[urlKey]});
     } else {
-      fetch(API_URI + '/api/v1/' + urlKey)
+      fetch(API_URI + '/api/v1/' + urlKey + '.json')
       .then((response) => {
         return response.json();
       })

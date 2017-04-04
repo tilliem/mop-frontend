@@ -35,7 +35,7 @@ class Petition extends React.Component {
             <div className="span8 pull-right petition-info-top">
               <div className="form-wrapper responsive">
                 <div className="petition-top hidden-phone">
-                  <h1 id="petition-title" className="moveon-bright-red big-title">{p.title}</h1>
+                  <h1 id="petition-title" className="moveon-bright-red big-title">XXXZ{p.title}</h1>
                 </div>
 
                 <div id="pet-statement-box" className="lh-36 blockquote hidden-phone">

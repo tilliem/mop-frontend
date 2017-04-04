@@ -1,14 +1,18 @@
 var webpack = require('webpack');
 var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-var BUILD_DIR = path.resolve(__dirname, 'js');
+var BUILD_DIR = path.resolve(__dirname, 'build');
 var APP_DIR = path.resolve(__dirname, 'src');
 
 var config = {
-  entry: APP_DIR + '/main.js',
+  entry: {
+    javascript: APP_DIR + '/main.js',
+    html: BUILD_DIR + '/index.html'
+  },
   output: {
     path: BUILD_DIR,
-    publicPath: process.env.STATIC_ROOT || "/static/",
+    publicPath: process.env.STATIC_ROOT || "/build/",
     //NOTE: when process.env.PROD is true this will be the minified file
     //TODO: maybe we should hash this and figure out a way to pass the hashed version to it
     filename: 'main.js'
@@ -20,22 +24,36 @@ var config = {
   module : {
     loaders : [
       {
-        test : /\.js?/,
+        test : /\.jsx?$/,
         include : APP_DIR,
-        loader : 'babel'
+        loader : 'babel-loader'
+      },
+      {
+        test: /\.json$/,
+        loader: "file-loader?name=[name].[ext]",
       }
     ]
   },
   plugins : [
+    new HtmlWebpackPlugin({
+      template: 'local/index.html',
+      inject: 'body',
+      //hash: true,
+      filename: 'index.html',
+      staticPath: (process.env.STATIC_ROOT || '')
+    }),
     ((process.env.PROD)
      ? new webpack.optimize.UglifyJsPlugin()
      : new webpack.HotModuleReplacementPlugin()),
     new webpack.DefinePlugin({
       'process.env':{
         'NODE_ENV': JSON.stringify(((process.env.PROD) ? 'production' : 'development')),
-        'API_URI': JSON.stringify(process.env.API_URI || ''),
+        'API_URI': JSON.stringify(process.env.API_URI ||
+                                  (process.env.PROD ? '' : '/local')
+                                 ),
         'BASE_APP_PATH': JSON.stringify(process.env.BASE_APP_PATH || '/'),
-        'STATIC_ROOT': JSON.stringify(process.env.STATIC_ROOT || '')
+        'STATIC_ROOT': JSON.stringify(process.env.STATIC_ROOT || ''),
+        'PROD': process.env.PROD
       }
     })
 

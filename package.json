@@ -7,13 +7,18 @@
   "directories": {},
   "scripts": {
     "test": "mocha --compilers js:babel-core/register",
-    "build": "webpack"
+    "build": "webpack -d",
+    "webpack-watch": "webpack -w",
+    "dev-server": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --progress --colors --port 8080 --inline"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "react-router": "^3.0.0",
-    "whatwg-fetch": "^2.0.1"
+    "whatwg-fetch": "^2.0.1",
+    "osdi-client": "MoveOnOrg/osdi-client",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
   },
   "devDependencies": {
     "babel-core": "^6.20.0",
@@ -27,12 +32,13 @@
     "eslint-plugin-promise": "~3.4.0",
     "eslint-plugin-react": "^6.8.0",
     "eslint-plugin-standard": "~2.0.1",
+    "file-loader": "^0.11.1",
+    "html-webpack-plugin": "^2.22.0",
     "mocha": "~3.2.0",
-    "react": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "webpack": "^1.14.0",
+    "webpack": "^2.3.3",
     "webpack-dev-middleware": "^1.9.0",
+    "webpack-dev-server": "^2.4.2",
     "webpack-hot-middleware": "^2.13.2"
   }
 }
