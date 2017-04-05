@@ -9,6 +9,7 @@ var config = {
   entry: {
     javascript: APP_DIR + '/main.js'
   },
+  devtool: 'sourcemap',
   output: {
     path: BUILD_DIR,
     publicPath: process.env.STATIC_ROOT || "/build/",
@@ -42,7 +43,7 @@ var config = {
       staticPath: (process.env.STATIC_ROOT || '')
     }),
     ((process.env.PROD)
-     ? new webpack.optimize.UglifyJsPlugin()
+     ? new webpack.optimize.UglifyJsPlugin({sourceMap: true})
      : new webpack.HotModuleReplacementPlugin()),
     new webpack.DefinePlugin({
       'process.env':{
