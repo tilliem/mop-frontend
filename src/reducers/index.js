@@ -1,12 +1,7 @@
 import {combineReducers} from 'redux';
 
-// make some actions
+import {actionTypes as petitionActionTypes} from '../actions/petitionActions.js';
 
-const actions = {
-  'FETCH_PETTION_REQUEST': 'FETCH_PETTION_REQUEST',
-  'FETCH_PETTION_SUCCESS': 'FETCH_PETTION_SUCCESS',
-  'FETCH_PETTION_FAILURE': 'FETCH_PETTION_FAILURE'
-};
 
 // function fetchPetitionRequest(petitionSlug) {
 //     return {
@@ -18,22 +13,24 @@ const actions = {
 var initialState = {petitions: {}}
 
 function petitionReducer (state = initialState, action) {
-
+    console.log(action);
     switch (action.type) {
-        case actions.FETCH_PETITION_REQUEST:
-            // call API
-            //console.log(action, "FETCH_PETITION_REQUEST");
-            break
-        case actions.FETCH_PETITION_SUCCESS:
-            // update state with petition data
-        case actions.FETCH_PETITION_FAILURE:
+        case petitionActionTypes.FETCH_PETITION_REQUEST:
+            console.log('in petitionReducer');
+            break;
+        case petitionActionTypes.FETCH_PETITION_SUCCESS:
+            return {
+              'petitions': Object.assign({},{[action.slug]: action.petition})
+            };
+        case petitionActionTypes.FETCH_PETITION_FAILURE:
             // udpate state with status?
+            break;
     }
     return state
 }
 
 const rootReducer = combineReducers({
-    petition: petitionReducer
+    petitionStore: petitionReducer
 });
 
 export default rootReducer;

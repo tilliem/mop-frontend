@@ -68,7 +68,7 @@ class Petition extends React.Component {
               <div id="pet-explain" className="background-moveon-white bump-top-1">
                 <div className="widget">
                   <div className="widget-top">
-                    <h3 className="moveon-bright-red">Petition Background</h3>
+                    <h3 onClick={()=>{this.props.fooBar()}} className="moveon-bright-red">Petition Background</h3>
                   </div>
                   <div dangerouslySetInnerHTML={{__html: p.description}}></div>
                 </div>
@@ -101,19 +101,23 @@ Petition.propTypes = {
 };
 
 Petition.defaultProps = {
-  petitionLoader: PetitionLoader
+  petitionLoader: PetitionLoader,
 };
 
 function mapStateToProps(state, ownProps) {
   return {
+    'foo': 1
     //petition: state.petitions[ownProps.petitionkey]
   }
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {
-    //actions: bindActionCreators
+    fooBar: () => {
+      console.log('from mapDispatchToProps');
+      dispatch({type:'FETCH_PETITION_REQUEST', foo:1, bar:2})
+    }
   }
 }
 
-export default Petition; //connect(mapStateToProps, mapDispatchToProps)(Petition);
+export default connect(mapStateToProps, mapDispatchToProps)(Petition);
