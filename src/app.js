@@ -9,23 +9,22 @@ const store = configureStore();
 let baseAppPath = process.env.BASE_APP_PATH || '/';
 let historyRouting = (process.env.PROD ? browserHistory : hashHistory);
 
-// class App extends React.Component {
-  // constructor (props) {
-  //   super(props);
-  //   this.state = {};
-  // }
+class App extends React.Component {
+  constructor (props) {
+     super(props);
+     this.state = {};
+  }
 
-const App = (
-  <Provider store={store}>
-    <Router history={historyRouting}>
+  render() {
+    return <Provider store={store}>
+     <Router history={historyRouting}>
       <Route path={baseAppPath} >
         <Route path="sign/:petition_slug" component={SignPetition}/>
         <Route path="thanks.html" component={Thanks}/>
       </Route>
     </Router>
   </Provider>
-);
-
-// }
+      }
+}
 
 export default App;

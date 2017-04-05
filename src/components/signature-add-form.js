@@ -191,8 +191,8 @@ class SignatureAddForm extends React.Component {
           <h1 id="petition-title" className="moveon-bright-red">{this.props.petition.title}</h1>
           <div id="pet-statement-box" className="blockquote petition-statement">
             <div id="pet-statement">{this.props.text2paras(this.props.petition.summary).map(
-              (paragraph) =>
-              <p>{paragraph}</p>
+              (paragraph, i) =>
+              <p key="para{i}">{paragraph}</p>
             )}</div>
           </div>
         </div>

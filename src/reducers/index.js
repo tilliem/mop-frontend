@@ -2,9 +2,11 @@ import {combineReducers} from 'redux';
 
 // make some actions
 
-const FETCH_PETTION_REQUEST = 0
-const FETCH_PETITION_SUCCESS = 1
-const FETCH_PETITION_FAILURE = 2
+const actions = {
+  'FETCH_PETTION_REQUEST': 'FETCH_PETTION_REQUEST',
+  'FETCH_PETTION_SUCCESS': 'FETCH_PETTION_SUCCESS',
+  'FETCH_PETTION_FAILURE': 'FETCH_PETTION_FAILURE'
+};
 
 // function fetchPetitionRequest(petitionSlug) {
 //     return {
@@ -17,21 +19,21 @@ var initialState = {petitions: {}}
 
 function petitionReducer (state = initialState, action) {
 
-    switch (action) {
-        case FETCH_PETITION_REQUEST:
+    switch (action.type) {
+        case actions.FETCH_PETITION_REQUEST:
             // call API
-            console.log(action, "FETCH_PETITION_REQUEST");
+            //console.log(action, "FETCH_PETITION_REQUEST");
             break
-        case FETCH_PETITION_SUCCESS:
+        case actions.FETCH_PETITION_SUCCESS:
             // update state with petition data
-        case FETCH_PETITION_FAILURE:
+        case actions.FETCH_PETITION_FAILURE:
             // udpate state with status?
     }
     return state
 }
 
 const rootReducer = combineReducers({
-    petitionReducer
+    petition: petitionReducer
 });
 
 export default rootReducer;

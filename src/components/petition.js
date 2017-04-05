@@ -1,9 +1,13 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+
 import PetitionLoader from '../loaders/petition.js';
 import SignatureAddForm from './signature-add-form.js';
 
 class Petition extends React.Component {
   constructor (props) {
+    console.log(props);
     super(props);
     this.state = {};
   }
@@ -41,8 +45,8 @@ class Petition extends React.Component {
                 <div id="pet-statement-box" className="lh-36 blockquote hidden-phone">
                   <h3 className="visible-phone moveon-bright-red">Petition Statement</h3>
                   <div id="pet-statement">{this.text2paras(p.summary).map(
-                    (para) =>
-                    <p>{para}</p>
+                    (para, i) =>
+                    <p key="statement_p{i}">{para}</p>
                     )}
                   </div>
                 </div>
@@ -100,4 +104,16 @@ Petition.defaultProps = {
   petitionLoader: PetitionLoader
 };
 
-export default Petition;
+function mapStateToProps(state, ownProps) {
+  return {
+    //petition: state.petitions[ownProps.petitionkey]
+  }
+}
+
+function mapDispatchToProps(dispatch, ownProps) {
+  return {
+    //actions: bindActionCreators
+  }
+}
+
+export default Petition; //connect(mapStateToProps, mapDispatchToProps)(Petition);
