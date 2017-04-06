@@ -9,6 +9,9 @@ var config = {
   entry: {
     javascript: APP_DIR + '/main.js'
   },
+  devServer: {
+    host: "0.0.0.0",
+  },
   devtool: 'sourcemap',
   output: {
     path: BUILD_DIR,
