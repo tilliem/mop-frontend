@@ -36,6 +36,10 @@ class SignPetition extends React.Component {
 
 }
 
+SignPetition.propTypes = {
+  petition: React.PropTypes.object
+}
+
 function mapStateToProps (state, ownProps) {
   console.log('sign-petition.js mapStatetoProps', state);
   return {
