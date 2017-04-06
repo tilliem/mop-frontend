@@ -9,7 +9,7 @@
     "test": "mocha --compilers js:babel-core/register",
     "build": "./node_modules/.bin/webpack -d",
     "webpack-watch": "./node_modules/.bin/webpack -w",
-    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --progress --colors --port 8080 --inline",
+    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --progress --colors --port ${PORT:-8080} --inline",
     "lint": "./node_modules/.bin/eslint src/*"
   },
   "author": "",
