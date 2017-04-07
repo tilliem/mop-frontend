@@ -1,4 +1,8 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import {actions as petitionActions} from '../actions/petitionActions.js';
 
 class SignatureAddForm extends React.Component {
 
@@ -73,7 +77,8 @@ class SignatureAddForm extends React.Component {
           },
           'comments': this.state.comment
         };
-        console.log(odsiSignature);
+        console.log('odsiSignature in addform submit()', odsiSignature);
+        this.props.actions.signPetition(odsiSignature);
       }
       event.preventDefault();
     };
@@ -493,4 +498,16 @@ SignatureAddForm.propTypes = {
   petition: React.PropTypes.object.isRequired
 }
 
-export default SignatureAddForm;
+function mapStateToProps (state, ownProps) {
+  console.log('signature-add-form.js mapStatetoProps', state);
+  return {
+  };
+}
+
+function mapDispatchToProps (dispatch, ownProps) {
+  return {
+    actions: bindActionCreators(petitionActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignatureAddForm);
