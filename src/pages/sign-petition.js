@@ -16,11 +16,14 @@ class SignPetition extends React.Component {
     this.props.actions.loadPetition(this.props.params.petition_slug);
   }
 
-  render () {
-    if (this.props.sign_success === 'success') {
-      appLocation.push('thanks.html?petition_id=' + this.props.petition.petition_id);
+  componentWillUpdate (nextProps, nextState) {
+    console.log('sign-petition.componentWillUpdate', nextProps, nextState);
+    if (nextProps.sign_success === 'success') {
+      appLocation.push('thanks.html?petition_id=' + nextProps.petition.petition_id);
     }
+  }
 
+  render () {
     console.log('rendering', this.props);
     if (!this.props.petition) {
       return (
