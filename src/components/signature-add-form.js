@@ -1,4 +1,8 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import {actions as petitionActions} from '../actions/petitionActions.js';
 
 class SignatureAddForm extends React.Component {
 
@@ -23,6 +27,7 @@ class SignatureAddForm extends React.Component {
       'state': 'State is required.',
       'zip': 'Zip code is required.'
     };
+    this.submit = this.submit.bind(this);
   }
 
   validationError (key) {
@@ -46,8 +51,7 @@ class SignatureAddForm extends React.Component {
     };
   }
 
-  submit () {
-    return (event) => {
+  submit(event) {
       if (this.formIsValid()) {
         var odsiSignature = {
           'person': {
@@ -73,10 +77,11 @@ class SignatureAddForm extends React.Component {
           },
           'comments': this.state.comment
         };
-        console.log(odsiSignature);
+        console.log('odsiSignature in addform submit()', odsiSignature);
+        this.props.actions.signPetition(odsiSignature, this.props.petition);
       }
       event.preventDefault();
-    };
+    return false;
   }
 
   renderStateOrRegion () {
@@ -201,7 +206,7 @@ class SignatureAddForm extends React.Component {
             <div className="widget-top">
               <h3>Sign this petition</h3>
             </div>
-            <form name="sign_form" id="sign" method="post" action="." onSubmit={this.submit()}>
+            <form name="sign_form" id="sign" method="post" action="." onSubmit={this.submit}>
               <input type="hidden" name="petition_id" value="" />
               <input type="hidden" name="source" value="none" />
               <input type="hidden" name="r_by" value="" />
@@ -493,4 +498,16 @@ SignatureAddForm.propTypes = {
   petition: React.PropTypes.object.isRequired
 }
 
-export default SignatureAddForm;
+function mapStateToProps (state, ownProps) {
+  console.log('signature-add-form.js mapStatetoProps', state);
+  return {
+  };
+}
+
+function mapDispatchToProps (dispatch, ownProps) {
+  return {
+    actions: bindActionCreators(petitionActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignatureAddForm);

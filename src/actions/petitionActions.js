@@ -1,14 +1,20 @@
+import Config from '../config.js';
+
 export const actionTypes = {
   'FETCH_PETITION_REQUEST': 'FETCH_PETITION_REQUEST',
   'FETCH_PETITION_SUCCESS': 'FETCH_PETITION_SUCCESS',
-  'FETCH_PETITION_FAILURE': 'FETCH_PETITION_FAILURE'
+  'FETCH_PETITION_FAILURE': 'FETCH_PETITION_FAILURE',
+
+  'PETITION_SIGNATURE_SUBMIT': 'PETITION_SIGNATURE_SUBMIT',
+  'PETITION_SIGNATURE_SUCCESS': 'PETITION_SIGNATURE_SUCCESS',
+  'PETITION_SIGNATURE_FAILURE': 'PETITION_SIGNATURE_FAILURE'
 };
 
-let API_URI = process.env.API_URI;
+let API_URI = Config.API_URI;
 
 export function loadPetition (petitionSlug) {
   return (dispatch) => {
-    console.log('from mapDispatchToProps');
+    console.log('from actions/loadPetition');
     dispatch({
       'type': actionTypes.FETCH_PETITION_REQUEST,
       'slug': petitionSlug
@@ -44,6 +50,24 @@ export function loadPetition (petitionSlug) {
   };
 };
 
+export function signPetition (petitionSignature, petition) {
+  return (dispatch) => {
+    console.log('from actions/signPetition', petition, petitionSignature);
+    dispatch({
+      'type': actionTypes.PETITION_SIGNATURE_SUBMIT,
+      'petition': petition,
+      'signature': petitionSignature
+    });
+    //TODO: actually submit signature
+    dispatch({
+      'type': actionTypes.PETITION_SIGNATURE_SUCCESS,
+      'petition': petition,
+      'signature': petitionSignature
+    });
+  }
+}
+
 export const actions = {
-  loadPetition
+  loadPetition,
+  signPetition
 };

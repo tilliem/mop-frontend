@@ -5,16 +5,7 @@ import PetitionLoader from '../loaders/petition.js';
 import SignatureAddForm from './signature-add-form.js';
 
 class Petition extends React.Component {
-  constructor (props) {
-    console.log(props);
-    super(props);
-    this.state = {};
-  }
-
   componentDidMount () {
-    this.timer = setTimeout(function () {
-      // do non-blocking things while loader is called
-    }, 500);
     // after we show the petition, THEN we can load Signature Count
     // for patterns where we need the SignatureCount module first, then this should
     // be in componentWillMount
