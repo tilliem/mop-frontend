@@ -489,4 +489,8 @@ class SignatureAddForm extends React.Component {
 
 }
 
+SignatureAddForm.propTypes = {
+  petition: React.PropTypes.object.isRequired
+}
+
 export default SignatureAddForm;

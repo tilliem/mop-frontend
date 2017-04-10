@@ -6,18 +6,20 @@ export const actionTypes = {
 
 let API_URI = process.env.API_URI;
 
-export function loadPetition(petition_slug) {
-  return function(dispatch) {
+export function loadPetition (petitionSlug) {
+  return (dispatch) => {
     console.log('from mapDispatchToProps');
-    dispatch({'type': actionTypes.FETCH_PETITION_REQUEST,
-              'slug': petition_slug})
-    let urlKey = 'petitions/' + petition_slug;
-    let component = this;
+    dispatch({
+      'type': actionTypes.FETCH_PETITION_REQUEST,
+      'slug': petitionSlug
+    });
+    let urlKey = 'petitions/' + petitionSlug;
     if (window.preloadObjects && window.preloadObjects[urlKey]) {
       console.log('using preloadedData');
-      dispatch({'type': actionTypes.FETCH_PETITION_SUCCESS,
-                'petition': window.preloadObjects[urlKey]})
-
+      dispatch({
+        'type': actionTypes.FETCH_PETITION_SUCCESS,
+        'petition': window.preloadObjects[urlKey]
+      });
     } else {
       fetch(API_URI + '/api/v1/' + urlKey + '.json')
         .then(
@@ -25,22 +27,23 @@ export function loadPetition(petition_slug) {
             return response.json();
           },
           (err) => {
-            dispatch({'type': actionTypes.FETCH_PETITION_FAILURE,
-                      'error': err,
-                      'slug': petition_slug
-                     })
+            dispatch({
+              'type': actionTypes.FETCH_PETITION_FAILURE,
+              'error': err,
+              'slug': petitionSlug
+            });
           }
         ).then((json) => {
-          dispatch({'type': actionTypes.FETCH_PETITION_SUCCESS,
-                    'petition': json,
-                    'slug': petition_slug
-                   });
-        })
+          dispatch({
+            'type': actionTypes.FETCH_PETITION_SUCCESS,
+            'petition': json,
+            'slug': petitionSlug
+          });
+        });
     }
-  }
+  };
 };
 
 export const actions = {
   loadPetition
 };
-
