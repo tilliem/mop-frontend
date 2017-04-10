@@ -1,3 +1,5 @@
+import Config from '../config.js';
+
 export const actionTypes = {
   'FETCH_PETITION_REQUEST': 'FETCH_PETITION_REQUEST',
   'FETCH_PETITION_SUCCESS': 'FETCH_PETITION_SUCCESS',
@@ -8,7 +10,7 @@ export const actionTypes = {
   'PETITION_SIGNATURE_FAILURE': 'PETITION_SIGNATURE_FAILURE'
 };
 
-let API_URI = process.env.API_URI;
+let API_URI = Config.API_URI;
 
 export function loadPetition (petitionSlug) {
   return (dispatch) => {
