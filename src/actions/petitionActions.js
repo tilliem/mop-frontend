@@ -13,20 +13,20 @@ export const actionTypes = {
 let API_URI = Config.API_URI;
 
 export function loadPetition (petitionSlug) {
-  return (dispatch) => {
-    console.log('from actions/loadPetition');
-    dispatch({
-      'type': actionTypes.FETCH_PETITION_REQUEST,
-      'slug': petitionSlug
-    });
-    let urlKey = 'petitions/' + petitionSlug;
-    if (window.preloadObjects && window.preloadObjects[urlKey]) {
-      console.log('using preloadedData');
+  let urlKey = 'petitions/' + petitionSlug;
+  if (window.preloadObjects && window.preloadObjects[urlKey]) {
+    console.log('using preloadedData');
+    return {
+      'type': actionTypes.FETCH_PETITION_SUCCESS,
+      'petition': window.preloadObjects[urlKey]
+    };
+  } else {
+    return (dispatch) => {
+      console.log('async from actions/loadPetition');
       dispatch({
-        'type': actionTypes.FETCH_PETITION_SUCCESS,
-        'petition': window.preloadObjects[urlKey]
+        'type': actionTypes.FETCH_PETITION_REQUEST,
+        'slug': petitionSlug
       });
-    } else {
       fetch(API_URI + '/api/v1/' + urlKey + '.json')
         .then(
           (response) => {
