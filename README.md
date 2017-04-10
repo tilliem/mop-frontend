@@ -9,11 +9,11 @@ This is the browser-based, JavaScript implementation of the MoveOn Petitions pla
 
 # Compile JavaScript
 
-* $ `./node_modules/.bin/webpack -d`
+* $ `npm run build`
 
 # Lint JavaScript
 
-* $ `./node_modules/.bin/eslint src/*`
+* $ `npm run lint`
 
 # Test JavaScript
 
@@ -21,12 +21,24 @@ This is the browser-based, JavaScript implementation of the MoveOn Petitions pla
 
 # Local development environment
 
+If you are just developing the client, then you should not have to set any variables.
+
+Just run:
+
+```bash
+  npm run dev  
+```
+
+and hot-reloading will work, then go to http://localhost:8080/#/sign/outkast
+
+
+## Developing with a Server Backend
 When running locally, you should set the following environment variables:
 
 ```
 export API_URI="https://petitions.example.com"
 export BASE_APP_PATH="/Users/yourusername/Sites/mop-frontend/local/"
-export STATIC_ROOT="../../js/"
+export STATIC_ROOT="../../build/"
 ```
 
 `API_URI` can either point at a hosted version of the API (as in the example), or a local instance of mop (something like `http://0.0.0.0:8000`).

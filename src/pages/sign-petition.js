@@ -1,36 +1,22 @@
+import 'whatwg-fetch';
+import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import React from 'react';
+
 import Nav from '../components/nav.js';
 import Footer from '../components/footer.js';
 import Petition from '../components/petition.js';
-import React from 'react';
-import 'whatwg-fetch';
-
-let API_URI = process.env.API_URI;
+import {actions as petitionActions} from '../actions/petitionActions.js';
 
 class SignPetition extends React.Component {
-  constructor (props) {
-    super(props);
-    this.state = { petition: null };
-  }
 
   componentWillMount () {
-    let urlKey = 'petitions/' + this.props.params.petition_slug;
-    let component = this;
-    if (window.preloadObjects && window.preloadObjects[urlKey]) {
-      console.log('using preloadedData');
-      this.setState({'petition': window.preloadObjects[urlKey]});
-    } else {
-      fetch(API_URI + '/api/v1/' + urlKey)
-      .then((response) => {
-        return response.json();
-      })
-      .then((json) => {
-        component.setState({'petition': json});
-      });
-    }
+    this.props.actions.loadPetition(this.props.params.petition_slug);
   }
 
   render () {
-    if (this.state.petition == null) {
+    console.log('rendering', this.props);
+    if (!this.props.petition) {
       return (
         <div>
           <Nav />
@@ -41,7 +27,7 @@ class SignPetition extends React.Component {
       return (
         <div>
           <Nav />
-          <Petition petition={this.state.petition} />
+          <Petition petition={this.props.petition} />
           <Footer />
         </div>
       );
@@ -50,4 +36,21 @@ class SignPetition extends React.Component {
 
 }
 
-export default SignPetition;
+SignPetition.propTypes = {
+  petition: React.PropTypes.object
+}
+
+function mapStateToProps (state, ownProps) {
+  console.log('sign-petition.js mapStatetoProps', state);
+  return {
+    'petition': state.petitionStore.petitions && state.petitionStore.petitions[ownProps.params.petition_slug]
+  };
+}
+
+function mapDispatchToProps (dispatch, ownProps) {
+  return {
+    actions: bindActionCreators(petitionActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignPetition);
