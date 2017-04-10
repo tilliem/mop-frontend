@@ -52,7 +52,7 @@ export function loadPetition (petitionSlug) {
 
 export function signPetition (petitionSignature, petition) {
   return (dispatch) => {
-    console.log('from actions/signPetition');
+    console.log('from actions/signPetition', petition, petitionSignature);
     dispatch({
       'type': actionTypes.PETITION_SIGNATURE_SUBMIT,
       'petition': petition,
