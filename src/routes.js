@@ -11,7 +11,7 @@ export const appLocation = (Config.USE_HASH_BROWSING ? hashHistory : browserHist
 export const routes = (
      <Router history={appLocation}>
       <Route path={baseAppPath} >
-        <Route path="sign/:petition_slug" component={SignPetition}/>
-        <Route path="thanks.html" component={Thanks}/>
+        <Route path="/sign/:petition_slug" component={SignPetition}/>
+        <Route path="/thanks.html" component={Thanks}/>
       </Route>
     </Router>);
