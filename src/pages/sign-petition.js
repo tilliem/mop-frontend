@@ -13,7 +13,8 @@ import {actions as petitionActions} from '../actions/petitionActions.js';
 class SignPetition extends React.Component {
 
   componentWillMount () {
-    this.props.actions.loadPetition(this.props.params.petition_slug);
+    const {dispatch, params} = this.props;
+    dispatch(petitionActions.loadPetition(params.petition_slug));
   }
 
   componentWillUpdate (nextProps, nextState) {
@@ -58,10 +59,4 @@ function mapStateToProps (store, ownProps) {
   };
 }
 
-function mapDispatchToProps (dispatch, ownProps) {
-  return {
-    actions: bindActionCreators(petitionActions, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignPetition);
+export default connect(mapStateToProps)(SignPetition);

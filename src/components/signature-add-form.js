@@ -52,6 +52,7 @@ class SignatureAddForm extends React.Component {
   }
 
   submit(event) {
+      const {dispatch, petition} = this.props;
       if (this.formIsValid()) {
         var odsiSignature = {
           'person': {
@@ -78,7 +79,7 @@ class SignatureAddForm extends React.Component {
           'comments': this.state.comment
         };
         console.log('odsiSignature in addform submit()', odsiSignature);
-        this.props.actions.signPetition(odsiSignature, this.props.petition);
+        dispatch(petitionActions.signPetition(odsiSignature, petition));
       }
       event.preventDefault();
     return false;
@@ -504,10 +505,4 @@ function mapStateToProps (state, ownProps) {
   };
 }
 
-function mapDispatchToProps (dispatch, ownProps) {
-  return {
-    actions: bindActionCreators(petitionActions, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignatureAddForm);
+export default connect(mapStateToProps)(SignatureAddForm);
