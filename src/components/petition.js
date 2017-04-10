@@ -101,13 +101,4 @@ function mapStateToProps (state, ownProps) {
   };
 }
 
-function mapDispatchToProps (dispatch, ownProps) {
-  return {
-    fooBar: () => {
-      console.log('from mapDispatchToProps');
-      dispatch({type: 'FETCH_PETITION_REQUEST', foo: 1, bar: 2});
-    }
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Petition);
+export default connect(mapStateToProps)(Petition);
