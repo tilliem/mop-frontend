@@ -15,7 +15,7 @@ var config = {
   devtool: 'sourcemap',
   output: {
     path: BUILD_DIR,
-    publicPath: process.env.STATIC_ROOT || "/build/",
+    publicPath: process.env.PUBLIC_ROOT || "/",
     //NOTE: when process.env.PROD is true this will be the minified file
     //TODO: maybe we should hash this and figure out a way to pass the hashed version to it
     filename: 'main.js'
