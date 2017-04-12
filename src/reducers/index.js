@@ -8,7 +8,10 @@ import {actionTypes as petitionActionTypes} from '../actions/petitionActions.js'
 //     }
 // }
 
-var initialState = {petitions: {}, signatureStatus:{}};
+var initialState = {
+  'petitions': {}, //keyed by slug for petition route
+  'signatureStatus':{} //keyed by petition_id (because form doesn't have slug)
+};
 
 function petitionReducer (state = initialState, action) {
   console.log(action);
