@@ -1,33 +1,28 @@
-import Nav from '../components/nav.js';
-import Footer from '../components/footer.js';
 import React from 'react';
 
-class Thanks extends React.Component {
-  constructor (props) {
-    super(props);
-    this.state = { petition: null };
+import {ThanksLoader} from '../loaders/petition.js';
+
+class ThanksPage extends React.Component {
+  componentWillMount () {
+    let self = this;
+    ThanksLoader().then((deps) => {
+      self.Thanks = deps.Thanks.default;
+      self.forceUpdate();
+    })
   }
 
   render () {
-    if (this.state.petition == null) {
-      return (
+    let x = {'foo': 'lbah'};
+    return (
         <div>
-          <Nav />
-          <div>test, without petition loaded</div>
-          <Footer />
+          <div>test loaded</div>
+        { (this.Thanks ?
+           <this.Thanks petition={x} />
+           : '')}
         </div>
-      );
-    } else {
-      return (
-        <div>
-          <Nav />
-          <div>test, with petition loaded</div>
-          <Footer />
-        </div>
-      );
-    }
+    );
   }
 
 }
 
-export default Thanks;
+export default ThanksPage;

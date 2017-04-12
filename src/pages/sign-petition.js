@@ -29,16 +29,12 @@ class SignPetition extends React.Component {
     if (!this.props.petition) {
       return (
         <div>
-          <Nav />
-          <Footer />
         </div>
       );
     } else {
       return (
         <div>
-          <Nav />
           <Petition petition={this.props.petition} />
-          <Footer />
         </div>
       );
     }

@@ -1,18 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import PetitionLoader from '../loaders/petition.js';
+import {ThanksLoader} from '../loaders/petition.js';
 import SignatureAddForm from './signature-add-form.js';
+import SignatureCount from './signature-count.js';
 
 class Petition extends React.Component {
   componentDidMount () {
-    // after we show the petition, THEN we can load Signature Count
-    // for patterns where we need the SignatureCount module first, then this should
-    // be in componentWillMount
-    this.props.petitionLoader().then((deps) => {
-      this.SignatureCount = deps.SignatureCount.default;
-      this.forceUpdate();
-    });
+    //TODO: lazy-load signature data here
+    //lazy-load thanks page component
+    ThanksLoader();
   }
 
   text2paras (str) {
@@ -40,10 +37,7 @@ class Petition extends React.Component {
                     )}
                   </div>
                 </div>
-                { ((this.SignatureCount)
-                ? <this.SignatureCount current={p.signatureCount} goal={p.signatureGoal} />
-                : '')
-                }
+                <SignatureCount current={p.signatureCount} goal={p.signatureGoal} />
               </div>
 
               <div className="petition-top">
@@ -86,12 +80,7 @@ class Petition extends React.Component {
 }
 
 Petition.propTypes = {
-  petitionLoader: React.PropTypes.func.isRequired,
   petition: React.PropTypes.object.isRequired
-};
-
-Petition.defaultProps = {
-  petitionLoader: PetitionLoader
 };
 
 function mapStateToProps (state, ownProps) {

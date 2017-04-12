@@ -7,7 +7,7 @@ var APP_DIR = path.resolve(__dirname, 'src');
 
 var config = {
   entry: {
-    javascript: APP_DIR + '/main.js'
+    javascript: APP_DIR + '/app.js'
   },
   devServer: {
     host: "0.0.0.0",
