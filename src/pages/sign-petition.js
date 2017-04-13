@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import 'whatwg-fetch';
 import {connect} from 'react-redux';
@@ -20,7 +21,10 @@ class SignPetition extends React.Component {
   componentWillUpdate (nextProps, nextState) {
     console.log('sign-petition.componentWillUpdate', nextProps, nextState);
     if (nextProps.sign_success === 'success') {
-      appLocation.push('thanks.html?petition_id=' + nextProps.petition.petition_id);
+      appLocation.push('thanks.html?petition_id='
+                       + nextProps.petition.petition_id
+                       + '&name=' + nextProps.petition.name
+                      );
     }
   }
 
@@ -29,16 +33,12 @@ class SignPetition extends React.Component {
     if (!this.props.petition) {
       return (
         <div>
-          <Nav />
-          <Footer />
         </div>
       );
     } else {
       return (
         <div>
-          <Nav />
           <Petition petition={this.props.petition} />
-          <Footer />
         </div>
       );
     }
@@ -47,7 +47,7 @@ class SignPetition extends React.Component {
 }
 
 SignPetition.propTypes = {
-  petition: React.PropTypes.object
+  petition: PropTypes.object
 }
 
 function mapStateToProps (store, ownProps) {

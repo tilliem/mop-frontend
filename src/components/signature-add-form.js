@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -496,7 +497,7 @@ class SignatureAddForm extends React.Component {
 }
 
 SignatureAddForm.propTypes = {
-  petition: React.PropTypes.object.isRequired
+  petition: PropTypes.object.isRequired
 }
 
 function mapStateToProps (state, ownProps) {

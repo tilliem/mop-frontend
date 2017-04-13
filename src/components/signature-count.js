@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class SignatureCount extends React.Component {
 
@@ -45,8 +46,8 @@ class SignatureCount extends React.Component {
 }
 
 SignatureCount.propTypes = {
-  current: React.PropTypes.number,
-  goal: React.PropTypes.number
+  current: PropTypes.number,
+  goal: PropTypes.number
 }
 
 export default SignatureCount;
