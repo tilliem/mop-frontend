@@ -20,7 +20,10 @@ class SignPetition extends React.Component {
   componentWillUpdate (nextProps, nextState) {
     console.log('sign-petition.componentWillUpdate', nextProps, nextState);
     if (nextProps.sign_success === 'success') {
-      appLocation.push('thanks.html?petition_id=' + nextProps.petition.petition_id);
+      appLocation.push('thanks.html?petition_id='
+                       + nextProps.petition.petition_id
+                       + '&name=' + nextProps.petition.name
+                      );
     }
   }
 

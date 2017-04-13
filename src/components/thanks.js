@@ -8,18 +8,14 @@ class Thanks extends React.Component {
 
     return (
         <div className="container background-moveon-white" role="main">
-          Thanks Yo!
+          Thanks Yo! {p.petition_id}
         </div>
     );
   }
 }
 
 Thanks.propTypes = {
-  petition: React.PropTypes.object.isRequired
+  petition: React.PropTypes.object
 };
 
-function mapStateToProps (state, ownProps) {
-  return {};
-}
-
-export default connect(mapStateToProps)(Thanks);
+export default Thanks;

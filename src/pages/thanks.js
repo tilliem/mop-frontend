@@ -1,6 +1,8 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
 import {ThanksLoader} from '../loaders/petition.js';
+import {actions as petitionActions} from '../actions/petitionActions.js';
 
 class ThanksPage extends React.Component {
   componentWillMount () {
@@ -9,15 +11,19 @@ class ThanksPage extends React.Component {
       self.Thanks = deps.Thanks.default;
       self.forceUpdate();
     })
+
+    const {dispatch, petition} = this.props;
+    if (!petition && this.props.location.query.name) {
+      dispatch(petitionActions.loadPetition(this.props.location.query.name));
+    }
   }
 
   render () {
-    let x = {'foo': 'lbah'};
     return (
         <div>
           <div>test loaded</div>
-        { (this.Thanks ?
-           <this.Thanks petition={x} />
+        { (this.Thanks && this.props.petition ?
+           <this.Thanks petition={this.props.petition} />
            : '')}
         </div>
     );
@@ -25,4 +31,15 @@ class ThanksPage extends React.Component {
 
 }
 
-export default ThanksPage;
+ThanksPage.propTypes = {
+  petition: React.PropTypes.object
+};
+
+function mapStateToProps (store, ownProps) {
+  var pkey = ownProps.location.query.name || ownProps.location.query.petition_id;
+  return {
+    petition: pkey && store.petitionStore.petitions[pkey]
+  };
+}
+
+export default connect(mapStateToProps)(ThanksPage);

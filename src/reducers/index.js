@@ -9,7 +9,7 @@ import {actionTypes as petitionActionTypes} from '../actions/petitionActions.js'
 // }
 
 var initialState = {
-  'petitions': {}, //keyed by slug for petition route
+  'petitions': {}, //keyed by slug AND petition_id for petition route
   'signatureStatus':{} //keyed by petition_id (because form doesn't have slug)
 };
 
@@ -22,7 +22,11 @@ function petitionReducer (state = initialState, action) {
     case petitionActionTypes.FETCH_PETITION_SUCCESS:
       return Object.assign({}, state, {
         'petitions': Object.assign(
-          {}, state.petitions, {[action.slug]: action.petition})
+          {}, state.petitions, {
+            //key it both by id and by slug, for different lookup needs
+            [action.slug]: action.petition,
+            [action.petition.petition_id]: action.petition
+          })
       });
     case petitionActionTypes.FETCH_PETITION_FAILURE:
       // udpate state with status?

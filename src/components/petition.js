@@ -83,11 +83,8 @@ Petition.propTypes = {
   petition: React.PropTypes.object.isRequired
 };
 
-function mapStateToProps (state, ownProps) {
-  return {
-    'foo': 1
-    // petition: state.petitions[ownProps.petitionkey]
-  };
+function mapStateToProps (store, ownProps) {
+  return {};
 }
 
 export default connect(mapStateToProps)(Petition);
