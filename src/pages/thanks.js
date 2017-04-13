@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {ThanksLoader} from '../loaders/petition.js';
@@ -32,7 +33,7 @@ class ThanksPage extends React.Component {
 }
 
 ThanksPage.propTypes = {
-  petition: React.PropTypes.object
+  petition: PropTypes.object
 };
 
 function mapStateToProps (store, ownProps) {

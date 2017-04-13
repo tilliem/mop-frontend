@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {ThanksLoader} from '../loaders/petition.js';
@@ -80,7 +81,7 @@ class Petition extends React.Component {
 }
 
 Petition.propTypes = {
-  petition: React.PropTypes.object.isRequired
+  petition: PropTypes.object.isRequired
 };
 
 function mapStateToProps (store, ownProps) {

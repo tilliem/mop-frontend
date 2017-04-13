@@ -2,7 +2,8 @@
 
 /*eslint-disable strict */ //Disabling check because we can't run strict mode. Need global vars.
 
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Nav from './nav.js';
 import Footer from './footer.js';
 

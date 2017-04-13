@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 class Thanks extends React.Component {
@@ -15,7 +16,7 @@ class Thanks extends React.Component {
 }
 
 Thanks.propTypes = {
-  petition: React.PropTypes.object
+  petition: PropTypes.object
 };
 
 export default Thanks;

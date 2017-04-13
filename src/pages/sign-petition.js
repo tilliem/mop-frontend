@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import 'whatwg-fetch';
 import {connect} from 'react-redux';
@@ -46,7 +47,7 @@ class SignPetition extends React.Component {
 }
 
 SignPetition.propTypes = {
-  petition: React.PropTypes.object
+  petition: PropTypes.object
 }
 
 function mapStateToProps (store, ownProps) {
