@@ -1,3 +1,5 @@
+import 'whatwg-fetch';
+
 import Config from '../config.js';
 
 export const actionTypes = {
@@ -10,11 +12,9 @@ export const actionTypes = {
   'PETITION_SIGNATURE_FAILURE': 'PETITION_SIGNATURE_FAILURE'
 };
 
-let API_URI = Config.API_URI;
-
 export function loadPetition (petitionSlug) {
   let urlKey = 'petitions/' + petitionSlug;
-  if (window.preloadObjects && window.preloadObjects[urlKey]) {
+  if (global && global.preloadObjects && global.preloadObjects[urlKey]) {
     console.log('using preloadedData');
     return {
       'type': actionTypes.FETCH_PETITION_SUCCESS,
@@ -27,10 +27,16 @@ export function loadPetition (petitionSlug) {
         'type': actionTypes.FETCH_PETITION_REQUEST,
         'slug': petitionSlug
       });
-      fetch(API_URI + '/api/v1/' + urlKey + '.json')
+      return fetch(Config.API_URI + '/api/v1/' + urlKey + '.json')
         .then(
           (response) => {
-            return response.json();
+            return response.json().then((json) => {
+              dispatch({
+                'type': actionTypes.FETCH_PETITION_SUCCESS,
+                'petition': json,
+                'slug': petitionSlug
+              });
+            })
           },
           (err) => {
             dispatch({
@@ -39,13 +45,7 @@ export function loadPetition (petitionSlug) {
               'slug': petitionSlug
             });
           }
-        ).then((json) => {
-          dispatch({
-            'type': actionTypes.FETCH_PETITION_SUCCESS,
-            'petition': json,
-            'slug': petitionSlug
-          });
-        });
+        );
     }
   };
 };
