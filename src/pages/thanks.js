@@ -11,7 +11,7 @@ class ThanksPage extends React.Component {
     ThanksLoader().then((deps) => {
       self.Thanks = deps.Thanks.default;
       self.forceUpdate();
-    })
+    });
 
     const {dispatch, petition} = this.props;
     if (!petition && this.props.location.query.name) {
@@ -23,9 +23,9 @@ class ThanksPage extends React.Component {
     return (
         <div>
           <div>test loaded</div>
-        { (this.Thanks && this.props.petition ?
-           <this.Thanks petition={this.props.petition} />
-           : '')}
+        { (this.Thanks && this.props.petition
+          ? <this.Thanks petition={this.props.petition} />
+          : '')}
         </div>
     );
   }

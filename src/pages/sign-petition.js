@@ -3,10 +3,6 @@ import PropTypes from 'prop-types';
 
 import 'whatwg-fetch';
 import {connect} from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import Nav from '../components/nav.js';
-import Footer from '../components/footer.js';
 import Petition from '../components/petition.js';
 import {appLocation} from '../routes.js';
 import {actions as petitionActions} from '../actions/petitionActions.js';
@@ -21,10 +17,10 @@ class SignPetition extends React.Component {
   componentWillUpdate (nextProps, nextState) {
     console.log('sign-petition.componentWillUpdate', nextProps, nextState);
     if (nextProps.sign_success === 'success') {
-      appLocation.push('thanks.html?petition_id='
-                       + nextProps.petition.petition_id
-                       + '&name=' + nextProps.petition.name
-                      );
+      appLocation.push('thanks.html?petition_id=' +
+        nextProps.petition.petition_id +
+        '&name=' + nextProps.petition.name
+      );
     }
   }
 
@@ -48,7 +44,7 @@ class SignPetition extends React.Component {
 
 SignPetition.propTypes = {
   petition: PropTypes.object
-}
+};
 
 function mapStateToProps (store, ownProps) {
   console.log('sign-petition.js mapStatetoProps', store);

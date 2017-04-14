@@ -48,6 +48,6 @@ class SignatureCount extends React.Component {
 SignatureCount.propTypes = {
   current: PropTypes.number,
   goal: PropTypes.number
-}
+};
 
 export default SignatureCount;

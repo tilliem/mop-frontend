@@ -8,8 +8,8 @@ import SignatureCount from './signature-count.js';
 
 class Petition extends React.Component {
   componentDidMount () {
-    //TODO: lazy-load signature data here
-    //lazy-load thanks page component
+    // TODO: lazy-load signature data here
+    // lazy-load thanks page component
     ThanksLoader();
   }
 

@@ -36,7 +36,7 @@ export function loadPetition (petitionSlug) {
                 'petition': json,
                 'slug': petitionSlug
               });
-            })
+            });
           },
           (err) => {
             dispatch({
@@ -46,8 +46,8 @@ export function loadPetition (petitionSlug) {
             });
           }
         );
-    }
-  };
+    };
+  }
 };
 
 export function signPetition (petitionSignature, petition) {
@@ -58,13 +58,13 @@ export function signPetition (petitionSignature, petition) {
       'petition': petition,
       'signature': petitionSignature
     });
-    //TODO: actually submit signature
+    // TODO: actually submit signature
     dispatch({
       'type': actionTypes.PETITION_SIGNATURE_SUCCESS,
       'petition': petition,
       'signature': petitionSignature
     });
-  }
+  };
 }
 
 export const actions = {

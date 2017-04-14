@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
 
 class Thanks extends React.Component {
 
   render () {
-    let p = this.props.petition;
+    const {petition} = this.props;
 
     return (
         <div className="container background-moveon-white" role="main">
-          Thanks Yo! {p.petition_id}
+          Thanks Yo! {petition.petition_id}
         </div>
     );
   }

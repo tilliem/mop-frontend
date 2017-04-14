@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import {actions as petitionActions} from '../actions/petitionActions.js';
 
@@ -52,37 +51,37 @@ class SignatureAddForm extends React.Component {
     };
   }
 
-  submit(event) {
-      const {dispatch, petition} = this.props;
-      if (this.formIsValid()) {
-        var odsiSignature = {
-          'person': {
-            'origin_system': 'petitions.moveon.org',
-            'full_name': this.state.name,
-            'email_addresses': [
-              {
-                'address': this.state.email
-              }
-            ],
-            'postal_addresses': [
-              {
-                'address_lines': [
-                  this.state.address1,
-                  this.state.address2
-                ],
-                'locality': this.state.city,
-                'region': (this.state.country === 'United States') ? this.state.state : this.state.region,
-                'postal_code': (this.state.country === 'United States') ? this.state.zip : this.state.postal,
-                'country_name': this.state.country
-              }
-            ]
-          },
-          'comments': this.state.comment
-        };
-        console.log('odsiSignature in addform submit()', odsiSignature);
-        dispatch(petitionActions.signPetition(odsiSignature, petition));
-      }
-      event.preventDefault();
+  submit (event) {
+    const {dispatch, petition} = this.props;
+    if (this.formIsValid()) {
+      var odsiSignature = {
+        'person': {
+          'origin_system': 'petitions.moveon.org',
+          'full_name': this.state.name,
+          'email_addresses': [
+            {
+              'address': this.state.email
+            }
+          ],
+          'postal_addresses': [
+            {
+              'address_lines': [
+                this.state.address1,
+                this.state.address2
+              ],
+              'locality': this.state.city,
+              'region': (this.state.country === 'United States') ? this.state.state : this.state.region,
+              'postal_code': (this.state.country === 'United States') ? this.state.zip : this.state.postal,
+              'country_name': this.state.country
+            }
+          ]
+        },
+        'comments': this.state.comment
+      };
+      console.log('odsiSignature in addform submit()', odsiSignature);
+      dispatch(petitionActions.signPetition(odsiSignature, petition));
+    }
+    event.preventDefault();
     return false;
   }
 
@@ -498,7 +497,7 @@ class SignatureAddForm extends React.Component {
 
 SignatureAddForm.propTypes = {
   petition: PropTypes.object.isRequired
-}
+};
 
 function mapStateToProps (state, ownProps) {
   console.log('signature-add-form.js mapStatetoProps', state);
