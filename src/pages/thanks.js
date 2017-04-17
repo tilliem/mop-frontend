@@ -22,7 +22,6 @@ class ThanksPage extends React.Component {
   render () {
     return (
         <div>
-          <div>test loaded</div>
         { (this.Thanks && this.props.petition
           ? <this.Thanks petition={this.props.petition} />
           : '')}
