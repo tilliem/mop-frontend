@@ -1,240 +1,240 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-import {actions as petitionActions} from '../actions/petitionActions.js';
+import { actions as petitionActions } from '../actions/petitionActions.js'
 
 class SignatureAddForm extends React.Component {
 
-  constructor (props) {
-    super(props);
+  constructor(props) {
+    super(props)
     this.state = {
-      'name': false,
-      'email': false,
-      'country': 'United States',
-      'address1': false,
-      'address2': false,
-      'city': false,
-      'state': false,
-      'region': false,
-      'zip': false,
-      'postal': false,
-      'comment': false
-    };
+      name: false,
+      email: false,
+      country: 'United States',
+      address1: false,
+      address2: false,
+      city: false,
+      state: false,
+      region: false,
+      zip: false,
+      postal: false,
+      comment: false
+    }
     this.required = {
-      'name': 'Name is required.',
-      'email': 'Email address is required.',
-      'state': 'State is required.',
-      'zip': 'Zip code is required.'
-    };
-    this.submit = this.submit.bind(this);
+      name: 'Name is required.',
+      email: 'Email address is required.',
+      state: 'State is required.',
+      zip: 'Zip code is required.'
+    }
+    this.submit = this.submit.bind(this)
   }
 
-  validationError (key) {
+  validationError(key) {
     if (Object.keys(this.required).indexOf(key) > -1) {
       if (this.state[key] != null && this.state[key].length === 0) {
         return (
-          <div className="alert alert-danger" role="alert">{ this.required[key] }</div>
-        );
+          <div className='alert alert-danger' role='alert'>{this.required[key]}</div>
+        )
       }
     }
-    return null;
+    return null
   }
 
-  formIsValid () {
-    return Object.keys(this.required).map(key => this.state[key] != null && this.state[key].length > 0).reduce((a, b) => a && b);
+  formIsValid() {
+    return Object.keys(this.required).map(key => this.state[key] != null && this.state[key].length > 0).reduce((a, b) => a && b)
   }
 
-  updateStateFromValue (field) {
+  updateStateFromValue(field) {
     return (event) => {
-      this.setState({[field]: event.target.value});
-    };
+      this.setState({ [field]: event.target.value })
+    }
   }
 
   submit(event) {
-      const {dispatch, petition} = this.props;
-      if (this.formIsValid()) {
-        var odsiSignature = {
-          'person': {
-            'origin_system': 'petitions.moveon.org',
-            'full_name': this.state.name,
-            'email_addresses': [
-              {
-                'address': this.state.email
-              }
-            ],
-            'postal_addresses': [
-              {
-                'address_lines': [
-                  this.state.address1,
-                  this.state.address2
-                ],
-                'locality': this.state.city,
-                'region': (this.state.country === 'United States') ? this.state.state : this.state.region,
-                'postal_code': (this.state.country === 'United States') ? this.state.zip : this.state.postal,
-                'country_name': this.state.country
-              }
-            ]
-          },
-          'comments': this.state.comment
-        };
-        console.log('odsiSignature in addform submit()', odsiSignature);
-        dispatch(petitionActions.signPetition(odsiSignature, petition));
+    const { dispatch, petition } = this.props
+    if (this.formIsValid()) {
+      const odsiSignature = {
+        person: {
+          origin_system: 'petitions.moveon.org',
+          full_name: this.state.name,
+          email_addresses: [
+            {
+              address: this.state.email
+            }
+          ],
+          postal_addresses: [
+            {
+              address_lines: [
+                this.state.address1,
+                this.state.address2
+              ],
+              locality: this.state.city,
+              region: (this.state.country === 'United States') ? this.state.state : this.state.region,
+              postal_code: (this.state.country === 'United States') ? this.state.zip : this.state.postal,
+              country_name: this.state.country
+            }
+          ]
+        },
+        comments: this.state.comment
       }
-      event.preventDefault();
-    return false;
+      console.log('odsiSignature in addform submit()', odsiSignature)
+      dispatch(petitionActions.signPetition(odsiSignature, petition))
+    }
+    event.preventDefault()
+    return false
   }
 
-  renderStateOrRegion () {
+  renderStateOrRegion() {
     if (this.state.country === 'United States') {
       return (
-        <div className="form-group state moveon-track-click">
-          <label htmlFor="state_id">State<span className="ak-required-flag">*</span></label>
-          <select name="state" id="state_id" value={ this.state.state } onChange={ this.updateStateFromValue('state') }>
-            <option value="">State*</option>
-            <option value="AL">Alabama</option>
-            <option value="AK">Alaska</option>
-            <option value="AS">American Samoa</option>
-            <option value="AZ">Arizona</option>
-            <option value="AR">Arkansas</option>
-            <option value="CA">California</option>
-            <option value="CO">Colorado</option>
-            <option value="CT">Connecticut</option>
-            <option value="DE">Delaware</option>
-            <option value="DC">District Of Columbia</option>
-            <option value="FL">Florida</option>
-            <option value="FM">Federated States of Micronesia</option>
-            <option value="GA">Georgia</option>
-            <option value="GU">Guam</option>
-            <option value="HI">Hawaii</option>
-            <option value="ID">Idaho</option>
-            <option value="IL">Illinois</option>
-            <option value="IN">Indiana</option>
-            <option value="IA">Iowa</option>
-            <option value="KS">Kansas</option>
-            <option value="KY">Kentucky</option>
-            <option value="LA">Louisiana</option>
-            <option value="ME">Maine</option>
-            <option value="MD">Maryland</option>
-            <option value="MA">Massachusetts</option>
-            <option value="MH">Marshall Islands</option>
-            <option value="MI">Michigan</option>
-            <option value="MN">Minnesota</option>
-            <option value="MS">Mississippi</option>
-            <option value="MO">Missouri</option>
-            <option value="MT">Montana</option>
-            <option value="NE">Nebraska</option>
-            <option value="MP">Northern Mariana Islands</option>
-            <option value="NV">Nevada</option>
-            <option value="NH">New Hampshire</option>
-            <option value="NJ">New Jersey</option>
-            <option value="NM">New Mexico</option>
-            <option value="NY">New York</option>
-            <option value="NC">North Carolina</option>
-            <option value="ND">North Dakota</option>
-            <option value="OH">Ohio</option>
-            <option value="OK">Oklahoma</option>
-            <option value="OR">Oregon</option>
-            <option value="PW">Palau</option>
-            <option value="PA">Pennsylvania</option>
-            <option value="PR">Puerto Rico</option>
-            <option value="RI">Rhode Island</option>
-            <option value="SC">South Carolina</option>
-            <option value="SD">South Dakota</option>
-            <option value="TN">Tennessee</option>
-            <option value="TX">Texas</option>
-            <option value="UT">Utah</option>
-            <option value="VT">Vermont</option>
-            <option value="VA">Virginia</option>
-            <option value="VI">U.S. Virgin Islands</option>
-            <option value="WA">Washington</option>
-            <option value="WV">West Virginia</option>
-            <option value="WI">Wisconsin</option>
-            <option value="WY">Wyoming</option>
-            <option value="AE">Armed Forces Africa</option>
-            <option value="AA">Armed Forces America</option>
-            <option value="AE">Armed Forces Canada</option>
-            <option value="AE">Armed Forces Europe</option>
-            <option value="AE">Armed Forces Middle East</option>
-            <option value="AP">Armed Forces Pacific</option>
+        <div className='form-group state moveon-track-click'>
+          <label htmlFor='state_id'>State<span className='ak-required-flag'>*</span></label>
+          <select name='state' id='state_id' value={this.state.state} onChange={this.updateStateFromValue('state')}>
+            <option value=''>State*</option>
+            <option value='AL'>Alabama</option>
+            <option value='AK'>Alaska</option>
+            <option value='AS'>American Samoa</option>
+            <option value='AZ'>Arizona</option>
+            <option value='AR'>Arkansas</option>
+            <option value='CA'>California</option>
+            <option value='CO'>Colorado</option>
+            <option value='CT'>Connecticut</option>
+            <option value='DE'>Delaware</option>
+            <option value='DC'>District Of Columbia</option>
+            <option value='FL'>Florida</option>
+            <option value='FM'>Federated States of Micronesia</option>
+            <option value='GA'>Georgia</option>
+            <option value='GU'>Guam</option>
+            <option value='HI'>Hawaii</option>
+            <option value='ID'>Idaho</option>
+            <option value='IL'>Illinois</option>
+            <option value='IN'>Indiana</option>
+            <option value='IA'>Iowa</option>
+            <option value='KS'>Kansas</option>
+            <option value='KY'>Kentucky</option>
+            <option value='LA'>Louisiana</option>
+            <option value='ME'>Maine</option>
+            <option value='MD'>Maryland</option>
+            <option value='MA'>Massachusetts</option>
+            <option value='MH'>Marshall Islands</option>
+            <option value='MI'>Michigan</option>
+            <option value='MN'>Minnesota</option>
+            <option value='MS'>Mississippi</option>
+            <option value='MO'>Missouri</option>
+            <option value='MT'>Montana</option>
+            <option value='NE'>Nebraska</option>
+            <option value='MP'>Northern Mariana Islands</option>
+            <option value='NV'>Nevada</option>
+            <option value='NH'>New Hampshire</option>
+            <option value='NJ'>New Jersey</option>
+            <option value='NM'>New Mexico</option>
+            <option value='NY'>New York</option>
+            <option value='NC'>North Carolina</option>
+            <option value='ND'>North Dakota</option>
+            <option value='OH'>Ohio</option>
+            <option value='OK'>Oklahoma</option>
+            <option value='OR'>Oregon</option>
+            <option value='PW'>Palau</option>
+            <option value='PA'>Pennsylvania</option>
+            <option value='PR'>Puerto Rico</option>
+            <option value='RI'>Rhode Island</option>
+            <option value='SC'>South Carolina</option>
+            <option value='SD'>South Dakota</option>
+            <option value='TN'>Tennessee</option>
+            <option value='TX'>Texas</option>
+            <option value='UT'>Utah</option>
+            <option value='VT'>Vermont</option>
+            <option value='VA'>Virginia</option>
+            <option value='VI'>U.S. Virgin Islands</option>
+            <option value='WA'>Washington</option>
+            <option value='WV'>West Virginia</option>
+            <option value='WI'>Wisconsin</option>
+            <option value='WY'>Wyoming</option>
+            <option value='AE'>Armed Forces Africa</option>
+            <option value='AA'>Armed Forces America</option>
+            <option value='AE'>Armed Forces Canada</option>
+            <option value='AE'>Armed Forces Europe</option>
+            <option value='AE'>Armed Forces Middle East</option>
+            <option value='AP'>Armed Forces Pacific</option>
           </select>
-          { this.validationError('state') }
+          {this.validationError('state')}
         </div>
-      );
+      )
     } else {
       return (
-        <div className="form-group region moveon-track-click">
-          <label htmlFor="region">Region</label>
-          <input type="text" name="region" id="region" onChange={ this.updateStateFromValue('region') } onBlur={ this.updateStateFromValue('region') } />
+        <div className='form-group region moveon-track-click'>
+          <label htmlFor='region'>Region</label>
+          <input type='text' name='region' id='region' onChange={this.updateStateFromValue('region')} onBlur={this.updateStateFromValue('region')} />
         </div>
-      );
+      )
     }
   }
 
-  renderZipOrPostal () {
+  renderZipOrPostal() {
     if (this.state.country === 'United States') {
       return (
-        <div className="form-group zip moveon-track-click">
-          <label htmlFor="zip">Zip Code<span className="ak-required-flag">*</span></label>
-          <input type="text" name="zip" id="zip" onChange={ this.updateStateFromValue('zip') } onBlur={ this.updateStateFromValue('zip') } />
-          { this.validationError('zip') }
+        <div className='form-group zip moveon-track-click'>
+          <label htmlFor='zip'>Zip Code<span className='ak-required-flag'>*</span></label>
+          <input type='text' name='zip' id='zip' onChange={this.updateStateFromValue('zip')} onBlur={this.updateStateFromValue('zip')} />
+          {this.validationError('zip')}
         </div>
-      );
+      )
     } else {
       return (
-        <div className="form-group postal moveon-track-click">
-          <label htmlFor="postal">Postal</label>
-          <input type="text" name="postal" id="postal" onChange={ this.updateStateFromValue('postal') } onBlur={ this.updateStateFromValue('postal') } />
+        <div className='form-group postal moveon-track-click'>
+          <label htmlFor='postal'>Postal</label>
+          <input type='text' name='postal' id='postal' onChange={this.updateStateFromValue('postal')} onBlur={this.updateStateFromValue('postal')} />
         </div>
-      );
+      )
     }
   }
 
-  render () {
+  render() {
     return (
-      <div className="span4 widget clearfix" id="sign-here">
-        <div className="petition-top visible-phone">
-          <h1 id="petition-title" className="moveon-bright-red">{this.props.petition.title}</h1>
-          <div id="pet-statement-box" className="blockquote petition-statement">
-            <div id="pet-statement">{this.props.text2paras(this.props.petition.summary).map(
+      <div className='span4 widget clearfix' id='sign-here'>
+        <div className='petition-top visible-phone'>
+          <h1 id='petition-title' className='moveon-bright-red'>{this.props.petition.title}</h1>
+          <div id='pet-statement-box' className='blockquote petition-statement'>
+            <div id='pet-statement'>{this.props.text2paras(this.props.petition.summary).map(
               (paragraph, i) =>
-              <p key="para{i}">{paragraph}</p>
+              <p key='para{i}'>{paragraph}</p>
             )}</div>
           </div>
         </div>
-        <div className="form-wrapper form-container" id="sign-form" data-viewable="true">
-          <div className="form-section">
-            <div className="widget-top">
+        <div className='form-wrapper form-container' id='sign-form' data-viewable='true'>
+          <div className='form-section'>
+            <div className='widget-top'>
               <h3>Sign this petition</h3>
             </div>
-            <form name="sign_form" id="sign" method="post" action="." onSubmit={this.submit}>
-              <input type="hidden" name="petition_id" value="" />
-              <input type="hidden" name="source" value="none" />
-              <input type="hidden" name="r_by" value="" />
-              <input type="hidden" name="mailing_id" value="" />
-              <input type="hidden" name="fb_test" value="0" />
-              <input type="hidden" name="test_group" value="" />
-              <input type="hidden" name="no_mo" value="0" />
-              <input type="hidden" name="id" value="" />
-              <input type="hidden" name="akid" value="" />
-              <input type="hidden" name="recognized_user" id="recognized_user_field" value="0" />
-              <input type="hidden" name="show_optin_checkbox" value="0" />
-              <div className="unrecognized">
-                <div className="form-group">
-                  <label htmlFor="name">Name<span className="ak-required-flag">*</span></label>
-                  <input type="text" name="name" id="name" className="moveon-track-click" onChange={ this.updateStateFromValue('name') } onBlur={ this.updateStateFromValue('name') } />
-                  { this.validationError('name') }
+            <form name='sign_form' id='sign' method='post' action='.' onSubmit={this.submit}>
+              <input type='hidden' name='petition_id' value='' />
+              <input type='hidden' name='source' value='none' />
+              <input type='hidden' name='r_by' value='' />
+              <input type='hidden' name='mailing_id' value='' />
+              <input type='hidden' name='fb_test' value='0' />
+              <input type='hidden' name='test_group' value='' />
+              <input type='hidden' name='no_mo' value='0' />
+              <input type='hidden' name='id' value='' />
+              <input type='hidden' name='akid' value='' />
+              <input type='hidden' name='recognized_user' id='recognized_user_field' value='0' />
+              <input type='hidden' name='show_optin_checkbox' value='0' />
+              <div className='unrecognized'>
+                <div className='form-group'>
+                  <label htmlFor='name'>Name<span className='ak-required-flag'>*</span></label>
+                  <input type='text' name='name' id='name' className='moveon-track-click' onChange={this.updateStateFromValue('name')} onBlur={this.updateStateFromValue('name')} />
+                  {this.validationError('name')}
                 </div>
-                <div className="form-group">
-                  <label htmlFor="email">Email<span className="ak-required-flag">*</span></label>
-                  <input type="text" name="email" id="email" className="moveon-track-click" onChange={ this.updateStateFromValue('email') } onBlur={ this.updateStateFromValue('email') } />
-                  { this.validationError('email') }
+                <div className='form-group'>
+                  <label htmlFor='email'>Email<span className='ak-required-flag'>*</span></label>
+                  <input type='text' name='email' id='email' className='moveon-track-click' onChange={this.updateStateFromValue('email')} onBlur={this.updateStateFromValue('email')} />
+                  {this.validationError('email')}
                 </div>
-                <div className="form-group">
-                  <label htmlFor="country">Country</label>
-                  <select name="country" id="country" className='country_select moveon-track-click' value={ this.state.country } onChange={ (event) =>
-                    this.setState({'country': event.target.value}) }>
+                <div className='form-group'>
+                  <label htmlFor='country'>Country</label>
+                  <select name='country' id='country' className='country_select moveon-track-click' value={this.state.country} onChange={(event) =>
+                    this.setState({ country: event.target.value })}>
                     <option>United States</option>
                     <option>Afghanistan</option>
                     <option>Albania</option>
@@ -464,34 +464,34 @@ class SignatureAddForm extends React.Component {
                     <option>Zimbabwe</option>
                   </select>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="address1">Address</label>
-                  <input type="text" name="address1" id="address1" className="moveon-track-click" onChange={ this.updateStateFromValue('address1') } onBlur={ this.updateStateFromValue('address1') } />
+                <div className='form-group'>
+                  <label htmlFor='address1'>Address</label>
+                  <input type='text' name='address1' id='address1' className='moveon-track-click' onChange={this.updateStateFromValue('address1')} onBlur={this.updateStateFromValue('address1')} />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="address2">Address (cont.)</label>
-                  <input type="text" name="address2" id="address2" className="moveon-track-click" onChange={ this.updateStateFromValue('address2') } onBlur={ this.updateStateFromValue('address2') } />
+                <div className='form-group'>
+                  <label htmlFor='address2'>Address (cont.)</label>
+                  <input type='text' name='address2' id='address2' className='moveon-track-click' onChange={this.updateStateFromValue('address2')} onBlur={this.updateStateFromValue('address2')} />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="city">City</label>
-                  <input type="text" name="city" id="city" className="moveon-track-click" onChange={ this.updateStateFromValue('city') } onBlur={ this.updateStateFromValue('city') }/>
+                <div className='form-group'>
+                  <label htmlFor='city'>City</label>
+                  <input type='text' name='city' id='city' className='moveon-track-click' onChange={this.updateStateFromValue('city')} onBlur={this.updateStateFromValue('city')} />
                 </div>
-                { this.renderStateOrRegion() }
-                { this.renderZipOrPostal() }
+                {this.renderStateOrRegion()}
+                {this.renderZipOrPostal()}
               </div>
-              <div className="form-group">
-                <label htmlFor="comment">Comment</label>
-                <textarea className="moveon-track-click" rows="3" cols="20" name="comment" id="comment" autoComplete="off" onChange={ this.updateStateFromValue('comment') } onBlur={ this.updateStateFromValue('comment') }></textarea>
+              <div className='form-group'>
+                <label htmlFor='comment'>Comment</label>
+                <textarea className='moveon-track-click' rows='3' cols='20' name='comment' id='comment' autoComplete='off' onChange={this.updateStateFromValue('comment')} onBlur={this.updateStateFromValue('comment')}></textarea>
               </div>
-              <div className="form-group form-group--submit">
-                <button type="submit" className="xl percent-100 moveon-track-click background-moveon-bright-red" id="sign-here-button" value="Sign the petition!">Sign the petition</button>
+              <div className='form-group form-group--submit'>
+                <button type='submit' className='xl percent-100 moveon-track-click background-moveon-bright-red' id='sign-here-button' value='Sign the petition!'>Sign the petition</button>
               </div>
-              <p className="disclaimer bump-top-1"><b>Note:</b> By signing, you agree to receive email messages from MoveOn.org Civic Action and MoveOn.org Political Action. You may unsubscribe at any time. [ <a href="http://petitions.moveon.org/privacy.html">Privacy policy</a> ]</p>
+              <p className='disclaimer bump-top-1'><b>Note:</b> By signing, you agree to receive email messages from MoveOn.org Civic Action and MoveOn.org Political Action. You may unsubscribe at any time. [ <a href='http://petitions.moveon.org/privacy.html'>Privacy policy</a> ]</p>
             </form>
           </div>
         </div>
       </div>
-    );
+    )
   }
 
 }
@@ -500,10 +500,10 @@ SignatureAddForm.propTypes = {
   petition: PropTypes.object.isRequired
 }
 
-function mapStateToProps (state, ownProps) {
-  console.log('signature-add-form.js mapStatetoProps', state);
+function mapStateToProps(state, ownProps) {
+  console.log('signature-add-form.js mapStatetoProps', state)
   return {
-  };
+  }
 }
 
-export default connect(mapStateToProps)(SignatureAddForm);
+export default connect(mapStateToProps)(SignatureAddForm)
