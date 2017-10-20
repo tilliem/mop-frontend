@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { ThanksLoader } from '../loaders/petition.js'
+import { thanksLoader } from '../loaders/petition.js'
 import { actions as petitionActions } from '../actions/petitionActions.js'
 
 class ThanksPage extends React.Component {
   componentWillMount() {
     const self = this
-    ThanksLoader().then((deps) => {
+    thanksLoader().then((deps) => {
       self.Thanks = deps.Thanks.default
       self.forceUpdate()
     })
@@ -21,19 +21,22 @@ class ThanksPage extends React.Component {
 
   render() {
     return (
-        <div>
-          <div>test loaded</div>
+      <div>
+        <div>test loaded</div>
         {(this.Thanks && this.props.petition ?
-           <this.Thanks petition={this.props.petition} />
-           : '')}
-        </div>
+          <this.Thanks petition={this.props.petition} /> :
+          ''
+        )}
+      </div>
     )
   }
 
 }
 
 ThanksPage.propTypes = {
-  petition: PropTypes.object
+  petition: PropTypes.object,
+  location: PropTypes.object,
+  dispatch: PropTypes.func
 }
 
 function mapStateToProps(store, ownProps) {

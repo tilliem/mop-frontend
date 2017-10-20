@@ -22,7 +22,7 @@ export const SignatureCountLoader = () => new Promise(resolve => {
   })
 })
 
-export const ThanksLoader = () => new Promise(resolve => {
+export const thanksLoader = () => new Promise(resolve => {
   require.ensure([], () => {
     resolve({
       Thanks: require('../components/thanks.js')

@@ -15,42 +15,38 @@ export const actionTypes = {
 export function loadPetition(petitionSlug) {
   const urlKey = `petitions/${petitionSlug}`
   if (global && global.preloadObjects && global.preloadObjects[urlKey]) {
-    console.log('using preloadedData')
     return {
       type: actionTypes.FETCH_PETITION_SUCCESS,
       petition: window.preloadObjects[urlKey]
     }
-  } else {
-    return (dispatch) => {
-      console.log('async from actions/loadPetition')
-      dispatch({
-        type: actionTypes.FETCH_PETITION_REQUEST,
-        slug: petitionSlug
-      })
-      return fetch(`${Config.API_URI}/api/v1/${urlKey}.json`)
-        .then(
-          (response) => response.json().then((json) => {
-            dispatch({
-              type: actionTypes.FETCH_PETITION_SUCCESS,
-              petition: json,
-              slug: petitionSlug
-            })
-          }),
-          (err) => {
-            dispatch({
-              type: actionTypes.FETCH_PETITION_FAILURE,
-              error: err,
-              slug: petitionSlug
-            })
-          }
-        )
-    }
+  }
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.FETCH_PETITION_REQUEST,
+      slug: petitionSlug
+    })
+    return fetch(`${Config.API_URI}/api/v1/${urlKey}.json`)
+      .then(
+        (response) => response.json().then((json) => {
+          dispatch({
+            type: actionTypes.FETCH_PETITION_SUCCESS,
+            petition: json,
+            slug: petitionSlug
+          })
+        }),
+        (err) => {
+          dispatch({
+            type: actionTypes.FETCH_PETITION_FAILURE,
+            error: err,
+            slug: petitionSlug
+          })
+        }
+      )
   }
 }
 
 export function signPetition(petitionSignature, petition) {
   return (dispatch) => {
-    console.log('from actions/signPetition', petition, petitionSignature)
     dispatch({
       type: actionTypes.PETITION_SIGNATURE_SUBMIT,
       petition,

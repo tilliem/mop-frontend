@@ -14,10 +14,8 @@ const initialState = {
 }
 
 function petitionReducer(state = initialState, action) {
-  console.log(action)
   switch (action.type) {
     case petitionActionTypes.FETCH_PETITION_REQUEST:
-      console.log('in petitionReducer')
       break
     case petitionActionTypes.FETCH_PETITION_SUCCESS:
       return Object.assign({}, state, {
@@ -40,9 +38,10 @@ function petitionReducer(state = initialState, action) {
           {}, state.signatureStatus, { [action.petition.petition_id]: 'success' })
       })
       // udpate state with status?
-      break
     case petitionActionTypes.PETITION_SIGNATURE_FAILURE:
       // udpate state with status?
+      break
+    default:
       break
   }
   return state

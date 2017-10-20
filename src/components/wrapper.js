@@ -7,23 +7,15 @@ import PropTypes from 'prop-types'
 import Nav from './nav.js'
 import Footer from './footer.js'
 
-class Wrapper extends React.Component {
-  render() {
-    return (
-      <div>
-        <Nav />
-
-            <main className='main'>
-
-                {this.props.children}
-
-            </main>
-
-        <Footer />
-      </div>
-    )
-  }
-}
+const Wrapper = ({ children }) => (
+  <div>
+    <Nav />
+    <main className='main'>
+      {children}
+    </main>
+    <Footer />
+  </div>
+)
 
 Wrapper.propTypes = {
   children: PropTypes.object.isRequired

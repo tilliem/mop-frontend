@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 
 import { actions as petitionActions } from '../actions/petitionActions.js'
 
@@ -79,7 +78,6 @@ class SignatureAddForm extends React.Component {
         },
         comments: this.state.comment
       }
-      console.log('odsiSignature in addform submit()', odsiSignature)
       dispatch(petitionActions.signPetition(odsiSignature, petition))
     }
     event.preventDefault()
@@ -162,14 +160,13 @@ class SignatureAddForm extends React.Component {
           {this.validationError('state')}
         </div>
       )
-    } else {
-      return (
-        <div className='form-group region moveon-track-click'>
-          <label htmlFor='region'>Region</label>
-          <input type='text' name='region' id='region' onChange={this.updateStateFromValue('region')} onBlur={this.updateStateFromValue('region')} />
-        </div>
-      )
     }
+    return (
+      <div className='form-group region moveon-track-click'>
+        <label htmlFor='region'>Region</label>
+        <input type='text' name='region' id='region' onChange={this.updateStateFromValue('region')} onBlur={this.updateStateFromValue('region')} />
+      </div>
+    )
   }
 
   renderZipOrPostal() {
@@ -181,14 +178,13 @@ class SignatureAddForm extends React.Component {
           {this.validationError('zip')}
         </div>
       )
-    } else {
-      return (
-        <div className='form-group postal moveon-track-click'>
-          <label htmlFor='postal'>Postal</label>
-          <input type='text' name='postal' id='postal' onChange={this.updateStateFromValue('postal')} onBlur={this.updateStateFromValue('postal')} />
-        </div>
-      )
     }
+    return (
+      <div className='form-group postal moveon-track-click'>
+        <label htmlFor='postal'>Postal</label>
+        <input type='text' name='postal' id='postal' onChange={this.updateStateFromValue('postal')} onBlur={this.updateStateFromValue('postal')} />
+      </div>
+    )
   }
 
   render() {
@@ -199,7 +195,7 @@ class SignatureAddForm extends React.Component {
           <div id='pet-statement-box' className='blockquote petition-statement'>
             <div id='pet-statement'>{this.props.text2paras(this.props.petition.summary).map(
               (paragraph, i) =>
-              <p key='para{i}'>{paragraph}</p>
+                <p key='para{i}'>{paragraph}</p>
             )}</div>
           </div>
         </div>
@@ -233,8 +229,13 @@ class SignatureAddForm extends React.Component {
                 </div>
                 <div className='form-group'>
                   <label htmlFor='country'>Country</label>
-                  <select name='country' id='country' className='country_select moveon-track-click' value={this.state.country} onChange={(event) =>
-                    this.setState({ country: event.target.value })}>
+                  <select
+                    name='country'
+                    id='country'
+                    className='country_select moveon-track-click'
+                    value={this.state.country}
+                    onChange={(event) => this.setState({ country: event.target.value })}
+                  >
                     <option>United States</option>
                     <option>Afghanistan</option>
                     <option>Albania</option>
@@ -497,11 +498,12 @@ class SignatureAddForm extends React.Component {
 }
 
 SignatureAddForm.propTypes = {
-  petition: PropTypes.object.isRequired
+  petition: PropTypes.object.isRequired,
+  dispatch: PropTypes.func,
+  text2paras: PropTypes.func
 }
 
 function mapStateToProps(state, ownProps) {
-  console.log('signature-add-form.js mapStatetoProps', state)
   return {
   }
 }
