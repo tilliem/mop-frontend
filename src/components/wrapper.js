@@ -1,32 +1,24 @@
-"use strict";
 
-/*eslint-disable strict */ //Disabling check because we can't run strict mode. Need global vars.
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import Nav from './nav.js';
-import Footer from './footer.js';
+/* eslint-disable strict */ // Disabling check because we can't run strict mode. Need global vars.
 
-class Wrapper extends React.Component {
-	render() {
-    return(
-      <div>
-        <Nav/>
+import React from 'react'
+import PropTypes from 'prop-types'
+import Nav from './nav.js'
+import Footer from './footer.js'
 
-            <main className="main">
-
-                {this.props.children}
-
-            </main>
-
-        <Footer/>
-      </div>
-    );
-  }
-}
+const Wrapper = ({ children }) => (
+  <div>
+    <Nav />
+    <main className='main'>
+      {children}
+    </main>
+    <Footer />
+  </div>
+)
 
 Wrapper.propTypes = {
   children: PropTypes.object.isRequired
-};
+}
 
-export default Wrapper;
+export default Wrapper
