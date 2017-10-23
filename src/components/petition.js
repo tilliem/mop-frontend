@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 
+import { text2paraJsx } from '../lib.js'
 import { thanksLoader } from '../loaders/petition.js'
 import SignatureAddForm from './signature-add-form.js'
 import SignatureCount from './signature-count.js'
@@ -13,17 +13,14 @@ class Petition extends React.Component {
     thanksLoader()
   }
 
-  text2paras(str) {
-    return str.split(/\n+/)
-  }
-
   render() {
     const p = this.props.petition
+    const statement = text2paraJsx(p.summary)
 
     return (
       <div className='container background-moveon-white' role='main'>
         <div className='row row-fluid'>
-          <SignatureAddForm petition={this.props.petition} text2paras={this.text2paras} />
+          <SignatureAddForm petition={this.props.petition} />
           <div className='span8 pull-right petition-info-top'>
             <div className='form-wrapper responsive'>
               <div className='petition-top hidden-phone'>
@@ -32,11 +29,7 @@ class Petition extends React.Component {
 
               <div id='pet-statement-box' className='lh-36 blockquote hidden-phone'>
                 <h3 className='visible-phone moveon-bright-red'>Petition Statement</h3>
-                <div id='pet-statement'>{this.text2paras(p.summary).map(
-                  (para, i) =>
-                    <p key='statement_p{i}'>{para}</p>
-                  )}
-                </div>
+                <div id='pet-statement'>{statement}</div>
               </div>
               <SignatureCount current={p.signatureCount} goal={p.signatureGoal} />
             </div>
@@ -84,8 +77,4 @@ Petition.propTypes = {
   petition: PropTypes.object.isRequired
 }
 
-function mapStateToProps(store, ownProps) {
-  return {}
-}
-
-export default connect(mapStateToProps)(Petition)
+export default Petition
