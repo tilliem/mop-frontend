@@ -10,41 +10,47 @@ import { actionTypes as petitionActionTypes } from '../actions/petitionActions.j
 
 const initialState = {
   petitions: {}, // keyed by slug AND petition_id for petition route
+  petitionSignatures: {}, // keyed by petition slug, then page
   signatureStatus: {} // keyed by petition_id (because form doesn't have slug)
 }
 
 function petitionReducer(state = initialState, action) {
-  switch (action.type) {
-    case petitionActionTypes.FETCH_PETITION_REQUEST:
-      break
+  const { type, petition: petitionWithoutSlug, slug, page, signatures } = action
+  let petition = {}
+  if (typeof petitionWithoutSlug === 'object') {
+    petition = Object.assign(petitionWithoutSlug, { slug })
+  }
+  switch (type) {
     case petitionActionTypes.FETCH_PETITION_SUCCESS:
       return Object.assign({}, state, {
         petitions: Object.assign(
           {}, state.petitions, {
             // key it both by id and by slug, for different lookup needs
-            [action.slug]: action.petition,
-            [action.petition.petition_id]: action.petition
+            [slug]: petition,
+            [petition.petition_id]: petition
           })
       })
-    case petitionActionTypes.FETCH_PETITION_FAILURE:
-      // udpate state with status?
-      break
-    case petitionActionTypes.PETITION_SIGNATURE_SUBMIT:
-      // udpate state with status?
-      break
     case petitionActionTypes.PETITION_SIGNATURE_SUCCESS:
       return Object.assign({}, state, {
         signatureStatus: Object.assign(
-          {}, state.signatureStatus, { [action.petition.petition_id]: 'success' })
+          {}, state.signatureStatus, { [petition.petition_id]: 'success' })
       })
-      // udpate state with status?
-    case petitionActionTypes.PETITION_SIGNATURE_FAILURE:
-      // udpate state with status?
-      break
+    case petitionActionTypes.FETCH_PETITION_SIGNATURES_SUCCESS:
+      return Object.assign({}, state, {
+        petitionSignatures: Object.assign(
+          {}, state.petitionSignatures, {
+            [slug]: Object.assign(
+              {},
+              state.petitionSignatures[slug],
+              // eslint-disable-next-line no-underscore-dangle
+              { [page]: signatures._embedded }
+            )
+          }
+        )
+      })
     default:
-      break
+      return state
   }
-  return state
 }
 
 const rootReducer = combineReducers({

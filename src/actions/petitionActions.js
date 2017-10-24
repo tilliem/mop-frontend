@@ -7,6 +7,10 @@ export const actionTypes = {
   FETCH_PETITION_SUCCESS: 'FETCH_PETITION_SUCCESS',
   FETCH_PETITION_FAILURE: 'FETCH_PETITION_FAILURE',
 
+  FETCH_PETITION_SIGNATURES_REQUEST: 'FETCH_PETITION_SIGNATURES_REQUEST',
+  FETCH_PETITION_SIGNATURES_SUCCESS: 'FETCH_PETITION_SIGNATURES_SUCCESS',
+  FETCH_PETITION_SIGNATURES_FAILURE: 'FETCH_PETITION_SIGNATURES_FAILURE',
+
   PETITION_SIGNATURE_SUBMIT: 'PETITION_SIGNATURE_SUBMIT',
   PETITION_SIGNATURE_SUCCESS: 'PETITION_SIGNATURE_SUCCESS',
   PETITION_SIGNATURE_FAILURE: 'PETITION_SIGNATURE_FAILURE'
@@ -61,7 +65,45 @@ export function signPetition(petitionSignature, petition) {
   }
 }
 
+export const loadPetitionSignatures = (petitionSlug, page = 1) => {
+  const urlKey = `petitions/${petitionSlug}/signatures`
+  // TODO: include page in URL when API supports.
+  if (global && global.preloadObjects && global.preloadObjects[urlKey]) {
+    return {
+      type: actionTypes.FETCH_PETITION_SIGNATURES_SUCCESS,
+      petition: window.preloadObjects[urlKey]
+    }
+  }
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.FETCH_PETITION_SIGNATURES_REQUEST,
+      slug: petitionSlug,
+      page
+    })
+    return fetch(`${Config.API_URI}/api/v1/${urlKey}.json`)
+      .then(
+        (response) => response.json().then((json) => {
+          dispatch({
+            type: actionTypes.FETCH_PETITION_SIGNATURES_SUCCESS,
+            signatures: json,
+            slug: petitionSlug,
+            page
+          })
+        }),
+        (err) => {
+          dispatch({
+            type: actionTypes.FETCH_PETITION_SIGNATURES_FAILURE,
+            error: err,
+            slug: petitionSlug,
+            page
+          })
+        }
+      )
+  }
+}
+
 export const actions = {
   loadPetition,
-  signPetition
+  signPetition,
+  loadPetitionSignatures
 }

@@ -1,26 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import { text2paraJsx } from '../lib.js'
 import { thanksLoader } from '../loaders/petition.js'
 import SignatureAddForm from './signature-add-form.js'
 import SignatureCount from './signature-count.js'
+import { loadPetitionSignatures } from '../actions/petitionActions.js'
 
 class Petition extends React.Component {
   componentDidMount() {
-    // TODO: lazy-load signature data here
+    const { loadSignatures, petition } = this.props
+    loadSignatures(petition.slug, 1)
     // lazy-load thanks page component
     thanksLoader()
   }
 
   render() {
-    const p = this.props.petition
+    const { petition: p, signatures } = this.props
     const statement = text2paraJsx(p.summary)
 
     return (
       <div className='container background-moveon-white' role='main'>
         <div className='row row-fluid'>
-          <SignatureAddForm petition={this.props.petition} />
+          <SignatureAddForm petition={p} />
           <div className='span8 pull-right petition-info-top'>
             <div className='form-wrapper responsive'>
               <div className='petition-top hidden-phone'>
@@ -74,7 +77,18 @@ class Petition extends React.Component {
 }
 
 Petition.propTypes = {
-  petition: PropTypes.object.isRequired
+  petition: PropTypes.object.isRequired,
+  loadSignatures: PropTypes.func,
+  signatures: PropTypes.object
 }
 
-export default Petition
+const mapStateToProps = (store, ownProps) => ({
+  signatures: store.petitionStore.petitionSignatures[ownProps.petition.slug]
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  loadSignatures: (petitionSlug, page) =>
+    dispatch(loadPetitionSignatures(petitionSlug, page))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Petition)
