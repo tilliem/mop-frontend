@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import { text2paraJsx } from '../lib.js'
 import { actions as petitionActions } from '../actions/petitionActions.js'
@@ -500,4 +501,4 @@ SignatureAddForm.propTypes = {
   dispatch: PropTypes.func
 }
 
-export default SignatureAddForm
+export default connect()(SignatureAddForm)
