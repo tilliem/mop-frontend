@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import { text2paraJsx } from '../lib.js'
 import { actions as petitionActions } from '../actions/petitionActions.js'
 
 class SignatureAddForm extends React.Component {
@@ -188,15 +189,13 @@ class SignatureAddForm extends React.Component {
   }
 
   render() {
+    const statement = text2paraJsx(this.props.petition.summary)
     return (
       <div className='span4 widget clearfix' id='sign-here'>
         <div className='petition-top visible-phone'>
           <h1 id='petition-title' className='moveon-bright-red'>{this.props.petition.title}</h1>
           <div id='pet-statement-box' className='blockquote petition-statement'>
-            <div id='pet-statement'>{this.props.text2paras(this.props.petition.summary).map(
-              (paragraph, i) =>
-                <p key='para{i}'>{paragraph}</p>
-            )}</div>
+            <div id='pet-statement'>{statement}</div>
           </div>
         </div>
         <div className='form-wrapper form-container' id='sign-form' data-viewable='true'>
@@ -499,13 +498,7 @@ class SignatureAddForm extends React.Component {
 
 SignatureAddForm.propTypes = {
   petition: PropTypes.object.isRequired,
-  dispatch: PropTypes.func,
-  text2paras: PropTypes.func
+  dispatch: PropTypes.func
 }
 
-function mapStateToProps(state, ownProps) {
-  return {
-  }
-}
-
-export default connect(mapStateToProps)(SignatureAddForm)
+export default connect()(SignatureAddForm)

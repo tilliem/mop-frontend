@@ -10,13 +10,15 @@ const { Promise } = global
 
 // This works because require() is async, and NOT imported at the top.
 // Note that this will not work for full page components because the route
-// needs to reference the component, but for async pages, just make a stub page component,
-// and put the rest of the logic inside a src/components (sub) component
+// needs to reference the component, but for async pages, just make a stub page
+// component, and put the rest of the logic inside a src/components
+// (sub) component
 
 
 export const SignatureCountLoader = () => new Promise(resolve => {
   require.ensure([], () => {
     resolve({
+      // eslint-disable-next-line global-require
       SignatureCount: require('../components/signature-count.js')
     })
   })
@@ -25,6 +27,7 @@ export const SignatureCountLoader = () => new Promise(resolve => {
 export const thanksLoader = () => new Promise(resolve => {
   require.ensure([], () => {
     resolve({
+      // eslint-disable-next-line global-require
       Thanks: require('../components/thanks.js')
     })
   })

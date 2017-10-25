@@ -7,10 +7,11 @@
   "directories": {},
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require isomorphic-fetch",
-    "build": "./node_modules/.bin/webpack -d",
-    "webpack-watch": "./node_modules/.bin/webpack -w",
+    "build": "webpack -d",
+    "webpack-watch": "webpack -w",
     "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --progress --colors --port ${PORT:-8080} --inline",
-    "lint": "./node_modules/.bin/eslint src/*; exit 0"
+    "lint": "eslint src/*",
+    "lint-and-test": "npm run lint && npm test"
   },
   "author": "",
   "license": "MIT",
