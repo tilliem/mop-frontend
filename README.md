@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/MoveOnOrg/mop-frontend.svg?branch=master)](https://travis-ci.org/MoveOnOrg/mop-frontend)
+
 # MoveOn Petitions (MOP) Front-end
 
 This is the browser-based, JavaScript implementation of the MoveOn Petitions platform. This uses React, Babel, and Webpack.
