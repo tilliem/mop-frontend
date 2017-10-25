@@ -1,25 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 
 import { text2paraJsx } from '../lib.js'
 import { thanksLoader } from '../loaders/petition.js'
 import SignatureAddForm from './signature-add-form.js'
 import SignatureCount from './signature-count.js'
-import { loadPetitionSignatures } from '../actions/petitionActions.js'
+import SignatureList from './signature-list.js'
 
 class Petition extends React.Component {
   componentDidMount() {
-    const { loadSignatures, petition } = this.props
-    loadSignatures(petition.slug, 1)
     // lazy-load thanks page component
     thanksLoader()
   }
 
   render() {
-    const { petition: p, signatures } = this.props
+    const { petition: p } = this.props
     const statement = text2paraJsx(p.summary)
-
     return (
       <div className='container background-moveon-white' role='main'>
         <div className='row row-fluid'>
@@ -58,7 +54,11 @@ class Petition extends React.Component {
                 <div className='widget-top'>
                   <h3 className='moveon-bright-red'>Current petition signers</h3>
                 </div>
-                <div id='pet-signers-loading' className='bump-top-1'><b>Loading...</b></div>
+
+                <SignatureList
+                  petitionSlug={p.slug}
+                  signatureCount={p.signatureCount}
+                />
 
                 <div>
                   <div id='pet-signers' className='bump-top-1'>
@@ -77,18 +77,7 @@ class Petition extends React.Component {
 }
 
 Petition.propTypes = {
-  petition: PropTypes.object.isRequired,
-  loadSignatures: PropTypes.func,
-  signatures: PropTypes.object
+  petition: PropTypes.object.isRequired
 }
 
-const mapStateToProps = (store, ownProps) => ({
-  signatures: store.petitionStore.petitionSignatures[ownProps.petition.slug]
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  loadSignatures: (petitionSlug, page) =>
-    dispatch(loadPetitionSignatures(petitionSlug, page))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Petition)
+export default Petition

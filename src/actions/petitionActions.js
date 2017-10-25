@@ -80,7 +80,7 @@ export const loadPetitionSignatures = (petitionSlug, page = 1) => {
       slug: petitionSlug,
       page
     })
-    return fetch(`${Config.API_URI}/api/v1/${urlKey}.json`)
+    return fetch(`${Config.API_URI}/api/v1/${urlKey}.json?per_page=10&page=${page}`)
       .then(
         (response) => response.json().then((json) => {
           dispatch({
