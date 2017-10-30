@@ -5,22 +5,21 @@ import { text2paraJsx } from '../lib.js'
 import { thanksLoader } from '../loaders/petition.js'
 import SignatureAddForm from './signature-add-form.js'
 import SignatureCount from './signature-count.js'
+import SignatureList from './signature-list.js'
 
 class Petition extends React.Component {
   componentDidMount() {
-    // TODO: lazy-load signature data here
     // lazy-load thanks page component
     thanksLoader()
   }
 
   render() {
-    const p = this.props.petition
+    const { petition: p } = this.props
     const statement = text2paraJsx(p.summary)
-
     return (
       <div className='container background-moveon-white' role='main'>
         <div className='row row-fluid'>
-          <SignatureAddForm petition={this.props.petition} />
+          <SignatureAddForm petition={p} />
           <div className='span8 pull-right petition-info-top'>
             <div className='form-wrapper responsive'>
               <div className='petition-top hidden-phone'>
@@ -55,7 +54,11 @@ class Petition extends React.Component {
                 <div className='widget-top'>
                   <h3 className='moveon-bright-red'>Current petition signers</h3>
                 </div>
-                <div id='pet-signers-loading' className='bump-top-1'><b>Loading...</b></div>
+
+                <SignatureList
+                  petitionSlug={p.slug}
+                  signatureCount={p.signatureCount}
+                />
 
                 <div>
                   <div id='pet-signers' className='bump-top-1'>

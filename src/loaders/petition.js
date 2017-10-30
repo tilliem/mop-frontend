@@ -15,15 +15,6 @@ const { Promise } = global
 // (sub) component
 
 
-export const SignatureCountLoader = () => new Promise(resolve => {
-  require.ensure([], () => {
-    resolve({
-      // eslint-disable-next-line global-require
-      SignatureCount: require('../components/signature-count.js')
-    })
-  })
-})
-
 export const thanksLoader = () => new Promise(resolve => {
   require.ensure([], () => {
     resolve({
