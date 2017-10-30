@@ -13,23 +13,35 @@ class SignatureList extends React.Component {
     this.previousPage = this.previousPage.bind(this)
   }
 
+  componentDidMount() {
+    this.loadSignaturesIfNeeded(this.state.page)
+  }
+
+  loadSignaturesIfNeeded(page) {
+    const { loadSignatures, signatures, petitionSlug } = this.props
+    if (typeof signatures === 'undefined' || typeof signatures[page] === 'undefined') {
+      loadSignatures(petitionSlug, page)
+    }
+  }
+
   nextPage() {
+    this.loadSignaturesIfNeeded(this.state.page + 1)
     this.setState((prevState) => ({
       page: prevState.page + 1
     }))
   }
 
   previousPage() {
+    this.loadSignaturesIfNeeded(this.state.page - 1)
     this.setState((prevState) => ({
       page: prevState.page - 1
     }))
   }
 
   render() {
-    const { loadSignatures, petitionSlug, signatures, signatureCount } = this.props
+    const { signatures, signatureCount } = this.props
     const { page } = this.state
     if (typeof signatures === 'undefined' || typeof signatures[page] === 'undefined') {
-      loadSignatures(petitionSlug, page)
       return (
         <div id='pet-signers-loading' className='bump-top-1'><b>Loading...</b></div>
       )
