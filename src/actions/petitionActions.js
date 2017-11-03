@@ -19,9 +19,12 @@ export const actionTypes = {
 export function loadPetition(petitionSlug) {
   const urlKey = `petitions/${petitionSlug}`
   if (global && global.preloadObjects && global.preloadObjects[urlKey]) {
-    return {
-      type: actionTypes.FETCH_PETITION_SUCCESS,
-      petition: window.preloadObjects[urlKey]
+    return (dispatch) => {
+      dispatch({
+        type: actionTypes.FETCH_PETITION_SUCCESS,
+        petition: window.preloadObjects[urlKey],
+        slug: petitionSlug
+      })
     }
   }
   return (dispatch) => {
@@ -67,13 +70,6 @@ export function signPetition(petitionSignature, petition) {
 
 export const loadPetitionSignatures = (petitionSlug, page = 1) => {
   const urlKey = `petitions/${petitionSlug}/signatures`
-  // TODO: include page in URL when API supports.
-  if (global && global.preloadObjects && global.preloadObjects[urlKey]) {
-    return {
-      type: actionTypes.FETCH_PETITION_SIGNATURES_SUCCESS,
-      petition: window.preloadObjects[urlKey]
-    }
-  }
   return (dispatch) => {
     dispatch({
       type: actionTypes.FETCH_PETITION_SIGNATURES_REQUEST,
