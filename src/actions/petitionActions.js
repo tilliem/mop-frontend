@@ -38,7 +38,7 @@ export function loadPetition(petitionSlug) {
           dispatch({
             type: actionTypes.FETCH_PETITION_SUCCESS,
             petition: json,
-            slug: json.slug
+            slug: json.name || petitionSlug
           })
         }),
         (err) => {
