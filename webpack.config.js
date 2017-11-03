@@ -54,6 +54,7 @@ var config = {
         'API_URI': JSON.stringify(process.env.API_URI ||
                                   (process.env.PROD ? '' : '/local')
                                  ),
+        'API_WRITABLE': process.env.API_WRITABLE || process.env.PROD,
         'BASE_APP_PATH': JSON.stringify(process.env.BASE_APP_PATH || '/'),
         'STATIC_ROOT': JSON.stringify(process.env.STATIC_ROOT || ''),
         'PROD': process.env.PROD

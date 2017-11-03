@@ -8,13 +8,13 @@ import { actionTypes as petitionActionTypes } from '../actions/petitionActions.j
 //     }
 // }
 
-const initialState = {
+const initialPetitionState = {
   petitions: {}, // keyed by slug AND petition_id for petition route
   petitionSignatures: {}, // keyed by petition slug, then page
   signatureStatus: {} // keyed by petition_id (because form doesn't have slug)
 }
 
-function petitionReducer(state = initialState, action) {
+function petitionReducer(state = initialPetitionState, action) {
   const { type, petition: petitionWithoutSlug, slug, page, signatures } = action
   let petition = {}
   if (typeof petitionWithoutSlug === 'object') {
@@ -69,8 +69,20 @@ function petitionReducer(state = initialState, action) {
   }
 }
 
+function userReducer(state = {}, action) {
+  switch (action.type) {
+    case petitionActionTypes.PETITION_SIGNATURE_SUBMIT:
+      console.log('userReducer on submit', action)
+      return state
+      break;
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
-  petitionStore: petitionReducer
+  petitionStore: petitionReducer,
+  userData: userReducer
 })
 
 export default rootReducer

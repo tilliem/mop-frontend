@@ -55,9 +55,13 @@ class SignatureAddForm extends React.Component {
   submit(event) {
     const { dispatch, petition } = this.props
     if (this.formIsValid()) {
-      const odsiSignature = {
+      const osdiSignature = {
+        petition: {
+          name: petition.name,
+          petition_id: petition.petition_id,
+          _links: petition._links
+        }
         person: {
-          origin_system: 'petitions.moveon.org',
           full_name: this.state.name,
           email_addresses: [
             {
@@ -79,7 +83,7 @@ class SignatureAddForm extends React.Component {
         },
         comments: this.state.comment
       }
-      dispatch(petitionActions.signPetition(odsiSignature, petition))
+      dispatch(petitionActions.signPetition(osdiSignature, petition))
     }
     event.preventDefault()
     return false
