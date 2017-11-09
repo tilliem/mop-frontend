@@ -56,6 +56,7 @@ var config = {
                                  ),
         'API_WRITABLE': process.env.API_WRITABLE || process.env.PROD,
         'BASE_APP_PATH': JSON.stringify(process.env.BASE_APP_PATH || '/'),
+        'SESSION_COOKIE_NAME': JSON.stringify(process.env.SESSION_COOKIE_NAME || 'SO_SESSION'),
         'STATIC_ROOT': JSON.stringify(process.env.STATIC_ROOT || ''),
         'PROD': process.env.PROD
       }

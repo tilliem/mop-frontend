@@ -60,7 +60,7 @@ class SignatureAddForm extends React.Component {
           name: petition.name,
           petition_id: petition.petition_id,
           _links: petition._links
-        }
+        },
         person: {
           full_name: this.state.name,
           email_addresses: [
@@ -75,8 +75,8 @@ class SignatureAddForm extends React.Component {
                 this.state.address2
               ],
               locality: this.state.city,
-              region: (this.state.country === 'United States') ? this.state.state : this.state.region,
-              postal_code: (this.state.country === 'United States') ? this.state.zip : this.state.postal,
+              region: ((this.state.country === 'United States') ? this.state.state : this.state.region),
+              postal_code: ((this.state.country === 'United States') ? this.state.zip : this.state.postal),
               country_name: this.state.country
             }
           ]

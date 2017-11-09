@@ -59,8 +59,6 @@ export function signPetition(petitionSignature, petition) {
       petition,
       signature: petitionSignature
     })
-    // TODO: actually submit signature
-    console.log('about to submit signature', petitionSignature, petition)
     const completion = function() {
       dispatch({
         type: actionTypes.PETITION_SIGNATURE_SUCCESS,
