@@ -13,8 +13,8 @@ export const appLocation = (Config.USE_HASH_BROWSING ? hashHistory : browserHist
 
 export const routes = (store) => (
   <Router history={appLocation}>
-    <Route path={baseAppPath} component={Wrapper}>
-      <Route path='/sign/:petition_slug' component={SignPetition} onEnter={(props) => { store.dispatch(loadSession(props)) }} />
+    <Route path={baseAppPath} component={Wrapper} onEnter={(nextState) => { store.dispatch(loadSession(nextState)) }} >
+      <Route path='/sign/:petition_slug' component={SignPetition} />
       <Route path='/thanks.html' component={ThanksPage} />
     </Route>
   </Router>
