@@ -12,6 +12,6 @@ const store = configureStore()
 // or at least after the id="root" element
 
 ReactDOM.render(
-  <Provider store={store} children={routes} />,
+  <Provider store={store} children={routes(store)} />,
   document.getElementById('root')
 )

@@ -6,8 +6,8 @@ import { formatDate } from '../lib.js'
 const SignatureListItem = ({ signature, number }) => {
   const { user } = signature
   const { city, state } = user
-  const location = (city === '') ? state : `${city}, ${state}`
-  const fromLocation = (location === '') ? '' : ` from ${location}`
+  const location = ((!city) ? state : `${city}, ${state}`)
+  const fromLocation = ((location === '') ? '' : ` from ${location}`)
   const date = new Date(signature.created_date)
   return (
     <li className='signer'>

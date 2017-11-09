@@ -14,8 +14,12 @@ class ThanksPage extends React.Component {
     })
 
     const { dispatch, petition } = this.props
-    if (!petition && this.props.location.query.name) {
-      dispatch(petitionActions.loadPetition(this.props.location.query.name))
+    if (!petition) {
+      if (this.props.location.query.name) {
+        dispatch(petitionActions.loadPetition(this.props.location.query.name))
+      } else if (this.props.location.query.petition_id) {
+        dispatch(petitionActions.loadPetition(this.props.location.query.petition_id))
+      }
     }
   }
 

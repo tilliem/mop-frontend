@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { actionTypes as petitionActionTypes } from '../actions/petitionActions.js'
+import { actionTypes as sessionActionTypes } from '../actions/sessionActions.js'
 
 // function fetchPetitionRequest(petitionSlug) {
 //     return {
@@ -8,13 +9,13 @@ import { actionTypes as petitionActionTypes } from '../actions/petitionActions.j
 //     }
 // }
 
-const initialState = {
+const initialPetitionState = {
   petitions: {}, // keyed by slug AND petition_id for petition route
   petitionSignatures: {}, // keyed by petition slug, then page
   signatureStatus: {} // keyed by petition_id (because form doesn't have slug)
 }
 
-function petitionReducer(state = initialState, action) {
+function petitionReducer(state = initialPetitionState, action) {
   const { type, petition: petitionWithoutSlug, slug, page, signatures } = action
   let petition = {}
   if (typeof petitionWithoutSlug === 'object') {
@@ -69,8 +70,49 @@ function petitionReducer(state = initialState, action) {
   }
 }
 
+function userReducer(state = {}, action) {
+  switch (action.type) {
+    case sessionActionTypes.ANONYMOUS_SESSION_START:
+    case sessionActionTypes.USER_SESSION_START:
+    case sessionActionTypes.USER_SESSION_FAILURE:
+    case sessionActionTypes.TOKEN_SESSION_START:
+    case sessionActionTypes.TOKEN_SESSION_FAILURE:
+      // TODO
+      break;
+    case petitionActionTypes.PETITION_SIGNATURE_SUBMIT:
+      // if it's an anonymous user or we get useful session information
+      // then copy it into userData
+      if (!state.full_name
+          && action.signature && action.signature.person) {
+        const newData = {}
+        if (action.signature.person.full_name) {
+          newData.full_name = action.signature.person.full_name
+        }
+        if (action.signature.person.email_addresses
+            && action.signature.person.email_addresses.length) {
+          newData.email = action.signature.person.email_addresses[0]
+          // TODO: possibly generate an md5hash here
+        }
+        if (action.signature.person.postal_addresses
+            && action.signature.person.postal_addresses.length) {
+          const address = action.signature.person.postal_addresses[0]
+          newData.zip = address.postal_code
+          newData.state = address.region
+          newData.country = address.country_name
+        }
+        return Object.assign({}, state, newData)
+      } else {
+        return state
+      }
+      break;
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
-  petitionStore: petitionReducer
+  petitionStore: petitionReducer,
+  userStore: userReducer
 })
 
 export default rootReducer

@@ -55,9 +55,13 @@ class SignatureAddForm extends React.Component {
   submit(event) {
     const { dispatch, petition } = this.props
     if (this.formIsValid()) {
-      const odsiSignature = {
+      const osdiSignature = {
+        petition: {
+          name: petition.name,
+          petition_id: petition.petition_id,
+          _links: petition._links
+        },
         person: {
-          origin_system: 'petitions.moveon.org',
           full_name: this.state.name,
           email_addresses: [
             {
@@ -71,15 +75,15 @@ class SignatureAddForm extends React.Component {
                 this.state.address2
               ],
               locality: this.state.city,
-              region: (this.state.country === 'United States') ? this.state.state : this.state.region,
-              postal_code: (this.state.country === 'United States') ? this.state.zip : this.state.postal,
+              region: ((this.state.country === 'United States') ? this.state.state : this.state.region),
+              postal_code: ((this.state.country === 'United States') ? this.state.zip : this.state.postal),
               country_name: this.state.country
             }
           ]
         },
         comments: this.state.comment
       }
-      dispatch(petitionActions.signPetition(odsiSignature, petition))
+      dispatch(petitionActions.signPetition(osdiSignature, petition))
     }
     event.preventDefault()
     return false

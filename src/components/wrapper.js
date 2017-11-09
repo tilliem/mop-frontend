@@ -1,5 +1,3 @@
-
-
 /* eslint-disable strict */ // Disabling check because we can't run strict mode. Need global vars.
 
 import React from 'react'

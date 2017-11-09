@@ -38,7 +38,7 @@ export function loadPetition(petitionSlug) {
           dispatch({
             type: actionTypes.FETCH_PETITION_SUCCESS,
             petition: json,
-            slug: petitionSlug
+            slug: json.name || petitionSlug
           })
         }),
         (err) => {
@@ -59,12 +59,28 @@ export function signPetition(petitionSignature, petition) {
       petition,
       signature: petitionSignature
     })
-    // TODO: actually submit signature
-    dispatch({
-      type: actionTypes.PETITION_SIGNATURE_SUCCESS,
-      petition,
-      signature: petitionSignature
-    })
+    const completion = function() {
+      dispatch({
+        type: actionTypes.PETITION_SIGNATURE_SUCCESS,
+        petition,
+        signature: petitionSignature
+      })
+    }
+    if (Config.API_WRITABLE) {
+      fetch(`${Config.API_URI}/sign-petition`, {
+        method: 'POST',
+        body: JSON.stringify(petitionSignature)
+      }).then(completion, function(err) {
+        dispatch({
+          type: actionTypes.PETITION_SIGNATURE_FAILURE,
+          petition,
+          signature: petitionSignature,
+          error: err
+      })
+      })
+    } else {
+      completion()
+    }
   }
 }
 
