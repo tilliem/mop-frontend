@@ -13,15 +13,19 @@ export const actionTypes = {
 export const loadSession = ({ location }) => {
   // called straigt from top route onEnter, so it's done only once on first-load
   const cookie = String(document.cookie).match(new RegExp(`${Config.SESSION_COOKIE_NAME}=([^;]+)`))
+
   if (cookie) {
     return loadUserSession()
   } else if (location && location.query
              && (location.query.akid || location.query.id)) {
-    const {akid, id} = location.query
-    return loadTokenSession({
-      akid,
-      id
-    })
+    const tokens = {}
+    if (location.query.akid) {
+      tokens.akid = location.query.akid
+    }
+    if (location.query.id) {
+      tokens.hashedId = location.query.id
+    }
+    return loadTokenSession(tokens)
   } else {
     return (dispatch) => {
       dispatch({
