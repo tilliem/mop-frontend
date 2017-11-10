@@ -15,6 +15,21 @@ const initialPetitionState = {
   signatureStatus: {} // keyed by petition_id (because form doesn't have slug)
 }
 
+const initialUserState = {
+  // Possible keys. none of these are guaranteed to be present/available
+  // anonymous: <boolean>
+  // given_name: (first name)
+  // full_name:
+  // emailHash: <the hash of the email address>
+  // email:
+  // zip:
+  // state:
+  // country:
+  // signonId: (unique id from signon)
+  // token: (either an id:<signon token> or akid:<akid token>) that can be used for a single action
+  // identifiers: <probably a combination of signonId, token, and any other identifiers available>
+}
+
 function petitionReducer(state = initialPetitionState, action) {
   const { type, petition: petitionWithoutSlug, slug, page, signatures } = action
   let petition = {}
@@ -70,21 +85,41 @@ function petitionReducer(state = initialPetitionState, action) {
   }
 }
 
-function userReducer(state = {}, action) {
+function userReducer(state = initialUserState, action) {
+  // fold in tokens at the top, since it's possible it's for everyone
+  const newData = Object.assign({}, action.tokens || {})
   switch (action.type) {
     case sessionActionTypes.ANONYMOUS_SESSION_START:
+      newData.anonymous = true
+      return Object.assign({}, state, newData)
+      break;
+    // NOTE: the next 4 cases depend on switch-case fall-through
+    // there are no breaks purposefully
     case sessionActionTypes.USER_SESSION_START:
-    case sessionActionTypes.USER_SESSION_FAILURE:
     case sessionActionTypes.TOKEN_SESSION_START:
+      if (action.session) {
+        // this should cover any of: given_name, last_name, full_name, etc
+        Object.assign(newData, action.session)
+        const { identifiers } = action.session
+        if (identifiers && identifiers.length) {
+          newData.signonId = identifiers[0]
+          identifiers.forEach((id) => {
+            if (/^(ak|token)?id:/.test(id)) {
+              newData.token = id
+            }
+          })
+        }
+      }
+    // no break here: fall through to the failures
+    case sessionActionTypes.USER_SESSION_FAILURE:
     case sessionActionTypes.TOKEN_SESSION_FAILURE:
-      // TODO
+      return Object.assign({}, state, newData)
       break;
     case petitionActionTypes.PETITION_SIGNATURE_SUBMIT:
       // if it's an anonymous user or we get useful session information
       // then copy it into userData
       if (!state.full_name
           && action.signature && action.signature.person) {
-        const newData = {}
         if (action.signature.person.full_name) {
           newData.full_name = action.signature.person.full_name
         }
