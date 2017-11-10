@@ -13,7 +13,6 @@ export const actionTypes = {
 export const loadSession = ({ location }) => {
   // called straigt from top route onEnter, so it's done only once on first-load
   const cookie = String(document.cookie).match(new RegExp(`${Config.SESSION_COOKIE_NAME}=([^;]+)`))
-  console.log('LOADSESSION', location, cookie)
 
   if (cookie) {
     return loadUserSession()
