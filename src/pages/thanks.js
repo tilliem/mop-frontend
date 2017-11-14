@@ -28,7 +28,7 @@ class ThanksPage extends React.Component {
       <div>
         <div>test loaded</div>
         {(this.Thanks && this.props.petition ?
-          <this.Thanks petition={this.props.petition} /> :
+          <this.Thanks petition={this.props.petition} user={this.props.user} /> :
           ''
         )}
       </div>
@@ -39,6 +39,7 @@ class ThanksPage extends React.Component {
 
 ThanksPage.propTypes = {
   petition: PropTypes.object,
+  user: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func
 }
@@ -46,7 +47,8 @@ ThanksPage.propTypes = {
 function mapStateToProps(store, ownProps) {
   const pkey = ownProps.location.query.name || ownProps.location.query.petition_id
   return {
-    petition: pkey && store.petitionStore.petitions[pkey]
+    petition: pkey && store.petitionStore.petitions[pkey],
+    user: store.userStore
   }
 }
 

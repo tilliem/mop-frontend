@@ -194,6 +194,19 @@ class SignatureAddForm extends React.Component {
 
   render() {
     const statement = text2paraJsx(this.props.petition.summary)
+    const user = this.props.user
+    if (user && user.signonId) {
+      return (  <div>            <div className='form-group'>
+                <label htmlFor='comment'>Comment</label>
+                <textarea className='moveon-track-click' rows='3' cols='20' name='comment' id='comment' autoComplete='off' onChange={this.updateStateFromValue('comment')} onBlur={this.updateStateFromValue('comment')}></textarea>
+              </div>
+              <div className='form-group form-group--submit'>
+                <button type='submit' className='xl percent-100 moveon-track-click background-moveon-bright-red' id='sign-here-button' value='Sign the petition!'>Sign the petition</button>
+              </div>
+              <p className='disclaimer bump-top-1'><b>Note:</b> By signing, you agree to receive email messages from MoveOn.org Civic Action and MoveOn.org Political Action. You may unsubscribe at any time. [ <a href='http://petitions.moveon.org/privacy.html'>Privacy policy</a> ]</p>
+                            </div>
+)
+    } else
     return (
       <div className='span4 widget clearfix' id='sign-here'>
         <div className='petition-top visible-phone'>
@@ -502,7 +515,14 @@ class SignatureAddForm extends React.Component {
 
 SignatureAddForm.propTypes = {
   petition: PropTypes.object.isRequired,
+  user: PropTypes.object,
   dispatch: PropTypes.func
 }
 
-export default connect()(SignatureAddForm)
+function mapStateToProps(store, ownProps) {
+  return {
+    user: store.userStore
+  }
+}
+
+export default connect(mapStateToProps)(SignatureAddForm)
