@@ -17,9 +17,11 @@ class Petition extends React.Component {
     const { petition: p } = this.props
     const statement = text2paraJsx(p.summary)
     return (
-      <div className='container background-moveon-white' role='main'>
-        <div className='row row-fluid'>
+      <div class="container background-moveon-white bump-top-1">
+        <div class="row">
           <SignatureAddForm petition={p} />
+
+
           <div className='span8 pull-right petition-info-top'>
             <div className='form-wrapper responsive'>
               <div className='petition-top hidden-phone'>
