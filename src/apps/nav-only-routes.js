@@ -3,8 +3,6 @@ import { Router, Route, browserHistory, hashHistory } from 'react-router'
 
 import { Config } from '../config'
 import { loadSession } from '../actions/sessionActions'
-import SignPetition from '../pages/sign-petition'
-import ThanksPage from '../pages/thanks'
 import Nav from '../components/nav'
 
 const baseAppPath = process.env.BASE_APP_PATH || '/'

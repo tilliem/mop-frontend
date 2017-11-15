@@ -4,10 +4,11 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var BUILD_DIR = path.resolve(__dirname, 'build');
 var APP_DIR = path.resolve(__dirname, 'src');
+var APP_ENTRY = process.env.APP_ENTRY || "main";
 
 var config = {
   entry: {
-    javascript: process.env.APP_ENTRY || APP_DIR + '/app.js'
+    javascript: APP_DIR + '/apps/' + APP_ENTRY + '.js'
   },
   devServer: {
     host: "0.0.0.0",
@@ -18,7 +19,7 @@ var config = {
     publicPath: process.env.PUBLIC_ROOT || "/",
     //NOTE: when process.env.PROD is true this will be the minified file
     //TODO: maybe we should hash this and figure out a way to pass the hashed version to it
-    filename: 'main.js'
+    filename: APP_ENTRY + '.js'
   },
   externals: {
     'react': 'React',
