@@ -8,6 +8,7 @@ import SignPetition from './pages/sign-petition.js'
 import ThanksPage from './pages/thanks.js'
 import SearchPage from './pages/search.js'
 import PetitionCreatorDashboard from './pages/petition-creator-dashboard.js'
+import CreatePetitionPage from './pages/create-petition-page.js'
 import Wrapper from './components/wrapper.js'
 
 const baseAppPath = process.env.BASE_APP_PATH || '/'
@@ -22,6 +23,7 @@ export const routes = (store) => (
       <Route path='/thanks.html' component={ThanksPage} />
       <Route path='/find' component={SearchPage} />
       <Route path='/dashboard.html' component={PetitionCreatorDashboard} />
+      <Route path='/create_start.html' component={CreatePetitionPage} />
     </Route>
   </Router>
 )
