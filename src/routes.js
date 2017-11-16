@@ -7,6 +7,7 @@ import Home from './pages/home.js'
 import SignPetition from './pages/sign-petition.js'
 import ThanksPage from './pages/thanks.js'
 import SearchPage from './pages/search.js'
+import PetitionCreatorDashboard from './pages/petition-creator-dashboard.js'
 import Wrapper from './components/wrapper.js'
 
 const baseAppPath = process.env.BASE_APP_PATH || '/'
@@ -20,6 +21,7 @@ export const routes = (store) => (
       <Route path='/sign/:petition_slug' component={SignPetition} />
       <Route path='/thanks.html' component={ThanksPage} />
       <Route path='/find' component={SearchPage} />
+      <Route path='/dashboard.html' component={PetitionCreatorDashboard} />
     </Route>
   </Router>
 )
