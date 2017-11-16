@@ -1,5 +1,5 @@
 import React from 'react'
-import { Router, Route, browserHistory, hashHistory } from 'react-router'
+import { IndexRoute, Route, Router, browserHistory, hashHistory } from 'react-router'
 
 import { Config } from './config.js'
 import { loadSession } from './actions/sessionActions.js'
@@ -15,8 +15,8 @@ export const appLocation = (Config.USE_HASH_BROWSING ? hashHistory : browserHist
 
 export const routes = (store) => (
   <Router history={appLocation}>
-    <Route path='/' component={Home} />
     <Route path={baseAppPath} component={Wrapper} onEnter={(nextState) => { store.dispatch(loadSession(nextState)) }} >
+      <IndexRoute component={Home} />
       <Route path='/sign/:petition_slug' component={SignPetition} />
       <Route path='/thanks.html' component={ThanksPage} />
       <Route path='/find' component={SearchPage} />
