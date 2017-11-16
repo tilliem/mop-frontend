@@ -6,7 +6,7 @@ script: "npm run lint-and-test"
 notifications:
   slack:
     rooms:
-      - moveonorg:57bdH2pUn2hngi1FR9Mlk5sR#tech-team
+      - moveonorg:OTFzZVGzKuhTSw5daB5MjHiL#mop-tech
     on_success: always
     on_failure: always
     on_start: never
