@@ -2,12 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import BillBoard from '../components/billboard'
+
 class Home extends React.Component {
 
   render() {
     return (
       <div>
-         <h2> Home Page </h2>
+         <BillBoard />
       </div>
     )
   }
