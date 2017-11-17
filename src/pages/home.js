@@ -8,7 +8,7 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container background-moveon-white bump-top-1">
          <BillBoard />
       </div>
     )

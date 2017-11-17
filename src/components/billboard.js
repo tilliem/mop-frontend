@@ -1,7 +1,7 @@
 import React from 'react'
 
 const billboardButton = {
-  fontSize: '1em'
+  fontSize: '90%'
 }
 
 export default class BillBoard extends React.Component {
@@ -14,7 +14,7 @@ export default class BillBoard extends React.Component {
             <div className="billboard-video text-center center clearfix">
                 <div className="billboard-content">
                   <span className="billboard-video">
-                    <iframe width="560" height="380" src="//www.youtube.com/embed/oMHH7FL66fo" frameBorder="0" allowFullScreen></iframe>
+                    <iframe width="500" height="380" src="//www.youtube.com/embed/oMHH7FL66fo" frameBorder="0" allowFullScreen></iframe>
                   </span>
                 </div>
               <div className="billboard-text">
