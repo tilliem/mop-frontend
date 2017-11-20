@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import BillBoard from '../components/billboard'
+import SearchBar from '../components/searchbar'
 
 class Home extends React.Component {
 
@@ -10,6 +11,7 @@ class Home extends React.Component {
     return (
       <div className="container background-moveon-white bump-top-1">
          <BillBoard />
+         <SearchBar />
       </div>
     )
   }
