@@ -18,5 +18,10 @@
           "ocd-division": "ocd-division/country:us/state:ga/sldu"
         }
     ],
-    "title": "Georgia: Add Outkast to Stone Mountain!"
+    "title": "Georgia: Add Outkast to Stone Mountain!",
+    "share_options": [{
+      "twitter_share": {
+        "message": "Tell Georgia to add Outkast to Stone Mountain! [URL]"
+      }
+    }]
 }
