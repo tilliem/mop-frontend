@@ -10,8 +10,8 @@ class Home extends React.Component {
   render() {
     return (
       <div className="container background-moveon-white bump-top-1">
-         <BillBoard />
-         <SearchBar />
+       <BillBoard />
+       <SearchBar />
       </div>
     )
   }
