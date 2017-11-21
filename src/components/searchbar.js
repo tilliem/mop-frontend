@@ -5,7 +5,9 @@ const selectStyle = {
   width: '100px'
 }
 
-export default class SearchBar extends React.Component {
+class SearchBar extends React.Component {
+
+  // TODO: we will need to handle the search within the react app
 
   render() {
     return (
@@ -79,3 +81,6 @@ export default class SearchBar extends React.Component {
     )
  }
 }
+
+
+export default SearchBar
