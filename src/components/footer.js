@@ -12,7 +12,7 @@ const Footer = () => (
         <div className="row">
           <div className="span4">
             <a className="icon-start icon-link-narrow" href="http://petitions.moveon.org/create_start.html?source=bnav">Start a Petition</a>
-            <a className="icon-link-narrow icon-managepetitions" href="http://petitions.moveon.org/dashboard.html">Scott's Dashboard</a>
+            <a className="icon-link-narrow icon-managepetitions" href="http://petitions.moveon.org/dashboard.html">Dashboard</a>
             <ul className="nav">
               <li><a className="lh-14 navlink" href="/login/do_logout.html?redirect=/index.html">Logout</a></li>
               <li><a href="http://petitions.moveon.org/organizations.html">Organizations</a></li>
