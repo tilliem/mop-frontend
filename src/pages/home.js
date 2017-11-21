@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import BillBoard from '../components/billboard'
 import SearchBar from '../components/searchbar'
+import RecentVictoryList from '../components/recentvictory.js'
 
 class Home extends React.Component {
 
@@ -12,6 +13,9 @@ class Home extends React.Component {
       <div className="container background-moveon-white bump-top-1">
        <BillBoard />
        <SearchBar />
+       <div className="row front-content">
+         <RecentVictoryList />
+       </div>
       </div>
     )
   }
