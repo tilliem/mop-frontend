@@ -1,10 +1,12 @@
 import React from 'react'
+import Video from './video'
 
 const billboardButton = {
   fontSize: '90%'
 }
 
-export default class BillBoard extends React.Component {
+class BillBoard extends React.Component {
+  // TODO: make start a petition a <Link>
 
   render() {
     return (
@@ -12,11 +14,7 @@ export default class BillBoard extends React.Component {
         <div className="row">
           <div className="span12 billboard-background bump-bottom-1 clearfix">
             <div className="billboard-video text-center center clearfix">
-                <div className="billboard-content">
-                  <span className="billboard-video">
-                    <iframe width="500" height="380" src="//www.youtube.com/embed/oMHH7FL66fo" frameBorder="0" allowFullScreen></iframe>
-                  </span>
-                </div>
+                <Video />
               <div className="billboard-text">
                 <h1 className="white big-title">People Powered Petitions</h1>
                 <p className="white size-medium-large">There are more than 8 million MoveOn members. Tap into our shared people power and create progressive change.</p>
@@ -31,3 +29,5 @@ export default class BillBoard extends React.Component {
     )
   }
 }
+
+export default BillBoard
