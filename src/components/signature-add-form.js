@@ -93,8 +93,8 @@ class SignatureAddForm extends React.Component {
   }
 
   render() {
-    const {petition} = this.props
-    const iframeEmbed = `&lt;iframe src="http://petitions.moveon.org/embed/widget.html?v=3&amp;name=${petition.slug}" class="moveon-petition" id="petition-embed" width="300px" height="500px"&gt;&lt;/iframe&gt;`
+    const {petition, user} = this.props
+    const iframeEmbedText = `<iframe src="http://petitions.moveon.org/embed/widget.html?v=3&amp;name=${petition.slug}" class="moveon-petition" id="petition-embed" width="300px" height="500px"></iframe>` // text to be copy/pasted
     return (
       <div className="span4 widget clearfix" id="sign-here">
         <div className="padding-left-15 form-wrapper background-moveon-light-gray padding-top-1 padding-bottom-1" style={{paddingRight: 15, position: "relative", top: -10}}>
@@ -125,6 +125,13 @@ class SignatureAddForm extends React.Component {
             <input type="hidden" name="recognized_user" id="recognized_user_field" value="0" />
             <input type="hidden" name="show_optin_checkbox" value="0" />
 
+            {( (user && user.signonId)
+              ? //Recognized
+	      <div id="recognized" className="bump-bottom-1" styleX="margin-bottom: 1em">
+                <strong>Welcome back {user.given_name}!</strong>
+                <div> (Not {user.given_name}? <a href="javascript:unrecognize();">Click here.</a>) </div>
+	      </div>
+              : // Anonymous
             <div className="unrecognized">
               <input type="text" name="name" placeholder="Name*" className="moveon-track-click" />
               <input type="text" name="email" placeholder="Email*" className="moveon-track-click" />
@@ -145,21 +152,21 @@ class SignatureAddForm extends React.Component {
                 postalOnChange={this.updateStateFromValue('postal')}
               />
             </div>
+            )}
 
             <textarea className="moveon-track-click" rows="3" cols="20" name="comment" autoComplete="off" placeholder="Comment"></textarea>
 
             <button type="submit" className="xl percent-100 moveon-track-click background-moveon-bright-red" id="sign-here-button" value="Sign the petition!" style={{marginTop: 7.2}}>Sign the petition</button>
 
-            <p className="disclaimer bump-top-1"><b>Note:</b> By signing, you agree to receive email messages from MoveOn.org Civic Action and MoveOn.org Political Action. You may unsubscribe at any time. [ <a href="http://petitions.moveon.org/privacy.html">Privacy policy</a> ]</p>
+            <p className="disclaimer bump-top-1"><b>Note:</b> By signing, you agree to receive email messages from MoveOn.org Civic Action and MoveOn.org Political Action. You may unsubscribe at any time. [ <a href="https://petitions.moveon.org/privacy.html">Privacy policy</a> ]</p>
           </form>
         </div>
-
         <div class="percent-90 padding-left-15 bump-top-1">
           <div class="widget-top hidden-phone">
             <h3 class="moveon-bright-red">Embed This petition</h3>
           </div>
           <div id="embedbox" class="codebox percent-95 hidden-phone moveon-track-click">
-            {iframeEmbed}
+            {iframeEmbedText}
           </div>
         </div>
       </div>
@@ -170,7 +177,14 @@ class SignatureAddForm extends React.Component {
 
 SignatureAddForm.propTypes = {
   petition: PropTypes.object.isRequired,
+  user: PropTypes.object,
   dispatch: PropTypes.func
 }
 
-export default connect()(SignatureAddForm)
+function mapStateToProps(store, ownProps) {
+  return {
+    user: store.userStore
+  }
+}
+
+export default connect(mapStateToProps)(SignatureAddForm)

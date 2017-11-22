@@ -12,7 +12,8 @@ import { actionTypes as sessionActionTypes } from '../actions/sessionActions.js'
 const initialPetitionState = {
   petitions: {}, // keyed by slug AND petition_id for petition route
   petitionSignatures: {}, // keyed by petition slug, then page
-  signatureStatus: {} // keyed by petition_id (because form doesn't have slug)
+  signatureStatus: {}, // keyed by petition_id (because form doesn't have slug)
+  signatureMessages: {} // keyed by petition_id, MessageId value from SQS post
 }
 
 const initialUserState = {
@@ -50,10 +51,15 @@ function petitionReducer(state = initialPetitionState, action) {
         )
       })
     case petitionActionTypes.PETITION_SIGNATURE_SUCCESS:
-      return Object.assign({}, state, {
-        signatureStatus: Object.assign(
+      const updateData = {
+        'signatureStatus': Object.assign(
           {}, state.signatureStatus, { [petition.petition_id]: 'success' })
-      })
+      }
+      if (action.messageId) {
+        updateData['signatureMessages'] = Object.assign(
+          {}, state.signatureMessages, { [petition.petition_id]: action.messageId })
+      }
+      return Object.assign({}, state, updateData)
     case petitionActionTypes.FETCH_PETITION_SIGNATURES_SUCCESS:
       petition.signatureCount = signatures.count
       // TODO: get signatureGoal from API
