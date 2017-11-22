@@ -15,9 +15,6 @@ class Thanks extends React.Component {
   }
 
   render() {
-    /*
-      share_url handling:
-     */
     const { petition, user } = this.props
     const creator = false // maybe test user.id==petition.creator_id or something, if we want to expose that
     const pre = (creator ? 'c' : 's') // TODO: based on ?from_source= parameter .icn and .imn, megapartner
@@ -53,7 +50,8 @@ Will you sign this petition? Click here:
 ${link}?source=${pre}.em.__TYPE__&r_by=${userId}
 
 Thanks!
-`)    const copyPasteMessage = `Subject: ${petition.summary}\n\n${mailToMessage}`
+`)
+    const copyPasteMessage = `Subject: ${petition.summary}\n\n${mailToMessage}`
 
     return (<div className='row'>
       <div className='span4'>
