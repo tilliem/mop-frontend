@@ -1,48 +1,35 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-class SignatureCount extends React.Component {
+const formatNumber = number => 
+  String(number).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-  formatted(number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+const percent = (current, goal) => {
+  if (goal <= 0) {
+    return '0%';
   }
 
-  percent() {
-    let number = 0
-    if (this.props.goal > 0) {
-      number = 100 * (this.props.current / this.props.goal)
-    }
-    if (number > 100) {
-      number = 100
-    }
-    return `${number.toFixed(2).toString()}%`
-  }
-
-  render() {
-    if (typeof this.props.current !== 'undefined') {
-      return (
-        <div id='therm' className='bump-top-2'>
-          <div className='progress-status clearfix'>
-            <div className='progress-stat progress-current'>
-              <em>Current</em>
-              <strong>{this.formatted(this.props.current)}</strong>
-            </div>
-            <div className='progress-stat progress-goal'>
-              <em>Goal</em>
-              <strong>{this.formatted(this.props.goal)}</strong>
-            </div>
-          </div>
-          <div className='progress progress-danger no-bottom-margin'>
-            <div className='bar' style={{ width: this.percent() }}></div>
-          </div>
-        </div>
-      )
-    }
-    return (
-      <div></div>
-    )
-  }
+  const v = Math.min(1, current / goal) * 100;
+  return `${v.toFixed(2)}%`;
 }
+
+const SignatureCount = ({current, goal}) => current !== undefined && (
+  <div id='therm' className='bump-top-2'>
+    <div className='progress-status clearfix'>
+      <div className='progress-stat progress-current'>
+        <em>Current</em>
+        <strong>{formatNumber(current)}</strong>
+      </div>
+      <div className='progress-stat progress-goal'>
+        <em>Goal</em>
+        <strong>{formatNumber(goal)}</strong>
+      </div>
+    </div>
+    <div className='progress progress-danger no-bottom-margin'>
+      <div className='bar' style={{ width: percent(current, goal) }}></div>
+    </div>
+  </div>
+);
 
 SignatureCount.propTypes = {
   current: PropTypes.number,
