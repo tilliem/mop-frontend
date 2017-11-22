@@ -8,7 +8,7 @@ import SignatureCount from '../../src/components/signature-count';
 describe('<SignatureCount />', () => {
 	it('renders nothing if current is undefined', () => {
 		const context = shallow(<SignatureCount />);
-		expect(context.getNode()).to.be.null;
+		expect(context.isEmptyRender()).to.be.true;
 	});
 
 	it('formats numbers', () => {
