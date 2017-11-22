@@ -5,7 +5,6 @@ import 'whatwg-fetch'
 import { connect } from 'react-redux'
 
 import Petition from '../components/petition.js'
-import { appLocation } from '../routes.js'
 import { actions as petitionActions } from '../actions/petitionActions.js'
 
 class SignPetition extends React.Component {
@@ -17,10 +16,7 @@ class SignPetition extends React.Component {
 
   componentWillUpdate(nextProps) {
     if (nextProps.sign_success === 'success') {
-      appLocation.push(`thanks.html?petition_id=${
-                        nextProps.petition.petition_id
-                        }&name=${nextProps.petition.name}`
-                      )
+      this.props.dispatch(petitionActions.registerSignatureAndThanks(nextProps.petition))
     }
   }
 
