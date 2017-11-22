@@ -17,42 +17,39 @@ class Petition extends React.Component {
     const { petition: p } = this.props
     const statement = text2paraJsx(p.summary)
     return (
-      <div className='container background-moveon-white' role='main'>
-        <div className='row row-fluid'>
+      <div className='container'>
+        <div className='row'>
           <SignatureAddForm petition={p} />
+
           <div className='span8 pull-right petition-info-top'>
-            <div className='form-wrapper responsive'>
+            <div className='percent-95 padding-left-15 form-wrapper responsive padding-bottom-1 padding-left-2 padding-right-3' style={{marginLeft: '-20px', position: 'relative'}}>
               <div className='petition-top hidden-phone'>
                 <h1 id='petition-title' className='moveon-bright-red big-title'>{p.title}</h1>
+                <p id='by' className='byline lh-20'>Petition by <a href='/contact_creator.html?petition_id=95935' className='underline'>{p.contact_name}</a></p>
+                <p id='to-target' className='lh-14 bump-top-1 bump-bottom-1 margin-0 disclaimer'>To be delivered to <span className='all-targets'><strong>
+                    {p.target.map((t) => t.name).join(', ')}</strong></span></p>
               </div>
-
-              <div id='pet-statement-box' className='lh-36 blockquote hidden-phone'>
+              <div id='pet-statement-box' className='lh-36 blockquote'>
                 <h3 className='visible-phone moveon-bright-red'>Petition Statement</h3>
                 <div id='pet-statement'>{statement}</div>
               </div>
-              <SignatureCount current={p.signatureCount} goal={p.signatureGoal} />
-            </div>
 
-            <div className='petition-top'>
-              <p id='to-target' className='lh-14 bump-top-1 bump-bottom-1 margin-0 disclaimer'>To be delivered to <span className='all-targets'><strong>
-                    {p.target.map((t) => t.name).join(', ')}
-              </strong></span></p>
-              <p id='by' className='byline lh-20'>Petition by <a href='/contact_creator.html?petition_id=95935' className='underline'>{p.contact_name}</a></p>
+              <SignatureCount current={p.signatureCount} goal={p.signatureGoal} />
             </div>
 
             <div className='clear'></div>
 
-            <div id='pet-explain' className='background-moveon-white bump-top-1'>
+            <div id='pet-explain' className='background-moveon-white bump-top-1 padding-left-2' style={{marginLeft: '-20px'}}>
               <div className='widget'>
                 <div className='widget-top'>
-                  <h3 className='moveon-bright-red'>Petition Background</h3>
+                  <h3 className='moveon-bright-red padding-bottom-1'>Petition Background</h3>
                 </div>
                 <div dangerouslySetInnerHTML={{ __html: p.description }}></div>
               </div>
 
-              <div className='widget'>
+              <div className='widget hidden-phone'>
                 <div className='widget-top'>
-                  <h3 className='moveon-bright-red'>Current petition signers</h3>
+                  <h3 className='moveon-bright-red padding-bottom-1'>Current petition signers</h3>
                 </div>
 
                 <SignatureList
