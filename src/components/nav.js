@@ -29,6 +29,14 @@ class Nav extends React.Component {
       </div>
     )
 
+    const userDashboardLink = (
+      <a className="icon-link-narrow icon-managepetitions" href="http://petitions.moveon.org/dashboard.html?source=topnav"> {user.given_name + `'s`} Dashboard</a>
+    )
+
+    const guestDashboardLink = (
+      <a className="icon-link-narrow icon-managepetitions" href="http://petitions.moveon.org/dashboard.html?source=topnav"> Dashboard</a>
+    )
+
 
     return (
       <div>
@@ -47,7 +55,7 @@ class Nav extends React.Component {
             <div className="pull-left top-icons hidden-phone">
               <div className="pull-left span2 petitions-partner-logo bump-top-1 margin-right-2 hidden-phone"></div>
               <a className="icon-link-narrow icon-start" href="http://petitions.moveon.org/create_start.html?source=topnav">Start a petition</a>
-              <a className="icon-link-narrow icon-managepetitions" href="http://petitions.moveon.org/dashboard.html?source=topnav">Dashboard</a>
+              { user ? userDashboardLink : guestDashboardLink }
             </div>
 
             <div className="pull-left top-icons visible-phone">
