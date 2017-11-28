@@ -2,7 +2,6 @@ import React from 'react';
 import { expect } from 'chai';
 
 import { mount, shallow } from 'enzyme';
-import Nav from '../src/components/nav.js';
 
 import Config from '../src/config.js';
 import configureMockStore from 'redux-mock-store'
@@ -29,21 +28,6 @@ const expect_async = function(promise, done, f) {
     }
   });
 }
-
-describe('<Nav />', function() {
-  it('contains logo', () => {
-    const nav = shallow(<Nav />);
-    expect(
-      nav.find('.moveon-masthead.pull-left.hidden-phone > a')
-    ).to.have.length(1);
-  });
-  it('contains logo linking to /', () => {
-    const nav = shallow(<Nav />);
-    expect(
-      nav.find('.moveon-masthead.pull-left.hidden-phone > a').prop('href')
-    ).to.equal('/');
-  });
-});
 
 describe('Petition loading', function() {
   nock(BASE_URI)
