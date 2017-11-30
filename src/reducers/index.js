@@ -61,9 +61,7 @@ function petitionReducer(state = initialPetitionState, action) {
       }
       return Object.assign({}, state, updateData)
     case petitionActionTypes.FETCH_PETITION_SIGNATURES_SUCCESS:
-      petition.signatureCount = signatures.count
-      // TODO: get signatureGoal from API
-      petition.signatureGoal = 1000000
+      petition.total_signatures = signatures.count
       return Object.assign({}, state, {
         petitionSignatures: Object.assign(
           {}, state.petitionSignatures, {
