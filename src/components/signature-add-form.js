@@ -86,7 +86,7 @@ class SignatureAddForm extends React.Component {
         },
         comments: this.state.comment
       }
-      dispatch(petitionActions.signPetition(osdiSignature, petition))
+      dispatch(petitionActions.signPetition(osdiSignature, petition, /*redirectOnSuccess*/true))
     }
     event.preventDefault()
     return false
@@ -133,8 +133,16 @@ class SignatureAddForm extends React.Component {
 	      </div>
               : // Anonymous
             <div className="unrecognized">
-              <input type="text" name="name" placeholder="Name*" className="moveon-track-click" />
-              <input type="text" name="email" placeholder="Email*" className="moveon-track-click" />
+              <input type="text" name="name" placeholder="Name*" className="moveon-track-click"
+                     onChange={this.updateStateFromValue('name')}
+                     onBlur={this.updateStateFromValue('name')}
+               />
+               {this.validationError('name')}
+              <input type="text" name="email" placeholder="Email*" className="moveon-track-click"
+                     onChange={this.updateStateFromValue('email')}
+                     onBlur={this.updateStateFromValue('email')}
+               />
+               {this.validationError('email')}
               <CountrySelect
                 value={this.state.country}
                 onChange={(event) => this.setState({ country: event.target.value })}
@@ -161,11 +169,11 @@ class SignatureAddForm extends React.Component {
             <p className="disclaimer bump-top-1"><b>Note:</b> By signing, you agree to receive email messages from MoveOn.org Civic Action and MoveOn.org Political Action. You may unsubscribe at any time. [ <a href="https://petitions.moveon.org/privacy.html">Privacy policy</a> ]</p>
           </form>
         </div>
-        <div class="percent-90 padding-left-15 bump-top-1">
-          <div class="widget-top hidden-phone">
-            <h3 class="moveon-bright-red">Embed This petition</h3>
+        <div className="percent-90 padding-left-15 bump-top-1">
+          <div className="widget-top hidden-phone">
+            <h3 className="moveon-bright-red">Embed This petition</h3>
           </div>
-          <div id="embedbox" class="codebox percent-95 hidden-phone moveon-track-click">
+          <div id="embedbox" className="codebox percent-95 hidden-phone moveon-track-click">
             {iframeEmbedText}
           </div>
         </div>

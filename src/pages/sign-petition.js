@@ -14,12 +14,6 @@ class SignPetition extends React.Component {
     dispatch(petitionActions.loadPetition(params.petition_slug))
   }
 
-  componentWillUpdate(nextProps) {
-    if (nextProps.sign_success === 'success') {
-      this.props.dispatch(petitionActions.registerSignatureAndThanks(nextProps.petition))
-    }
-  }
-
   render() {
     if (!this.props.petition) {
       return (
