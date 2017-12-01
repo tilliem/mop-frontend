@@ -34,7 +34,7 @@ class Petition extends React.Component {
                 <div id='pet-statement'>{statement}</div>
               </div>
 
-              <SignatureCount current={p.signatureCount} goal={p.signatureGoal} />
+              <SignatureCount current={p.total_signatures} goal={p.signature_goal} />
             </div>
 
             <div className='clear'></div>
@@ -54,7 +54,7 @@ class Petition extends React.Component {
 
                 <SignatureList
                   petitionSlug={p.slug}
-                  signatureCount={p.signatureCount}
+                  signatureCount={p.total_signatures}
                 />
 
                 <div>

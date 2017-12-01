@@ -1,17 +1,72 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { moNumber2base62 } from '../lib'
+import { actions as petitionActions } from '../actions/petitionActions.js'
 
 class Thanks extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      'pre': 's' // TODO
+    }
+    this.recordShare = this.recordShare.bind(this)
+    this.shareLink = this.shareLink.bind(this)
+    this.shareEmail = this.shareEmail.bind(this)
+    this.openFacebookSharing = this.openFacebookSharing.bind(this)
+    this.shareFacebook = this.shareFacebook.bind(this)
+    this.shareTwitter = this.shareTwitter.bind(this)
+  }
+
+  recordShare(medium, source) {
+    petitionActions.recordShareClick(this.props.petition, medium, source, this.props.user)
+  }
 
   shareLink(evt) {
     evt.target.select()
+    this.recordShareClick("email", this.state.pre + ".ln.cp");
   }
 
   shareEmail(evt) {
-    // note: currently non-bound method, so `this` will not work
     evt.target.select()
-    // this.focus();this.select(); record_share_click('email', 's.em.cp')
+    this.recordShareClick("email", this.state.pre + ".em.cp");
+  }
+
+  openFacebookSharing(urlToShare) {
+    var preChar = ( (/\?/.test(urlToShare)) ? '&' : '?');
+    let fbUrl = urlToShare + preChar +"source="+ this.state.pre +".fb"
+    if (user.signonId) {
+      fbUrl = fbUrl + "&r_by=" + user.signonId
+    } // TODO: signatureMessages hash alternative
+    window.open("https://www.facebook.com/share.php?u=" + encodeURIComponent(fbUrl));
+  }
+
+  shareFacebook(evt) {
+    const { petition, user } = this.props
+    const shareOpts = (petition.share_options && petition.share_options[0]) || {}
+    const self = this
+    setTimeout(() => {
+      self.recordShareClick("facebook", self.state.pre + ".fb")
+    }, 100)
+    let fbUrl = petition._links.url
+    if (shareOpts.facebook_share && shareOpts.facebook_share.share_url) {
+      if (shareOpts.facebook_share.sharebandit) { // non-OSDI feature
+        petitionActions.getSharebanditShareLink(
+          shareOpts.facebook_share.share_url)
+          .then(this.openFacebookSharing)
+        // prematurely exit, since we will block on the promise
+        return false
+      }
+      fbUrl = shareOpts.facebook_share.share_url
+    }
+    this.openFacebookSharing(fbUrl)
+    return false;
+  }
+
+  shareTwitter(evt) {
+    var url = ('http://twitter.com/intent/tweet?text=' +
+               encodeURIComponent(this.tweetTextArea.value));
+    window.open(url);
+    this.recordShareClick('twitter', this.state.pre + ".tw")
   }
 
   render() {
@@ -68,13 +123,18 @@ Thanks!
             <span className='icon-fb-default'></span>
             Tell your friends on Facebook:
           </div>
-          <button id='facebook-button' className='xl300 background-facebook-blue'>Share on Facebook</button>
+          <button id='facebook-button' className='xl300 background-facebook-blue'
+            onClick={this.shareFacebook} >Share on Facebook</button>
           <div className='lanky-header bump-top-3 align-center'>
             <span className='icon-twitter-default'></span>
             Tweet your followers:
           </div>
-          <button id='twitter-button' className='xl300 background-moveon-bright-red'>Tweet This</button>
-          <textarea className='hidden' id='tweet_text' defaultValue={tweet}></textarea>
+          <button id='twitter-button' className='xl300 background-moveon-bright-red'
+            onClick={this.shareTwitter}>Tweet This</button>
+          <textarea className='hidden' id='tweet_text'
+                    defaultValue={tweet}
+                    ref={(input) => { this.tweetTextArea = input }}
+            ></textarea>
           <div className='lanky-header bump-top-3 align-center'>
             Send a link:
           </div>
@@ -89,7 +149,8 @@ Thanks!
             <div className='lanky-header align-center'><span className='icon-join-default'></span>Email your friends, family and colleagues:</div>
             <a id='email-button' href='mailto:?subject={encodeURIComponent(petition.summary)}&body={encodeURIComponent(mailToMessage.replace("__TYPE__","mt")}' className='button xl300 background-moveon-bright-red'>Email your friends</a>
             <div className='disclaimer bump-top-3 hidden-phone'>Or copy and paste the text below into a message:</div>
-            <textarea ref={(input) => { this.emailTextarea = input }} className='hidden-phone' id='email-textarea' onClick={this.shareEmail} value={copyPasteMessage.replace("__TYPE__","cp")}></textarea>
+            <textarea ref={(input) => { this.emailTextarea = input }} className='hidden-phone' id='email-textarea'
+                      onClick={this.shareEmail} value={copyPasteMessage.replace("__TYPE__","cp")}></textarea>
           </div>
         </div>
       </div>

@@ -35,13 +35,14 @@ export function loadPetition(petitionSlug) {
     })
     return fetch(`${Config.API_URI}/api/v1/${urlKey}.json`)
       .then(
-        (response) => response.json().then((json) => {
-          dispatch({
-            type: actionTypes.FETCH_PETITION_SUCCESS,
-            petition: json,
-            slug: json.name || petitionSlug
-          })
-        }),
+        (response) => {
+          return response.json().then((json) => {
+            dispatch({
+              type: actionTypes.FETCH_PETITION_SUCCESS,
+              petition: json,
+              slug: json.name || petitionSlug
+            })
+        })},
         (err) => {
           dispatch({
             type: actionTypes.FETCH_PETITION_FAILURE,
@@ -53,7 +54,7 @@ export function loadPetition(petitionSlug) {
   }
 }
 
-export function signPetition(petitionSignature, petition) {
+export function signPetition(petitionSignature, petition, options) {
   return (dispatch) => {
     dispatch({
       type: actionTypes.PETITION_SIGNATURE_SUBMIT,
@@ -74,7 +75,10 @@ export function signPetition(petitionSignature, petition) {
             dispatchData.messageId = sqsResponse[1]
           }
         }
-        dispatch(dispatchData)
+        const dispatchResult = dispatch(dispatchData)
+        if (options && options.redirectOnSuccess) {
+          registerSignatureAndThanks(dispatchResult.petition)(dispatch)
+        }
       }
       if (data && typeof data.text == 'function') {
         data.text().then(finalDispatch)
@@ -123,6 +127,30 @@ export const registerSignatureAndThanks = (petition) => {
 
 }
 
+export const recordShareClick = (petition, medium, source, user) => {
+  if (window._gaq) {
+    _gaq.push(['_trackEvent', 'share', medium, petition.petition_id, 1])
+  }
+  if (Config.TRACK_SHARE_URL) {
+    const params = { 'page': window.location.pathname,
+                     'petition_id': petition.petition_id,
+                     'user_id': user && user.signonId,
+                     'medium': medium,
+                     'source': source }
+    const form = new FormData()
+    for (const p in params) {
+      form.append(p, params[p])
+    }
+    fetch(Config.TRACK_SHARE_URL, { // "/record_share_click.html"
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+      },
+      body: form
+    })
+  }
+}
+
 export const loadPetitionSignatures = (petitionSlug, page = 1) => {
   const urlKey = `petitions/${petitionSlug}/signatures`
   return (dispatch) => {
@@ -131,6 +159,14 @@ export const loadPetitionSignatures = (petitionSlug, page = 1) => {
       slug: petitionSlug,
       page
     })
+    const dispatchError = (err) => {
+      dispatch({
+        type: actionTypes.FETCH_PETITION_SIGNATURES_FAILURE,
+        error: err,
+        slug: petitionSlug,
+        page
+      })
+    }
     return fetch(`${Config.API_URI}/api/v1/${urlKey}.json?per_page=10&page=${page}`)
       .then(
         (response) => response.json().then((json) => {
@@ -140,22 +176,31 @@ export const loadPetitionSignatures = (petitionSlug, page = 1) => {
             slug: petitionSlug,
             page
           })
-        }),
-        (err) => {
-          dispatch({
-            type: actionTypes.FETCH_PETITION_SIGNATURES_FAILURE,
-            error: err,
-            slug: petitionSlug,
-            page
-          })
-        }
+        }, dispatchError),
+        dispatchError
       )
   }
+}
+
+export const getSharebanditShareLink = (petitionSharebanditUrl) => {
+  const jsonSampleUrl = petitionSharebanditUrl.replace('/r/0/', '/jsonaction/')
+  const fallbackResponse = (err) => {
+    console.log('Sharebandit trial loading failed', err)
+    return petitionSharebanditUrl
+  }
+  return fetch(`${jsonSampleUrl}`).then(
+    (success) => success.json().then(
+      (jsonData) => jsonData.shareurl,
+      fallbackResponse
+    ),
+    fallbackResponse)
 }
 
 export const actions = {
   loadPetition,
   signPetition,
   registerSignatureAndThanks,
-  loadPetitionSignatures
+  recordShareClick,
+  loadPetitionSignatures,
+  getSharebanditShareLink
 }
