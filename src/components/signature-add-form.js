@@ -86,7 +86,7 @@ class SignatureAddForm extends React.Component {
         },
         comments: this.state.comment
       }
-      dispatch(petitionActions.signPetition(osdiSignature, petition, /*redirectOnSuccess*/true))
+      dispatch(petitionActions.signPetition(osdiSignature, petition, {redirectOnSuccess: true}))
     }
     event.preventDefault()
     return false

@@ -54,7 +54,7 @@ export function loadPetition(petitionSlug) {
   }
 }
 
-export function signPetition(petitionSignature, petition, redirectOnSuccess) {
+export function signPetition(petitionSignature, petition, options) {
   return (dispatch) => {
     dispatch({
       type: actionTypes.PETITION_SIGNATURE_SUBMIT,
@@ -76,7 +76,7 @@ export function signPetition(petitionSignature, petition, redirectOnSuccess) {
           }
         }
         const dispatchResult = dispatch(dispatchData)
-        if (redirectOnSuccess) {
+        if (options && options.redirectOnSuccess) {
           registerSignatureAndThanks(dispatchResult.petition)(dispatch)
         }
       }
