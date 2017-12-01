@@ -23,7 +23,8 @@ class SignPetition extends React.Component {
     }
     return (
       <div>
-        <Petition petition={this.props.petition} />
+        <Petition petition={this.props.petition}
+                  query={this.props.location.query} />
       </div>
     )
   }

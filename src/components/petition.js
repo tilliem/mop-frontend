@@ -6,6 +6,7 @@ import { thanksLoader } from '../loaders/petition.js'
 import SignatureAddForm from './signature-add-form.js'
 import SignatureCount from './signature-count.js'
 import SignatureList from './signature-list.js'
+import PetitionFlagForm from './petition-flag-form.js'
 
 class Petition extends React.Component {
   componentDidMount() {
@@ -14,10 +15,41 @@ class Petition extends React.Component {
   }
 
   render() {
-    const { petition: p } = this.props
+    const { petition: p, query } = this.props
     const statement = text2paraJsx(p.summary)
     return (
       <div className='container'>
+        {(p.status === 'Past') ?
+         <div className='message-header'>
+           <span className='bell'>This petition has not been edited in a while. As a new legislative session has begun, it&#39;s possible some of the targets of this petition are out of date.</span>
+         </div>
+         : ((p.status !== 'Verified') ?
+            <div className='message-header'>
+              <PetitionFlagForm petition={p} />
+            </div>
+            : '')}
+
+        {(p.status === 'Bad') ?
+            <div className='message-header'>
+              <span className='bell'>MoveOn volunteers reviewed this petition and determined that it either may not reflect MoveOn members' progressive values, or that MoveOn members may disagree about whether to support this petition. MoveOn will not promote the petition beyond hosting it on our site. <a href="http://act.moveon.org/cms/thanks/thanks-your-input" target="_blank">Click here</a> if you think MoveOn should support this petition.
+              </span>
+            </div>
+            : ''}
+
+        {(p.tags && p.tags.filter(t => t.name === 'outcome:victory').length) ?
+            <div className="message-header">
+              <img src="/images/star.png" height="30" width="30" />
+              <span><strong>Victory!</strong> The creator of this petition declared the campaign a success. You can still sign the petition to show support.</span>
+            </div>
+            : ''}
+
+        {(query.fwd) ?
+            <div className='message-header'>
+              <span className='bell'>  We've forwarded you to this trending petition.  To return to your previous action, use your browser's back button.
+              </span>
+            </div>
+            : ''}
+
         <div className='row'>
           <SignatureAddForm petition={p} />
 
@@ -74,7 +106,8 @@ class Petition extends React.Component {
 }
 
 Petition.propTypes = {
-  petition: PropTypes.object.isRequired
+  petition: PropTypes.object.isRequired,
+  query: PropTypes.object
 }
 
 export default Petition
