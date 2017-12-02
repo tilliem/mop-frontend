@@ -10,57 +10,6 @@ export const actionTypes = {
   TOKEN_SESSION_FAILURE: 'TOKEN_SESSION_FAILURE'
 }
 
-export const loadSession = ({ location }) => {
-  // called straigt from top route onEnter, so it's done only once on first-load
-  const cookie = String(document.cookie).match(new RegExp(`${Config.SESSION_COOKIE_NAME}=([^;]+)`))
-
-  if (cookie) {
-    return loadUserSession()
-  } else if (location && location.query
-             && (location.query.akid || location.query.id)) {
-    const tokens = {}
-    if (location.query.akid) {
-      tokens.akid = location.query.akid
-    }
-    if (location.query.id) {
-      tokens.hashedId = location.query.id
-    }
-    return loadTokenSession(tokens)
-  } else {
-    return (dispatch) => {
-      dispatch({
-        type: actionTypes.ANONYMOUS_SESSION_START
-      })
-    }
-  }
-}
-
-export function loadTokenSession(tokens) {
-  return (dispatch) => {
-    const args = Object.keys(tokens)
-      .map((k) => ((tokens[k]) ? encodeURIComponent(k) + '=' + encodeURIComponent(tokens[k]) : ''))
-      .join('&')
-    fetch(`${Config.API_URI}/api/v1/user/session.json`
-          + ((args && args != '&') ? `?${args}` : '') )
-    .then(
-      (response) => response.json().then((json) => {
-        dispatch({
-          type: actionTypes.TOKEN_SESSION_START,
-          session: json,
-          tokens
-        })
-      }),
-      (err) => {
-        dispatch({
-          type: actionTypes.TOKEN_SESSION_FAILURE,
-          error: err,
-          tokens
-        })
-      }
-    )
-  }
-}
-
 export function loadUserSession() {
   return (dispatch) => {
     fetch(`${Config.API_URI}/api/v1/user/session.json`)
@@ -80,6 +29,57 @@ export function loadUserSession() {
     )
   }
 }
+
+export function loadTokenSession(tokens) {
+  return (dispatch) => {
+    const args = Object.keys(tokens)
+      .map((k) => ((tokens[k]) ? `${encodeURIComponent(k)}=${encodeURIComponent(tokens[k])}` : ''))
+      .join('&')
+    const queryString = (args && args !== '&') ? `?${args}` : ''
+    fetch(`${Config.API_URI}/api/v1/user/session.json${queryString}`)
+    .then(
+      (response) => response.json().then((json) => {
+        dispatch({
+          type: actionTypes.TOKEN_SESSION_START,
+          session: json,
+          tokens
+        })
+      }),
+      (err) => {
+        dispatch({
+          type: actionTypes.TOKEN_SESSION_FAILURE,
+          error: err,
+          tokens
+        })
+      }
+    )
+  }
+}
+
+export const loadSession = ({ location }) => {
+  // called straigt from top route onEnter, so it's done only once on first-load
+  const cookie = String(document.cookie).match(new RegExp(`${Config.SESSION_COOKIE_NAME}=([^;]+)`))
+
+  if (cookie) {
+    return loadUserSession()
+  } else if (location && location.query
+             && (location.query.akid || location.query.id)) {
+    const tokens = {}
+    if (location.query.akid) {
+      tokens.akid = location.query.akid
+    }
+    if (location.query.id) {
+      tokens.hashedId = location.query.id
+    }
+    return loadTokenSession(tokens)
+  }
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.ANONYMOUS_SESSION_START
+    })
+  }
+}
+
 
 export const actions = {
   loadTokenSession,

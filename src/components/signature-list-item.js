@@ -20,10 +20,10 @@ SignatureListItem.propTypes = {
   user: PropTypes.shape({
     city: PropTypes.string,
     state: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
   }),
   created_date: PropTypes.number.isRequired,
-  number: PropTypes.number.isRequired,
+  number: PropTypes.number.isRequired
 }
 
 export default SignatureListItem
