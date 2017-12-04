@@ -12,6 +12,10 @@ export const actionTypes = {
   FETCH_PETITION_SIGNATURES_SUCCESS: 'FETCH_PETITION_SIGNATURES_SUCCESS',
   FETCH_PETITION_SIGNATURES_FAILURE: 'FETCH_PETITION_SIGNATURES_FAILURE',
 
+  FETCH_TOP_PETITIONS_REQUEST: 'FETCH_TOP_PETITIONS_REQUEST',
+  FETCH_TOP_PETITIONS_SUCCESS: 'FETCH_TOP_PETITIONS_SUCCESS',
+  FETCH_TOP_PETITIONS_FAILURE: 'FETCH_TOP_PETITIONS_FAILURE',
+
   PETITION_SIGNATURE_SUBMIT: 'PETITION_SIGNATURE_SUBMIT',
   PETITION_SIGNATURE_SUCCESS: 'PETITION_SIGNATURE_SUCCESS',
   PETITION_SIGNATURE_FAILURE: 'PETITION_SIGNATURE_FAILURE'
@@ -47,6 +51,46 @@ export function loadPetition(petitionSlug) {
             type: actionTypes.FETCH_PETITION_FAILURE,
             error: err,
             slug: petitionSlug
+          })
+        }
+      )
+  }
+}
+
+export function loadTopPetitions(pac, megapartner) {
+  let urlKey = 'top-petitions'
+  if (pac) {
+    if (megapartner) {
+      urlKey += `?megapartner=${megapartner}&pac=1`
+    } else {
+      urlKey += '?pac=1'
+    }
+  } else if (megapartner) {
+    urlKey += `?megapartner=${megapartner}`
+  }
+
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.FETCH_TOP_PETITIONS_REQUEST,
+      pac,
+      megapartner
+    })
+    return fetch(`${Config.API_URI}/api/v1/${urlKey}.json`)
+      .then(
+        (response) => response.json().then((json) => {
+          dispatch({
+            type: actionTypes.FETCH_TOP_PETITIONS_SUCCESS,
+            petitions: json._embedded,
+            pac,
+            megapartner
+          })
+        }),
+        (err) => {
+          dispatch({
+            type: actionTypes.FETCH_TOP_PETITIONS_FAILURE,
+            error: err,
+            pac,
+            megapartner
           })
         }
       )

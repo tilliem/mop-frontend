@@ -13,7 +13,8 @@ const initialPetitionState = {
   petitions: {}, // keyed by slug AND petition_id for petition route
   petitionSignatures: {}, // keyed by petition slug, then page
   signatureStatus: {}, // keyed by petition_id (because form doesn't have slug)
-  signatureMessages: {} // keyed by petition_id, MessageId value from SQS post
+  signatureMessages: {}, // keyed by petition_id, MessageId value from SQS post
+  topPetitions: {} // lists of petition IDs keyed by pac then megapartner
 }
 
 const initialUserState = {
@@ -32,9 +33,19 @@ const initialUserState = {
 }
 
 function petitionReducer(state = initialPetitionState, action) {
-  const { type, petition: petitionWithoutSlug, slug, page, signatures } = action
+  const {
+    type,
+    petition: petitionWithoutSlug,
+    slug,
+    page,
+    signatures,
+    petitions,
+    pac,
+    megapartner
+  } = action
   let petition = {}
   let updateData = {}
+  let topPetitionsKey = ''
   if (typeof petitionWithoutSlug === 'object') {
     petition = Object.assign(petitionWithoutSlug, { slug })
   } else if (slug && typeof state.petitions[slug] !== 'undefined') {
@@ -84,6 +95,19 @@ function petitionReducer(state = initialPetitionState, action) {
             [petition.petition_id]: petition
           }
         )
+      })
+    case petitionActionTypes.FETCH_TOP_PETITIONS_SUCCESS:
+      topPetitionsKey = `${pac}--${megapartner}`
+      return Object.assign({}, state, {
+        petitions: petitions.reduce((addedPetitions, topPetition) => Object.assign(
+          {}, addedPetitions, {
+            [topPetition.name]: topPetition,
+            [topPetition.petition_id]: topPetition
+          }
+        ), state.petitions),
+        topPetitions: Object.assign({}, state.topPetitions, {
+          [topPetitionsKey]: petitions.map(topPetition => topPetition.petition_id)
+        })
       })
     default:
       return state

@@ -37,7 +37,7 @@ const RecentVictoryList = () => (
         <h4>VICTORY: New York Times Works to Inform Readers on Budget</h4>
       </a>
       <p className='blurb'>
-        The New York Times' tendency to report on budget numbers without contextualizing them was a problem - especially in light of the recent federal budget crisis. MoveOn member (and former staffer) Daniel Mintz and Robert Naiman of Just Foreign Policy started MoveOn Petitions to Times Public Editor Margaret Sullivan, asking her to institute a policy of always reporting budget numbers with percentages or comparisons.
+        The New York Times&#39; tendency to report on budget numbers without contextualizing them was a problem - especially in light of the recent federal budget crisis. MoveOn member (and former staffer) Daniel Mintz and Robert Naiman of Just Foreign Policy started MoveOn Petitions to Times Public Editor Margaret Sullivan, asking her to institute a policy of always reporting budget numbers with percentages or comparisons.
         <a href='http://front.moveon.org/victory-ny-times-works-to-inform-readers-on-budget/?rc=petitionshp'>(Read More)</a>
       </p>
     </article>
