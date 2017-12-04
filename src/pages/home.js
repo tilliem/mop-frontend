@@ -5,12 +5,12 @@ import SearchBar from '../components/searchbar'
 import RecentVictoryList from '../components/recentvictory.js'
 
 const Home = () => (
-  <div className="container background-moveon-white bump-top-1">
-   <BillBoard />
-   <SearchBar />
-   <div className="row front-content">
-     <RecentVictoryList />
-   </div>
+  <div className='container background-moveon-white bump-top-1'>
+    <BillBoard />
+    <SearchBar />
+    <div className='row front-content'>
+      <RecentVictoryList />
+    </div>
   </div>
 )
 

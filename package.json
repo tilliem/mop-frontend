@@ -10,7 +10,7 @@
     "build": "webpack -d",
     "webpack-watch": "webpack -w",
     "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --progress --colors --port ${PORT:-8080} --inline",
-    "lint": "eslint src/**.js",
+    "lint": "eslint \"src/**/*.js\"",
     "lint-and-test": "npm run lint && npm test"
   },
   "author": "",

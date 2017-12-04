@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const CountrySelect = ({value, onChange}) => (
+const CountrySelect = ({ value, onChange }) => (
   <select
-    name="country"
-    className="span4 country_select moveon-track-click"
+    name='country'
+    className='span4 country_select moveon-track-click'
     value={value}
     onChange={onChange}
   >

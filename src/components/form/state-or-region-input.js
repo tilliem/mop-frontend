@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import StateSelect from './state-select'
 
-const StateOrRegionInput = ({country, stateOnChange, stateValidationError, regionOnChange}) => {
+const StateOrRegionInput = ({ country, stateOnChange, stateValidationError, regionOnChange }) => {
   if (country === 'United States') {
     return (
       <div>
@@ -14,12 +14,13 @@ const StateOrRegionInput = ({country, stateOnChange, stateValidationError, regio
   }
   return (
     <input
-      type="text"
-      name="region"
-      placeholder="Region"
-      className="region moveon-track-click"
+      type='text'
+      name='region'
+      placeholder='Region'
+      className='region moveon-track-click'
       onChange={regionOnChange}
-      onBlur={regionOnChange} />
+      onBlur={regionOnChange}
+    />
   )
 }
 

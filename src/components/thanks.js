@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { moNumber2base62 } from '../lib'
 import { actions as petitionActions } from '../actions/petitionActions.js'
 
 class Thanks extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      'pre': 's' // TODO
+      pre: 's' // TODO
     }
     this.recordShare = this.recordShare.bind(this)
     this.shareLink = this.shareLink.bind(this)
@@ -23,29 +22,30 @@ class Thanks extends React.Component {
 
   shareLink(evt) {
     evt.target.select()
-    this.recordShareClick("email", this.state.pre + ".ln.cp");
+    this.recordShareClick('email', `${this.state.pre}.ln.cp`)
   }
 
   shareEmail(evt) {
     evt.target.select()
-    this.recordShareClick("email", this.state.pre + ".em.cp");
+    this.recordShareClick('email', `${this.state.pre}.em.cp`)
   }
 
   openFacebookSharing(urlToShare) {
-    var preChar = ( (/\?/.test(urlToShare)) ? '&' : '?');
-    let fbUrl = urlToShare + preChar +"source="+ this.state.pre +".fb"
+    const { user } = this.props
+    const preChar = ((/\?/.test(urlToShare)) ? '&' : '?')
+    let fbUrl = `${urlToShare}${preChar}source=${this.state.pre}.fb`
     if (user.signonId) {
-      fbUrl = fbUrl + "&r_by=" + user.signonId
+      fbUrl = `${fbUrl}&r_by=${user.signonId}`
     } // TODO: signatureMessages hash alternative
-    window.open("https://www.facebook.com/share.php?u=" + encodeURIComponent(fbUrl));
+    window.open(`https://www.facebook.com/share.php?u=${encodeURIComponent(fbUrl)}`)
   }
 
-  shareFacebook(evt) {
-    const { petition, user } = this.props
+  shareFacebook() {
+    const { petition } = this.props
     const shareOpts = (petition.share_options && petition.share_options[0]) || {}
     const self = this
     setTimeout(() => {
-      self.recordShareClick("facebook", self.state.pre + ".fb")
+      self.recordShareClick('facebook', `${self.state.pre}.fb`)
     }, 100)
     let fbUrl = petition._links.url
     if (shareOpts.facebook_share && shareOpts.facebook_share.share_url) {
@@ -59,14 +59,14 @@ class Thanks extends React.Component {
       fbUrl = shareOpts.facebook_share.share_url
     }
     this.openFacebookSharing(fbUrl)
-    return false;
+    return false
   }
 
-  shareTwitter(evt) {
-    var url = ('http://twitter.com/intent/tweet?text=' +
-               encodeURIComponent(this.tweetTextArea.value));
-    window.open(url);
-    this.recordShareClick('twitter', this.state.pre + ".tw")
+  shareTwitter() {
+    const encodedValue = encodeURIComponent(this.tweetTextArea.value)
+    const url = `http://twitter.com/intent/tweet?text=${encodedValue}`
+    window.open(url)
+    this.recordShareClick('twitter', `${this.state.pre}.tw`)
   }
 
   render() {
@@ -76,7 +76,7 @@ class Thanks extends React.Component {
     const actedOn = (creator ? 'created' : 'signed')
     const userId = user.signonId || '123' // TODO
     const link = petition._links.url // TODO: ref_by_id, shortening, etc
-    const target = (petition.target.slice(0,3).map(t => t.name).join(' and ')
+    const target = (petition.target.slice(0, 3).map(t => t.name).join(' and ')
                     + ((petition.target.length > 3) ? ' and others' : ''))
     const shareOpts = (petition.share_options && petition.share_options[0]) || {}
     // convert description to text
@@ -90,13 +90,13 @@ class Thanks extends React.Component {
       tweet = `${petition.title.slice(0, 140 - suffix.length)} ${suffix}`
     }
 
-    // TODO: previous code for mailToMessage tries a bunch of permutations if this is >1024 characters. 
+    // TODO: previous code for mailToMessage tries a bunch of permutations if this is >1024 characters.
     // We could possibly implement this by making any of these versions server-side
     const mailToMessage = (shareOpts.email_share || `Hi,
 
 ${textDescription.textContent}
 
-That\'s why I ${actedOn} a petition to ${target}, which says:
+That's why I ${actedOn} a petition to ${target}, which says:
 
 "${petition.summary}"
 
@@ -123,18 +123,25 @@ Thanks!
             <span className='icon-fb-default'></span>
             Tell your friends on Facebook:
           </div>
-          <button id='facebook-button' className='xl300 background-facebook-blue'
-            onClick={this.shareFacebook} >Share on Facebook</button>
+          <button
+            id='facebook-button'
+            className='xl300 background-facebook-blue'
+            onClick={this.shareFacebook}
+          >Share on Facebook</button>
           <div className='lanky-header bump-top-3 align-center'>
             <span className='icon-twitter-default'></span>
             Tweet your followers:
           </div>
-          <button id='twitter-button' className='xl300 background-moveon-bright-red'
-            onClick={this.shareTwitter}>Tweet This</button>
-          <textarea className='hidden' id='tweet_text'
-                    defaultValue={tweet}
-                    ref={(input) => { this.tweetTextArea = input }}
-            ></textarea>
+          <button
+            id='twitter-button'
+            className='xl300 background-moveon-bright-red'
+            onClick={this.shareTwitter}
+          >Tweet This</button>
+          <textarea
+            className='hidden' id='tweet_text'
+            defaultValue={tweet}
+            ref={(input) => { this.tweetTextArea = input }}
+          ></textarea>
           <div className='lanky-header bump-top-3 align-center'>
             Send a link:
           </div>
@@ -149,8 +156,12 @@ Thanks!
             <div className='lanky-header align-center'><span className='icon-join-default'></span>Email your friends, family and colleagues:</div>
             <a id='email-button' href='mailto:?subject={encodeURIComponent(petition.summary)}&body={encodeURIComponent(mailToMessage.replace("__TYPE__","mt")}' className='button xl300 background-moveon-bright-red'>Email your friends</a>
             <div className='disclaimer bump-top-3 hidden-phone'>Or copy and paste the text below into a message:</div>
-            <textarea ref={(input) => { this.emailTextarea = input }} className='hidden-phone' id='email-textarea'
-                      onClick={this.shareEmail} value={copyPasteMessage.replace("__TYPE__","cp")}></textarea>
+            <textarea
+              ref={(input) => { this.emailTextarea = input }}
+              className='hidden-phone' id='email-textarea'
+              onClick={this.shareEmail}
+              value={copyPasteMessage.replace('__TYPE__', 'cp')}
+            ></textarea>
           </div>
         </div>
       </div>
