@@ -31,7 +31,7 @@ class Petition extends React.Component {
 
         {(p.status === 'Bad') ?
             <div className='message-header'>
-              <span className='bell'>MoveOn volunteers reviewed this petition and determined that it either may not reflect MoveOn members' progressive values, or that MoveOn members may disagree about whether to support this petition. MoveOn will not promote the petition beyond hosting it on our site. <a href="http://act.moveon.org/cms/thanks/thanks-your-input" target="_blank">Click here</a> if you think MoveOn should support this petition.
+              <span className='bell'>MoveOn volunteers reviewed this petition and determined that it either may not reflect MoveOn members&#39; progressive values, or that MoveOn members may disagree about whether to support this petition. MoveOn will not promote the petition beyond hosting it on our site. <a href="http://act.moveon.org/cms/thanks/thanks-your-input" target="_blank">Click here</a> if you think MoveOn should support this petition.
               </span>
             </div>
             : ''}
@@ -45,7 +45,7 @@ class Petition extends React.Component {
 
         {(query.fwd) ?
             <div className='message-header'>
-              <span className='bell'>  We've forwarded you to this trending petition.  To return to your previous action, use your browser's back button.
+              <span className='bell'>  We&#39;ve forwarded you to this trending petition.  To return to your previous action, use your browser&#39;s back button.
               </span>
             </div>
             : ''}
