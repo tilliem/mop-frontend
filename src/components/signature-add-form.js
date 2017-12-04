@@ -128,7 +128,7 @@ class SignatureAddForm extends React.Component {
               ? // Recognized
               <div id='recognized' className='bump-bottom-1' styleX='margin-bottom: 1em'>
                 <strong>Welcome back {user.given_name}!</strong>
-                <div> (Not {user.given_name}? <a href='javascript:unrecognize();'>Click here.</a>) </div>
+                <div> (Not {user.given_name}? <a href='#' onClick={() => { if (window.$) { window.$('.unrecognized').show(); window.$('#recognized').hide(); window.$('#recognized_user_field').val(0) } }}>Click here.</a>) </div>
               </div>
               : // Anonymous
               <div className='unrecognized'>
