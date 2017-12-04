@@ -59,7 +59,7 @@ export function loadPetition(petitionSlug) {
 
 export function loadTopPetitions(pac, megapartner) {
   let urlKey = 'top-petitions'
-  if (pac === 1) {
+  if (pac) {
     if (megapartner) {
       urlKey += `?megapartner=${megapartner}&pac=1`
     } else {
