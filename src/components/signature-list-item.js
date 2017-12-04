@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 
 import { formatDate } from '../lib.js'
 
-const SignatureListItem = ({ user, created_date, number }) => {
+const SignatureListItem = ({ user, createdDate, number }) => {
   const { city, state, name } = user
   const location = ((!city) ? state : `${city}, ${state}`)
   const fromLocation = ((location === '') ? '' : `from ${location}`)
-  const date = new Date(created_date)
+  const date = new Date(createdDate)
   return (
     <li className='signer'>
       <span className='signer-number'>{number}</span>{' '}
@@ -22,7 +22,7 @@ SignatureListItem.propTypes = {
     state: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
   }),
-  created_date: PropTypes.number.isRequired,
+  createdDate: PropTypes.number.isRequired,
   number: PropTypes.number.isRequired
 }
 
