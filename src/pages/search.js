@@ -1,20 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 
-class SearchPage extends React.Component {
+const SearchPage = () => (
+  <div>
+    <h2> Search Page </h2>
+  </div>
+)
 
-  render() {
-    return (
-      <div>
-        <h2> Search Page </h2>
-      </div>
-    )
-  }
-}
-
-function mapStateToProps(store, ownProps) {
-  return {}
-}
-
-export default connect(mapStateToProps)(SearchPage)
+export default SearchPage

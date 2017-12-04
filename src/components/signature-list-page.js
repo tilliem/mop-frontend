@@ -6,12 +6,12 @@ import SignatureListItem from './signature-list-item.js'
 const SignatureListPage = ({ signatures, startNumber }) => (
   <div className='signature-table'>
     <ul className='unstyled'>
-    {signatures.map(({user, created_date}, index) => (
+    {signatures.map(({ user, created_date: createdDate }, index) => (
       <SignatureListItem
         key={startNumber + index}
         number={startNumber + index}
         user={user}
-        created_date={created_date}
+        createdDate={createdDate}
       />
     ))}
     </ul>

@@ -99,7 +99,26 @@ export function loadTopPetitions(pac, megapartner) {
   }
 }
 
-export function signPetition(petitionSignature, petition) {
+export const registerSignatureAndThanks = (petition) => () => {
+  // 1. track petition success
+  if (window.fbq) {
+    window.fbq('track', 'Lead') // facebook lead
+  }
+  // 2. show thanks page
+  let thanksUrl = 'thanks.html'
+  if (petition.thanks_url) {
+    if (/^https?:\/\//.test(petition.thanks_url)) {
+      document.location = petition.thanks_url // TODO: maybe add some query params
+      return
+    }
+    thanksUrl = petition.thanks_url
+  }
+  appLocation.push(`${thanksUrl}?petition_id=${
+    petition.petition_id
+  }&name=${petition.name}`)
+}
+
+export function signPetition(petitionSignature, petition, options) {
   return (dispatch) => {
     dispatch({
       type: actionTypes.PETITION_SIGNATURE_SUBMIT,
@@ -107,7 +126,7 @@ export function signPetition(petitionSignature, petition) {
       signature: petitionSignature
     })
 
-    const completion = function(data) {
+    const completion = (data) => {
       const finalDispatch = (text) => {
         const dispatchData = {
           type: actionTypes.PETITION_SIGNATURE_SUCCESS,
@@ -115,14 +134,17 @@ export function signPetition(petitionSignature, petition) {
           signature: petitionSignature
         }
         if (text) {
-          const sqsResponse = text.match(/\<MessageId\>(.*)\<\/MessageId\>/)
+          const sqsResponse = text.match(/<MessageId>(.*)<\/MessageId>/)
           if (sqsResponse) {
             dispatchData.messageId = sqsResponse[1]
           }
         }
-        dispatch(dispatchData)
+        const dispatchResult = dispatch(dispatchData)
+        if (options && options.redirectOnSuccess) {
+          registerSignatureAndThanks(dispatchResult.petition)(dispatch)
+        }
       }
-      if (data && typeof data.text == 'function') {
+      if (data && typeof data.text === 'function') {
         data.text().then(finalDispatch)
       } else {
         finalDispatch()
@@ -132,13 +154,13 @@ export function signPetition(petitionSignature, petition) {
       fetch(`${Config.API_URI}/sign-petition`, {
         method: 'POST',
         body: JSON.stringify(petitionSignature)
-      }).then(completion, function(err) {
+      }).then(completion, (err) => {
         dispatch({
           type: actionTypes.PETITION_SIGNATURE_FAILURE,
           petition,
           signature: petitionSignature,
           error: err
-      })
+        })
       })
     } else {
       completion()
@@ -146,27 +168,30 @@ export function signPetition(petitionSignature, petition) {
   }
 }
 
-export const registerSignatureAndThanks = (petition) => {
-  return (dispatch) => {
-    // 1. track petition success
-    if (window.fbq) {
-      fbq('track', 'Lead') // facebook lead
-    }
-    // 2. show thanks page
-    let thanks_url = 'thanks.html'
-    if (petition.thanks_url) {
-      if (/^https?:\/\//.test(petition.thanks_url)) {
-        document.location = petition.thanks_url // TODO: maybe add some query params
-        return
-      } else {
-        thanks_url = petition.thanks_url
-      }
-    }
-    appLocation.push(`${thanks_url}?petition_id=${
-      petition.petition_id
-    }&name=${petition.name}`)
+export const recordShareClick = (petition, medium, source, user) => {
+  if (window._gaq) {
+    window._gaq.push(['_trackEvent', 'share', medium, petition.petition_id, 1])
   }
-
+  if (Config.TRACK_SHARE_URL) {
+    const params = {
+      page: window.location.pathname,
+      petition_id: petition.petition_id,
+      user_id: user && user.signonId,
+      medium,
+      source
+    }
+    const form = new FormData()
+    Object.keys(params).forEach(p => {
+      form.append(p, params[p])
+    })
+    fetch(Config.TRACK_SHARE_URL, { // "/record_share_click.html"
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+      },
+      body: form
+    })
+  }
 }
 
 export const loadPetitionSignatures = (petitionSlug, page = 1) => {
@@ -177,6 +202,14 @@ export const loadPetitionSignatures = (petitionSlug, page = 1) => {
       slug: petitionSlug,
       page
     })
+    const dispatchError = (err) => {
+      dispatch({
+        type: actionTypes.FETCH_PETITION_SIGNATURES_FAILURE,
+        error: err,
+        slug: petitionSlug,
+        page
+      })
+    }
     return fetch(`${Config.API_URI}/api/v1/${urlKey}.json?per_page=10&page=${page}`)
       .then(
         (response) => response.json().then((json) => {
@@ -186,22 +219,28 @@ export const loadPetitionSignatures = (petitionSlug, page = 1) => {
             slug: petitionSlug,
             page
           })
-        }),
-        (err) => {
-          dispatch({
-            type: actionTypes.FETCH_PETITION_SIGNATURES_FAILURE,
-            error: err,
-            slug: petitionSlug,
-            page
-          })
-        }
+        }, dispatchError),
+        dispatchError
       )
   }
+}
+
+export const getSharebanditShareLink = (petitionSharebanditUrl) => {
+  const jsonSampleUrl = petitionSharebanditUrl.replace('/r/0/', '/jsonaction/')
+  const fallbackResponse = () => petitionSharebanditUrl
+  return fetch(`${jsonSampleUrl}`).then(
+    (success) => success.json().then(
+      (jsonData) => jsonData.shareurl,
+      fallbackResponse
+    ),
+    fallbackResponse)
 }
 
 export const actions = {
   loadPetition,
   signPetition,
   registerSignatureAndThanks,
-  loadPetitionSignatures
+  recordShareClick,
+  loadPetitionSignatures,
+  getSharebanditShareLink
 }

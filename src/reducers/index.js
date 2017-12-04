@@ -35,6 +35,7 @@ const initialUserState = {
 function petitionReducer(state = initialPetitionState, action) {
   const { type, petition: petitionWithoutSlug, slug, page, signatures } = action
   let petition = {}
+  let updateData = {}
   if (typeof petitionWithoutSlug === 'object') {
     petition = Object.assign(petitionWithoutSlug, { slug })
   } else if (slug && typeof state.petitions[slug] !== 'undefined') {
@@ -52,19 +53,17 @@ function petitionReducer(state = initialPetitionState, action) {
         )
       })
     case petitionActionTypes.PETITION_SIGNATURE_SUCCESS:
-      const updateData = {
-        'signatureStatus': Object.assign(
+      updateData = {
+        signatureStatus: Object.assign(
           {}, state.signatureStatus, { [petition.petition_id]: 'success' })
       }
       if (action.messageId) {
-        updateData['signatureMessages'] = Object.assign(
+        updateData.signatureMessages = Object.assign(
           {}, state.signatureMessages, { [petition.petition_id]: action.messageId })
       }
       return Object.assign({}, state, updateData)
     case petitionActionTypes.FETCH_PETITION_SIGNATURES_SUCCESS:
-      petition.signatureCount = signatures.count
-      // TODO: get signatureGoal from API
-      petition.signatureGoal = 1000000
+      petition.total_signatures = signatures.count
       return Object.assign({}, state, {
         petitionSignatures: Object.assign(
           {}, state.petitionSignatures, {
@@ -113,7 +112,6 @@ function userReducer(state = initialUserState, action) {
     case sessionActionTypes.ANONYMOUS_SESSION_START:
       newData.anonymous = true
       return Object.assign({}, state, newData)
-      break;
     // NOTE: the next 4 cases depend on switch-case fall-through
     // there are no breaks purposefully
     case sessionActionTypes.USER_SESSION_START:
@@ -135,7 +133,6 @@ function userReducer(state = initialUserState, action) {
     case sessionActionTypes.USER_SESSION_FAILURE:
     case sessionActionTypes.TOKEN_SESSION_FAILURE:
       return Object.assign({}, state, newData)
-      break;
     case petitionActionTypes.PETITION_SIGNATURE_SUBMIT:
       // if it's an anonymous user or we get useful session information
       // then copy it into userData
@@ -157,10 +154,8 @@ function userReducer(state = initialUserState, action) {
           newData.country = address.country_name
         }
         return Object.assign({}, state, newData)
-      } else {
-        return state
       }
-      break;
+      return state
     default:
       return state
   }

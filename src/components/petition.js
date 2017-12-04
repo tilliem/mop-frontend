@@ -22,7 +22,7 @@ class Petition extends React.Component {
           <SignatureAddForm petition={p} />
 
           <div className='span8 pull-right petition-info-top'>
-            <div className='percent-95 padding-left-15 form-wrapper responsive padding-bottom-1 padding-left-2 padding-right-3' style={{marginLeft: '-20px', position: 'relative'}}>
+            <div className='percent-95 padding-left-15 form-wrapper responsive padding-bottom-1 padding-left-2 padding-right-3' style={{ marginLeft: '-20px', position: 'relative' }}>
               <div className='petition-top hidden-phone'>
                 <h1 id='petition-title' className='moveon-bright-red big-title'>{p.title}</h1>
                 <p id='by' className='byline lh-20'>Petition by <a href='/contact_creator.html?petition_id=95935' className='underline'>{p.contact_name}</a></p>
@@ -34,12 +34,12 @@ class Petition extends React.Component {
                 <div id='pet-statement'>{statement}</div>
               </div>
 
-              <SignatureCount current={p.signatureCount} goal={p.signatureGoal} />
+              <SignatureCount current={p.total_signatures} goal={p.signature_goal} />
             </div>
 
             <div className='clear'></div>
 
-            <div id='pet-explain' className='background-moveon-white bump-top-1 padding-left-2' style={{marginLeft: '-20px'}}>
+            <div id='pet-explain' className='background-moveon-white bump-top-1 padding-left-2' style={{ marginLeft: '-20px' }}>
               <div className='widget'>
                 <div className='widget-top'>
                   <h3 className='moveon-bright-red padding-bottom-1'>Petition Background</h3>
@@ -54,7 +54,7 @@ class Petition extends React.Component {
 
                 <SignatureList
                   petitionSlug={p.slug}
-                  signatureCount={p.signatureCount}
+                  signatureCount={p.total_signatures}
                 />
 
                 <div>
