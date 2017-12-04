@@ -42,10 +42,10 @@ TopPetitions.propTypes = {
 const mapStateToProps = (store, ownProps) => {
   const {pac, megapartner} = ownProps
   const topPetitionsState = store.petitionStore.topPetitions
+  const topPetitionsKey = `${pac}--${megapartner}`
   const topPetitionsProp = (
-    typeof topPetitionsState[pac] === 'undefined' ||
-    typeof topPetitionsState[pac][megapartner] === 'undefined'
-  ) ? false : topPetitionsState[pac][megapartner].map(petitionId => store.petitionStore.petitions[petitionId])
+    typeof topPetitionsState[topPetitionsKey] === 'undefined'
+  ) ? false : topPetitionsState[topPetitionsKey].map(petitionId => store.petitionStore.petitions[petitionId])
   return {
     topPetitions: topPetitionsProp
   }

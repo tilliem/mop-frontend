@@ -88,6 +88,7 @@ function petitionReducer(state = initialPetitionState, action) {
       })
     case petitionActionTypes.FETCH_TOP_PETITIONS_SUCCESS:
       const {petitions, pac, megapartner} = action
+      const topPetitionsKey = `${pac}--${megapartner}`
       return Object.assign({}, state, {
         petitions: petitions.reduce((addedPetitions, petition) => {
           addedPetitions[petition.name] = petition
@@ -95,9 +96,7 @@ function petitionReducer(state = initialPetitionState, action) {
           return addedPetitions
         }, state.petitions),
         topPetitions: Object.assign({}, state.topPetitions, {
-          [pac]: Object.assign({}, state.topPetitions[pac], {
-            [megapartner]: petitions.map(petition => petition.petition_id)
-          })
+          [topPetitionsKey]: petitions.map(petition => petition.petition_id)
         })
       })
     default:
