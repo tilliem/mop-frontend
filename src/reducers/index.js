@@ -33,9 +33,19 @@ const initialUserState = {
 }
 
 function petitionReducer(state = initialPetitionState, action) {
-  const { type, petition: petitionWithoutSlug, slug, page, signatures } = action
+  const {
+    type,
+    petition: petitionWithoutSlug,
+    slug,
+    page,
+    signatures,
+    petitions,
+    pac,
+    megapartner
+  } = action
   let petition = {}
   let updateData = {}
+  let topPetitionsKey = ''
   if (typeof petitionWithoutSlug === 'object') {
     petition = Object.assign(petitionWithoutSlug, { slug })
   } else if (slug && typeof state.petitions[slug] !== 'undefined') {
@@ -87,16 +97,16 @@ function petitionReducer(state = initialPetitionState, action) {
         )
       })
     case petitionActionTypes.FETCH_TOP_PETITIONS_SUCCESS:
-      const {petitions, pac, megapartner} = action
-      const topPetitionsKey = `${pac}--${megapartner}`
+      topPetitionsKey = `${pac}--${megapartner}`
       return Object.assign({}, state, {
-        petitions: petitions.reduce((addedPetitions, petition) => {
-          addedPetitions[petition.name] = petition
-          addedPetitions[petition.petition_id] = petition
-          return addedPetitions
-        }, state.petitions),
+        petitions: petitions.reduce((addedPetitions, topPetition) => Object.assign(
+          {}, addedPetitions, {
+            [topPetition.name]: topPetition,
+            [topPetition.petition_id]: topPetition
+          }
+        ), state.petitions),
         topPetitions: Object.assign({}, state.topPetitions, {
-          [topPetitionsKey]: petitions.map(petition => petition.petition_id)
+          [topPetitionsKey]: petitions.map(topPetition => topPetition.petition_id)
         })
       })
     default:

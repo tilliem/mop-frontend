@@ -8,27 +8,26 @@ import { loadTopPetitions } from '../actions/petitionActions.js'
 
 class TopPetitions extends React.Component {
   componentDidMount() {
-    const {pac, megapartner, topPetitions, loadPetitions} = this.props
+    const { pac, megapartner, topPetitions, loadPetitions } = this.props
     if (!topPetitions) {
       loadPetitions(pac, megapartner)
     }
   }
 
   render() {
-    const {topPetitions, source } = this.props
+    const { topPetitions, source } = this.props
     const petitionList = (topPetitions) ? topPetitions.map(petition => (
       <PetitionPreview petition={petition} source={source} />
     )) : ''
 
     return (
-      <div id="campaign-widget" className="span6 widget clearfix pull-right">
-        <div className="widget-top">
+      <div id='campaign-widget' className='span6 widget clearfix pull-right'>
+        <div className='widget-top'>
           <h3>Hot Petitions</h3>
         </div>
         {petitionList}
       </div>
     )
-
   }
 }
 
@@ -36,11 +35,12 @@ TopPetitions.propTypes = {
   pac: PropTypes.number,
   megapartner: PropTypes.string,
   source: PropTypes.string,
-  topPetitions: PropTypes.oneOfType([PropTypes.array, PropTypes.bool])
+  topPetitions: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  loadPetitions: PropTypes.func
 }
 
 const mapStateToProps = (store, ownProps) => {
-  const {pac, megapartner} = ownProps
+  const { pac, megapartner } = ownProps
   const topPetitionsState = store.petitionStore.topPetitions
   const topPetitionsKey = `${pac}--${megapartner}`
   const topPetitionsProp = (

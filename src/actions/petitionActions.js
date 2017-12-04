@@ -58,24 +58,22 @@ export function loadPetition(petitionSlug) {
 }
 
 export function loadTopPetitions(pac, megapartner) {
-  let urlKey = `top-petitions`
+  let urlKey = 'top-petitions'
   if (pac === 1) {
     if (megapartner) {
       urlKey += `?megapartner=${megapartner}&pac=1`
-    }
-    else {
+    } else {
       urlKey += '?pac=1'
     }
-  }
-  else if (megapartner) {
+  } else if (megapartner) {
     urlKey += `?megapartner=${megapartner}`
   }
 
   return (dispatch) => {
     dispatch({
       type: actionTypes.FETCH_TOP_PETITIONS_REQUEST,
-      pac: pac,
-      megapartner: megapartner
+      pac,
+      megapartner
     })
     return fetch(`${Config.API_URI}/api/v1/${urlKey}.json`)
       .then(
@@ -83,16 +81,16 @@ export function loadTopPetitions(pac, megapartner) {
           dispatch({
             type: actionTypes.FETCH_TOP_PETITIONS_SUCCESS,
             petitions: json._embedded,
-            pac: pac,
-            megapartner: megapartner
+            pac,
+            megapartner
           })
         }),
         (err) => {
           dispatch({
             type: actionTypes.FETCH_TOP_PETITIONS_FAILURE,
             error: err,
-            pac: pac,
-            megapartner: megapartner
+            pac,
+            megapartner
           })
         }
       )
