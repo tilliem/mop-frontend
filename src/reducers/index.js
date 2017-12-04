@@ -13,7 +13,8 @@ const initialPetitionState = {
   petitions: {}, // keyed by slug AND petition_id for petition route
   petitionSignatures: {}, // keyed by petition slug, then page
   signatureStatus: {}, // keyed by petition_id (because form doesn't have slug)
-  signatureMessages: {} // keyed by petition_id, MessageId value from SQS post
+  signatureMessages: {}, // keyed by petition_id, MessageId value from SQS post
+  topPetitions: {} // lists of petition IDs keyed by pac then megapartner
 }
 
 const initialUserState = {
@@ -32,8 +33,19 @@ const initialUserState = {
 }
 
 function petitionReducer(state = initialPetitionState, action) {
-  const { type, petition: petitionWithoutSlug, slug, page, signatures } = action
+  const {
+    type,
+    petition: petitionWithoutSlug,
+    slug,
+    page,
+    signatures,
+    petitions,
+    pac,
+    megapartner
+  } = action
   let petition = {}
+  let updateData = {}
+  let topPetitionsKey = ''
   if (typeof petitionWithoutSlug === 'object') {
     petition = Object.assign(petitionWithoutSlug, { slug })
   } else if (slug && typeof state.petitions[slug] !== 'undefined') {
@@ -51,12 +63,12 @@ function petitionReducer(state = initialPetitionState, action) {
         )
       })
     case petitionActionTypes.PETITION_SIGNATURE_SUCCESS:
-      const updateData = {
-        'signatureStatus': Object.assign(
+      updateData = {
+        signatureStatus: Object.assign(
           {}, state.signatureStatus, { [petition.petition_id]: 'success' })
       }
       if (action.messageId) {
-        updateData['signatureMessages'] = Object.assign(
+        updateData.signatureMessages = Object.assign(
           {}, state.signatureMessages, { [petition.petition_id]: action.messageId })
       }
       return Object.assign({}, state, updateData)
@@ -84,6 +96,19 @@ function petitionReducer(state = initialPetitionState, action) {
           }
         )
       })
+    case petitionActionTypes.FETCH_TOP_PETITIONS_SUCCESS:
+      topPetitionsKey = `${pac}--${megapartner}`
+      return Object.assign({}, state, {
+        petitions: petitions.reduce((addedPetitions, topPetition) => Object.assign(
+          {}, addedPetitions, {
+            [topPetition.name]: topPetition,
+            [topPetition.petition_id]: topPetition
+          }
+        ), state.petitions),
+        topPetitions: Object.assign({}, state.topPetitions, {
+          [topPetitionsKey]: petitions.map(topPetition => topPetition.petition_id)
+        })
+      })
     default:
       return state
   }
@@ -96,7 +121,6 @@ function userReducer(state = initialUserState, action) {
     case sessionActionTypes.ANONYMOUS_SESSION_START:
       newData.anonymous = true
       return Object.assign({}, state, newData)
-      break;
     // NOTE: the next 4 cases depend on switch-case fall-through
     // there are no breaks purposefully
     case sessionActionTypes.USER_SESSION_START:
@@ -118,7 +142,6 @@ function userReducer(state = initialUserState, action) {
     case sessionActionTypes.USER_SESSION_FAILURE:
     case sessionActionTypes.TOKEN_SESSION_FAILURE:
       return Object.assign({}, state, newData)
-      break;
     case petitionActionTypes.PETITION_SIGNATURE_SUBMIT:
       // if it's an anonymous user or we get useful session information
       // then copy it into userData
@@ -140,10 +163,8 @@ function userReducer(state = initialUserState, action) {
           newData.country = address.country_name
         }
         return Object.assign({}, state, newData)
-      } else {
-        return state
       }
-      break;
+      return state
     default:
       return state
   }
