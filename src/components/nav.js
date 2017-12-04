@@ -2,9 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-const Nav = () => {
-  const { user } = this.props
-
+const Nav = ({ user }) => {
   const userLinks = (
     <div className='pull-right bump-top-1 span-7 top-menu'>
       <ul className='nav collapse nav-collapse'>
