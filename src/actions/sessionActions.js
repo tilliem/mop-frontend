@@ -4,10 +4,19 @@ import Config from '../config.js'
 
 export const actionTypes = {
   ANONYMOUS_SESSION_START: 'ANONYMOUS_SESSION_START',
+  UNRECOGNIZE_USER_SESSION: 'UNRECOGNIZE_USER_SESSION',
   USER_SESSION_START: 'USER_SESSION_START',
   USER_SESSION_FAILURE: 'USER_SESSION_FAILURE',
   TOKEN_SESSION_START: 'TOKEN_SESSION_START',
   TOKEN_SESSION_FAILURE: 'TOKEN_SESSION_FAILURE'
+}
+
+export function unRecognize() {
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.UNRECOGNIZE_USER_SESSION
+    })
+  }
 }
 
 export function loadUserSession() {
@@ -82,6 +91,7 @@ export const loadSession = ({ location }) => {
 
 
 export const actions = {
+  unRecognize,
   loadTokenSession,
   loadUserSession,
   loadSession

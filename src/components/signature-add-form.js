@@ -6,6 +6,7 @@ import CountrySelect from './form/country-select'
 import StateOrRegionInput from './form/state-or-region-input'
 import ZipOrPostalInput from './form/zip-or-postal-input'
 import { actions as petitionActions } from '../actions/petitionActions.js'
+import { actions as sessionActions } from '../actions/sessionActions.js'
 
 class SignatureAddForm extends React.Component {
 
@@ -111,7 +112,7 @@ class SignatureAddForm extends React.Component {
   }
 
   render() {
-    const { petition, user, query } = this.props
+    const { dispatch, petition, user, query } = this.props
     const iframeEmbedText = `<iframe src="http://petitions.moveon.org/embed/widget.html?v=3&amp;name=${petition.slug}" class="moveon-petition" id="petition-embed" width="300px" height="500px"></iframe>` // text to be copy/pasted
     const src = this.parseSource()
     return (
@@ -146,9 +147,9 @@ class SignatureAddForm extends React.Component {
 
             {((user && user.signonId)
               ? // Recognized
-              <div id='recognized' className='bump-bottom-1' styleX='margin-bottom: 1em'>
+              <div id='recognized' style={{ marginBottom: '1em' }}>
                 <strong>Welcome back {user.given_name}!</strong>
-                <div> (Not {user.given_name}? <a href='#' onClick={() => { if (window.$) { window.$('.unrecognized').show(); window.$('#recognized').hide(); window.$('#recognized_user_field').val(0) } }}>Click here.</a>) </div>
+                <div> (Not {user.given_name}? <a onClick={() => { dispatch(sessionActions.unRecognize()) }}>Click here.</a>) </div>
               </div>
               : // Anonymous
               <div className='unrecognized'>

@@ -118,6 +118,8 @@ function userReducer(state = initialUserState, action) {
   // fold in tokens at the top, since it's possible it's for everyone
   const newData = Object.assign({}, action.tokens || {})
   switch (action.type) {
+    case sessionActionTypes.UNRECOGNIZE_USER_SESSION:
+      return { anonymous: true } // Purposefully destroying current state
     case sessionActionTypes.ANONYMOUS_SESSION_START:
       newData.anonymous = true
       return Object.assign({}, state, newData)
