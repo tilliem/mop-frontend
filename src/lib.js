@@ -14,17 +14,17 @@ const formatDate = (date) => {
 const text2paras = (str) => str.split(/\n+/)
 
 const ellipsize = (str, length) => {
-  const re = new RegExp(`^(.{0,${length}})(\\s|$)`);
-  const match = String(str).substr(0, length + 1).match(re);
+  const re = new RegExp(`^(.{0,${length}})(\\s|$)`)
+  const match = String(str).substr(0, length + 1).match(re)
   if (!match) {
     // Just in case some weirdo puts 500 characters without a space at the beginning of a petition summary
-    return String(str).substr(0, length);
+    return String(str).substr(0, length)
   }
   if (match[2].length) {
     // we matched a space instead of the end of string so add ...
-    return `${match[1]}...`;
+    return `${match[1]}...`
   }
-  return match[1];
+  return match[1]
 }
 
 const text2paraJsx = (str) => {
