@@ -64,7 +64,7 @@ const Nav = ({ user }) => {
             <span className='icon-th-list'></span>
           </a>
 
-          {user.identifiers && user.identifiers.length ? userLinks : guestLinks}
+          {user.signonId ? userLinks : guestLinks}
 
         </div>
       </div>
