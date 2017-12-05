@@ -6,7 +6,7 @@ import { text2paraJsx, ellipsize } from '../lib.js'
 
 const PetitionPreview = ({ petition, source }) => {
   const url = `/sign/${petition.name}?source=${source}`
-  const statement = text2paraJsx(ellipsize(petition.summary, 500));
+  const statement = text2paraJsx(ellipsize(petition.summary, 500))
   return (
     <div>
       <article>
