@@ -17,13 +17,14 @@ class Petition extends React.Component {
   render() {
     const { petition: p, query } = this.props
     const statement = text2paraJsx(p.summary)
-    const creator = ((p._embedded && p._embedded.creator) || {name: p.contact_name})
+    const creator = ((p._embedded && p._embedded.creator) || { name: p.contact_name })
     const petitionBy = creator.name + (creator.organization
                                        ? `, ${creator.organization}`
                                        : '')
+    const outOfDate = (p.tags && p.tags.filter(t => t.name === 'possibly_out_of_date').length)
     return (
       <div className='container'>
-        {(p.status === 'Past') ?
+        {(outOfDate) ?
           <div className='message-header'>
             <span className='bell'>This petition has not been edited in a while. As a new legislative session has begun, it&#39;s possible some of the targets of this petition are out of date.</span>
           </div>
@@ -37,7 +38,7 @@ class Petition extends React.Component {
 
         {(p.status === 'Bad') ?
           <div className='message-header'>
-            <span className='bell'>MoveOn volunteers reviewed this petition and determined that it either may not reflect MoveOn members&#39; progressive values, or that MoveOn members may disagree about whether to support this petition. MoveOn will not promote the petition beyond hosting it on our site. <a href='http://act.moveon.org/cms/thanks/thanks-your-input' target='_blank'>Click here</a> if you think MoveOn should support this petition.
+            <span className='bell'>MoveOn volunteers reviewed this petition and determined that it either may not reflect MoveOn members&#39; progressive values, or that MoveOn members may disagree about whether to support this petition. MoveOn will not promote the petition beyond hosting it on our site. <a href='https://act.moveon.org/cms/thanks/thanks-your-input' target='_blank'>Click here</a> if you think MoveOn should support this petition.
             </span>
           </div>
           : ''}
@@ -57,7 +58,7 @@ class Petition extends React.Component {
           : ''}
 
         <div className='row'>
-          <SignatureAddForm petition={p} />
+          <SignatureAddForm petition={p} query={this.props.query} />
 
           <div className='span8 pull-right petition-info-top'>
             <div className='percent-95 padding-left-15 form-wrapper responsive padding-bottom-1 padding-left-2 padding-right-3' style={{ marginLeft: '-20px', position: 'relative' }}>
@@ -66,7 +67,7 @@ class Petition extends React.Component {
                 <p id='by' className='byline lh-20'>
                   Petition by <a href='/contact_creator.html?petition_id=95935' className='underline'>
                       {petitionBy}
-                    </a>
+                  </a>
                 </p>
                 <p id='to-target' className='lh-14 bump-top-1 bump-bottom-1 margin-0 disclaimer'>To be delivered to <span className='all-targets'><strong>
                     {p.target.map((t) => t.name).join(', ')}</strong></span></p>
