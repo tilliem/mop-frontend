@@ -2,6 +2,11 @@
     "_links": {
         "url": "https://petitions.moveon.org/sign/outkast"
     },
+    "_embedded": {
+      "creator": {
+        "name": "Mack Fooooooo"
+      }
+    },
     "identifiers": [95983, "list_id:96069"],
     "petition_id": 95983,
     "collect_volunteers": false,

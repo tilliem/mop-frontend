@@ -50,7 +50,7 @@ class SignatureAddForm extends React.Component {
 
   parseSource() {
     const { user, petition, query } = this.props
-    const creator = petition._embedded.creator
+    const creator = (petition._embedded && petition._embedded.creator || {})
     const source = query.source || ''
     const sourceProps = {
       fromCreator: (/^c\./.test(source) || /^s\.icn/.test(source)),
