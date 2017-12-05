@@ -81,7 +81,8 @@ const StateSelect = ({ onChange, selectText, style }) => (
 
 StateSelect.propTypes = {
   onChange: PropTypes.func,
-  style: PropTypes.object
+  style: PropTypes.object,
+  selectText: PropTypes.object
 }
 
 export default StateSelect
