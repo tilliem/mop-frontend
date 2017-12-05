@@ -17,12 +17,10 @@ const SignatureCount = ({ current, goal }) => current !== undefined && (
   <div id='therm' className='bump-top-2'>
     <div className='progress-status clearfix'>
       <div className='progress-stat progress-current'>
-        <em>Current</em>
-        <strong>{formatNumber(current)}</strong>
+        <em>Current</em> <strong>{formatNumber(current)}</strong>
       </div>
       <div className='progress-stat progress-goal'>
-        <em>Goal</em>
-        <strong>{formatNumber(goal)}</strong>
+        <em>Goal</em> <strong>{formatNumber(goal)}</strong>
       </div>
     </div>
     <div className='progress progress-danger no-bottom-margin'>
