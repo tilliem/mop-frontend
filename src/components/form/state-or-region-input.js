@@ -7,7 +7,7 @@ const StateOrRegionInput = ({ country, stateOnChange, stateValidationError, regi
   if (country === 'United States') {
     return (
       <div>
-        <StateSelect onChange={stateOnChange} />
+        <StateSelect onChange={stateOnChange} selectText='State*' />
         <stateValidationError />
       </div>
     )

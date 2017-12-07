@@ -1,14 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const StateSelect = ({ onChange }) => (
+const StateSelect = ({ onChange, selectText, style }) => (
+
   <select
     name='state'
     id='state_id'
     className='span4 state moveon-track-click'
     onChange={onChange}
+    style={style}
   >
-    <option value=''>State*</option>
+    <option value=''>{selectText}</option>
     <option value='AL'>Alabama</option>
     <option value='AK'>Alaska</option>
     <option value='AS'>American Samoa</option>
@@ -78,7 +80,9 @@ const StateSelect = ({ onChange }) => (
 )
 
 StateSelect.propTypes = {
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  style: PropTypes.object,
+  selectText: PropTypes.string
 }
 
 export default StateSelect
