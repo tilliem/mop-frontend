@@ -5,7 +5,10 @@
     "_embedded": {
       "creator": {
         "name": "Shake it",
-        "organization": "like a polaroid picture"
+        "organization": "M.O.P.",
+        "custom_fields": {
+          "may_optin": true
+        }
       }
     },
     "identifiers": [95983, "list_id:96069"],

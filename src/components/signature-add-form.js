@@ -59,7 +59,8 @@ class SignatureAddForm extends React.Component {
     const source = query.source || ''
     const sourceProps = {
       fromCreator: (/^c\./.test(source) || /^s\.icn/.test(source)),
-      fromMailing: /\.imn/.test(source)
+      fromMailing: /\.imn/.test(source),
+      organization: creator.organization
     }
     sourceProps.showOptinWarning = (!creator.source // mega_partner
                                     && (creator.custom_fields && creator.custom_fields.may_optin)
@@ -327,7 +328,16 @@ class SignatureAddForm extends React.Component {
               onClick={this.submit}
             >Sign the petition</button>
 
-            <p className='disclaimer bump-top-1'><b>Note:</b> By signing, you agree to receive email messages from MoveOn.org Civic Action and MoveOn.org Political Action. You may unsubscribe at any time. [ <a href='https://petitions.moveon.org/privacy.html'>Privacy policy</a> ]</p>
+           {(src.showOptinWarning) ? (
+             <p className='disclaimer bump-top-1'>
+               <b>Note:</b> This petition is a project of {src.organization} and MoveOn.org. By signing, you agree to receive email messages from <span id='organization_receive'>{src.organization}, </span>MoveOn Political Action, and MoveOn Civic Action. You may unsubscribe at any time. [<a href='http://petitions.moveon.org/privacy.html'>privacy policy</a>]
+             </p>)
+            : (
+             <p className='disclaimer bump-top-1'>
+               <b>Note:</b> By signing, you agree to receive email messages from MoveOn.org Civic Action and MoveOn.org Political Action. You may unsubscribe at any time. [ <a href='https://petitions.moveon.org/privacy.html'>Privacy policy</a> ]
+             </p>)}
+
+
           </form>
         </div>
         <div className='percent-90 padding-left-15 bump-top-1'>
