@@ -383,17 +383,17 @@ function mapStateToProps(store, ownProps) {
     fromCreator: (/^c\./.test(source) || /^s\.icn/.test(source)),
     fromMailing: /\.imn/.test(source)
   }
-  newProps.showOptinWarning = (!creator.source // mega_partner
-                               && (creator.custom_fields && creator.custom_fields.may_optin)
-                               && !user.signonId)
-  newProps.showOptinCheckbox = ((creator.source && !user.signonId &&
-                                 ((query.mailing_id && newProps.fromCreator)
-                                  || (!newProps.fromCreator && query.mega_partner && newProps.fromMailing)
-                                  || (!newProps.fromCreator && !query.mega_partner && query.show_optin_checkbox)))
-                                || (!creator.source && creator.custom_fields && creator.custom_fields.may_optin && !user.signonId
-                                    && ((newProps.fromCreator && query.mailing_id) || !newProps.fromCreator)))
-  newProps.hiddenOptin = ((newProps.fromCreator && !query.mailing_id)
-                          || (newProps.fromMailing && !query.mega_partner))
+  newProps.showOptinWarning = !!(!creator.source // mega_partner
+                                 && (creator.custom_fields && creator.custom_fields.may_optin)
+                                 && !user.signonId)
+  newProps.showOptinCheckbox = !!((creator.source && !user.signonId &&
+                                   ((query.mailing_id && newProps.fromCreator)
+                                    || (!newProps.fromCreator && query.mega_partner && newProps.fromMailing)
+                                    || (!newProps.fromCreator && !query.mega_partner && query.show_optin_checkbox)))
+                                  || (!creator.source && creator.custom_fields && creator.custom_fields.may_optin && !user.signonId
+                                      && ((newProps.fromCreator && query.mailing_id) || !newProps.fromCreator)))
+  newProps.hiddenOptin = !!((newProps.fromCreator && !query.mailing_id)
+                            || (newProps.fromMailing && !query.mega_partner))
   return newProps
 }
 
