@@ -6,6 +6,7 @@ import CountrySelect from './form/country-select'
 import StateOrRegionInput from './form/state-or-region-input'
 import ZipOrPostalInput from './form/zip-or-postal-input'
 import { actions as petitionActions } from '../actions/petitionActions.js'
+import { actions as sessionActions } from '../actions/sessionActions.js'
 
 class SignatureAddForm extends React.Component {
 
@@ -46,6 +47,25 @@ class SignatureAddForm extends React.Component {
 
   formIsValid() {
     return Object.keys(this.required).map(key => this.state[key] != null && this.state[key].length > 0).reduce((a, b) => a && b)
+  }
+
+  parseSource() {
+    const { user, petition, query } = this.props
+    const creator = (petition._embedded && petition._embedded.creator || {})
+    const source = query.source || ''
+    const sourceProps = {
+      fromCreator: (/^c\./.test(source) || /^s\.icn/.test(source)),
+      fromMailing: /\.imn/.test(source)
+    }
+    sourceProps.showOptinWarning = (!creator.source // mega_partner
+                                    && (creator.custom_fields && creator.custom_fields.may_optin)
+                                    && !user.signonId)
+    sourceProps.showOptinCheckbox = ((sourceProps.fromCreator && query.mailing_id)
+                                     || (sourceProps.fromMailing && query.mega_partner)
+                                     || (!query.mega_partner && !query.mailing_id))
+    sourceProps.hiddenOptIn = ((sourceProps.fromCreator && !query.mailing_id)
+                               || (sourceProps.fromMailing && !query.mega_partner))
+    return sourceProps
   }
 
   updateStateFromValue(field) {
@@ -92,8 +112,9 @@ class SignatureAddForm extends React.Component {
   }
 
   render() {
-    const { petition, user } = this.props
+    const { dispatch, petition, user, query } = this.props
     const iframeEmbedText = `<iframe src="http://petitions.moveon.org/embed/widget.html?v=3&amp;name=${petition.slug}" class="moveon-petition" id="petition-embed" width="300px" height="500px"></iframe>` // text to be copy/pasted
+    const src = this.parseSource()
     return (
       <div className='span4 widget clearfix' id='sign-here'>
         <div className='padding-left-15 form-wrapper background-moveon-light-gray padding-top-1 padding-bottom-1' style={{ paddingRight: 15, position: 'relative', top: -10 }}>
@@ -113,22 +134,22 @@ class SignatureAddForm extends React.Component {
 
           <form name='sign_form' id='sign' method='post' action='.' onSubmit={this.submit}>
             <input type='hidden' name='petition_id' value={petition.id} />
-            <input type='hidden' name='source' value='homepage' />
-            <input type='hidden' name='r_by' value='' />
-            <input type='hidden' name='mailing_id' value='' />
-            <input type='hidden' name='fb_test' value='0' />
-            <input type='hidden' name='test_group' value='' />
-            <input type='hidden' name='no_mo' value='0' />
-            <input type='hidden' name='id' value='' />
-            <input type='hidden' name='akid' value='' />
-            <input type='hidden' name='recognized_user' id='recognized_user_field' value='0' />
-            <input type='hidden' name='show_optin_checkbox' value='0' />
+            <input type='hidden' name='source' value={query.source || ''} />
+            <input type='hidden' name='r_by' value={query.r_by || ''} />
+            <input type='hidden' name='mailing_id' value={query.mailing_id || ''} />
+            <input type='hidden' name='fb_test' value={query.fb_test || '0'} />
+            <input type='hidden' name='test_group' value={query.test_group || ''} />
+            <input type='hidden' name='no_mo' value={query.no_mo || ''} />
+            <input type='hidden' name='id' value={query.id || ''} />
+            <input type='hidden' name='akid' value={query.akid || ''} />
+            <input type='hidden' name='recognized_user' id='recognized_user_field' value={user.signonId ? '1' : '0'} />
+            <input type='hidden' name='show_optin_checkbox' value={src.showOptinCheckbox ? '1' : '0'} />
 
             {((user && user.signonId)
               ? // Recognized
-              <div id='recognized' className='bump-bottom-1' styleX='margin-bottom: 1em'>
+              <div id='recognized' style={{ marginBottom: '1em' }}>
                 <strong>Welcome back {user.given_name}!</strong>
-                <div> (Not {user.given_name}? <a href='#' onClick={() => { if (window.$) { window.$('.unrecognized').show(); window.$('#recognized').hide(); window.$('#recognized_user_field').val(0) } }}>Click here.</a>) </div>
+                <div> (Not {user.given_name}? <a onClick={() => { dispatch(sessionActions.unRecognize()) }}>Click here.</a>) </div>
               </div>
               : // Anonymous
               <div className='unrecognized'>
@@ -193,7 +214,8 @@ class SignatureAddForm extends React.Component {
 SignatureAddForm.propTypes = {
   petition: PropTypes.object.isRequired,
   user: PropTypes.object,
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
+  query: PropTypes.object
 }
 
 function mapStateToProps(store) {
