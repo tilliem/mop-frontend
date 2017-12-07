@@ -44,7 +44,10 @@ var config = {
       inject: 'body',
       //hash: true,
       filename: 'index.html',
-      staticPath: (process.env.STATIC_ROOT || '')
+      staticPath: (process.env.STATIC_ROOT || ''),
+      cssPath: (process.env.NODE_ENV == 'production'
+                ? 'https://s3.amazonaws.com/mop-static/css/moui.css'
+                : '/css/moui.css')
     }),
     ((process.env.PROD)
      ? new webpack.optimize.UglifyJsPlugin({sourceMap: true})

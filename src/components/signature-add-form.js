@@ -115,6 +115,7 @@ class SignatureAddForm extends React.Component {
     const { dispatch, petition, user, query } = this.props
     const iframeEmbedText = `<iframe src="http://petitions.moveon.org/embed/widget.html?v=3&amp;name=${petition.slug}" class="moveon-petition" id="petition-embed" width="300px" height="500px"></iframe>` // text to be copy/pasted
     const src = this.parseSource()
+    const showAddressFields = (!(user && user.signonId) || !(user && user.postal_addresses && user.postal_addresses.length))
     return (
       <div className='span4 widget clearfix' id='sign-here'>
         <div className='padding-left-15 form-wrapper background-moveon-light-gray padding-top-1 padding-bottom-1' style={{ paddingRight: 15, position: 'relative', top: -10 }}>
@@ -171,24 +172,44 @@ class SignatureAddForm extends React.Component {
                   onBlur={this.updateStateFromValue('email')}
                 />
                  {this.validationError('email')}
-                <CountrySelect
-                  value={this.state.country}
-                  onChange={(event) => this.setState({ country: event.target.value })}
-                />
-                <StateOrRegionInput
-                  country={this.state.country}
-                  stateOnChange={this.updateStateFromValue('state')}
-                  stateValidationError={this.validationError('state')}
-                  regionOnChange={this.updateStateFromValue('region')}
-                />
-                <ZipOrPostalInput
-                  country={this.state.country}
-                  zipOnChange={this.updateStateFromValue('zip')}
-                  zipValidationError={this.validationError('zip')}
-                  postalOnChange={this.updateStateFromValue('postal')}
-                />
               </div>
-            )}
+             )}
+
+             {(showAddressFields) ? (
+               <div>
+                 <CountrySelect
+                   value={this.state.country}
+                   onChange={(event) => this.setState({ country: event.target.value })}
+                 />
+                 <input
+                   type='text'
+                   name='address1'
+                   placeholder={petition.needs_full_addresses ? 'Address*' : 'Address'}
+                   className='moveon-track-click'
+                 />
+                 <input type='text' name='address2' placeholder='Address (cont.)' className='moveon-track-click' />
+                 <input
+                   type='text'
+                   name='city'
+                   placeholder={petition.needs_full_addresses ? 'City*' : 'City'}
+                   className='moveon-track-click'
+                 />
+
+                 <StateOrRegionInput
+                   country={this.state.country}
+                   stateOnChange={this.updateStateFromValue('state')}
+                   stateValidationError={this.validationError('state')}
+                   regionOnChange={this.updateStateFromValue('region')}
+                 />
+                 <ZipOrPostalInput
+                   country={this.state.country}
+                   zipOnChange={this.updateStateFromValue('zip')}
+                   zipValidationError={this.validationError('zip')}
+                   postalOnChange={this.updateStateFromValue('postal')}
+                 />
+               </div>
+             ) : ''
+             }
 
             <textarea className='moveon-track-click' rows='3' cols='20' name='comment' autoComplete='off' placeholder='Comment'></textarea>
 

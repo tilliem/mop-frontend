@@ -27,6 +27,7 @@ const initialUserState = {
   // zip:
   // state:
   // country:
+  // postal_addresses: [{status: "Potential"}] (here when we have an address for this user)
   // signonId: (unique id from signon)
   // token: (either an id:<signon token> or akid:<akid token>) that can be used for a single action
   // identifiers: <probably a combination of signonId, token, and any other identifiers available>
