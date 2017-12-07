@@ -206,10 +206,10 @@ class SignatureAddForm extends React.Component {
             <input type='hidden' name='show_optin_checkbox' value={this.props.showOptinCheckbox ? '1' : '0'} />
             {(this.props.hiddenOptin) ? (
               <span>
-	        <input type="hidden" name="thirdparty_optin" value="1" />
-	        <input type="hidden" name="hidden_optin" value="1" />
+                <input type='hidden' name='thirdparty_optin' value='1' />
+                <input type='hidden' name='hidden_optin' value='1' />
               </span>
-            ) : '' }
+            ) : ''}
 
             {((user.signonId)
               ? // Recognized
