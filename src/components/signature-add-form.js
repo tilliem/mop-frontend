@@ -27,6 +27,7 @@ class SignatureAddForm extends React.Component {
       volunteer: false,
       phone: false,
       submitTried: false,
+      thirdparty_optin: props.showOptinCheckbox,
       required: {}
     }
 
@@ -50,27 +51,7 @@ class SignatureAddForm extends React.Component {
   }
 
   formIsValid() {
-    return Object.keys(this.state.required).map(key => !!this.state[key]).reduce((a, b) => a && b)
-  }
-
-  parseSource() {
-    const { user, petition, query } = this.props
-    const creator = (petition._embedded && petition._embedded.creator || {})
-    const source = query.source || ''
-    const sourceProps = {
-      fromCreator: (/^c\./.test(source) || /^s\.icn/.test(source)),
-      fromMailing: /\.imn/.test(source),
-      organization: creator.organization
-    }
-    sourceProps.showOptinWarning = (!creator.source // mega_partner
-                                    && (creator.custom_fields && creator.custom_fields.may_optin)
-                                    && !user.signonId)
-    sourceProps.showOptinCheckbox = ((sourceProps.fromCreator && query.mailing_id)
-                                     || (sourceProps.fromMailing && query.mega_partner)
-                                     || (!query.mega_partner && !query.mailing_id))
-    sourceProps.hiddenOptIn = ((sourceProps.fromCreator && !query.mailing_id)
-                               || (sourceProps.fromMailing && !query.mega_partner))
-    return sourceProps
+    return Object.keys(this.state.required).map(key => !!this.state[key]).reduce((a, b) => a && b, true)
   }
 
   updateStateFromValue(field) {
@@ -137,6 +118,9 @@ class SignatureAddForm extends React.Component {
     const { dispatch, petition, user } = this.props
     this.updateRequired(true)
     if (this.formIsValid()) {
+      // TODO: thirdparty_optin, hidden_optin, volunteer
+      //       source, r_by, fb_test, abid, abver, test_group, no_mo, mailing_id
+      // - where to set thirdparty_optin to true at first? for checkbox
       const osdiSignature = {
         petition: {
           name: petition.name,
@@ -189,8 +173,8 @@ class SignatureAddForm extends React.Component {
 
   render() {
     const { dispatch, petition, user, query, showAddressFields } = this.props
+    const creator = (petition._embedded && petition._embedded.creator || {})
     const iframeEmbedText = `<iframe src="http://petitions.moveon.org/embed/widget.html?v=3&amp;name=${petition.slug}" class="moveon-petition" id="petition-embed" width="300px" height="500px"></iframe>` // text to be copy/pasted
-    const src = this.parseSource()
     return (
       <div className='span4 widget clearfix' id='sign-here'>
         <div className='padding-left-15 form-wrapper background-moveon-light-gray padding-top-1 padding-bottom-1' style={{ paddingRight: 15, position: 'relative', top: -10 }}>
@@ -219,7 +203,13 @@ class SignatureAddForm extends React.Component {
             <input type='hidden' name='id' value={((user.token && (/^id:/.test(user.token))) ? user.token.slice(3) : '')} />
             <input type='hidden' name='akid' value={((user.token && (/^akid:/.test(user.token))) ? user.token.slice(5) : '')} />
             <input type='hidden' name='recognized_user' id='recognized_user_field' value={user.signonId ? '1' : '0'} />
-            <input type='hidden' name='show_optin_checkbox' value={src.showOptinCheckbox ? '1' : '0'} />
+            <input type='hidden' name='show_optin_checkbox' value={this.props.showOptinCheckbox ? '1' : '0'} />
+            {(this.props.hiddenOptin) ? (
+              <span>
+	        <input type="hidden" name="thirdparty_optin" value="1" />
+	        <input type="hidden" name="hidden_optin" value="1" />
+              </span>
+            ) : '' }
 
             {((user.signonId)
               ? // Recognized
@@ -328,9 +318,24 @@ class SignatureAddForm extends React.Component {
               onClick={this.submit}
             >Sign the petition</button>
 
-           {(src.showOptinWarning) ? (
+           {(this.props.showOptinCheckbox) ? (
+             <div>
+               <label id='checkbox_label' htmlFor='checkbox' className='bump-top-1'>
+                 <input
+                   type='checkbox'
+                   name='thirdparty_optin'
+                   value='1'
+                   className='moveon-track-click'
+                   checked={this.state.thirdparty_optin}
+                   onChange={(evt) => this.setState({ thirdparty_optin: evt.target.checked })}
+                 /> Receive campaign updates from {creator.organization || 'this organization'}.
+               </label>
+             </div>
+           ) : ''}
+
+           {(this.props.showOptinWarning) ? (
              <p className='disclaimer bump-top-1'>
-               <b>Note:</b> This petition is a project of {src.organization} and MoveOn.org. By signing, you agree to receive email messages from <span id='organization_receive'>{src.organization}, </span>MoveOn Political Action, and MoveOn Civic Action. You may unsubscribe at any time. [<a href='http://petitions.moveon.org/privacy.html'>privacy policy</a>]
+               <b>Note:</b> This petition is a project of {creator.organization} and MoveOn.org. By signing, you agree to receive email messages from <span id='organization_receive'>{creator.organization}, </span>MoveOn Political Action, and MoveOn Civic Action. You may unsubscribe at any time. [<a href='http://petitions.moveon.org/privacy.html'>privacy policy</a>]
              </p>)
             : (
              <p className='disclaimer bump-top-1'>
@@ -359,15 +364,37 @@ SignatureAddForm.propTypes = {
   user: PropTypes.object,
   dispatch: PropTypes.func,
   query: PropTypes.object,
-  showAddressFields: PropTypes.bool
+  showAddressFields: PropTypes.bool,
+  fromCreator: PropTypes.bool,
+  fromMailing: PropTypes.bool,
+  showOptinWarning: PropTypes.bool,
+  showOptinCheckbox: PropTypes.bool,
+  hiddenOptin: PropTypes.bool
 }
 
-function mapStateToProps(store) {
+function mapStateToProps(store, ownProps) {
   const user = store.userStore
-  return {
+  const { petition, query } = ownProps
+  const creator = (petition._embedded && petition._embedded.creator || {})
+  const source = query.source || ''
+  const newProps = {
     user,
-    showAddressFields: (!(user.signonId) || !(user.postal_addresses && user.postal_addresses.length))
+    showAddressFields: (!(user.signonId) || !(user.postal_addresses && user.postal_addresses.length)),
+    fromCreator: (/^c\./.test(source) || /^s\.icn/.test(source)),
+    fromMailing: /\.imn/.test(source)
   }
+  newProps.showOptinWarning = (!creator.source // mega_partner
+                               && (creator.custom_fields && creator.custom_fields.may_optin)
+                               && !user.signonId)
+  newProps.showOptinCheckbox = ((creator.source && !user.signonId &&
+                                 ((query.mailing_id && newProps.fromCreator)
+                                  || (!newProps.fromCreator && query.mega_partner && newProps.fromMailing)
+                                  || (!newProps.fromCreator && !query.mega_partner && query.show_optin_checkbox)))
+                                || (!creator.source && creator.custom_fields && creator.custom_fields.may_optin && !user.signonId
+                                    && ((newProps.fromCreator && query.mailing_id) || !newProps.fromCreator)))
+  newProps.hiddenOptin = ((newProps.fromCreator && !query.mailing_id)
+                          || (newProps.fromMailing && !query.mega_partner))
+  return newProps
 }
 
 export default connect(mapStateToProps)(SignatureAddForm)
