@@ -9,7 +9,6 @@ import { actions as petitionActions } from '../actions/petitionActions.js'
 import { actions as sessionActions } from '../actions/sessionActions.js'
 
 
-
 class SignatureAddForm extends React.Component {
 
   constructor(props) {
@@ -30,18 +29,70 @@ class SignatureAddForm extends React.Component {
       phone: false,
       validationTried: false,
       thirdparty_optin: props.showOptinCheckbox,
-      required: {},
+      required: {}
     }
     this.validationRegex = {
       email: /.+@.+\..+/, // forgiving email regex
       zip: /(\d\D*){5}/,
-      phone: /(\d\D*){10}/, // 10-digits
+      phone: /(\d\D*){10}/ // 10-digits
     }
 
     this.volunteer = this.volunteer.bind(this)
     this.submit = this.submit.bind(this)
     this.validationError = this.validationError.bind(this)
     this.updateStateFromValue = this.updateStateFromValue.bind(this)
+  }
+
+  getOsdiSignature() {
+    const { petition, user } = this.props
+    // TODO: thirdparty_optin, hidden_optin, volunteer
+    //       source, r_by, fb_test, abid, abver, test_group, no_mo, mailing_id
+    // - where to set thirdparty_optin to true at first? for checkbox
+    const osdiSignature = {
+      petition: {
+        name: petition.name,
+        petition_id: petition.petition_id,
+        _links: petition._links
+      },
+      person: {
+        full_name: this.state.name,
+        email_addresses: [],
+        postal_addresses: []
+      },
+      comments: this.state.comment
+    }
+    if (this.state.name) {
+      osdiSignature.person.full_name = this.state.name
+    } else if (user.given_name) {
+      osdiSignature.person.given_name = user.given_name
+    }
+    if (this.state.email) {
+      osdiSignature.person.email_addresses.push({
+        address: this.state.email
+      })
+    }
+    if (user.token) {
+      osdiSignature.person.identifiers = [user.token]
+    }
+    if (this.state.phone) {
+      osdiSignature.person.phone_numbers = [this.state.phone]
+    }
+    if (this.state.city) {
+      osdiSignature.person.postal_addresses.push({
+        locality: this.state.city,
+        region: ((this.state.country === 'United States') ? this.state.state : this.state.region),
+        postal_code: ((this.state.country === 'United States') ? this.state.zip : this.state.postal),
+        country_name: this.state.country
+      })
+    }
+    if (this.state.address1) {
+      const lines = [this.state.address1]
+      if (this.state.address2) {
+        lines.push(this.state.address2)
+      }
+      osdiSignature.person.postal_addresses[0].address_lines = lines
+    }
+    return osdiSignature
   }
 
   validationError(key) {
@@ -120,58 +171,6 @@ class SignatureAddForm extends React.Component {
       this.setState({ required })
     }
     return required
-  }
-
-  getOsdiSignature() {
-    const { petition, user } = this.props
-    // TODO: thirdparty_optin, hidden_optin, volunteer
-    //       source, r_by, fb_test, abid, abver, test_group, no_mo, mailing_id
-    // - where to set thirdparty_optin to true at first? for checkbox
-    const osdiSignature = {
-      petition: {
-        name: petition.name,
-        petition_id: petition.petition_id,
-        _links: petition._links
-      },
-      person: {
-        full_name: this.state.name,
-        email_addresses: [],
-        postal_addresses: []
-      },
-      comments: this.state.comment
-    }
-    if (this.state.name) {
-      osdiSignature.person.full_name = this.state.name
-    } else if (user.given_name) {
-      osdiSignature.person.given_name = user.given_name
-    }
-    if (this.state.email) {
-      osdiSignature.person.email_addresses.push({
-        address: this.state.email
-      })
-    }
-    if (user.token) {
-      osdiSignature.person.identifiers = [user.token]
-    }
-    if (this.state.phone) {
-      osdiSignature.person.phone_numbers = [this.state.phone]
-    }
-    if (this.state.city) {
-      osdiSignature.person.postal_addresses.push({
-        locality: this.state.city,
-        region: ((this.state.country === 'United States') ? this.state.state : this.state.region),
-        postal_code: ((this.state.country === 'United States') ? this.state.zip : this.state.postal),
-        country_name: this.state.country
-      })
-    }
-    if (this.state.address1) {
-      const lines = [this.state.address1]
-      if (this.state.address2) {
-        lines.push(this.state.address2)
-      }
-      osdiSignature.person.postal_addresses[0].address_lines = lines
-    }
-    return osdiSignature
   }
 
   submit(event) {
