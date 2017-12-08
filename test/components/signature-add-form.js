@@ -61,7 +61,7 @@ describe('<SignatureAddForm />', () => {
   describe('<SignatureAddForm /> stateful tests', () => {
     // it('TODO:non-US address', () => {})
     // it('TODO:logout/unrecognize shows anonymous field list', () => {})
-    it('TODO:checking volunteer requires phone', () => {
+    it('checking volunteer requires phone', () => {
       const store = createMockStore(storeAnonymous)
       const context = mount(<SignatureAddForm {...propsProfileBase} store={store}/>)
       const component = unwrapReduxComponent(context)
