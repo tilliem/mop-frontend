@@ -8,6 +8,8 @@ import ZipOrPostalInput from './form/zip-or-postal-input'
 import { actions as petitionActions } from '../actions/petitionActions.js'
 import { actions as sessionActions } from '../actions/sessionActions.js'
 
+
+
 class SignatureAddForm extends React.Component {
 
   constructor(props) {
@@ -26,9 +28,14 @@ class SignatureAddForm extends React.Component {
       comment: false,
       volunteer: false,
       phone: false,
-      submitTried: false,
+      validationTried: false,
       thirdparty_optin: props.showOptinCheckbox,
-      required: {}
+      required: {},
+    }
+    this.validationRegex = {
+      email: /.+@.+\..+/, // forgiving email regex
+      zip: /(\d\D*){5}/,
+      phone: /(\d\D*){10}/, // 10-digits
     }
 
     this.volunteer = this.volunteer.bind(this)
@@ -37,9 +44,10 @@ class SignatureAddForm extends React.Component {
     this.updateStateFromValue = this.updateStateFromValue.bind(this)
   }
 
-  validationError(key, regex) {
-    if (this.state.submitTried) {
+  validationError(key) {
+    if (this.state.validationTried) {
       if (Object.keys(this.state.required).indexOf(key) > -1) {
+        const regex = this.validationRegex[key]
         if (!this.state[key] || (regex && !regex.test(String(this.state[key])))) {
           return (
             <div className='alert alert-danger' role='alert'>{this.state.required[key]}</div>
@@ -51,6 +59,8 @@ class SignatureAddForm extends React.Component {
   }
 
   formIsValid() {
+    this.setState({ validationTried: true })
+    this.updateRequiredFields(true)
     return Object.keys(this.state.required).map(key => !!this.state[key]).reduce((a, b) => a && b, true)
   }
 
@@ -62,7 +72,7 @@ class SignatureAddForm extends React.Component {
 
   volunteer(event) {
     const vol = event.target.checked
-    const req = this.updateRequired(false)
+    const req = this.updateRequiredFields(false)
     if (vol) {
       req.phone = 'We need a phone number to coordinate volunteers.'
     } else {
@@ -72,11 +82,11 @@ class SignatureAddForm extends React.Component {
       required: req })
   }
 
-  updateRequired(doUpdate) {
+  updateRequiredFields(doUpdate) {
     // This is a separate method because it can change when state or props are changed
     const { user, petition, showAddressFields } = this.props
     const required = this.state.required
-    let changeRequired = false
+    let changeRequiredFields = false
     if (!user.signonId) {
       Object.assign(required, {
         name: 'Name is required.',
@@ -84,7 +94,7 @@ class SignatureAddForm extends React.Component {
         state: 'State is required.',
         zip: 'Zip code is required.'
       })
-      changeRequired = true
+      changeRequiredFields = true
     } else {
       delete required.name
       delete required.email
@@ -98,7 +108,7 @@ class SignatureAddForm extends React.Component {
         state: 'State is required.',
         zip: 'Zip code is required.'
       })
-      changeRequired = true
+      changeRequiredFields = true
     } else {
       delete required.address1
       delete required.city
@@ -106,85 +116,96 @@ class SignatureAddForm extends React.Component {
     if (this.state.country !== 'United States') {
       delete required.state
     }
-    if (changeRequired && doUpdate) {
+    if (changeRequiredFields && doUpdate) {
       this.setState({ required })
     }
     return required
   }
 
+  getOsdiSignature() {
+    const { petition, user } = this.props
+    // TODO: thirdparty_optin, hidden_optin, volunteer
+    //       source, r_by, fb_test, abid, abver, test_group, no_mo, mailing_id
+    // - where to set thirdparty_optin to true at first? for checkbox
+    const osdiSignature = {
+      petition: {
+        name: petition.name,
+        petition_id: petition.petition_id,
+        _links: petition._links
+      },
+      person: {
+        full_name: this.state.name,
+        email_addresses: [],
+        postal_addresses: []
+      },
+      comments: this.state.comment
+    }
+    if (this.state.name) {
+      osdiSignature.person.full_name = this.state.name
+    } else if (user.given_name) {
+      osdiSignature.person.given_name = user.given_name
+    }
+    if (this.state.email) {
+      osdiSignature.person.email_addresses.push({
+        address: this.state.email
+      })
+    }
+    if (user.token) {
+      osdiSignature.person.identifiers = [user.token]
+    }
+    if (this.state.phone) {
+      osdiSignature.person.phone_numbers = [this.state.phone]
+    }
+    if (this.state.city) {
+      osdiSignature.person.postal_addresses.push({
+        locality: this.state.city,
+        region: ((this.state.country === 'United States') ? this.state.state : this.state.region),
+        postal_code: ((this.state.country === 'United States') ? this.state.zip : this.state.postal),
+        country_name: this.state.country
+      })
+    }
+    if (this.state.address1) {
+      const lines = [this.state.address1]
+      if (this.state.address2) {
+        lines.push(this.state.address2)
+      }
+      osdiSignature.person.postal_addresses[0].address_lines = lines
+    }
+    return osdiSignature
+  }
+
   submit(event) {
     event.preventDefault()
-
-    const { dispatch, petition, user } = this.props
-    this.updateRequired(true)
+    const { dispatch, petition } = this.props
     if (this.formIsValid()) {
-      // TODO: thirdparty_optin, hidden_optin, volunteer
-      //       source, r_by, fb_test, abid, abver, test_group, no_mo, mailing_id
-      // - where to set thirdparty_optin to true at first? for checkbox
-      const osdiSignature = {
-        petition: {
-          name: petition.name,
-          petition_id: petition.petition_id,
-          _links: petition._links
-        },
-        person: {
-          full_name: this.state.name,
-          email_addresses: [],
-          postal_addresses: []
-        },
-        comments: this.state.comment
-      }
-      if (this.state.name) {
-        osdiSignature.person.full_name = this.state.name
-      } else if (user.given_name) {
-        osdiSignature.person.given_name = user.given_name
-      }
-      if (this.state.email) {
-        osdiSignature.person.email_addresses.push({
-          address: this.state.email
-        })
-      }
-      if (user.token) {
-        osdiSignature.person.identifiers = [user.token]
-      }
-      if (this.state.phone) {
-        osdiSignature.person.phone_numbers = [this.state.phone]
-      }
-      if (this.state.city) {
-        osdiSignature.person.postal_addresses.push({
-          locality: this.state.city,
-          region: ((this.state.country === 'United States') ? this.state.state : this.state.region),
-          postal_code: ((this.state.country === 'United States') ? this.state.zip : this.state.postal),
-          country_name: this.state.country
-        })
-      }
-      if (this.state.address1) {
-        const lines = [this.state.address1]
-        if (this.state.address2) {
-          lines.push(this.state.address2)
-        }
-        osdiSignature.person.postal_addresses[0].address_lines = lines
-      }
+      const osdiSignature = this.getOsdiSignature()
       dispatch(petitionActions.signPetition(osdiSignature, petition, { redirectOnSuccess: true }))
     }
-    this.setState({ submitTried: true })
     return false
   }
 
   render() {
     const { dispatch, petition, user, query, showAddressFields } = this.props
     const creator = (petition._embedded && petition._embedded.creator || {})
+    const petitionBy = creator.name + (creator.organization
+                                       ? `, ${creator.organization}`
+                                       : '')
     const iframeEmbedText = `<iframe src="http://petitions.moveon.org/embed/widget.html?v=3&amp;name=${petition.slug}" class="moveon-petition" id="petition-embed" width="300px" height="500px"></iframe>` // text to be copy/pasted
     return (
       <div className='span4 widget clearfix' id='sign-here'>
         <div className='padding-left-15 form-wrapper background-moveon-light-gray padding-top-1 padding-bottom-1' style={{ paddingRight: 15, position: 'relative', top: -10 }}>
           <div className='petition-top visible-phone' style={{ paddingLeft: 20 }}>
-            <a style={{ float: 'right' }} href='/admin/petition_zoom.html?petition_id=125956'>zoom&nbsp;&#x270e;</a>
-            <p id='to-target' className='lh-14 bump-top-1 bump-bottom-1 margin-0 disclaimer'>Petition statement to be delivered to <span className='all-targets'><strong>Fox News and President Donald Trump</strong></span></p>
+            {(user.admin_petition_link) ?
+              <a style={{ float: 'right' }} href={`${user.admin_petition_link}?petition_id=${petition.petition_id}`}>zoom&nbsp;&#x270e;</a>
+             : ''}
+            <p id='to-target' className='lh-14 bump-top-1 bump-bottom-1 margin-0 disclaimer'>
+              Petition statement to be delivered to <span className='all-targets'>
+                <strong>{petition.target.map((t) => t.name).join(', ')}</strong>
+              </span>
+            </p>
             <h1 id='petition-title' className='moveon-bright-red big-title'>{petition.title}</h1>
             <p id='by' className='byline lh-20'>
-              Petition by
-              <a href='/contact_creator.html?petition_id=125956' className='underline'>Tom Steyer</a>
+              Petition by <a href={`/contact_creator.html?petition_id=${petition.petition_id}`} className='underline'>{petitionBy}</a>
             </p>
           </div>
 
@@ -236,7 +257,7 @@ class SignatureAddForm extends React.Component {
                   onChange={this.updateStateFromValue('email')}
                   onBlur={this.updateStateFromValue('email')}
                 />
-                 {this.validationError('email', /* forgiving email regex */ /.+@.+\..+/)}
+                 {this.validationError('email')}
               </div>
              )}
 
@@ -283,7 +304,7 @@ class SignatureAddForm extends React.Component {
                    zipOnChange={this.updateStateFromValue('zip')}
                    postalOnChange={this.updateStateFromValue('postal')}
                  />
-                 {this.validationError('zip', /(\d\D*){5}/)}
+                 {this.validationError('zip')}
                </div>
              ) : ''}
 
@@ -303,7 +324,7 @@ class SignatureAddForm extends React.Component {
                       onChange={this.updateStateFromValue('phone')}
                       onBlur={this.updateStateFromValue('phone')}
                     />
-                    {this.validationError('phone', /* 10 digits*/ /(\d\D*){10}/)}
+                    {this.validationError('phone')}
                   </div>
                 ) : ''}
               </div>)
