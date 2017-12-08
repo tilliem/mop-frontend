@@ -41,7 +41,20 @@ describe('<SignatureAddForm />', () => {
       expect(dom.find('#sign-here').text().match(/Sign this petition/)[0]).to.equal('Sign this petition');
     });
 
-    //it('TODO:anonymous fields displaying', () => {});
+    it('anonymous fields displaying', () => {
+      const context = shallowWithStore(<SignatureAddForm {...propsProfileBase} />,
+                                       createMockStore(storeAnonymous))
+      expect(context.props().user.anonymous).to.be.equal(true)
+      const dom = context.render()
+      expect(dom.find('input[name="name"]').length).to.equal(1);
+      expect(dom.find('input[name="email"]').length).to.equal(1);
+      expect(dom.find('input[name="address1"]').length).to.equal(1);
+      expect(dom.find('input[name="address2"]').length).to.equal(1);
+      expect(dom.find('input[name="city"]').length).to.equal(1);
+      // not testing state because state is a sub component
+      // expect(dom.find('input[name="state"]').length).to.equal(1);
+      expect(dom.find('input[name="zip"]').length).to.equal(1);
+    });
 
     //it('TODO:user fields displaying', () => {});
 
