@@ -112,7 +112,11 @@ class SignatureAddForm extends React.Component {
   formIsValid() {
     this.setState({ validationTried: true })
     this.updateRequiredFields(true)
-    return Object.keys(this.state.required).map(key => !!this.state[key]).reduce((a, b) => a && b, true)
+    return Object.keys(this.state.required).map(
+      key => !!(this.state[key]
+                && (!this.validationRegex[key]
+                    || this.validationRegex[key].test(String(this.state[key]))))
+    ).reduce((a, b) => a && b, true)
   }
 
   updateStateFromValue(field) {
@@ -135,7 +139,7 @@ class SignatureAddForm extends React.Component {
 
   updateRequiredFields(doUpdate) {
     // This is a separate method because it can change when state or props are changed
-    const { user, petition, showAddressFields } = this.props
+    const { user, petition, requireAddressFields } = this.props
     const required = this.state.required
     let changeRequiredFields = false
     if (!user.signonId) {
@@ -152,7 +156,7 @@ class SignatureAddForm extends React.Component {
       delete required.state
       delete required.zip
     }
-    if (showAddressFields && petition.needs_full_addresses) {
+    if (requireAddressFields) {
       Object.assign(required, {
         address1: 'Full address is required.',
         city: 'City is required.',
@@ -163,6 +167,7 @@ class SignatureAddForm extends React.Component {
     } else {
       delete required.address1
       delete required.city
+      delete required.state
     }
     if (this.state.country !== 'United States') {
       delete required.state
@@ -184,7 +189,7 @@ class SignatureAddForm extends React.Component {
   }
 
   render() {
-    const { dispatch, petition, user, query, showAddressFields } = this.props
+    const { dispatch, petition, user, query, showAddressFields, requireAddressFields } = this.props
     const creator = (petition._embedded && petition._embedded.creator || {})
     const petitionBy = creator.name + (creator.organization
                                        ? `, ${creator.organization}`
@@ -269,7 +274,7 @@ class SignatureAddForm extends React.Component {
                  <input
                    type='text'
                    name='address1'
-                   placeholder={petition.needs_full_addresses ? 'Address*' : 'Address'}
+                   placeholder={requireAddressFields ? 'Address*' : 'Address'}
                    onChange={this.updateStateFromValue('address1')}
                    onBlur={this.updateStateFromValue('address1')}
                    className='moveon-track-click'
@@ -385,6 +390,7 @@ SignatureAddForm.propTypes = {
   dispatch: PropTypes.func,
   query: PropTypes.object,
   showAddressFields: PropTypes.bool,
+  requireAddressFields: PropTypes.bool,
   fromCreator: PropTypes.bool,
   fromMailing: PropTypes.bool,
   showOptinWarning: PropTypes.bool,
@@ -400,6 +406,8 @@ function mapStateToProps(store, ownProps) {
   const newProps = {
     user,
     showAddressFields: (!(user.signonId) || !(user.postal_addresses && user.postal_addresses.length)),
+    requireAddressFields: (petition.needs_full_addresses
+                           && !(user.postal_addresses && user.postal_addresses.length)),
     fromCreator: (/^c\./.test(source) || /^s\.icn/.test(source)),
     fromMailing: /\.imn/.test(source)
   }

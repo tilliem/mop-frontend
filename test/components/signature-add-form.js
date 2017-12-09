@@ -34,31 +34,58 @@ describe('<SignatureAddForm />', () => {
 
   describe('<SignatureAddForm /> static tests', () => {
     it('basic loading', () => {
-      const context = shallowWithStore(<SignatureAddForm {...propsProfileBase} />,
-                                       createMockStore(storeAnonymous))
-      expect(context.props().user.anonymous).to.be.equal(true)
-      const dom = context.render()
-      expect(dom.find('#sign-here').text().match(/Sign this petition/)[0]).to.equal('Sign this petition');
+      const store = createMockStore(storeAnonymous)
+      const context = mount(<SignatureAddForm {...propsProfileBase} store={store}/>)
+      const component = unwrapReduxComponent(context)
+      expect(component.props.user.anonymous).to.be.equal(true)
+      expect(context.find('#sign-here').text().match(/Sign this petition/)[0]).to.equal('Sign this petition');
     });
 
     it('anonymous fields displaying', () => {
-      const context = shallowWithStore(<SignatureAddForm {...propsProfileBase} />,
-                                       createMockStore(storeAnonymous))
-      expect(context.props().user.anonymous).to.be.equal(true)
-      const dom = context.render()
-      expect(dom.find('input[name="name"]').length).to.equal(1);
-      expect(dom.find('input[name="email"]').length).to.equal(1);
-      expect(dom.find('input[name="address1"]').length).to.equal(1);
-      expect(dom.find('input[name="address2"]').length).to.equal(1);
-      expect(dom.find('input[name="city"]').length).to.equal(1);
+      const store = createMockStore(storeAnonymous)
+      const context = mount(<SignatureAddForm {...propsProfileBase} store={store}/>)
+      const component = unwrapReduxComponent(context)
+      expect(component.props.user.anonymous).to.be.equal(true)
+      expect(context.find('input[name="name"]').length).to.equal(1);
+      expect(context.find('input[name="email"]').length).to.equal(1);
+      expect(context.find('input[name="address1"]').length).to.equal(1);
+      expect(context.find('input[name="address2"]').length).to.equal(1);
+      expect(context.find('input[name="city"]').length).to.equal(1);
       // not testing state because state is a sub component
-      // expect(dom.find('input[name="state"]').length).to.equal(1);
-      expect(dom.find('input[name="zip"]').length).to.equal(1);
+      // expect(context.find('input[name="state"]').length).to.equal(1);
+      expect(context.find('input[name="zip"]').length).to.equal(1);
     });
 
-    //it('TODO:user fields displaying', () => {});
+    it('petition with user fields displaying', () => {
+      // Note: needs to test when it *appears* not when it's required
+      const store = createMockStore(storeAkid)
+      const context = mount(<SignatureAddForm {...propsProfileOpposite} store={store}/>)
+      const component = unwrapReduxComponent(context)
+      expect(Boolean(component.props.user.anonymous)).to.be.equal(false)
+      expect(context.find('input[name="name"]').length).to.equal(0);
+      expect(context.find('input[name="email"]').length).to.equal(0);
+      expect(context.find('input[name="address1"]').length).to.equal(1);
+      expect(context.find('input[name="address2"]').length).to.equal(1);
+      expect(context.find('input[name="city"]').length).to.equal(1);
+      // not testing state because state is a sub component
+      // expect(context.find('input[name="state"]').length).to.equal(1);
+      expect(context.find('input[name="zip"]').length).to.equal(1);
+    });
 
-    //it('TODO:local petition with user fields displaying', () => {});
+    it('local petition with user fields displaying', () => {
+      const store = createMockStore(storeAkid)
+      const context = mount(<SignatureAddForm {...propsProfileBase} store={store}/>)
+      const component = unwrapReduxComponent(context)
+      expect(Boolean(component.props.user.anonymous)).to.be.equal(false)
+      expect(context.find('input[name="name"]').length).to.equal(0);
+      expect(context.find('input[name="email"]').length).to.equal(0);
+      expect(context.find('input[name="address1"]').length).to.equal(1);
+      expect(context.find('input[name="address2"]').length).to.equal(1);
+      expect(context.find('input[name="city"]').length).to.equal(1);
+      // not testing state because state is a sub component
+      // expect(context.find('input[name="state"]').length).to.equal(1);
+      expect(context.find('input[name="zip"]').length).to.equal(1);
+    });
 
     //it('TODO:local petition without address when user has address', () => {});
 
@@ -74,6 +101,7 @@ describe('<SignatureAddForm />', () => {
   describe('<SignatureAddForm /> stateful tests', () => {
     // it('TODO:non-US address', () => {})
     // it('TODO:logout/unrecognize shows anonymous field list', () => {})
+
     it('checking volunteer requires phone', () => {
       const store = createMockStore(storeAnonymous)
       const context = mount(<SignatureAddForm {...propsProfileBase} store={store}/>)
