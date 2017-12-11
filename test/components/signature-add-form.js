@@ -15,6 +15,13 @@ import { unwrapReduxComponent } from '../lib';
 import SignatureAddForm from '../../src/components/signature-add-form';
 
 describe('<SignatureAddForm />', () => {
+  // This file is organized into two sub- describe() buckets.
+  // 1. for "static tests" which do not involve any state
+  // 2. for changing state (like filling in forms, etc)
+  // Please put new tests in the appropriate bucket with `it(...)`
+  // Below are a set of profiles and user store states that can be re-used
+  // for different test conditions
+
   const propsProfileBase = { petition: outkastPetition, query: {} }
   const propsProfileOpposite = { petition: outkastPetition2, query: {} }
   const propsProfileBaseQueries = { petition: outkastPetition,
@@ -33,6 +40,8 @@ describe('<SignatureAddForm />', () => {
                                              postal_addresses: [{status: 'Potential'}]}}
 
   describe('<SignatureAddForm /> static tests', () => {
+    //THESE ARE TESTS WHERE NO STATE IS CHANGED -- we send in properties, and the rest should be static
+
     it('basic loading', () => {
       const store = createMockStore(storeAnonymous)
       const context = mount(<SignatureAddForm {...propsProfileBase} store={store}/>)
@@ -99,6 +108,7 @@ describe('<SignatureAddForm />', () => {
 
   })
   describe('<SignatureAddForm /> stateful tests', () => {
+    //THESE ARE TESTS WHERE WE CHANGE THE STATE (FILL IN FORM, ETC)
     // it('TODO:non-US address', () => {})
     // it('TODO:logout/unrecognize shows anonymous field list', () => {})
 
