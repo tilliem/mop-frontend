@@ -24,10 +24,14 @@ describe('<SignatureAddForm />', () => {
 
   const propsProfileBase = { petition: outkastPetition, query: {} }
   const propsProfileOpposite = { petition: outkastPetition2, query: {} }
-  const propsProfileOppositeQueries = { petition: outkastPetition2,
-                                        query: { source: 'c.123', mailing_id: '123'} }
-  const propsProfileOppositeQueries2 = { petition: outkastPetition2,
-                                         query: { source: 'c.123' } }
+  const outkastPetition2AsMegapartner = JSON.parse(JSON.stringify(outkastPetition2)) //deepcopy
+  outkastPetition2AsMegapartner._embedded.creator.source = 'M.O.P.' //set as megapartner
+  const petitionProfiles = {
+    'megapartner_mayoptin': outkastPetition2AsMegapartner,
+    'mayoptin': outkastPetition2,
+    'normal': outkastPetition
+  }
+
   const storeAnonymous = { userStore: { anonymous: true }}
   const storeAkid = { userStore: { signonId: 123456,
                                    token: 'akid:fake.123456.bad123',
@@ -119,36 +123,15 @@ describe('<SignatureAddForm />', () => {
       expect(wasShown).to.equal(false);
     });
 
-    it('showing optin checkbox or hidden optin', () => {
-      const outkastPetition2AsMegapartner = JSON.parse(JSON.stringify(outkastPetition2)) //deepcopy
-      outkastPetition2AsMegapartner._embedded.creator.source = 'M.O.P.' //set as megapartner
-      const profiles = {
-        'megapartner_mayoptin': outkastPetition2AsMegapartner,
-        'mayoptin': outkastPetition2,
-        'normal': outkastPetition
-      }
+    it('optin checkbox or hidden optin: normal profiles', () => {
       const normalProfiles = [
         { petition: 'normal', query: {} },
         { petition: 'normal', query: { source: 'c.123', mailing_id: '123' }},
       ]
-      const hideProfiles = [ // should have hidden optin
-        { petition: 'megapartner_mayoptin', query: { source: 'c.123' }},
-        { petition: 'megapartner_mayoptin', query: { source: 'c.123', mega_partner: '1' }},
-        { petition: 'mayoptin', query: { source: 'c.123' }}, // no mailing_id
-      ]
-      const showProfiles = [
-        { petition: 'megapartner_mayoptin', query: { source: 'c.123', mailing_id: '123' }},
-        { petition: 'megapartner_mayoptin', query: { source: 's.imn', mega_partner: '1' }},
-        { petition: 'megapartner_mayoptin', query: {} },
-        //non-megapartner, but still may_optin: true
-        { petition: 'mayoptin', query: { source: 'c.123', mailing_id: '123' }},
-        { petition: 'mayoptin', query: { source: 's.abc' }}
-      ]
-
       const mockStoreAnon = createMockStore(storeAnonymous)
-      const mockStoreAkid = createMockStore(storeAkid)
+
       normalProfiles.forEach((profile) => {
-        const realProfile = { petition: profiles[profile.petition], query: profile.query }
+        const realProfile = { petition: petitionProfiles[profile.petition], query: profile.query }
         const context = mount(<SignatureAddForm {...realProfile} store={mockStoreAnon}/>)
         const component = unwrapReduxComponent(context)
         // 1. make sure NOT shown
@@ -163,8 +146,16 @@ describe('<SignatureAddForm />', () => {
                'thirdparty_optin is false for normal profile: ' + JSON.stringify(profile)
               ).to.equal(false);
       })
+    })
+    it('optin checkbox or hidden optin: hide profiles', () => {
+      const hideProfiles = [ // should have hidden optin
+        { petition: 'megapartner_mayoptin', query: { source: 'c.123' }},
+        { petition: 'megapartner_mayoptin', query: { source: 'c.123', mega_partner: '1' }},
+        { petition: 'mayoptin', query: { source: 'c.123' }}, // no mailing_id
+      ]
+      const mockStoreAnon = createMockStore(storeAnonymous)
       hideProfiles.forEach((profile) => {
-        const realProfile = { petition: profiles[profile.petition], query: profile.query }
+        const realProfile = { petition: petitionProfiles[profile.petition], query: profile.query }
         const context = mount(<SignatureAddForm {...realProfile} store={mockStoreAnon}/>)
         const component = unwrapReduxComponent(context)
         // 1. make sure NOT shown
@@ -176,8 +167,20 @@ describe('<SignatureAddForm />', () => {
                'hidden optin profile have hidden_optin=true: ' + JSON.stringify(profile)
               ).to.equal(true);
       })
+    })
+    it('optin checkbox or hidden optin: show profiles', () => {
+      const showProfiles = [
+        { petition: 'megapartner_mayoptin', query: { source: 'c.123', mailing_id: '123' }},
+        { petition: 'megapartner_mayoptin', query: { source: 's.imn', mega_partner: '1' }},
+        { petition: 'megapartner_mayoptin', query: {} },
+        //non-megapartner, but still may_optin: true
+        { petition: 'mayoptin', query: { source: 'c.123', mailing_id: '123' }},
+        { petition: 'mayoptin', query: { source: 's.abc' }}
+      ]
+      const mockStoreAnon = createMockStore(storeAnonymous)
+      const mockStoreAkid = createMockStore(storeAkid)
       showProfiles.forEach((profile) => {
-        const realProfile = { petition: profiles[profile.petition], query: profile.query }
+        const realProfile = { petition: petitionProfiles[profile.petition], query: profile.query }
         const context = mount(<SignatureAddForm {...realProfile} store={mockStoreAnon}/>)
         const component = unwrapReduxComponent(context)
         // 1. make sure shown
@@ -194,7 +197,7 @@ describe('<SignatureAddForm />', () => {
                'optin checkbox with user should NOT show for ' + JSON.stringify(profile)
               ).to.equal(0);
       })
-    });
+    })
 
     //it('TODO:non-US address', () => {});
 
