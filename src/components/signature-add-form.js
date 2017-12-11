@@ -28,7 +28,8 @@ class SignatureAddForm extends React.Component {
       volunteer: false,
       phone: false,
       validationTried: false,
-      thirdparty_optin: props.showOptinCheckbox,
+      thirdparty_optin: props.hiddenOptin || props.showOptinCheckbox,
+      hidden_optin: props.hiddenOptin,
       required: {}
     }
     this.validationRegex = {
@@ -44,10 +45,7 @@ class SignatureAddForm extends React.Component {
   }
 
   getOsdiSignature() {
-    const { petition, user } = this.props
-    // TODO: thirdparty_optin, hidden_optin, volunteer
-    //       source, r_by, fb_test, abid, abver, test_group, no_mo, mailing_id
-    // - where to set thirdparty_optin to true at first? for checkbox
+    const { petition, query, user } = this.props
     const osdiSignature = {
       petition: {
         name: petition.name,
@@ -92,6 +90,18 @@ class SignatureAddForm extends React.Component {
       }
       osdiSignature.person.postal_addresses[0].address_lines = lines
     }
+    const referrerKeys = [
+      'source', 'r_by', 'fb_test', 'abid', 'abver', 'test_group', 'no_mo', 'mailing_id', 'r_hash']
+    const referrerData = referrerKeys.filter(k => query[k]).map(k => ({ [k]: query[k] }))
+    if (referrerData.length) {
+      osdiSignature.referrer_data = Object.assign({}, ...referrerData)
+    }
+    const customFields = ['thirdparty_optin', 'hidden_optin', 'volunteer']
+    const customData = customFields.filter(k => this.state[k]).map(k => ({ [k]: this.state[k] }))
+    if (customData.length) {
+      osdiSignature.person.custom_fields = Object.assign({}, ...customData)
+    }
+    // console.log('signature!', osdiSignature)
     return osdiSignature
   }
 
