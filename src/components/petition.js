@@ -88,8 +88,8 @@ class Petition extends React.Component {
                   <h3 className='moveon-bright-red padding-bottom-1'>Petition Background</h3>
                 </div>
                 {p.featured_image_url ? (
-                  <img id="pet-image" src={p.featured_image_url} alt="promotional petition image" />
-                ) : '' }
+                  <img id='pet-image' src={p.featured_image_url} role='presentation' />
+                ) : ''}
                 <div dangerouslySetInnerHTML={{ __html: p.description }}></div>
               </div>
 
