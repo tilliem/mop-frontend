@@ -139,7 +139,7 @@ class SignatureAddForm extends React.Component {
 
   updateRequiredFields(doUpdate) {
     // This is a separate method because it can change when state or props are changed
-    const { user, petition, requireAddressFields } = this.props
+    const { user, requireAddressFields } = this.props
     const required = this.state.required
     let changeRequiredFields = false
     if (!user.signonId) {
