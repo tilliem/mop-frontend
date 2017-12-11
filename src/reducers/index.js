@@ -9,6 +9,10 @@ import { actionTypes as sessionActionTypes } from '../actions/sessionActions.js'
 //     }
 // }
 
+const navState = {
+  partnerCobrand: null // or {logo, link, name}
+}
+
 const initialPetitionState = {
   petitions: {}, // keyed by slug AND petition_id for petition route
   petitionSignatures: {}, // keyed by petition slug, then page
@@ -31,6 +35,42 @@ const initialUserState = {
   // signonId: (unique id from signon)
   // token: (either an id:<signon token> or akid:<akid token>) that can be used for a single action
   // identifiers: <probably a combination of signonId, token, and any other identifiers available>
+}
+
+function navReducer(state = navState, action) {
+  // the goal here is to ignore most actions
+  // and then turn the partner logo on/off depending on the state
+  // however for top petitions, and petition loading
+  // we need to see if we should show a logo or not
+  // If there are other 'megapartner' pages where we show a logo
+  // then we should add loading of their data here, as well
+  // This is a little icky, because it should relate to the view
+  // more than what data we load, but we are taking the perspective
+  // that the actions are about changing the 'presentation' state
+  // rather than the actions being pure 'model' interfaces
+  let petition = null
+  switch (action.type) {
+    case petitionActionTypes.FETCH_PETITION_SUCCESS:
+      petition = action.petition
+      break
+    case petitionActionTypes.FETCH_TOP_PETITIONS_SUCCESS:
+      petition = action.petitions[0]
+      break
+    default:
+      break
+  }
+  if (petition) {
+    const creator = petition._embedded && petition._embedded.creator
+    if (creator.organization_logo_image_url) {
+      return Object.assign({}, state, { partnerCobrand: {
+        logo: creator.organization_logo_image_url,
+        name: creator.organization,
+        url: creator.organization_url
+      } })
+    } // else
+    return Object.assign({}, state, { partnerCobrand: null })
+  }
+  return state
 }
 
 function petitionReducer(state = initialPetitionState, action) {
@@ -174,6 +214,7 @@ function userReducer(state = initialUserState, action) {
 }
 
 const rootReducer = combineReducers({
+  navStore: navReducer,
   petitionStore: petitionReducer,
   userStore: userReducer
 })
