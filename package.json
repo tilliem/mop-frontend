@@ -6,7 +6,8 @@
   "repository": "https://github.com/MoveOnOrg/mop-frontend",
   "directories": {},
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register --require isomorphic-fetch test test/*",
+    "test": "mocha --compilers js:babel-core/register --require jsdom-global/register --require isomorphic-fetch test test/*",
+    "test1": "mocha --compilers js:babel-core/register --require jsdom-global/register --require isomorphic-fetch test ",
     "build": "webpack -d",
     "webpack-watch": "webpack -w",
     "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --progress --colors --port ${PORT:-8080} --inline",
@@ -43,6 +44,8 @@
     "file-loader": "^0.11.1",
     "html-webpack-plugin": "^2.22.0",
     "isomorphic-fetch": "^2.2.1",
+    "jsdom": "11.5.1",
+    "jsdom-global": "3.0.2",
     "mocha": "~3.2.0",
     "nock": "^9.0.13",
     "react-addons-test-utils": "^15.4.2",

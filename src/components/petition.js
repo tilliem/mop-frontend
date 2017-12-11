@@ -65,7 +65,7 @@ class Petition extends React.Component {
               <div className='petition-top hidden-phone'>
                 <h1 id='petition-title' className='moveon-bright-red big-title'>{p.title}</h1>
                 <p id='by' className='byline lh-20'>
-                  Petition by <a href='/contact_creator.html?petition_id=95935' className='underline'>
+                  Petition by <a href={`/contact_creator.html?petition_id=${p.petition_id}`} className='underline'>
                       {petitionBy}
                   </a>
                 </p>
