@@ -25,7 +25,6 @@ class Thanks extends React.Component {
   shareLink(evt) {
     evt.target.select()
     this.recordShare('email', `${this.state.pre}.ln.cp`)
-    this.setState({ sharedSocially: true }) // useful for debugging
   }
 
   shareEmail(evt) {

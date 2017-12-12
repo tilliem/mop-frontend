@@ -78,7 +78,10 @@ export function loadTopPetitions(pac, megapartner, forceReload) {
       topPetitionsKey
     })
     const { userStore, petitionStore } = getState()
-    if (!forceReload && petitionStore.topPetitions[topPetitionsKey]) {
+    if (!forceReload
+        && petitionStore
+        && petitionStore.topPetitions
+        && petitionStore.topPetitions[topPetitionsKey]) {
       return dispatch({
         type: actionTypes.FETCH_TOP_PETITIONS_SUCCESS,
         useCache: true,
@@ -92,7 +95,7 @@ export function loadTopPetitions(pac, megapartner, forceReload) {
     if (megapartner) {
       query.push(`megapartner=${megapartner}`)
     }
-    if (userStore.signonId) {
+    if (userStore && userStore.signonId) {
       query.push(`user=${userStore.signonId}`)
     }
     const queryString = ((query.length) ? `?${query.join('&')}` : '')
