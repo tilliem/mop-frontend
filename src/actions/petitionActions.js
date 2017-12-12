@@ -102,6 +102,10 @@ export const registerSignatureAndThanks = (petition) => () => {
   if (window.fbq) {
     window.fbq('track', 'Lead') // facebook lead
   }
+  if (window.gtag && petition.gtag_keys) {
+    // https://developers.google.com/adwords-remarketing-tag/
+    window.gtag('event', 'conversion', { send_to: petition.gtag_keys })
+  }
   // 2. show thanks page
   let thanksUrl = 'thanks.html'
   if (petition.thanks_url) {
