@@ -38,7 +38,10 @@ export function loadPetition(petitionSlug, forceReload) {
       slug: petitionSlug
     })
     const { petitionStore } = getState()
-    if (!forceReload && petitionStore.petitions[petitionSlug]) {
+    if (!forceReload
+        && petitionStore
+        && petitionStore.petitions
+        && petitionStore.petitions[petitionSlug]) {
       return dispatch({
         type: actionTypes.FETCH_PETITION_SUCCESS,
         petition: petitionStore.petitions[petitionSlug],
