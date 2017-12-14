@@ -204,8 +204,19 @@ describe('<SignatureAddForm />', () => {
   })
   describe('<SignatureAddForm /> stateful tests', () => {
     //THESE ARE TESTS WHERE WE CHANGE THE STATE (FILL IN FORM, ETC)
-    // it('TODO:non-US address', () => {})
     // it('TODO:logout/unrecognize shows anonymous field list', () => {})
+
+    it('adding a non-US address updates requirements to not require state', () => {
+      const store = createMockStore(storeAnonymous)
+      const context = mount(<SignatureAddForm {...propsProfileBase} store={store}/>)
+      const component = unwrapReduxComponent(context)
+      const reqFieldsBefore = component.updateRequiredFields(true)
+      expect(typeof reqFieldsBefore.state).to.be.equal('string')
+      component.setState({address1:'123 main', city:'Sydney', country:'Australia', name:'John Smith', email:'hi@example.com', zip:'60024'})
+      const reqFieldsAfter = component.updateRequiredFields(true)
+      expect(typeof reqFieldsAfter.state).to.be.equal('undefined')
+      expect(component.formIsValid()).to.be.equal(true)
+    })
 
     it('checking volunteer requires phone', () => {
       const store = createMockStore(storeAnonymous)
