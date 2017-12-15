@@ -23,3 +23,12 @@ export const thanksLoader = () => new Promise(resolve => {
     })
   })
 })
+
+export const petitionReportLoader = () => new Promise(resolve => {
+  require.ensure([], () => {
+    resolve({
+      // eslint-disable-next-line global-require
+      petitionReport: require('../components/petition-report.js')
+    })
+  })
+})
