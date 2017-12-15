@@ -29,7 +29,7 @@ class ThanksNextPetition extends React.Component {
 
   componentWillMount() {
     if (!this.props.nextPetitionsLoaded) {
-      this.props.dispatch(loadTopPetitions(this.props.entity === 'pac'))
+      this.props.dispatch(loadTopPetitions(this.props.entity === 'pac' ? 1 : 0, '', false))
     }
     // start countdown on refocusing to this window
     window.addEventListener('focus', this.startCountdown)
