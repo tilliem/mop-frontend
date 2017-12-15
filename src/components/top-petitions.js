@@ -15,13 +15,13 @@ class TopPetitions extends React.Component {
   }
 
   render() {
-    const { topPetitions, source } = this.props
+    const { topPetitions, source, fullWidth } = this.props
     const petitionList = (topPetitions) ? topPetitions.map(petition => (
-      <PetitionPreview petition={petition} source={source} />
+      <PetitionPreview key={petition.petition_id} petition={petition} source={source} />
     )) : ''
 
     return (
-      <div id='campaign-widget' className='span6 widget clearfix pull-right'>
+      <div id='campaign-widget' className={fullWidth ? 'span12 widget clearfix' : 'span6 widget clearfix pull-right'}>
         <div className='widget-top'>
           <h3>Hot Petitions</h3>
         </div>
@@ -36,7 +36,8 @@ TopPetitions.propTypes = {
   megapartner: PropTypes.string,
   source: PropTypes.string,
   topPetitions: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-  loadPetitions: PropTypes.func
+  loadPetitions: PropTypes.func,
+  fullWidth: PropTypes.bool
 }
 
 const mapStateToProps = (store, ownProps) => {
