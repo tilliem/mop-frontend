@@ -16,6 +16,10 @@ export const actionTypes = {
   FETCH_TOP_PETITIONS_SUCCESS: 'FETCH_TOP_PETITIONS_SUCCESS',
   FETCH_TOP_PETITIONS_FAILURE: 'FETCH_TOP_PETITIONS_FAILURE',
 
+  FETCH_PETITION_SEARCH_REQUEST: 'FETCH_PETITION_SEARCH_REQUEST',
+  FETCH_PETITION_SEARCH_FAILURE: 'FETCH_PETITION_SEARCH_FAILURE',
+  FETCH_TOP_PETITIONS_SUCCESS: 'FETCH_TOP_PETITIONS_SUCCESS',
+
   PETITION_SIGNATURE_SUBMIT: 'PETITION_SIGNATURE_SUBMIT',
   PETITION_SIGNATURE_SUCCESS: 'PETITION_SIGNATURE_SUCCESS',
   PETITION_SIGNATURE_FAILURE: 'PETITION_SIGNATURE_FAILURE'
@@ -249,6 +253,40 @@ export const loadPetitionSignatures = (petitionSlug, page = 1) => {
   }
 }
 
+export const searchPetitions = (query) => {
+  const urlKey = `search?=`
+
+  return (dispatch) => {
+    dispath({
+      type: actionTypes.FETCH_PETITION_SEARCH_REQUEST,
+      query: query
+    })
+
+  //define what to do when an error happens
+    const dispatchError = err => {
+      dispatch({
+        type: actionTypes.FETCH_PETITION_SEARCH_FAILURE,
+        error: err,
+        query: query
+      })
+    }
+
+    // connect to search api and return json or error if error
+    return fetch(`${Config.API_URI}/api/v1/${urlKey}=${query}.json`)
+      .then(
+        response => response.json()
+        .then( json => {
+          dispath({
+            type: actionTypes.FETCH_PETITION_SEARCH_SUCCESS,
+            results: json,
+            query: query
+          })
+        }, dispatchError)
+        , dispatchError
+      )
+  }
+}
+
 export const getSharebanditShareLink = (petitionSharebanditUrl) => {
   const jsonSampleUrl = petitionSharebanditUrl.replace('/r/0/', '/jsonaction/')
   const fallbackResponse = () => petitionSharebanditUrl
@@ -266,5 +304,6 @@ export const actions = {
   registerSignatureAndThanks,
   recordShareClick,
   loadPetitionSignatures,
-  getSharebanditShareLink
+  getSharebanditShareLink,
+  searchPetitions
 }
