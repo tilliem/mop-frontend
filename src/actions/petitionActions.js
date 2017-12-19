@@ -254,10 +254,10 @@ export const loadPetitionSignatures = (petitionSlug, page = 1) => {
 }
 
 export const searchPetitions = (query) => {
-  const urlKey = `search?=`
+  const urlKey = 'search?='
 
   return (dispatch) => {
-    dispath({
+    dispatch({
       type: actionTypes.FETCH_PETITION_SEARCH_REQUEST,
       query: query
     })
@@ -275,8 +275,8 @@ export const searchPetitions = (query) => {
     return fetch(`${Config.API_URI}/api/v1/${urlKey}=${query}.json`)
       .then(
         response => response.json()
-        .then( json => {
-          dispath({
+        .then(json => {
+          dispatch({
             type: actionTypes.FETCH_PETITION_SEARCH_SUCCESS,
             results: json,
             query: query
