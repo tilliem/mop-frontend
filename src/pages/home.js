@@ -8,10 +8,11 @@ import SearchBar from '../components/searchbar'
 import RecentVictoryList from '../components/recentvictory.js'
 import TopPetitions from '../components/top-petitions'
 
-const Home = ({ params }) => {
+const Home = ({ params, nav }) => {
   const { organization } = params
-  const isPac = (organization === 'pac' || Config.ENTITY === 'pac')
   const isOrganization = Boolean(organization && organization !== 'pac')
+  const isPac = (organization === 'pac' || (!isOrganization && Config.ENTITY === 'pac'))
+  const orgData = (nav && nav.orgs && nav.orgs[organization]) || {}
   return (
     <div className='container background-moveon-white bump-top-1'>
       {isOrganization ? null : <BillBoard />}
@@ -20,8 +21,8 @@ const Home = ({ params }) => {
       {isOrganization
        ? (
         <div>
-          <h2>{organization}</h2>
-          {organization} is a
+          <h2>{orgData.organization}</h2>
+          {orgData.description || `${orgData.organization} is a MoveOn MegaPartner, an invite-only program that lets a partner organization&#39;s members and activists set up their own MoveOn petitions in partnership with the original organization.`}
           <p className='pull-right'><a href='create_start.html' className='button background-moveon-bright-red'>Create a petition</a></p>
         </div>
        ) : null

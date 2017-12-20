@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { actionTypes as navActionTypes } from '../actions/navActions.js'
 import { actionTypes as petitionActionTypes } from '../actions/petitionActions.js'
 import { actionTypes as sessionActionTypes } from '../actions/sessionActions.js'
 
@@ -10,7 +11,8 @@ import { actionTypes as sessionActionTypes } from '../actions/sessionActions.js'
 // }
 
 const navState = {
-  partnerCobrand: null // or {logo, link, name}
+  partnerCobrand: null, // or {logo, link, name}
+  orgs: {} // organization data by organization slug
 }
 
 const initialPetitionState = {
@@ -52,6 +54,10 @@ function navReducer(state = navState, action) {
   // rather than the actions being pure 'model' interfaces
   let petition = null
   switch (action.type) {
+    case navActionTypes.FETCH_ORG_SUCCESS:
+      return Object.assign({}, {
+        orgs: Object.assign({}, state.orgs, { [action.slug]: action.org })
+      })
     case petitionActionTypes.FETCH_PETITION_SUCCESS:
       petition = action.petition
       break
@@ -62,12 +68,12 @@ function navReducer(state = navState, action) {
       break
   }
   if (petition) {
-    const creator = ((petition._embedded && petition._embedded.creator) || {})
-    if (creator.organization_logo_image_url) {
+    const sponsor = ((petition._embedded && (petition._embedded.sponsor || petition._embedded.creator) || {}))
+    if (sponsor.logo_image_url) {
       return Object.assign({}, state, { partnerCobrand: {
-        logo: creator.organization_logo_image_url,
-        name: creator.organization,
-        url: creator.organization_url
+        logo_image_url: sponsor.logo_image_url,
+        organization: sponsor.organization,
+        browser_url: sponsor.browser_url
       } })
     } // else
     return Object.assign({}, state, { partnerCobrand: null })

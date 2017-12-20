@@ -48,6 +48,8 @@ it('something with redux state', () => {
 });
 ```
 
+A good example of this is `components/signature-add-form.js`
+
 ### A component with children that have redux state
 
 Because Redux does some 'magic'-like stuff to propagate down the `store` property at the
@@ -71,3 +73,12 @@ it('something with children with redux state', () => {
 });
 
 ```
+
+A good example of this is `pages/home.js`
+
+### Gotchas
+
+If you have code that assumes initial store state that isn't reflected
+in your test mock store, then nothing will 'automatically' initialize
+the default state -- you must include any state the code relies on
+including initial state in the test mock store.
