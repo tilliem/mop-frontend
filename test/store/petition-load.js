@@ -3,12 +3,12 @@ import { expect } from 'chai';
 
 import { mount, shallow } from 'enzyme';
 
-import Config from '../src/config.js';
+import Config from '../../src/config.js';
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import {actionTypes, loadPetition} from '../src/actions/petitionActions.js'
+import {actionTypes, loadPetition} from '../../src/actions/petitionActions.js'
 import nock from 'nock'
-import samplePetition from '../local/api/v1/petitions/outkast.json';
+import samplePetition from '../../local/api/v1/petitions/outkast.json';
 
 const middlewares = [ thunk ]
 const mockStore = configureMockStore(middlewares)

@@ -8,7 +8,7 @@ import SearchBar from '../components/searchbar'
 import RecentVictoryList from '../components/recentvictory.js'
 import TopPetitions from '../components/top-petitions'
 
-const Home = ({ params, nav }) => {
+const Home = ({ params }) => {
   const { organization } = params
   const isPac = (organization === 'pac' || Config.ENTITY === 'pac')
   const isOrganization = Boolean(organization && organization !== 'pac')

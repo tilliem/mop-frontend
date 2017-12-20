@@ -5,11 +5,9 @@ import outkastPetition from '../../local/api/v1/petitions/outkast.json'
 import outkastPetition2 from '../../local/api/v1/petitions/outkast-opposite.json'
 
 import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
 import { createMockStore } from 'redux-test-utils';
 
-import { shallow, mount } from 'enzyme';
-import { shallowWithStore } from 'enzyme-redux';
+import { mount } from 'enzyme';
 import { unwrapReduxComponent } from '../lib';
 
 import SignatureAddForm from '../../src/components/signature-add-form';
