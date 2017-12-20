@@ -4,11 +4,10 @@ import { expect } from 'chai'
 import outkastPetition from '../../local/api/v1/petitions/outkast.json'
 import outkastPetition2 from '../../local/api/v1/petitions/outkast-opposite.json'
 
-import configureMockStore from 'redux-mock-store'
-import { createMockStore } from 'redux-test-utils';
+import { createMockStore } from 'redux-test-utils'
 
-import { mount } from 'enzyme';
-import { unwrapReduxComponent } from '../lib';
+import { mount } from 'enzyme'
+import { unwrapReduxComponent } from '../lib'
 
 import SignatureAddForm from '../../src/components/signature-add-form'
 
