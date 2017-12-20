@@ -23,6 +23,10 @@ const initialPetitionState = {
   nextPetitionsLoaded: false // is nextPetitions empty because there are none to suggest or it hasn't been loaded yet?
 }
 
+const initialSearchState = {
+  searchQuery: ""
+}
+
 const initialUserState = {
   // Possible keys. none of these are guaranteed to be present/available
   // anonymous: <boolean>
@@ -168,6 +172,24 @@ function petitionReducer(state = initialPetitionState, action) {
   }
 }
 
+function petitionSearchReducer(state = initialSearchState, action) {
+  const {
+    type,
+    query
+  } = action
+  switch (type) {
+    case petitionActionTypes.SEARCH_PETITIONS_SUCCESS:
+      debugger 
+      return Object.assign({}, state, {
+        searchResults: Object.assign(
+          {}, state.searchResults
+        )
+      })
+    default:
+      return state
+  }
+}
+
 function userReducer(state = initialUserState, action) {
   // fold in tokens at the top, since it's possible it's for everyone
   const newData = Object.assign({}, action.tokens || {})
@@ -229,6 +251,7 @@ function userReducer(state = initialUserState, action) {
 const rootReducer = combineReducers({
   navStore: navReducer,
   petitionStore: petitionReducer,
+  petitionSearchStore: petitionSearchReducer,
   userStore: userReducer
 })
 

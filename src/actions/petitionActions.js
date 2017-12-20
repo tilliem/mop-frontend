@@ -16,6 +16,10 @@ export const actionTypes = {
   FETCH_TOP_PETITIONS_SUCCESS: 'FETCH_TOP_PETITIONS_SUCCESS',
   FETCH_TOP_PETITIONS_FAILURE: 'FETCH_TOP_PETITIONS_FAILURE',
 
+  SEARCH_PETITIONS_REQUEST: 'SEARCH_PETITIONS_REQUEST',
+  SEARCH_PETITIONS_SUCCESS: 'SEARCH_PETITIONS_SUCCESS',
+  SEARCH_PETITIONS_FAILURE: 'SEARCH_PETITIONS_FAILURE',
+
   PETITION_SIGNATURE_SUBMIT: 'PETITION_SIGNATURE_SUBMIT',
   PETITION_SIGNATURE_SUCCESS: 'PETITION_SIGNATURE_SUCCESS',
   PETITION_SIGNATURE_FAILURE: 'PETITION_SIGNATURE_FAILURE'
@@ -67,6 +71,40 @@ export function loadPetition(petitionSlug, forceReload) {
       )
   }
 }
+
+export function searchPetitions(searchQuery) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: actionTypes.SEARCH_PETITIONS_REQUEST,
+      searchQuery
+    })
+    debugger
+    const { userStore, petitionSearchStore } = getState()
+    const query = []
+    // TODO: actually pass through search params
+    const queryString = ""
+    return fetch(`${Config.API_URI}/api/v1/search/petitions.json?q=${queryString}`)
+      .then(
+        (response) => response.json().then((json) => {
+          debugger
+          dispatch({
+            type: actionTypes.SEARCH_PETITIONS_SUCCESS,
+            petitions: json._embedded,
+            topPetitionsKey
+          })
+        }),
+        (err) => {
+          debugger
+          dispatch({
+            type: actionTypes.SEARCH_PETITIONS_FAILURE,
+            error: err,
+            topPetitionsKey
+          })
+        }
+      )
+  }
+}
+
 
 export function loadTopPetitions(pac, megapartner, forceReload) {
   // topPetitionsKey must not just be truthily equal but exact
@@ -263,6 +301,7 @@ export const getSharebanditShareLink = (petitionSharebanditUrl) => {
 export const actions = {
   loadPetition,
   signPetition,
+  searchPetitions,
   registerSignatureAndThanks,
   recordShareClick,
   loadPetitionSignatures,

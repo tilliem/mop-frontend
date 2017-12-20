@@ -27,7 +27,7 @@ class ThanksPage extends React.Component {
     return (
       <div>
         {(this.Thanks && this.props.petition ?
-          <this.Thanks petition={this.props.petition} user={this.props.user} /> :
+          <this.Thanks searchQuery={this.props.searchQuery} user={this.props.user} /> :
           ''
         )}
       </div>
@@ -37,16 +37,14 @@ class ThanksPage extends React.Component {
 }
 
 ThanksPage.propTypes = {
-  petition: PropTypes.object,
+  searchQuery: PropTypes.object,
   user: PropTypes.object,
-  location: PropTypes.object,
   dispatch: PropTypes.func
 }
 
 function mapStateToProps(store, ownProps) {
-  const pkey = ownProps.location.query.name || ownProps.location.query.petition_id
   return {
-    petition: pkey && store.petitionStore.petitions[pkey],
+    searchQuery: "",
     user: store.userStore
   }
 }
