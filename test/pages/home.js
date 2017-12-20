@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { createMockStore } from 'redux-test-utils';
 
-import Home from '../../src/pages/home';
+import Home from '../../src/pages/home'
 import BillBoard from '../../src/components/billboard'
 import SearchBar from '../../src/components/searchbar'
 import RecentVictoryList from '../../src/components/recentvictory.js'
