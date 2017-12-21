@@ -24,7 +24,12 @@ const initialPetitionState = {
 }
 
 const initialSearchState = {
-  searchQuery: ""
+  searchResults: {
+    count: "0",
+    page_size: 0,
+    _embed: [],
+    _links: {}
+  }
 }
 
 const initialUserState = {
@@ -175,14 +180,14 @@ function petitionReducer(state = initialPetitionState, action) {
 function petitionSearchReducer(state = initialSearchState, action) {
   const {
     type,
-    query
+    searchResults
   } = action
   switch (type) {
     case petitionActionTypes.SEARCH_PETITIONS_SUCCESS:
       debugger 
       return Object.assign({}, state, {
         searchResults: Object.assign(
-          {}, state.searchResults
+          {}, searchResults
         )
       })
     default:

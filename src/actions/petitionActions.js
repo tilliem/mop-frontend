@@ -78,7 +78,6 @@ export function searchPetitions(searchQuery) {
       type: actionTypes.SEARCH_PETITIONS_REQUEST,
       searchQuery
     })
-    debugger
     const { userStore, petitionSearchStore } = getState()
     const query = []
     // TODO: actually pass through search params
@@ -86,19 +85,15 @@ export function searchPetitions(searchQuery) {
     return fetch(`${Config.API_URI}/api/v1/search/petitions.json?q=${queryString}`)
       .then(
         (response) => response.json().then((json) => {
-          debugger
           dispatch({
             type: actionTypes.SEARCH_PETITIONS_SUCCESS,
-            petitions: json._embedded,
-            topPetitionsKey
+            searchResults: json
           })
         }),
         (err) => {
-          debugger
           dispatch({
             type: actionTypes.SEARCH_PETITIONS_FAILURE,
-            error: err,
-            topPetitionsKey
+            error: err
           })
         }
       )

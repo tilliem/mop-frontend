@@ -5,17 +5,16 @@ import { connect } from 'react-redux'
 import { searchResultLoader } from '../loaders/petition.js'
 import SearchBar from '../components/searchbar'
 import SearchResults from '../components/search-results'
-import SearchResultPagination from '../components/search-result-pagination'
 
 import { actions as searchActions } from '../actions/petitionActions.js'
 
 class SearchPage extends React.Component {
   componentWillMount() {
     const self = this
-    searchResultLoader().then((deps) => {
-      self.SearchResults = deps.SearchResults.default
-      self.forceUpdate()
-    })
+    // searchResultLoader().then((deps) => {
+    //   self.SearchResults = deps.SearchResults.default
+    //   self.forceUpdate()
+    // })
 
     const { dispatch } = this.props
   }
@@ -31,11 +30,7 @@ class SearchPage extends React.Component {
 					</p>
 
 					<SearchBar />
-					{(this.SearchResults ?
-					  <this.SearchResults user={this.props.user} /> :
-					  ''
-					)}
-		            <SearchResultPagination />
+					<SearchResults user={this.props.user} />
 				</div>
         </div>}
       </div>
