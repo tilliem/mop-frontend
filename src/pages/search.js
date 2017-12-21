@@ -11,11 +11,6 @@ import { actions as searchActions } from '../actions/petitionActions.js'
 class SearchPage extends React.Component {
   componentWillMount() {
     const self = this
-    // searchResultLoader().then((deps) => {
-    //   self.SearchResults = deps.SearchResults.default
-    //   self.forceUpdate()
-    // })
-
     const { dispatch } = this.props
   }
 
@@ -30,7 +25,7 @@ class SearchPage extends React.Component {
 					</p>
 
 					<SearchBar />
-					<SearchResults user={this.props.user} />
+					<SearchResults user={this.props.user} query={this.props.query} />
 				</div>
         </div>}
       </div>
@@ -41,13 +36,18 @@ class SearchPage extends React.Component {
 
 SearchPage.propTypes = {
   user: PropTypes.object,
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
+  params: PropTypes.object,
+  query: PropTypes.string
 }
 
 function mapStateToProps(store, ownProps) {
-  return {
-    user: store.userStore
-  }
+	const queryString = require('query-string')
+	var parsed = queryString.parse(ownProps.location.search)
+	return {
+		user: store.userStore,
+		query: parsed.q
+	}
 }
 
 export default connect(mapStateToProps)(SearchPage)
