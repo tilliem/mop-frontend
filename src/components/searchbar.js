@@ -10,7 +10,7 @@ const SearchBar = () => (
   <div className='container'>
     <div className='row'>
       <div className='span7 control-group bump-top-1'>
-        <form className='search' method='get' action='/find/'>
+        <form className='search' method='get' action='/#/find/'>
           <div className='search'>
             <input name='q' placeholder='Search Petitions' type='text' className='margin-right-1 ' />
             <StateSelect selectText='All States' style={smallStateSelectStyle} />

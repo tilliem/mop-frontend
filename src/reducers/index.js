@@ -184,7 +184,6 @@ function petitionSearchReducer(state = initialSearchState, action) {
   } = action
   switch (type) {
     case petitionActionTypes.SEARCH_PETITIONS_SUCCESS:
-      debugger 
       return Object.assign({}, state, {
         searchResults: Object.assign(
           {}, searchResults

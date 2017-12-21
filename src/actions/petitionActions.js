@@ -72,17 +72,15 @@ export function loadPetition(petitionSlug, forceReload) {
   }
 }
 
-export function searchPetitions(searchQuery) {
+export function searchPetitions(query) {
   return (dispatch, getState) => {
     dispatch({
       type: actionTypes.SEARCH_PETITIONS_REQUEST,
-      searchQuery
+      query
     })
     const { userStore, petitionSearchStore } = getState()
-    const query = []
-    // TODO: actually pass through search params
-    const queryString = ""
-    return fetch(`${Config.API_URI}/api/v1/search/petitions.json?q=${queryString}`)
+
+    return fetch(`${Config.API_URI}/api/v1/search/petitions.json?q=${query}`)
       .then(
         (response) => response.json().then((json) => {
           dispatch({

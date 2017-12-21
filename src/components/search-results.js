@@ -9,8 +9,8 @@ class SearchResults extends React.Component {
     super(props)
   }
   componentDidMount() {
-    const { user, searchPetitions } = this.props
-    searchPetitions();
+    const { user, searchPetitions, query } = this.props
+    searchPetitions(query);
   }
 
   render() {
@@ -24,8 +24,8 @@ class SearchResults extends React.Component {
     const nextPage = searchNavLinks.next
     const numPages = Math.min(4, Math.ceil(resultCount / pageSize))
 
-    var resultsList = resultsEmbed.map(function(result){
-                      return <div className="result">
+    var resultsList = resultsEmbed.map(function(result, index){
+                      return <div className="result" key={index}>
                               <div className="result-text">
                                 <p className="result-name">
                                 <a className="size-medium-large font-heavy" href={"http://pac.petitions.moveon.org/sign/" + result.short_name + "/?source=search"}>
@@ -61,8 +61,8 @@ const mapStateToProps = (store, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  searchPetitions: () =>
-    dispatch(searchPetitions())
+  searchPetitions: (query) =>
+    dispatch(searchPetitions(query))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResults)

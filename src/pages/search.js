@@ -11,7 +11,7 @@ import { actions as searchActions } from '../actions/petitionActions.js'
 class SearchPage extends React.Component {
   componentWillMount() {
     const self = this
-    const { dispatch } = this.props
+    const { dispatch, query } = this.props
   }
 
   render() {
@@ -44,9 +44,11 @@ SearchPage.propTypes = {
 function mapStateToProps(store, ownProps) {
 	const queryString = require('query-string')
 	var parsed = queryString.parse(ownProps.location.search)
+  console.log('parsed', parsed);
+  console.log('parsed q', parsed.query);
 	return {
 		user: store.userStore,
-		query: parsed.q
+		query: parsed.query
 	}
 }
 
