@@ -17,23 +17,31 @@ class SearchResults extends React.Component {
     const { user, searchResults } = this.props
     const resultCount = searchResults.count
     const pageSize = searchResults.page_size
-    const results = searchResults._embed
+    const resultsEmbed = searchResults._embed
     const searchNavLinks = searchResults._links
     const currentPage = 1 // todo
 
+    const nextPage = searchNavLinks.next
+    const numPages = Math.min(4, Math.ceil(resultCount / pageSize))
+
+    var resultsList = resultsEmbed.map(function(result){
+                      return <div className="result">
+                              <div className="result-text">
+                                <p className="result-name">
+                                <a className="size-medium-large font-heavy" href={"http://pac.petitions.moveon.org/sign/" + result.short_name + "/?source=search"}>
+                                    {result.name}
+                                </a>
+                                </p>
+                                <p className="size-small">http://pac.petitions.moveon.org/sign/{result.short_name}/</p>
+                                <p className="size-medium">{result.blurb}</p>
+                              </div>
+                            </div>;
+                      })
+
+
     return (
       <div id="search-results">
-          <div className="result">
-            <div className="result-text">
-              <p className="result-name">
-              <a className="size-medium-large font-heavy" href="http://pac.petitions.moveon.org/sign/support-the-student-loan/?source=search">
-                  Support Student Loan Forgiveness
-              </a>
-              </p>
-              <p className="size-small">http://pac.petitions.moveon.org/sign/support-the-student-loan/</p>
-              <p className="size-medium">Total outstanding student loan debt in America is expected to exceed $1.4 TRILLION this year. Millions of hardworking, taxpaying, educated Americans are being crushed under the weight of their educati...</p>
-            </div>
-          </div>
+        {resultsList}
         <SearchResultPagination resultCount={resultCount} pageSize={pageSize} currentPage={currentPage} searchNavLinks={searchNavLinks}/>
       </div>
     )
