@@ -4,7 +4,9 @@ import { connect } from 'react-redux'
 
 import NavLink from './nav-link'
 
-const Nav = ({ user, nav }) => {
+const Nav = ({ user, nav, organization }) => {
+  const cobrand = ((organization) ? nav.orgs[organization] : nav.partnerCobrand)
+
   const userLinks = (
     <div className='pull-right bump-top-1 span-7 top-menu'>
       <ul className='nav collapse nav-collapse'>
@@ -36,8 +38,8 @@ const Nav = ({ user, nav }) => {
   )
 
   const partnerLogoLinks = (
-    (nav.partnerCobrand)
-      ? (<a href={nav.partnerCobrand.url}><img className='org_logo' src={nav.partnerCobrand.logo} alt={nav.partnerCobrand.name} /></a>
+    (cobrand)
+      ? (<a href={cobrand.browser_url}><img className='org_logo' src={cobrand.logo_image_url} alt={`${cobrand.organization} logo`} /></a>
         ) : null)
 
   return (
@@ -88,7 +90,8 @@ const Nav = ({ user, nav }) => {
 
 Nav.propTypes = {
   user: PropTypes.object,
-  nav: PropTypes.object
+  nav: PropTypes.object,
+  organization: PropTypes.string
 }
 
 function mapStateToProps(store) {
