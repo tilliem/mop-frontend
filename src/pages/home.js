@@ -15,7 +15,7 @@ const Home = ({ params }) => {
   return (
     <div className='container background-moveon-white bump-top-1'>
       {isOrganization ? null : <BillBoard />}
-      <SearchBar />
+      <SearchBar size="long" />
 
       {isOrganization
        ? (
