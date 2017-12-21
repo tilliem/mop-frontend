@@ -14,7 +14,7 @@ const SearchBar = ({ size }) => {
     <div className="container">
       <div className="row">
         <div className="span7 control-group bump-top-1">
-          <form className="search" method="get" action="/find/">
+          <form className="search" method="get" action="/#/find/">
             <div className="search">
               <input name="query" placeholder="Search Petitions" type="text" className="margin-right-1 " />
               <StateSelect selectText="All States" style={smallStateSelectStyle} />
@@ -30,7 +30,7 @@ const SearchBar = ({ size }) => {
   const shortSearchBar = (
     <div id="search-form-div">
       <form className="form-vertical">
-        <div className="search">
+        <div className="search" method="get" action="/#/find/">
           <input name="query" type="text" id="search-box2" className="margin-top-0 margin-right-2"/>
           <button type="submit" className="background-moveon-dark-blue">Search</button>
         </div>

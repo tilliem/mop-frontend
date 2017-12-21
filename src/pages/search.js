@@ -25,7 +25,7 @@ class SearchPage extends React.Component {
 					</p>
 
 					<SearchBar />
-					<SearchResults user={this.props.user} query={this.props.query} />
+					<SearchResults user={this.props.user} query={this.props.query || ''} />
 				</div>
         </div>}
       </div>
