@@ -50,6 +50,7 @@ class SignatureAddForm extends React.Component {
       petition: {
         name: petition.name,
         petition_id: petition.petition_id,
+        show_optin: this.props.showOptinCheckbox,
         _links: petition._links
       },
       person: {
