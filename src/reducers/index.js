@@ -25,7 +25,7 @@ const initialPetitionState = {
 
 const initialSearchState = {
   searchResults: {
-    count: "0",
+    count: '0',
     page_size: 0,
     _embed: [],
     _links: {}

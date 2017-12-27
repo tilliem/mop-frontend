@@ -16,12 +16,12 @@ class SearchPage extends React.Component {
 
   render() {
     return (
-      <div className="container background-moveon-white bump-top-1">
-		{<div className="row">
-				<div className="span12">
-					<h2 id="title" className="light">Top petitions</h2>
+      <div className='container background-moveon-white bump-top-1'>
+		{<div className='row'>
+				<div className='span12'>
+					<h2 id='title' className='light'>Top petitions</h2>
 					<p>
-					You can search for petitions by issue, title, author, target, city, state, or keyword &mdash; or check out <a href="/victories.html">recent victories</a>.
+					You can search for petitions by issue, title, author, target, city, state, or keyword &mdash; or check out <a href='/victories.html'>recent victories</a>.
 					</p>
 
 					<SearchBar />
@@ -42,14 +42,14 @@ SearchPage.propTypes = {
 }
 
 function mapStateToProps(store, ownProps) {
-	const queryString = require('query-string')
-	var parsed = queryString.parse(ownProps.location.search)
-  console.log('parsed', parsed);
-  console.log('parsed q', parsed.query);
-	return {
-		user: store.userStore,
-		query: parsed.query
-	}
+  const queryString = require('query-string')
+  const parsed = queryString.parse(ownProps.location.search)
+  console.log('parsed', parsed)
+  console.log('parsed q', parsed.query)
+  return {
+    user: store.userStore,
+    query: parsed.query
+  }
 }
 
 export default connect(mapStateToProps)(SearchPage)

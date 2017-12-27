@@ -7,14 +7,14 @@ const SearchResultPagination = ({ resultCount, pageSize, currentPage, searchNavL
   const nextPage = searchNavLinks.next
   const numPages = Math.min(4, Math.ceil(resultCount / pageSize))
   const pages = []
-  pages.push(<li className="disabled"><a href={searchNavLinks.url}>&#171;</a></li>);      
-  pages.push(<li className="active"><a href="?page={currentPage}&amp;">{currentPage}</a></li>);      
-  for (var i = currentPage+1; i <= numPages; i++) {
-    pages.push(<li ><a href="?page={i}&amp;">{i}</a></li>);      
+  pages.push(<li className='disabled'><a href={searchNavLinks.url}>&#171;</a></li>)
+  pages.push(<li className='active'><a href='?page={currentPage}&amp;'>{currentPage}</a></li>)
+  for (let i = currentPage + 1; i <= numPages; i++) {
+    pages.push(<li ><a href='?page={i}&amp;'>{i}</a></li>)
   }
 
   return (
-    <div className="pagination">
+    <div className='pagination'>
       <ul>
         {pages}
         <li><a href={nextPage}>&#187;</a></li>

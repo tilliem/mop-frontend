@@ -44,7 +44,7 @@ ThanksPage.propTypes = {
 
 function mapStateToProps(store, ownProps) {
   return {
-    searchQuery: "",
+    searchQuery: '',
     user: store.userStore
   }
 }

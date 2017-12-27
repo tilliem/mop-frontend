@@ -10,7 +10,7 @@ class SearchResults extends React.Component {
   }
   componentDidMount() {
     const { user, searchPetitions, query } = this.props
-    searchPetitions(query);
+    searchPetitions(query)
   }
 
   render() {
@@ -24,25 +24,23 @@ class SearchResults extends React.Component {
     const nextPage = searchNavLinks.next
     const numPages = Math.min(4, Math.ceil(resultCount / pageSize))
 
-    var resultsList = resultsEmbed.map(function(result, index){
-                      return <div className="result" key={index}>
-                              <div className="result-text">
-                                <p className="result-name">
-                                <a className="size-medium-large font-heavy" href={"http://pac.petitions.moveon.org/sign/" + result.short_name + "/?source=search"}>
+    const resultsList = resultsEmbed.map((result, index) => (<div className='result' key={index}>
+                              <div className='result-text'>
+                                <p className='result-name'>
+                                <a className='size-medium-large font-heavy' href={`http://pac.petitions.moveon.org/sign/${result.short_name}/?source=search`}>
                                     {result.name}
                                 </a>
                                 </p>
-                                <p className="size-small">http://pac.petitions.moveon.org/sign/{result.short_name}/</p>
-                                <p className="size-medium">{result.blurb}</p>
+                                <p className='size-small'>http://pac.petitions.moveon.org/sign/{result.short_name}/</p>
+                                <p className='size-medium'>{result.blurb}</p>
                               </div>
-                            </div>;
-                      })
+                            </div>))
 
 
     return (
-      <div id="search-results">
+      <div id='search-results'>
         {resultsList}
-        <SearchResultPagination resultCount={resultCount} pageSize={pageSize} currentPage={currentPage} searchNavLinks={searchNavLinks}/>
+        <SearchResultPagination resultCount={resultCount} pageSize={pageSize} currentPage={currentPage} searchNavLinks={searchNavLinks} />
       </div>
     )
   }
@@ -54,9 +52,9 @@ SearchResults.propTypes = {
 }
 
 const mapStateToProps = (store, ownProps) => {
-  const searchResults = store.petitionSearchStore.searchResults;
+  const searchResults = store.petitionSearchStore.searchResults
   return {
-    searchResults: searchResults
+    searchResults
   }
 }
 
