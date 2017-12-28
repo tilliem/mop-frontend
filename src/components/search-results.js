@@ -9,8 +9,8 @@ class SearchResults extends React.Component {
     super(props)
   }
   componentDidMount() {
-    const { user, searchPetitions, query } = this.props
-    searchPetitions(query)
+    const { user, searchPetitions, query, pageNumber } = this.props
+    searchPetitions(query, pageNumber)
   }
 
   render() {
@@ -59,8 +59,8 @@ const mapStateToProps = (store, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  searchPetitions: (query) =>
-    dispatch(searchPetitions(query))
+  searchPetitions: (query, pageNumber) =>
+    dispatch(searchPetitions(query, pageNumber))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResults)

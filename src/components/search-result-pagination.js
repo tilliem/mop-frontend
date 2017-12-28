@@ -8,9 +8,9 @@ const SearchResultPagination = ({ resultCount, pageSize, currentPage, searchNavL
   const numPages = Math.min(4, Math.ceil(resultCount / pageSize))
   const pages = []
   pages.push(<li className='disabled'><a href={searchNavLinks.url}>&#171;</a></li>)
-  pages.push(<li className='active'><a href='?page={currentPage}&amp;'>{currentPage}</a></li>)
+  pages.push(<li className='active'><a href={'/#/find?page='+currentPage}>{currentPage}</a></li>)
   for (let i = currentPage + 1; i <= numPages; i++) {
-    pages.push(<li ><a href='?page={i}&amp;'>{i}</a></li>)
+    pages.push(<li><a href={'/#/find?page='+i}>{i}</a></li>)
   }
 
   return (
