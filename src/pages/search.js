@@ -39,7 +39,7 @@ SearchPage.propTypes = {
   dispatch: PropTypes.func,
   params: PropTypes.object,
   query: PropTypes.string,
-  pageNumber: PropTypes.integer
+  pageNumber: PropTypes.string
 }
 
 function mapStateToProps(store, ownProps) {

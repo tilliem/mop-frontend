@@ -19,19 +19,19 @@ class SearchBar extends React.Component {
   }
   componentWillMount() {
     const self = this
-    const { dispatch, query } = this.props
+    const { dispatch, query, history } = this.props
   }
 
   handleQuery(e) {
     e.preventDefault()
     const q = e.target.query.value
-
     this.setState({
       query: q
     })
+
     const path = `#/find?query=${q}`
-    console.log(path)
     browserHistory.push(path)
+    window.location.reload()
   }
 
   render() {
@@ -41,7 +41,7 @@ class SearchBar extends React.Component {
       <div className='container'>
         <div className='row'>
           <div className='span7 control-group bump-top-1'>
-            <form className='search'>
+            <form className='search' onSubmit={this.handleQuery.bind(this)}>
               <div className='search'>
                 <input name='query' placeholder='Search Petitions' type='text' className='margin-right-1 ' />
                 <StateSelect selectText='All States' style={smallStateSelectStyle} />
@@ -75,7 +75,8 @@ class SearchBar extends React.Component {
 }
 
 SearchBar.propTypes = {
-  size: PropTypes.string
+  size: PropTypes.string,
+  history: PropTypes.object
 }
 
 
