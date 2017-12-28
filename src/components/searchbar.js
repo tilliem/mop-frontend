@@ -35,7 +35,7 @@ class SearchBar extends React.Component {
   }
 
   render() {
-    const { size } = this.props
+    const { size, selectedState } = this.props
 
     const longSearchBar = (
       <div className='container'>
@@ -44,7 +44,7 @@ class SearchBar extends React.Component {
             <form className='search' onSubmit={this.handleQuery.bind(this)}>
               <div className='search'>
                 <input name='query' placeholder='Search Petitions' type='text' className='margin-right-1 ' />
-                <StateSelect selectText='All States' style={smallStateSelectStyle} />
+                <StateSelect selectText='All States' style={smallStateSelectStyle} selectedState={this.props.selectedState} />
                 <button className='background-moveon-dark-blue margin-left-1' type='submit'>Search</button>
               </div>
             </form>
