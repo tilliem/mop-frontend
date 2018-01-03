@@ -45,12 +45,12 @@ class SignatureAddForm extends React.Component {
   }
 
   getOsdiSignature() {
-    const { petition, query, user } = this.props
+    const { petition, query, showOptinCheckbox, user } = this.props
     const osdiSignature = {
       petition: {
         name: petition.name,
         petition_id: petition.petition_id,
-        show_optin: this.props.showOptinCheckbox,
+        show_optin: showOptinCheckbox,
         _links: petition._links
       },
       person: {
