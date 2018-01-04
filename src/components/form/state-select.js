@@ -16,9 +16,6 @@ class StateSelect extends React.Component {
    this.setState({
      selectedState: selected_state
     })
-
-    const path = `#/find?state=${selected_state}`
-    browserHistory.push(path)
   }
 
   render(){

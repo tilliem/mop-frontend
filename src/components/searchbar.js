@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { browserHistory } from 'react-router'
+import { browserHistory, withRouter } from 'react-router'
 
 import StateSelect from './form/state-select'
 
@@ -29,9 +29,8 @@ class SearchBar extends React.Component {
       query: q
     })
 
-    const path = `#/find?query=${q}`
-    browserHistory.push(path)
-    window.location.reload()
+    const path = `find?query=${q}`
+    this.props.router.push(path)
   }
 
   render() {
@@ -76,8 +75,8 @@ class SearchBar extends React.Component {
 
 SearchBar.propTypes = {
   size: PropTypes.string,
-  history: PropTypes.object
+  history: PropTypes.object,
+  router: PropTypes.object
 }
 
-
-export default SearchBar
+export default withRouter(SearchBar)
