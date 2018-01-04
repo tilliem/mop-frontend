@@ -182,6 +182,7 @@ class SignatureAddForm extends React.Component {
     }
     if (this.state.country !== 'United States') {
       delete required.state
+      delete required.zip
     }
     if (changeRequiredFields && doUpdate) {
       this.setState({ required })
