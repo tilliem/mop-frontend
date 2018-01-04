@@ -196,8 +196,28 @@ describe('<SignatureAddForm />', () => {
   })
   describe('<SignatureAddForm /> stateful tests', () => {
     // THESE ARE TESTS WHERE WE CHANGE THE STATE (FILL IN FORM, ETC)
-    // it('TODO:non-US address', () => {})
     // it('TODO:logout/unrecognize shows anonymous field list', () => {})
+
+    it('adding a non-US address updates requirements to not require state or zip', () => {
+      const store = createMockStore(storeAnonymous)
+      const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
+      const component = unwrapReduxComponent(context)
+      const reqFieldsBefore = component.updateRequiredFields(true)
+      expect(typeof reqFieldsBefore.state).to.be.equal('string')
+      expect(typeof reqFieldsBefore.zip).to.be.equal('string')
+      component.setState({ address1: '123 main', city: 'Sydney', country: 'Australia', region: 'Sydney Region', name: 'John Smith', email: 'hi@example.com', postal: '6024' })
+      const reqFieldsAfter = component.updateRequiredFields(true)
+      expect(typeof reqFieldsAfter.state).to.be.equal('undefined')
+      expect(typeof reqFieldsAfter.zip).to.be.equal('undefined')
+
+      const osdiSignature = component.getOsdiSignature()
+      expect(osdiSignature.person.postal_addresses[0].country_name).to.be.equal('Australia')
+      expect(osdiSignature.person.postal_addresses[0].locality).to.be.equal('Sydney')
+      expect(osdiSignature.person.postal_addresses[0].region).to.be.equal('Sydney Region')
+      expect(osdiSignature.person.postal_addresses[0].postal_code).to.be.equal('6024')
+
+      expect(component.formIsValid()).to.be.equal(true)
+    })
 
     it('checking volunteer requires phone', () => {
       const store = createMockStore(storeAnonymous)
