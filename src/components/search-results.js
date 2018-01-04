@@ -14,7 +14,7 @@ class SearchResults extends React.Component {
   }
 
   render() {
-    const { user, searchResults } = this.props
+    const { user, searchResults, currentPage } = this.props
     const resultCount = searchResults.count
     const pageSize = searchResults.page_size
     const resultsEmbed = searchResults._embed
@@ -48,13 +48,16 @@ class SearchResults extends React.Component {
 
 SearchResults.propTypes = {
   user: PropTypes.object,
-  searchResults: PropTypes.object
+  searchResults: PropTypes.object,
+  currentPage: PropTypes.number
 }
 
 const mapStateToProps = (store, ownProps) => {
   const searchResults = store.petitionSearchStore.searchResults
+
   return {
-    searchResults
+    searchResults: searchResults,
+    currentPage: parseInt(ownProps.pageNumber)
   }
 }
 

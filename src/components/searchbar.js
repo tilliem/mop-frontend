@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { browserHistory, withRouter } from 'react-router'
+import { searchPetitions } from '../actions/petitionActions.js'
 
 import StateSelect from './form/state-select'
 
@@ -45,24 +46,32 @@ class SearchBar extends React.Component {
     const query = this.state.query
     const selState = this.state.select_state
 
+    let targetValue = document.getElementById('searchValue').value
+
+    debugger;
+
     if(query != '' && selState === ''){
       console.log('this.props.router:', this.props.router);
       this.setState({
-        query: e.target.query.value
+        query: targetValue
       })
-      this.props.router.push('find/?query=' + `${this.state.query}`)
+      this.props.router.push('/find/?query=' + `${this.state.query}`)
     } else if(query != '' && selState === ''){
-      this.props.router.push('find/?query=' + `${this.state.query}`)
+
+      this.props.router.push(`${this.state.query}`)
     } else if(query == '' && selState === ''){
       console.log('this.props.router:', this.props.router);
       this.setState({
-        query: e.target.query.value
+        query: targetValue
       })
       this.props.router.push('find/?query=' + `${this.state.query}`)
     } else {
       console.log('this.props.router:', this.props.router);
       this.props.router.push('find/?query=' + `${this.state.query}` + '&' + 'state=' + `${this.state.select_state}`)
     }
+
+    searchPetitions(query)
+    e.preventDefault()
   }
 
 
@@ -74,11 +83,11 @@ class SearchBar extends React.Component {
       <div className='container'>
         <div className='row'>
           <div className='span7 control-group bump-top-1'>
-            <form className='search' onSubmit={this.submitQuery.bind(this)}>
+            <form className='search'>
               <div className='search'>
-                <input name='query' placeholder='Search Petitions' onChange={this.selectQuery.bind(this)} type='text' className='margin-right-1 ' />
+                <input id='searchValue' placeholder='Search Petitions' onChange={this.selectQuery.bind(this)} type='text' className='margin-right-1 ' />
                 <StateSelect selectText='All States' style={smallStateSelectStyle} onChange={this.selectState.bind(this)} />
-                <button className='background-moveon-dark-blue margin-left-1' type='submit'>Search</button>
+                <button type="button" onClick={this.submitQuery.bind(this)} className='background-moveon-dark-blue margin-left-1'>Search</button>
               </div>
             </form>
           </div>
@@ -89,10 +98,10 @@ class SearchBar extends React.Component {
 
     const shortSearchBar = (
       <div id='search-form-div'>
-        <form className='form-vertical' onSubmit={this.submitQuery.bind(this)}>
+        <form className='form-vertical'>
           <div className='search'>
-            <input name='query' type='text' id='search-box2' onChange={this.selectQuery.bind(this)} className='margin-top-0 margin-right-2' />
-            <button type='submit' className='background-moveon-dark-blue'>Search</button>
+            <input id='searchValue' name='query' type='text' onChange={this.selectQuery.bind(this)} className='margin-top-0 margin-right-2' />
+            <button type="button" onClick={this.submitQuery.bind(this)} className='background-moveon-dark-blue'>Search</button>
           </div>
           <div className='clear'></div>
         </form>
@@ -111,5 +120,10 @@ SearchBar.propTypes = {
   size: PropTypes.string,
   router: PropTypes.object
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  searchPetitions: (query) =>
+    dispatch(searchPetitions(query))
+})
 
 export default withRouter(SearchBar)
