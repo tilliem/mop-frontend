@@ -21,7 +21,9 @@ export function unRecognize() {
 
 export function loadUserSession() {
   return (dispatch) => {
-    fetch(`${Config.API_URI}/api/v1/user/session.json`)
+    fetch(`${Config.API_URI}/api/v1/user/session.json`, {
+      credentials: 'include'
+    })
     .then(
       (response) => response.json().then((json) => {
         dispatch({
@@ -45,7 +47,9 @@ export function loadTokenSession(tokens) {
       .map((k) => ((tokens[k]) ? `${encodeURIComponent(k)}=${encodeURIComponent(tokens[k])}` : ''))
       .join('&')
     const queryString = (args && args !== '&') ? `?${args}` : ''
-    fetch(`${Config.API_URI}/api/v1/user/session.json${queryString}`)
+    fetch(`${Config.API_URI}/api/v1/user/session.json${queryString}`, {
+      credentials: 'include'
+    })
     .then(
       (response) => response.json().then((json) => {
         dispatch({
