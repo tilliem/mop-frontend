@@ -49,7 +49,7 @@ function mapStateToProps(store, ownProps) {
 
   return {
     user: store.userStore,
-    query: parsed.query,
+    query: parsed.q,
     pageNumber: parsed.page || 1
   }
 }

@@ -33,7 +33,6 @@ class SearchBar extends React.Component {
     this.setState({
       query: q
     })
-    console.log('this.state.query:', this.state.query);
   }
 
   selectState(e){
@@ -42,7 +41,6 @@ class SearchBar extends React.Component {
     this.setState({
       select_state: selectedState
     })
-    console.log('this.state.select_state', this.state.select_state);
   }
 
   submitQuery(e){
@@ -51,16 +49,18 @@ class SearchBar extends React.Component {
 
     const query = this.state.query
     const selState = this.state.select_state
+    debugger;
 
     if(query != '' && selState === ''){
-      this.props.router.push('/find/?query=' + `${this.state.query}`)
+      debugger;
+      this.props.router.push('/find/?q=' + `${this.state.query}`)
     } else if(query != '' && selState === ''){
 
       this.props.router.push(`${this.state.query}`)
     } else if(query == '' && selState === ''){
-      this.props.router.push('/find/?query=' + `${this.state.query}`)
+      this.props.router.push('/find/?q=' + `${this.state.query}`)
     } else {
-      this.props.router.push('/find/?query=' + `${this.state.query}` + '&' + 'state=' + `${this.state.select_state}`)
+      this.props.router.push('/find/?q=' + `${this.state.query}` + '&' + 'state=' + `${this.state.select_state}`)
     }
 
     dispatch(petitionActions.searchPetitions(query))
@@ -92,7 +92,7 @@ class SearchBar extends React.Component {
       <div id='search-form-div'>
         <form className='form-vertical' onSubmit={this.submitQuery}>
           <div className='search'>
-            <input id='searchValue' value={this.state.query} name='query' type='text' onChange={this.selectQuery.bind(this)} className='margin-top-0 margin-right-2' />
+            <input id='searchValue' value={this.state.query} name='q' type='text' onChange={this.selectQuery.bind(this)} className='margin-top-0 margin-right-2' />
             <button type="submit" className='background-moveon-dark-blue'>Search</button>
           </div>
           <div className='clear'></div>
