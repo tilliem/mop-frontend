@@ -73,12 +73,11 @@ export function loadPetition(petitionSlug, forceReload) {
 }
 
 export function searchPetitions(query, pageNumber) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({
       type: actionTypes.SEARCH_PETITIONS_REQUEST,
       query
     })
-    const { petitionSearchStore } = getState()
 
     const page = pageNumber ? `&page=${pageNumber}` : ''
 

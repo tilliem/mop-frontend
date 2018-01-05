@@ -39,12 +39,14 @@ class ThanksPage extends React.Component {
 ThanksPage.propTypes = {
   searchQuery: PropTypes.object,
   user: PropTypes.object,
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
+  petition: PropTypes.object,
+  location: PropTypes.object
 }
 
-function mapStateToProps(store, ownProps) {
+function mapStateToProps(store) {
   return {
-    searchQuery: '',
+    searchQuery: {},
     user: store.userStore
   }
 }

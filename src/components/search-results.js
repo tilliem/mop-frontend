@@ -7,8 +7,7 @@ import SearchResultPagination from '../components/search-result-pagination'
 class SearchResults extends React.Component {
 
   componentDidMount() {
-    const { searchPetitions, query, pageNumber } = this.props
-    searchPetitions(query, pageNumber)
+    this.props.searchPetitions(this.props.query, this.props.pageNumber)
   }
 
   render() {

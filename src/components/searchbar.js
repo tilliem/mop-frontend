@@ -24,9 +24,6 @@ class SearchBar extends React.Component {
     this.selectState = this.selectState.bind(this)
     this.selectQuery = this.selectQuery.bind(this)
   }
-  componentWillMount() {
-    const { dispatch, query } = this.props
-  }
 
   selectQuery(e) {
     e.preventDefault()
