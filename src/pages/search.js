@@ -24,7 +24,7 @@ class SearchPage extends React.Component {
 					You can search for petitions by issue, title, author, target, city, state, or keyword &mdash; or check out <a href='/victories.html'>recent victories</a>.
 					</p>
 
-					<SearchBar />
+					<SearchBar query={this.props.query}/>
 					<SearchResults user={this.props.user} query={this.props.query || ''} pageNumber={this.props.pageNumber || ''} />
 				</div>
         </div>}
@@ -45,8 +45,7 @@ SearchPage.propTypes = {
 function mapStateToProps(store, ownProps) {
   const queryString = require('query-string')
   const parsed = queryString.parse(ownProps.location.search)
-  console.log('parsed', parsed)
-  console.log('parsed q', parsed.query)
+
   return {
     user: store.userStore,
     query: parsed.query,

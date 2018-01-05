@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { browserHistory, withRouter } from 'react-router'
-import { searchPetitions } from '../actions/petitionActions.js'
+import { connect } from 'react-redux'
+import { actions as petitionActions } from '../actions/petitionActions.js'
 
 import StateSelect from './form/state-select'
 
@@ -18,10 +19,12 @@ class SearchBar extends React.Component {
       query: '',
       select_state: ''
     }
+
+    this.submitQuery = this.submitQuery.bind(this)
   }
   componentWillMount() {
     const self = this
-    const { dispatch, query, history } = this.props
+    const { dispatch, query } = this.props
   }
 
   selectQuery(e) {
@@ -43,35 +46,24 @@ class SearchBar extends React.Component {
   }
 
   submitQuery(e){
+    e.preventDefault()
+    const dispatch = this.props.dispatch
+
     const query = this.state.query
     const selState = this.state.select_state
 
-    let targetValue = document.getElementById('searchValue').value
-
-    debugger;
-
     if(query != '' && selState === ''){
-      console.log('this.props.router:', this.props.router);
-      this.setState({
-        query: targetValue
-      })
       this.props.router.push('/find/?query=' + `${this.state.query}`)
     } else if(query != '' && selState === ''){
 
       this.props.router.push(`${this.state.query}`)
     } else if(query == '' && selState === ''){
-      console.log('this.props.router:', this.props.router);
-      this.setState({
-        query: targetValue
-      })
-      this.props.router.push('find/?query=' + `${this.state.query}`)
+      this.props.router.push('/find/?query=' + `${this.state.query}`)
     } else {
-      console.log('this.props.router:', this.props.router);
-      this.props.router.push('find/?query=' + `${this.state.query}` + '&' + 'state=' + `${this.state.select_state}`)
+      this.props.router.push('/find/?query=' + `${this.state.query}` + '&' + 'state=' + `${this.state.select_state}`)
     }
 
-    searchPetitions(query)
-    e.preventDefault()
+    dispatch(petitionActions.searchPetitions(query))
   }
 
 
@@ -83,11 +75,11 @@ class SearchBar extends React.Component {
       <div className='container'>
         <div className='row'>
           <div className='span7 control-group bump-top-1'>
-            <form className='search'>
+            <form className='search' onSubmit={this.submitQuery}>
               <div className='search'>
-                <input id='searchValue' placeholder='Search Petitions' onChange={this.selectQuery.bind(this)} type='text' className='margin-right-1 ' />
+                <input id='searchValue' value={this.state.query} placeholder='Search Petitions' onChange={this.selectQuery.bind(this)} type='text' className='margin-right-1 ' />
                 <StateSelect selectText='All States' style={smallStateSelectStyle} onChange={this.selectState.bind(this)} />
-                <button type="button" onClick={this.submitQuery.bind(this)} className='background-moveon-dark-blue margin-left-1'>Search</button>
+                <button type="submit" className='background-moveon-dark-blue margin-left-1'>Search</button>
               </div>
             </form>
           </div>
@@ -98,10 +90,10 @@ class SearchBar extends React.Component {
 
     const shortSearchBar = (
       <div id='search-form-div'>
-        <form className='form-vertical'>
+        <form className='form-vertical' onSubmit={this.submitQuery}>
           <div className='search'>
-            <input id='searchValue' name='query' type='text' onChange={this.selectQuery.bind(this)} className='margin-top-0 margin-right-2' />
-            <button type="button" onClick={this.submitQuery.bind(this)} className='background-moveon-dark-blue'>Search</button>
+            <input id='searchValue' value={this.state.query} name='query' type='text' onChange={this.selectQuery.bind(this)} className='margin-top-0 margin-right-2' />
+            <button type="submit" className='background-moveon-dark-blue'>Search</button>
           </div>
           <div className='clear'></div>
         </form>
@@ -118,12 +110,9 @@ class SearchBar extends React.Component {
 
 SearchBar.propTypes = {
   size: PropTypes.string,
-  router: PropTypes.object
+  router: PropTypes.object,
+  query: PropTypes.string,
+  dispatch: PropTypes.func
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  searchPetitions: (query) =>
-    dispatch(searchPetitions(query))
-})
-
-export default withRouter(SearchBar)
+export default connect()(withRouter(SearchBar))

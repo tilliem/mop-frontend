@@ -82,8 +82,6 @@ export function searchPetitions(query, pageNumber) {
 
     const page = pageNumber ? `&page=${pageNumber}` : ''
 
-    console.log('page number:', page);
-
     return fetch(`${Config.API_URI}/api/v1/search/petitions.json?q=${query}${page}`)
       .then(
         (response) => response.json().then((json) => {

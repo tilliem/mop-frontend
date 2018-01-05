@@ -19,7 +19,6 @@ class SearchResults extends React.Component {
     const pageSize = searchResults.page_size
     const resultsEmbed = searchResults._embed
     const searchNavLinks = searchResults._links
-    const currentPage = 1 // todo
 
     const nextPage = searchNavLinks.next
     const numPages = Math.min(4, Math.ceil(resultCount / pageSize))
