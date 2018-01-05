@@ -5,35 +5,33 @@ import { searchPetitions } from '../actions/petitionActions.js'
 import SearchResultPagination from '../components/search-result-pagination'
 
 class SearchResults extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+
   componentDidMount() {
-    const { user, searchPetitions, query, pageNumber } = this.props
+    const { searchPetitions, query, pageNumber } = this.props
     searchPetitions(query, pageNumber)
   }
 
   render() {
-    const { user, searchResults, currentPage, query } = this.props
+    const { searchResults, currentPage, query } = this.props
     const resultCount = searchResults.count
     const pageSize = searchResults.page_size
     const resultsEmbed = searchResults._embed
     const searchNavLinks = searchResults._links
 
-    const nextPage = searchNavLinks.next
-    const numPages = Math.min(4, Math.ceil(resultCount / pageSize))
-
-    const resultsList = resultsEmbed.map((result, index) => (<div className='result' key={index}>
-                              <div className='result-text'>
-                                <p className='result-name'>
-                                <a className='size-medium-large font-heavy' href={`http://pac.petitions.moveon.org/sign/${result.short_name}/?source=search`}>
-                                    {result.name}
-                                </a>
-                                </p>
-                                <p className='size-small'>http://pac.petitions.moveon.org/sign/{result.short_name}/</p>
-                                <p className='size-medium'>{result.blurb}</p>
-                              </div>
-                            </div>))
+    const resultsList = resultsEmbed.map((result, index) => (
+      <div className='result' key={index}>
+        <div className='result-text'>
+          <p className='result-name'>
+            <a className='size-medium-large font-heavy' href={`http://pac.petitions.moveon.org/sign/${result.short_name}/?source=search`}>
+                {result.name}
+            </a>
+          </p>
+          <p className='size-small'>http://pac.petitions.moveon.org/sign/{result.short_name}/</p>
+          <p className='size-medium'>{result.blurb}</p>
+        </div>
+      </div>
+      )
+    )
 
 
     return (
@@ -46,18 +44,19 @@ class SearchResults extends React.Component {
 }
 
 SearchResults.propTypes = {
-  user: PropTypes.object,
   searchResults: PropTypes.object,
   currentPage: PropTypes.number,
-  query: PropTypes.string
+  query: PropTypes.string,
+  searchPetitions: PropTypes.func,
+  pageNumber: PropTypes.number
 }
 
 const mapStateToProps = (store, ownProps) => {
   const searchResults = store.petitionSearchStore.searchResults
 
   return {
-    searchResults: searchResults,
-    currentPage: parseInt(ownProps.pageNumber)
+    searchResults,
+    currentPage: parseInt(ownProps.pageNumber, 10)
   }
 }
 

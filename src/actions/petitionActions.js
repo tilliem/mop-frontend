@@ -78,7 +78,7 @@ export function searchPetitions(query, pageNumber) {
       type: actionTypes.SEARCH_PETITIONS_REQUEST,
       query
     })
-    const { userStore, petitionSearchStore } = getState()
+    const { petitionSearchStore } = getState()
 
     const page = pageNumber ? `&page=${pageNumber}` : ''
 
