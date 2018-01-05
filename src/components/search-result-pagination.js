@@ -17,7 +17,7 @@ const SearchResultPagination = ({ resultCount, pageSize, currentPage, searchNavL
     if(i == currentPage){
       pages.push(<li className='active'><a href={'/#/find?query=' + q + '&page=' + currentPage}>{currentPage}</a></li>)
     } else {
-      pages.push(<li><a href={'/#/find?page='+i}>{i}</a></li>)
+      pages.push(<li><a href={'/#/find?query=' + q + '&page='+ i}>{i}</a></li>)
     }
   }
 

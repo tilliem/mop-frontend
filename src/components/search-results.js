@@ -14,7 +14,7 @@ class SearchResults extends React.Component {
   }
 
   render() {
-    const { user, searchResults, currentPage } = this.props
+    const { user, searchResults, currentPage, query } = this.props
     const resultCount = searchResults.count
     const pageSize = searchResults.page_size
     const resultsEmbed = searchResults._embed
@@ -39,7 +39,7 @@ class SearchResults extends React.Component {
     return (
       <div id='search-results'>
         {resultsList}
-        <SearchResultPagination resultCount={resultCount} pageSize={pageSize} currentPage={currentPage} searchNavLinks={searchNavLinks} />
+        <SearchResultPagination resultCount={resultCount} pageSize={pageSize} currentPage={currentPage} searchNavLinks={searchNavLinks} query={query} />
       </div>
     )
   }
@@ -48,7 +48,8 @@ class SearchResults extends React.Component {
 SearchResults.propTypes = {
   user: PropTypes.object,
   searchResults: PropTypes.object,
-  currentPage: PropTypes.number
+  currentPage: PropTypes.number,
+  query: PropTypes.string
 }
 
 const mapStateToProps = (store, ownProps) => {

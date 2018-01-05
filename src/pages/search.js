@@ -39,17 +39,18 @@ SearchPage.propTypes = {
   dispatch: PropTypes.func,
   params: PropTypes.object,
   query: PropTypes.string,
-  pageNumber: PropTypes.string
+  pageNumber: PropTypes.number
 }
 
 function mapStateToProps(store, ownProps) {
   const queryString = require('query-string')
+  debugger;
   const parsed = queryString.parse(ownProps.location.search)
 
   return {
     user: store.userStore,
     query: parsed.query,
-    pageNumber: parsed.page
+    pageNumber: parsed.page || 1
   }
 }
 
