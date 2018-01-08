@@ -48,7 +48,7 @@ export function loadPetition(petitionSlug, forceReload) {
         slug: petitionSlug
       })
     }
-    return fetch(`${Config.API_URI}/api/v1/${urlKey}.json`)
+    return fetch(`${Config.API_URI}/${urlKey}.json`)
       .then(
         (response) => response.json().then((json) => {
           dispatch({
@@ -99,7 +99,7 @@ export function loadTopPetitions(pac, megapartner, forceReload) {
       query.push(`user=${userStore.signonId}`)
     }
     const queryString = ((query.length) ? `?${query.join('&')}` : '')
-    return fetch(`${Config.API_URI}/api/v1/top-petitions.json${queryString}`)
+    return fetch(`${Config.API_URI}/top-petitions.json${queryString}`)
       .then(
         (response) => response.json().then((json) => {
           dispatch({
@@ -175,7 +175,10 @@ export function signPetition(petitionSignature, petition, options) {
       }
     }
     if (Config.API_WRITABLE) {
-      fetch(`${Config.API_URI}/sign-petition`, {
+      const signingEndpoint = ((Config.API_SIGN_PETITION)
+                               ? Config.API_SIGN_PETITION
+                               : `${Config.API_URI}/signatures`)
+      fetch(signingEndpoint, {
         method: 'POST',
         body: JSON.stringify(petitionSignature)
       }).then(completion, (err) => {
@@ -234,7 +237,7 @@ export const loadPetitionSignatures = (petitionSlug, page = 1) => {
         page
       })
     }
-    return fetch(`${Config.API_URI}/api/v1/${urlKey}.json?per_page=10&page=${page}`)
+    return fetch(`${Config.API_URI}/${urlKey}.json?per_page=10&page=${page}`)
       .then(
         (response) => response.json().then((json) => {
           dispatch({
