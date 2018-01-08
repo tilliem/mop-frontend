@@ -323,7 +323,16 @@ class SignatureAddForm extends React.Component {
                </div>
              ) : ''}
 
-            <textarea className='moveon-track-click' rows='3' cols='20' name='comment' autoComplete='off' placeholder='Comment'></textarea>
+            <textarea
+              className='moveon-track-click'
+              rows='3'
+              cols='20'
+              name='comment'
+              autoComplete='off'
+              onChange={this.updateStateFromValue('comment')}
+              onBlur={this.updateStateFromValue('comment')}
+              placeholder='Comment'
+            ></textarea>
 
             {(petition.collect_volunteers)
               ? (
