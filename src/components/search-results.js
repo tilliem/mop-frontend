@@ -47,7 +47,7 @@ SearchResults.propTypes = {
   currentPage: PropTypes.number,
   query: PropTypes.string,
   searchPetitions: PropTypes.func,
-  pageNumber: PropTypes.number
+  pageNumber: PropTypes.string
 }
 
 const mapStateToProps = (store, ownProps) => {

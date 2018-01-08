@@ -1,22 +1,32 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router'
+import queryString from 'query-string'
 
 const SearchResultPagination = ({ resultCount, pageSize, currentPage, searchNavLinks, query }) => {
   const q = query || ''
   const nextPage = searchNavLinks.next
+  const pageNow = searchNavLinks.url
+  const parsedPreviousPageLink = (queryString.parse(pageNow)).page - 1
+  const parsedNextPageLink = queryString.parse(nextPage)
+  const nextPageLinkUrl = `find?q=${q}&page=${parsedNextPageLink.page}`
+  const prevPageLinkUrl = `find?q=${q}&page=${parsedPreviousPageLink}`
+
   const numPages = Math.ceil(resultCount / pageSize)
   const pages = []
 
-  pages.push(<li className='disabled'><a href={searchNavLinks.url}>&#171;</a></li>)
+  pages.push(<li className='disabled'><Link to={prevPageLinkUrl}>&#171;</Link></li>)
 
   const startPage = Math.max(1, currentPage - 3)
   const endPage = Math.min(currentPage + 3, numPages)
 
   for (let i = startPage; i <= endPage; i++) {
     if (i === currentPage) {
-      pages.push(<li className='active'><a href={`/#/find?q=${q}&page=${currentPage}`}>{currentPage}</a></li>)
+      const url = `find?q=${q}&page=${currentPage}`
+      pages.push(<li className='active'><Link to={url}>{currentPage}</Link></li>)
     } else {
-      pages.push(<li><a href={`/#/find?q=${q}&page=${i}`}>{i}</a></li>)
+      const url = `find?q=${q}&page=${i}`
+      pages.push(<li><Link to={url}>{i}</Link></li>)
     }
   }
 
@@ -24,7 +34,7 @@ const SearchResultPagination = ({ resultCount, pageSize, currentPage, searchNavL
     <div className='pagination'>
       <ul>
         {pages}
-        <li><a href={nextPage}>&#187;</a></li>
+        <li><Link to={nextPageLinkUrl}>&#187;</Link></li>
       </ul>
       <p><small>Found {resultCount} results.</small></p>
     </div>
@@ -38,6 +48,5 @@ SearchResultPagination.propTypes = {
   searchNavLinks: PropTypes.object.isRequired,
   query: PropTypes.string
 }
-
 
 export default SearchResultPagination
