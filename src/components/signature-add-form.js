@@ -57,8 +57,10 @@ class SignatureAddForm extends React.Component {
         full_name: this.state.name,
         email_addresses: [],
         postal_addresses: []
-      },
-      comments: this.state.comment
+      }
+    }
+    if (this.state.comment) {
+      osdiSignature.comments = this.state.comment
     }
     if (this.state.name) {
       osdiSignature.person.full_name = this.state.name
