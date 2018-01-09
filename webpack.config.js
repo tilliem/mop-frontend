@@ -62,9 +62,10 @@ var config = {
       'process.env':{
         'NODE_ENV': JSON.stringify(((process.env.PROD) ? 'production' : 'development')),
         'API_URI': JSON.stringify(process.env.API_URI ||
-                                  (process.env.PROD ? '' : '/local')
+                                  (process.env.PROD ? '/api/v1' : '/local/api/v1')
                                  ),
-        'API_WRITABLE': process.env.API_WRITABLE || process.env.PROD,
+        'API_WRITABLE': JSON.stringify(process.env.API_WRITABLE || process.env.PROD),
+        'API_SIGN_PETITION': JSON.stringify(process.env.API_SIGN_PETITION || ''),
         'BASE_APP_PATH': JSON.stringify(process.env.BASE_APP_PATH || '/'),
         'SESSION_COOKIE_NAME': JSON.stringify(process.env.SESSION_COOKIE_NAME || 'SO_SESSION'),
         'STATIC_ROOT': JSON.stringify(process.env.STATIC_ROOT || ''),

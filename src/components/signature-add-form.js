@@ -57,8 +57,10 @@ class SignatureAddForm extends React.Component {
         full_name: this.state.name,
         email_addresses: [],
         postal_addresses: []
-      },
-      comments: this.state.comment
+      }
+    }
+    if (this.state.comment) {
+      osdiSignature.comments = this.state.comment
     }
     if (this.state.name) {
       osdiSignature.person.full_name = this.state.name
@@ -324,7 +326,16 @@ class SignatureAddForm extends React.Component {
                </div>
              ) : ''}
 
-            <textarea className='moveon-track-click' rows='3' cols='20' name='comment' autoComplete='off' placeholder='Comment'></textarea>
+            <textarea
+              className='moveon-track-click'
+              rows='3'
+              cols='20'
+              name='comment'
+              autoComplete='off'
+              onChange={this.updateStateFromValue('comment')}
+              onBlur={this.updateStateFromValue('comment')}
+              placeholder='Comment'
+            ></textarea>
 
             {(petition.collect_volunteers)
               ? (
