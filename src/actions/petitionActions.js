@@ -72,16 +72,18 @@ export function loadPetition(petitionSlug, forceReload) {
   }
 }
 
-export function searchPetitions(query, pageNumber) {
+export function searchPetitions(query, pageNumber, selectState) {
   return (dispatch) => {
     dispatch({
       type: actionTypes.SEARCH_PETITIONS_REQUEST,
-      query
+      query, pageNumber, selectState
     })
 
     const page = pageNumber ? `&page=${pageNumber}` : ''
 
-    return fetch(`${Config.API_URI}/api/v1/search/petitions.json?q=${query}${page}`)
+    const selState = selectState ? `&state=${selectState}` : ''
+
+    return fetch(`${Config.API_URI}/api/v1/search/petitions.json?q=${query}${selState}${page}`)
       .then(
         (response) => response.json().then((json) => {
           dispatch({

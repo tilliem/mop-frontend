@@ -7,7 +7,7 @@ import SearchResultPagination from '../components/search-result-pagination'
 class SearchResults extends React.Component {
 
   componentDidMount() {
-    this.props.searchPetitions(this.props.query, this.props.pageNumber)
+    this.props.searchPetitions(this.props.query, this.props.pageNumber, this.props.selectState)
   }
 
   render() {
@@ -47,7 +47,8 @@ SearchResults.propTypes = {
   currentPage: PropTypes.number,
   query: PropTypes.string,
   searchPetitions: PropTypes.func,
-  pageNumber: PropTypes.string
+  pageNumber: PropTypes.string,
+  selectState: PropTypes.string
 }
 
 const mapStateToProps = (store, ownProps) => {
@@ -60,8 +61,8 @@ const mapStateToProps = (store, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  searchPetitions: (query, pageNumber) =>
-    dispatch(searchPetitions(query, pageNumber))
+  searchPetitions: (query, pageNumber, selectState) =>
+    dispatch(searchPetitions(query, pageNumber, selectState))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResults)

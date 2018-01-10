@@ -17,7 +17,7 @@ class SearchBar extends React.Component {
     super(props)
     this.state = {
       query: '',
-      select_state: ''
+      selectState: ''
     }
 
     this.submitQuery = this.submitQuery.bind(this)
@@ -37,7 +37,7 @@ class SearchBar extends React.Component {
     e.preventDefault()
     const selectedState = e.target.value
     this.setState({
-      select_state: selectedState
+      selectState: selectedState
     })
   }
 
@@ -46,7 +46,7 @@ class SearchBar extends React.Component {
     const dispatch = this.props.dispatch
 
     const query = this.state.query
-    const selState = this.state.select_state
+    const selState = this.state.selectState || ''
 
     if (query !== '' && selState === '') {
       this.props.router.push(`/find/?q=${this.state.query}`)
@@ -55,10 +55,10 @@ class SearchBar extends React.Component {
     } else if (query === '' && selState === '') {
       this.props.router.push(`/find/?q=${this.state.query}`)
     } else {
-      this.props.router.push(`/find/?q=${this.state.query}&state=${this.state.select_state}`)
+      this.props.router.push(`/find/?q=${this.state.query}&state=${this.state.selectState}`)
     }
 
-    dispatch(petitionActions.searchPetitions(query))
+    dispatch(petitionActions.searchPetitions(query, selState))
   }
 
 
@@ -107,7 +107,7 @@ SearchBar.propTypes = {
   router: PropTypes.object,
   query: PropTypes.string,
   dispatch: PropTypes.func,
-  selectedState: PropTypes.string
+  selectState: PropTypes.string
 }
 
 export default connect()(withRouter(SearchBar))
