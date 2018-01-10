@@ -8,7 +8,8 @@
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require jsdom-global/register --require isomorphic-fetch test test/*",
     "test1": "mocha --compilers js:babel-core/register --require jsdom-global/register --require isomorphic-fetch test ",
-    "build": "webpack -d",
+    "build": "webpack",
+    "dev-build": "webpack -d",
     "webpack-watch": "webpack -w",
     "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --progress --colors --port ${PORT:-8080} --inline",
     "lint": "eslint src test .*.js --ignore-pattern='!.eslintrc.js' ",

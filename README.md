@@ -11,7 +11,7 @@ This is the browser-based, JavaScript implementation of the MoveOn Petitions pla
 
 # Compile JavaScript
 
-* $ `npm run build`
+* $ `npm run build` (do `npm run dev-build` to get source maps, though this increases filesize significantly)
 
 # Lint JavaScript
 
