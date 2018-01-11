@@ -27,15 +27,25 @@ SearchPage.propTypes = {
   selectState: PropTypes.string
 }
 
-function mapStateToProps(store, ownProps) {
+function getParams(ownProps) {
   const searchString = ownProps.location.search
   const parsed = searchString ? queryString.parse(searchString) : ''
 
   return {
+    query: parsed.q || '',
+    page: parsed.page || '1',
+    state: parsed.state || ''
+  }
+}
+
+function mapStateToProps(store, ownProps) {
+  const params = getParams(ownProps)
+
+  return {
     user: store.userStore,
-    query: parsed.q,
-    pageNumber: parsed.page || '1',
-    selectState: parsed.state || ''
+    query: params.query,
+    pageNumber: params.page,
+    selectState: params.state
   }
 }
 
