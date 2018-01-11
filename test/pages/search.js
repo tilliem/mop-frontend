@@ -10,7 +10,7 @@ import SearchBar from '../../src/components/searchbar'
 import SearchResults from '../../src/components/search-results'
 
 
-describe('<Home />', () => {
+describe('<SearchPage />', () => {
   const baseStore = createMockStore({ userStore: {}})
   
   it('renders default values with no search query', () => {

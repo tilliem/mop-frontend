@@ -16,8 +16,8 @@ class SearchBar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      query: '',
-      selectState: ''
+      query: props.query || '',
+      selectState: props.selectState || ''
     }
 
     this.submitQuery = this.submitQuery.bind(this)
@@ -65,38 +65,22 @@ class SearchBar extends React.Component {
   render() {
     const { size } = this.props
 
-    const longSearchBar = (
-      <div className='container'>
-        <div className='row'>
-          <div className='span7 control-group bump-top-1'>
-            <form className='search' onSubmit={this.submitQuery}>
-              <div className='search'>
-                <input id='searchValue' value={this.state.query} placeholder='Search Petitions' onChange={this.selectQuery} type='text' className='margin-right-1 ' />
-                <StateSelect selectText='All States' style={smallStateSelectStyle} onChange={this.selectState} />
-                <button type='submit' className='background-moveon-dark-blue margin-left-1'>Search</button>
-              </div>
-            </form>
-          </div>
-          <p className='lanky-header size-medium-small lh-24 bump-top-1'>Search for petitions by any keyword.</p>
-        </div>
-      </div>
-    )
-
-    const shortSearchBar = (
-      <div id='search-form-div'>
-        <form className='form-vertical' onSubmit={this.submitQuery}>
-          <div className='search'>
-            <input id='searchValue' value={this.state.query} name='q' type='text' onChange={this.selectQuery} className='margin-top-0 margin-right-2' />
-            <button type='submit' className='background-moveon-dark-blue'>Search</button>
-          </div>
-          <div className='clear'></div>
-        </form>
-      </div>
-    )
-
     return (
       <div>
-        {size === 'long' ? longSearchBar : shortSearchBar}
+        <div id="search-bar-large" className='container'>
+          <div className='row'>
+            <div className='span7 control-group bump-top-1'>
+              <form className='search' onSubmit={this.submitQuery}>
+                <div className='search'>
+                  <input id='searchValue' value={this.state.query} placeholder='Search Petitions' onChange={this.selectQuery} type='text' className='margin-right-1 ' />
+                  <StateSelect selectText='All States' style={smallStateSelectStyle} onChange={this.selectState} value={this.state.selectState} />
+                  <button type='submit' className='background-moveon-dark-blue margin-left-1'>Search</button>
+                </div>
+              </form>
+            </div>
+            <p className='lanky-header size-medium-small lh-24 bump-top-1'>Search for petitions by any keyword.</p>
+          </div>
+        </div>
       </div>
     )
   }
