@@ -1,9 +1,10 @@
 import React from 'react'
 
+import CreatePetitionForm from '../components/create-petition-form.js'
+
+
 const CreatePetitionPage = () => (
-  <div>
-    <h2> Create a Petition </h2>
-  </div>
+  <CreatePetitionForm />
 )
 
 export default CreatePetitionPage
