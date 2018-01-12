@@ -15,7 +15,7 @@ const SearchResultPagination = ({ resultCount, pageSize, currentPage, searchNavL
   const numPages = Math.ceil(resultCount / pageSize)
   const pages = []
 
-  pages.push(<li className='disabled prevLink'><Link to={prevPageLinkUrl}>&#171;</Link></li>)
+  pages.push(<li className='disabled prevLink' key={0} ><Link to={prevPageLinkUrl}>&#171;</Link></li>)
 
   const startPage = Math.max(1, currentPage - 3)
   const endPage = Math.min(currentPage + 3, numPages)
@@ -23,10 +23,10 @@ const SearchResultPagination = ({ resultCount, pageSize, currentPage, searchNavL
   for (let i = startPage; i <= endPage; i++) {
     if (i === currentPage) {
       const url = `find?q=${q}&page=${currentPage}`
-      pages.push(<li className='active pagelink'><Link to={url}>{currentPage}</Link></li>)
+      pages.push(<li className='active pagelink' key={i}><Link to={url}>{currentPage}</Link></li>)
     } else {
       const url = `find?q=${q}&page=${i}`
-      pages.push(<li className="pagelink" ><Link to={url}>{i}</Link></li>)
+      pages.push(<li className="pagelink" key={i} ><Link to={url}>{i}</Link></li>)
     }
   }
 
@@ -34,7 +34,7 @@ const SearchResultPagination = ({ resultCount, pageSize, currentPage, searchNavL
     <div className='pagination'>
       <ul>
         {pages}
-        <li ><Link className="nextLink" to={nextPageLinkUrl}>&#187;</Link></li>
+        <li key={endPage} ><Link className="nextLink" to={nextPageLinkUrl}>&#187;</Link></li>
       </ul>
       <p><small>Found {resultCount} results.</small></p>
     </div>
