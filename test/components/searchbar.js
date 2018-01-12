@@ -1,8 +1,7 @@
 import React from 'react'
-import { Provider } from 'react-redux'
 import { expect } from 'chai'
 
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import { unwrapReduxComponent } from '../lib'
 import { createMockStore } from 'redux-test-utils'
 
@@ -10,7 +9,7 @@ import SearchBar from '../../src/components/searchbar'
 
 
 describe('<SearchBar />', () => {
-  const baseStore = createMockStore({ userStore: {}})
+  const baseStore = createMockStore({ userStore: {} })
 
 
   it('basic loading, long searchbar', () => {
@@ -24,7 +23,7 @@ describe('<SearchBar />', () => {
   })
 
   it('prepopulates query if passed in', () => {
-    const searchBarProps = { query: "cats" } 
+    const searchBarProps = { query: 'cats' }
     const context = mount(<SearchBar {...searchBarProps} store={baseStore} />)
     const component = unwrapReduxComponent(context)
     expect(component.props.query).to.equal('cats')
@@ -33,12 +32,10 @@ describe('<SearchBar />', () => {
 
   // TODO: did we intentionally not include state select when the search bar is long?
   it('prepopulates selectState if passed in ', () => {
-    const searchBarProps = { selectState: "VA"} 
+    const searchBarProps = { selectState: 'VA' }
     const context = mount(<SearchBar {...searchBarProps} store={baseStore} />)
     const component = unwrapReduxComponent(context)
     expect(component.props.query).to.equal(undefined)
     expect(component.props.selectState).to.equal('VA')
   })
-
-
 })

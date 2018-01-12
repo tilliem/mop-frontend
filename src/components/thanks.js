@@ -52,11 +52,11 @@ class Thanks extends React.Component {
     }, 100)
     let fbUrl = petition._links.url
     if (shareOpts.facebook_share && shareOpts.facebook_share.share_url) {
-      if (shareOpts.facebook_share.sharebandit) { // non-OSDI feature
+      if (shareOpts.facebook_share.sharebandit) { // Non-OSDI feature
         petitionActions.getSharebanditShareLink(
           shareOpts.facebook_share.share_url)
           .then(this.openFacebookSharing)
-        // prematurely exit, since we will block on the promise
+        // Prematurely exit, since we will block on the promise
         return false
       }
       fbUrl = shareOpts.facebook_share.share_url
@@ -75,7 +75,7 @@ class Thanks extends React.Component {
 
   render() {
     const { petition, user } = this.props
-    const creator = false // maybe test user.id==petition.creator_id or something, if we want to expose that
+    const creator = false // Maybe test user.id==petition.creator_id or something, if we want to expose that
     const pre = (creator ? 'c' : 's') // TODO: based on ?from_source= parameter .icn and .imn, megapartner
     const actedOn = (creator ? 'created' : 'signed')
     const userId = user.signonId || '123' // TODO
@@ -83,7 +83,7 @@ class Thanks extends React.Component {
     const target = (petition.target.slice(0, 3).map(t => t.name).join(' and ')
                     + ((petition.target.length > 3) ? ' and others' : ''))
     const shareOpts = (petition.share_options && petition.share_options[0]) || {}
-    // convert description to text
+    // Convert description to text
     const textDescription = document.createElement('div')
     textDescription.innerHTML = petition.description
     let tweet

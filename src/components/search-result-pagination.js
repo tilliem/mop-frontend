@@ -6,7 +6,7 @@ import queryString from 'query-string'
 const SearchResultPagination = ({ resultCount, pageSize, currentPage, searchNavLinks, query }) => {
   const q = query || ''
   const nextPage = searchNavLinks ? searchNavLinks.next : ''
-  const pageNow = searchNavLinks ? searchNavLinks.url : '' 
+  const pageNow = searchNavLinks ? searchNavLinks.url : ''
   const parsedPreviousPageLink = (queryString.parse(pageNow)).page - 1
   const parsedNextPageLink = queryString.parse(nextPage)
   const nextPageLinkUrl = `find?q=${q}&page=${parsedNextPageLink.page}`
@@ -26,7 +26,7 @@ const SearchResultPagination = ({ resultCount, pageSize, currentPage, searchNavL
       pages.push(<li className='active pagelink' key={i}><Link to={url}>{currentPage}</Link></li>)
     } else {
       const url = `find?q=${q}&page=${i}`
-      pages.push(<li className="pagelink" key={i} ><Link to={url}>{i}</Link></li>)
+      pages.push(<li className='pagelink' key={i} ><Link to={url}>{i}</Link></li>)
     }
   }
 
@@ -34,7 +34,7 @@ const SearchResultPagination = ({ resultCount, pageSize, currentPage, searchNavL
     <div className='pagination'>
       <ul>
         {pages}
-        <li key={endPage} ><Link className="nextLink" to={nextPageLinkUrl}>&#187;</Link></li>
+        <li key={endPage} ><Link className='nextLink' to={nextPageLinkUrl}>&#187;</Link></li>
       </ul>
       <p><small>Found {resultCount} results.</small></p>
     </div>

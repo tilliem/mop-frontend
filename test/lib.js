@@ -1,5 +1,5 @@
 export const unwrapReduxComponent = (mountedContext) => (
-  // mountedContext will be something like mount(<Foo ... />)
+  // MountedContext will be something like mount(<Foo ... />)
   // This method gets you the Foo context, unwrapped from its redux and mount wrapper
 
   // This is pretty hacky, but haven't found a better way to get this.

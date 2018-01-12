@@ -31,13 +31,13 @@ class ThanksNextPetition extends React.Component {
     if (!this.props.nextPetitionsLoaded) {
       this.props.dispatch(loadTopPetitions(this.props.entity === 'pac' ? 1 : 0, '', false))
     }
-    // start countdown on refocusing to this window
+    // Start countdown on refocusing to this window
     window.addEventListener('focus', this.startCountdown)
   }
 
   startCountdown() {
     window.removeEventListener('focus', this.startCountdown)
-    // guard against running twice -- countdown should be a singleton
+    // Guard against running twice -- countdown should be a singleton
     if (this.props.nextPetition && this.state.secondsLeft > this.startSeconds) {
       if (this.state.intervalListener) {
         clearInterval(this.state.intervalListener)
@@ -61,7 +61,6 @@ class ThanksNextPetition extends React.Component {
     if (newSecondsLeft <= 0) {
       this.redirectToNext()
     }
-    return
   }
 
   nextUrl() {

@@ -63,11 +63,9 @@ class SearchBar extends React.Component {
 
 
   render() {
-    const { size } = this.props
-
     return (
       <div>
-        <div id="search-bar-large" className='container'>
+        <div id='search-bar-large' className='container'>
           <div className='row'>
             <div className='span7 control-group bump-top-1'>
               <form className='search' onSubmit={this.submitQuery}>

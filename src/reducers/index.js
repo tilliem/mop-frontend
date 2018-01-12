@@ -2,25 +2,25 @@ import { combineReducers } from 'redux'
 import { actionTypes as petitionActionTypes } from '../actions/petitionActions.js'
 import { actionTypes as sessionActionTypes } from '../actions/sessionActions.js'
 
-// function fetchPetitionRequest(petitionSlug) {
-//     return {
-//         type: FETCH_PETTION_REQUEST,
-//         petitionSlug
+// Function fetchPetitionRequest(petitionSlug) {
+//     Return {
+//         Type: FETCH_PETTION_REQUEST,
+//         PetitionSlug
 //     }
 // }
 
 const navState = {
-  partnerCobrand: null // or {logo, link, name}
+  partnerCobrand: null // Or {logo, link, name}
 }
 
 const initialPetitionState = {
-  petitions: {}, // keyed by slug AND petition_id for petition route
-  petitionSignatures: {}, // keyed by petition slug, then page
-  signatureStatus: {}, // keyed by petition_id (because form doesn't have slug)
-  signatureMessages: {}, // keyed by petition_id, MessageId value from SQS post
-  topPetitions: {}, // lists of petition IDs keyed by pac then megapartner
-  nextPetitions: [], // list of petition IDs that can be suggested to sign next
-  nextPetitionsLoaded: false // is nextPetitions empty because there are none to suggest or it hasn't been loaded yet?
+  petitions: {}, // Keyed by slug AND petition_id for petition route
+  petitionSignatures: {}, // Keyed by petition slug, then page
+  signatureStatus: {}, // Keyed by petition_id (because form doesn't have slug)
+  signatureMessages: {}, // Keyed by petition_id, MessageId value from SQS post
+  topPetitions: {}, // Lists of petition IDs keyed by pac then megapartner
+  nextPetitions: [], // List of petition IDs that can be suggested to sign next
+  nextPetitionsLoaded: false // Is nextPetitions empty because there are none to suggest or it hasn't been loaded yet?
 }
 
 const initialSearchState = {
@@ -49,10 +49,10 @@ const initialUserState = {
 }
 
 function navReducer(state = navState, action) {
-  // the goal here is to ignore most actions
-  // and then turn the partner logo on/off depending on the state
-  // however for top petitions, and petition loading
-  // we need to see if we should show a logo or not
+  // The goal here is to ignore most actions
+  // And then turn the partner logo on/off depending on the state
+  // However for top petitions, and petition loading
+  // We need to see if we should show a logo or not
   // If there are other 'megapartner' pages where we show a logo
   // then we should add loading of their data here, as well
   // This is a little icky, because it should relate to the view
@@ -78,7 +78,7 @@ function navReducer(state = navState, action) {
         name: creator.organization,
         url: creator.organization_url
       } })
-    } // else
+    } // Else
     return Object.assign({}, state, { partnerCobrand: null })
   }
   return state
@@ -107,7 +107,7 @@ function petitionReducer(state = initialPetitionState, action) {
       return Object.assign({}, state, {
         petitions: Object.assign(
           {}, state.petitions, {
-            // key it both by id and by slug, for different lookup needs
+            // Key it both by id and by slug, for different lookup needs
             [slug]: petition,
             [petition.petition_id]: petition
           }
@@ -168,8 +168,8 @@ function petitionReducer(state = initialPetitionState, action) {
       updateData.nextPetitions = state.nextPetitions.concat(
         petitions.map(topPetition => topPetition.petition_id)
       ).filter((petId, i, list) => (
-        i === list.indexOf(petId) // make each item unique on the list
-          && !(petId in state.signatureStatus || updateData.petitions[petId].signed) // exclude signed
+        i === list.indexOf(petId) // Make each item unique on the list
+          && !(petId in state.signatureStatus || updateData.petitions[petId].signed) // Exclude signed
       ))
       return Object.assign({}, state, updateData)
     default:
@@ -195,7 +195,7 @@ function petitionSearchReducer(state = initialSearchState, action) {
 }
 
 function userReducer(state = initialUserState, action) {
-  // fold in tokens at the top, since it's possible it's for everyone
+  // Fold in tokens at the top, since it's possible it's for everyone
   const newData = Object.assign({}, action.tokens || {})
   switch (action.type) {
     case sessionActionTypes.UNRECOGNIZE_USER_SESSION:
@@ -208,7 +208,7 @@ function userReducer(state = initialUserState, action) {
     case sessionActionTypes.USER_SESSION_START:
     case sessionActionTypes.TOKEN_SESSION_START:
       if (action.session) {
-        // this should cover any of: given_name, last_name, full_name, etc
+        // This should cover any of: given_name, last_name, full_name, etc
         Object.assign(newData, action.session)
         const { identifiers } = action.session
         if (identifiers && identifiers.length) {
@@ -220,13 +220,13 @@ function userReducer(state = initialUserState, action) {
           })
         }
       }
-    // no break here: fall through to the failures
+    // No break here: fall through to the failures
     case sessionActionTypes.USER_SESSION_FAILURE:
     case sessionActionTypes.TOKEN_SESSION_FAILURE:
       return Object.assign({}, state, newData)
     case petitionActionTypes.PETITION_SIGNATURE_SUBMIT:
-      // if it's an anonymous user or we get useful session information
-      // then copy it into userData
+      // If it's an anonymous user or we get useful session information
+      // Then copy it into userData
       if (!state.full_name
           && action.signature && action.signature.person) {
         if (action.signature.person.full_name) {

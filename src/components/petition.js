@@ -10,7 +10,7 @@ import PetitionFlagForm from './petition-flag-form.js'
 
 class Petition extends React.Component {
   componentDidMount() {
-    // lazy-load thanks page component
+    // Lazy-load thanks page component
     thanksLoader()
   }
 
