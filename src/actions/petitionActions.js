@@ -151,16 +151,17 @@ export function signPetition(petitionSignature, petition, options) {
     })
 
     const completion = (data) => {
-      const finalDispatch = (text) => {
+      const finalDispatch = (json) => {
         const dispatchData = {
           type: actionTypes.PETITION_SIGNATURE_SUCCESS,
           petition,
           signature: petitionSignature
         }
-        if (text) {
-          const sqsResponse = text.match(/<MessageId>(.*)<\/MessageId>/)
+        if (json && json.SendMessageResponse) {
+          const sqsResponse = json.SendMessageResponse.SendMessageResult
           if (sqsResponse) {
-            dispatchData.messageId = sqsResponse[1]
+            dispatchData.messageId = sqsResponse.MessageId
+            dispatchData.messageMd5 = sqsResponse.MD5OfMessageBody
           }
         }
         const dispatchResult = dispatch(dispatchData)
@@ -168,8 +169,8 @@ export function signPetition(petitionSignature, petition, options) {
           registerSignatureAndThanks(dispatchResult.petition)(dispatch)
         }
       }
-      if (data && typeof data.text === 'function') {
-        data.text().then(finalDispatch)
+      if (data && typeof data.json === 'function') {
+        data.json().then(finalDispatch, finalDispatch)
       } else {
         finalDispatch()
       }
