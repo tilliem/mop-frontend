@@ -30,7 +30,7 @@ const Nav = ({ user, nav, organization }) => {
   )
 
   const userDashboardLink = (
-    <a className='icon-link-narrow icon-managepetitions' href='http://petitions.moveon.org/dashboard.html?source=topnav'> {`${user.given_name}&#39;s`} Dashboard</a>
+    <a className='icon-link-narrow icon-managepetitions' href='http://petitions.moveon.org/dashboard.html?source=topnav'> {`${user.given_name}’s`} Dashboard</a>
   )
 
   const guestDashboardLink = (
