@@ -19,7 +19,7 @@ const initialPetitionState = {
   petitions: {}, // keyed by slug AND petition_id for petition route
   petitionSignatures: {}, // keyed by petition slug, then page
   signatureStatus: {}, // keyed by petition_id (because form doesn't have slug)
-  signatureMessages: {}, // keyed by petition_id, MessageId value from SQS post
+  signatureMessages: {}, // keyed by petition_id, {messageId, messageMd5} values from SQS post
   topPetitions: {}, // lists of petition IDs keyed by pac then megapartner
   nextPetitions: [], // list of petition IDs that can be suggested to sign next
   nextPetitionsLoaded: false // is nextPetitions empty because there are none to suggest or it hasn't been loaded yet?
@@ -117,7 +117,8 @@ function petitionReducer(state = initialPetitionState, action) {
       }
       if (action.messageId) {
         updateData.signatureMessages = Object.assign(
-          {}, state.signatureMessages, { [petition.petition_id]: action.messageId })
+          {}, state.signatureMessages,
+          { [petition.petition_id]: { messageId: action.messageId, messageMd5: action.messageMd5 } })
       }
       if (state.nextPetitionsLoaded) {
         updateData.nextPetitions = state.nextPetitions.filter(petId => petId !== petition.petition_id)

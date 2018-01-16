@@ -1,13 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { actions as petitionActions } from '../actions/petitionActions'
+import { petitionShortCode, md5ToToken } from '../lib'
 import ThanksNextPetition from './thanks-next-petition'
 
 class Thanks extends React.Component {
   constructor(props) {
     super(props)
+    let trackingParams = ''
+    if (props.user && props.user.signonId) {
+      trackingParams = `r_by=${props.user.signonId}`
+    } else if (props.signatureMessage && props.signatureMessage.messageMd5) {
+      const hashToken = md5ToToken(props.signatureMessage.messageMd5)
+      trackingParams = `r_hash=${hashToken}`
+    }
+    this.trackingParams = trackingParams
     this.state = {
-      pre: 's', // TODO
       sharedSocially: false
     }
     this.recordShare = this.recordShare.bind(this)
@@ -37,8 +45,8 @@ class Thanks extends React.Component {
     const preChar = ((/\?/.test(urlToShare)) ? '&' : '?')
     let fbUrl = `${urlToShare}${preChar}source=${this.state.pre}.fb`
     if (user.signonId) {
-      fbUrl = `${fbUrl}&r_by=${user.signonId}`
-    } // TODO: signatureMessages hash alternative
+      fbUrl = `${fbUrl}&${this.trackingParams}`
+    }
     window.open(`https://www.facebook.com/share.php?u=${encodeURIComponent(fbUrl)}`)
     this.setState({ sharedSocially: true })
   }
@@ -74,12 +82,16 @@ class Thanks extends React.Component {
   }
 
   render() {
-    const { petition, user } = this.props
+    const { petition, user, signatureMessage } = this.props
     const creator = false // maybe test user.id==petition.creator_id or something, if we want to expose that
     const pre = (creator ? 'c' : 's') // TODO: based on ?from_source= parameter .icn and .imn, megapartner
     const actedOn = (creator ? 'created' : 'signed')
-    const userId = user.signonId || '123' // TODO
-    const link = petition._links.url // TODO: ref_by_id, shortening, etc
+    const link = petition._links.url
+    const shortLinkArgs = [
+      petition.petition_id,
+      user && user.signonId,
+      signatureMessage && signatureMessage.messageMd5]
+    const twitterShareLink = petitionShortCode((creator ? 'c' : 't'), ...shortLinkArgs)
     const target = (petition.target.slice(0, 3).map(t => t.name).join(' and ')
                     + ((petition.target.length > 3) ? ' and others' : ''))
     const shareOpts = (petition.share_options && petition.share_options[0]) || {}
@@ -88,9 +100,9 @@ class Thanks extends React.Component {
     textDescription.innerHTML = petition.description
     let tweet
     if (shareOpts.twitter_share && shareOpts.twitter_share.message) {
-      tweet = shareOpts.twitter_share.message.replace('[URL]', link)
+      tweet = shareOpts.twitter_share.message.replace('[URL]', twitterShareLink)
     } else {
-      const suffix = ` ${link} @moveon`
+      const suffix = ` ${twitterShareLink} @moveon`
       tweet = `${petition.title.slice(0, 140 - suffix.length)} ${suffix}`
     }
 
@@ -100,17 +112,17 @@ class Thanks extends React.Component {
 
 ${textDescription.textContent}
 
-That's why I ${actedOn} a petition to ${target}, which says:
+That‘s why I ${actedOn} a petition to ${target}, which says:
 
 "${petition.summary}"
 
 Will you sign this petition? Click here:
 
-${link}?source=${pre}.em.__TYPE__&r_by=${userId}
+${link}?source=${pre}.em.__TYPE__&${this.trackingParams}
 
 Thanks!
 `)
-    const copyPasteMessage = `Subject: ${petition.summary}\n\n${mailToMessage}`
+    const copyPasteMessage = `Subject: ${petition.summary}\n\n${mailToMessage}` // TODO: replace __TYPE__
 
     return (<div className='row'>
       {(this.state.sharedSocially ? <ThanksNextPetition entity={petition.entity || ''} /> : null)}
@@ -146,6 +158,7 @@ Thanks!
             className='hidden' id='tweet_text'
             defaultValue={tweet}
             ref={(input) => { this.tweetTextArea = input }}
+            readOnly
           ></textarea>
           <div className='lanky-header bump-top-3 align-center'>
             Send a link:
@@ -153,7 +166,9 @@ Thanks!
           <textarea
             ref={(input) => { this.linkTextarea = input }}
             onClick={this.shareLink}
-            id='link_text' defaultValue={link}
+            id='link_text'
+            defaultValue={link}
+            readOnly
           ></textarea>
         </div>
         <div className='span7 padding-top-1'>
@@ -166,6 +181,7 @@ Thanks!
               className='hidden-phone' id='email-textarea'
               onClick={this.shareEmail}
               value={copyPasteMessage.replace('__TYPE__', 'cp')}
+              readOnly
             ></textarea>
           </div>
         </div>
@@ -176,7 +192,8 @@ Thanks!
 
 Thanks.propTypes = {
   petition: PropTypes.object,
-  user: PropTypes.object
+  user: PropTypes.object,
+  signatureMessage: PropTypes.object
 }
 
 export default Thanks

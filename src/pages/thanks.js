@@ -27,8 +27,12 @@ class ThanksPage extends React.Component {
     return (
       <div>
         {(this.Thanks && this.props.petition ?
-          <this.Thanks petition={this.props.petition} user={this.props.user} /> :
-          ''
+          <this.Thanks
+            petition={this.props.petition}
+            user={this.props.user}
+            signatureMessage={this.props.signatureMessage}
+          />
+          : ''
         )}
       </div>
     )
@@ -39,15 +43,18 @@ class ThanksPage extends React.Component {
 ThanksPage.propTypes = {
   petition: PropTypes.object,
   user: PropTypes.object,
+  signatureMessage: PropTypes.object,
   location: PropTypes.object,
   dispatch: PropTypes.func
 }
 
 function mapStateToProps(store, ownProps) {
   const pkey = ownProps.location.query.name || ownProps.location.query.petition_id
+  const petition = pkey && store.petitionStore.petitions[pkey]
   return {
-    petition: pkey && store.petitionStore.petitions[pkey],
-    user: store.userStore
+    petition,
+    user: store.userStore,
+    signatureMessage: petition.petition_id && store.signatureMessages[petition.petition_id]
   }
 }
 
