@@ -181,7 +181,11 @@ export function signPetition(petitionSignature, petition, options) {
                                : `${Config.API_URI}/signatures`)
       fetch(signingEndpoint, {
         method: 'POST',
-        body: JSON.stringify(petitionSignature)
+        body: JSON.stringify(petitionSignature),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
       }).then(completion, (err) => {
         dispatch({
           type: actionTypes.PETITION_SIGNATURE_FAILURE,
