@@ -184,7 +184,7 @@ export function signPetition(petitionSignature, petition, options) {
         body: JSON.stringify(petitionSignature),
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          Accept: 'application/json'
         }
       }).then(completion, (err) => {
         dispatch({
