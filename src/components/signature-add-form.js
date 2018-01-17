@@ -204,7 +204,7 @@ class SignatureAddForm extends React.Component {
     const petitionBy = creator.name + (creator.organization
                                        ? `, ${creator.organization}`
                                        : '')
-    const iframeEmbedText = `<iframe src="http://petitions.moveon.org/embed/widget.html?v=3&amp;name=${petition.slug}" class="moveon-petition" id="petition-embed" width="300px" height="500px"></iframe>` // Text to be copy/pasted
+    const iframeEmbedText = `<iframe src="https://petitions.moveon.org/embed/widget.html?v=3&amp;name=${petition.slug}" class="moveon-petition" id="petition-embed" width="300px" height="500px"></iframe>` // Text to be copy/pasted
     return (
       <div className='span4 widget clearfix' id='sign-here'>
         <div className='padding-left-15 form-wrapper background-moveon-light-gray padding-top-1 padding-bottom-1' style={{ paddingRight: 15, position: 'relative', top: -10 }}>

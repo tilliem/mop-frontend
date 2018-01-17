@@ -37,7 +37,7 @@ class ThanksPage extends React.Component {
 }
 
 ThanksPage.propTypes = {
-  searchQuery: PropTypes.object,
+  petition: PropTypes.object,
   user: PropTypes.object,
   dispatch: PropTypes.func,
   petition: PropTypes.object,

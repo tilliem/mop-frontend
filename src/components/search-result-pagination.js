@@ -27,7 +27,6 @@ class SearchResultPagination extends React.Component {
   }
 
 
-  debugger
   render() {
     const q = this.props.query || ''
     const currentPage = this.props.currentPage

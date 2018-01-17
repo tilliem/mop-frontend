@@ -13,6 +13,7 @@ class SearchResults extends React.Component {
     }
   }
 
+
   render() {
     const { searchResults, currentPage, query } = this.props
     const resultCount = searchResults.count
@@ -24,11 +25,11 @@ class SearchResults extends React.Component {
       <div className='result' key={index}>
         <div className='result-text'>
           <p className='result-name'>
-            <a className='size-medium-large font-heavy' href={`http://pac.petitions.moveon.org/sign/${result.short_name}/?source=search`}>
+            <a className='size-medium-large font-heavy' href={`{result._links.url}/?source=search`}>
                 {result.name}
             </a>
           </p>
-          <p className='size-small'>http://pac.petitions.moveon.org/sign/{result.short_name}/</p>
+          <p className='size-small'>{result._links.url}/</p>
           <p className='size-medium'>{result.blurb}</p>
         </div>
       </div>
