@@ -27,7 +27,7 @@ class ThanksPage extends React.Component {
     return (
       <div>
         {(this.Thanks && this.props.petition ?
-          <this.Thanks searchQuery={this.props.searchQuery} user={this.props.user} /> :
+          <this.Thanks petition={this.props.petition} user={this.props.user} /> :
           ''
         )}
       </div>
