@@ -54,7 +54,9 @@ function mapStateToProps(store, ownProps) {
   return {
     petition,
     user: store.userStore,
-    signatureMessage: petition.petition_id && store.signatureMessages[petition.petition_id]
+    signatureMessage: (petition.petition_id
+                       && store.signatureMessages
+                       && store.signatureMessages[petition.petition_id])
   }
 }
 
