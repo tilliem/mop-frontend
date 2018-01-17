@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import queryString from 'query-string'
 
 import SearchBar from '../components/searchbar'
 import SearchResults from '../components/search-results'
@@ -28,13 +27,10 @@ SearchPage.propTypes = {
 }
 
 function getParams(ownProps) {
-  const searchString = ownProps.location.search
-  const parsed = searchString ? queryString.parse(searchString) : ''
-
   return {
-    query: parsed.q || '',
-    page: parsed.page || '1',
-    state: parsed.state || ''
+    query: ownProps.location.query.q || '',
+    page: ownProps.location.query.page || '1',
+    state: ownProps.location.query.state || ''
   }
 }
 
