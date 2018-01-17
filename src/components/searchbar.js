@@ -48,17 +48,20 @@ class SearchBar extends React.Component {
     const query = this.state.query
     const selState = this.state.selectState || ''
 
-    if (query !== '' && selState === '') {
-      this.props.router.push(`/find/?q=${this.state.query}`)
-    } else if (query !== '' && selState === '') {
-      this.props.router.push(`${this.state.query}`)
-    } else if (query === '' && selState === '') {
-      this.props.router.push(`/find/?q=${this.state.query}`)
-    } else {
-      this.props.router.push(`/find/?q=${this.state.query}&state=${this.state.selectState}`)
+    dispatch(petitionActions.searchPetitions(query, selState))
+
+    let queryString = []
+    if (this.state.query) {
+       queryString.push(`q=${this.state.query}`)
+    }
+    if (this.state.selectState) {
+      queryString.push(`state=${this.state.selectState}`)
+    }
+    if (queryString.length) {
+      const fullQuery = queryString.join('&')
+      this.props.router.push(`/find/?${fullQuery}`)
     }
 
-    dispatch(petitionActions.searchPetitions(query, selState))
   }
 
 

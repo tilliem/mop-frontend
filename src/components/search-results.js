@@ -7,7 +7,11 @@ import SearchResultPagination from '../components/search-result-pagination'
 class SearchResults extends React.Component {
 
   componentDidMount() {
-    this.props.searchPetitions(this.props.query, this.props.pageNumber, this.props.selectState)
+
+    // guarding for a cold page reload: check to see if we have search results, and if not load them
+    if(this.props.searchResults !== undefined ) {
+      this.props.searchPetitions(this.props.query, this.props.pageNumber, this.props.selectState)
+    }
   }
 
   render() {

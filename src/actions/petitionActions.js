@@ -83,12 +83,15 @@ export function searchPetitions(query, pageNumber, selectState) {
 
     const selState = selectState ? `&state=${selectState}` : ''
 
-    return fetch(`${Config.API_URI}/api/v1/search/petitions.json?q=${query}${selState}${page}`)
+    return fetch(`${Config.API_URI}/search/petitions.json?q=${query}${selState}${page}`)
       .then(
         (response) => response.json().then((json) => {
           dispatch({
             type: actionTypes.SEARCH_PETITIONS_SUCCESS,
-            searchResults: json
+            searchResults: json,
+            pageNumber: page,
+            query: query,
+            selectState: selState
           })
         }),
         (err) => {

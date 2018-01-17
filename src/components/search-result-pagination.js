@@ -1,14 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
-import queryString from 'query-string'
 
 const SearchResultPagination = ({ resultCount, pageSize, currentPage, searchNavLinks, query }) => {
+
   const q = query || ''
   const nextPage = searchNavLinks ? searchNavLinks.next : ''
   const pageNow = searchNavLinks ? searchNavLinks.url : ''
-  const parsedPreviousPageLink = (queryString.parse(pageNow)).page - 1
-  const parsedNextPageLink = queryString.parse(nextPage)
+
+  const parsedPreviousPageLink = (location.query !== undefined ? location.query.pageNow - 1  : 0)
+  const parsedNextPageLink = (location.query !== undefined ? location.query.nextPage  : 0)
   const nextPageLinkUrl = `find?q=${q}&page=${parsedNextPageLink.page}`
   const prevPageLinkUrl = `find?q=${q}&page=${parsedPreviousPageLink}`
 
