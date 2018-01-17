@@ -10,12 +10,15 @@ notifications:
     on_failure: always
     on_start: never
 before_deploy:
-  - export API_URI="https://broom.moveon.org"
+  - export API_URI="https://broom.moveon.org/api/v1"
+  - export API_SIGN_PETITION="https://broom.moveon.org/api-v1-signatures"
   - export BASE_APP_PATH="/"
-  - export PUBLIC_ROOT="http://mop-static-stage.s3-website-us-west-1.amazonaws.com/js/"
+  - export BASE_URL="https://broom.moveon.org"
+  - export SESSION_COOKIE_NAME="SO_DEV_SESSION"
+  - export PUBLIC_ROOT="https://s3.us-west-1.amazonaws.com/mop-static-stage/js/"
   - export STATIC_ROOT=""
   - export PROD=1
-  - npm run build
+  - npm run dev-build
 deploy:
   on:
     branch: master

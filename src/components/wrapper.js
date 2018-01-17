@@ -5,9 +5,9 @@ import PropTypes from 'prop-types'
 import Nav from './nav.js'
 import Footer from './footer.js'
 
-const Wrapper = ({ children }) => (
+const Wrapper = ({ children, params }) => (
   <div>
-    <Nav />
+    <Nav organization={params && params.organization || ''} />
     <main className='main'>
       {children}
     </main>
@@ -16,8 +16,10 @@ const Wrapper = ({ children }) => (
   </div>
 )
 
+
 Wrapper.propTypes = {
-  children: PropTypes.object.isRequired
+  children: PropTypes.object.isRequired,
+  params: PropTypes.object
 }
 
 export default Wrapper

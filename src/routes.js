@@ -3,6 +3,7 @@ import { IndexRoute, Route, Router, browserHistory, hashHistory } from 'react-ro
 
 import { Config } from './config.js'
 import { loadSession } from './actions/sessionActions.js'
+import { loadOrganization } from './actions/navActions.js'
 import Home from './pages/home.js'
 import SignPetition from './pages/sign-petition.js'
 import ThanksPage from './pages/thanks.js'
@@ -15,18 +16,26 @@ const baseAppPath = process.env.BASE_APP_PATH || '/'
 
 export const appLocation = (Config.USE_HASH_BROWSING ? hashHistory : browserHistory)
 
-export const routes = (store) => (
-  <Router history={appLocation}>
-    <Route path={baseAppPath} component={Wrapper} onEnter={(nextState) => { store.dispatch(loadSession(nextState)) }} >
-      <IndexRoute component={Home} />
-      <Route path='/sign/:petition_slug' component={SignPetition} />
-      <Route path='/:organization/sign/:petition_slug' component={SignPetition} />
-      <Route path='/thanks.html' component={ThanksPage} />
-      <Route path='/find' component={SearchPage} />
-      <Route path='/dashboard.html' component={PetitionCreatorDashboard} />
-      <Route path='/create_start.html' component={CreatePetitionPage} />
-      <Route path='/:organization/create_start.html' component={CreatePetitionPage} />
-      <Route path='/:organization/' component={Home} />
-    </Route>
-  </Router>
-)
+export const routes = (store) => {
+  const orgLoader = (nextState) => {
+    if (nextState.params && nextState.params.organization) {
+      store.dispatch(loadOrganization(nextState.params.organization))
+    }
+  }
+  return (
+    <Router history={appLocation}>
+      <Route path={baseAppPath} component={Wrapper} onEnter={(nextState) => { store.dispatch(loadSession(nextState)) }} >
+        <IndexRoute component={Home} />
+        <Route path='/sign/:petition_slug' component={SignPetition} />
+        <Route path='/:organization/sign/:petition_slug' component={SignPetition} onEnter={orgLoader} />
+        <Route path='/thanks.html' component={ThanksPage} />
+        <Route path='/:organization/thanks.html' component={ThanksPage} onEnter={orgLoader} />
+        <Route path='/find' component={SearchPage} />
+        <Route path='/dashboard.html' component={PetitionCreatorDashboard} />
+        <Route path='/create_start.html' component={CreatePetitionPage} />
+        <Route path='/:organization/create_start.html' component={CreatePetitionPage} onEnter={orgLoader} />
+        <Route path='/:organization/' component={Home} onEnter={orgLoader} />
+      </Route>
+    </Router>
+  )
+}

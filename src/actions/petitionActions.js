@@ -52,7 +52,7 @@ export function loadPetition(petitionSlug, forceReload) {
         slug: petitionSlug
       })
     }
-    return fetch(`${Config.API_URI}/api/v1/${urlKey}.json`)
+    return fetch(`${Config.API_URI}/${urlKey}.json`)
       .then(
         (response) => response.json().then((json) => {
           dispatch({
@@ -136,7 +136,7 @@ export function loadTopPetitions(pac, megapartner, forceReload) {
       query.push(`user=${userStore.signonId}`)
     }
     const queryString = ((query.length) ? `?${query.join('&')}` : '')
-    return fetch(`${Config.API_URI}/api/v1/top-petitions.json${queryString}`)
+    return fetch(`${Config.API_URI}/top-petitions.json${queryString}`)
       .then(
         (response) => response.json().then((json) => {
           dispatch({
@@ -188,16 +188,17 @@ export function signPetition(petitionSignature, petition, options) {
     })
 
     const completion = (data) => {
-      const finalDispatch = (text) => {
+      const finalDispatch = (json) => {
         const dispatchData = {
           type: actionTypes.PETITION_SIGNATURE_SUCCESS,
           petition,
           signature: petitionSignature
         }
-        if (text) {
-          const sqsResponse = text.match(/<MessageId>(.*)<\/MessageId>/)
+        if (json && json.SendMessageResponse) {
+          const sqsResponse = json.SendMessageResponse.SendMessageResult
           if (sqsResponse) {
-            dispatchData.messageId = sqsResponse[1]
+            dispatchData.messageId = sqsResponse.MessageId
+            dispatchData.messageMd5 = sqsResponse.MD5OfMessageBody
           }
         }
         const dispatchResult = dispatch(dispatchData)
@@ -205,16 +206,23 @@ export function signPetition(petitionSignature, petition, options) {
           registerSignatureAndThanks(dispatchResult.petition)(dispatch)
         }
       }
-      if (data && typeof data.text === 'function') {
-        data.text().then(finalDispatch)
+      if (data && typeof data.json === 'function') {
+        data.json().then(finalDispatch, finalDispatch)
       } else {
         finalDispatch()
       }
     }
     if (Config.API_WRITABLE) {
-      fetch(`${Config.API_URI}/sign-petition`, {
+      const signingEndpoint = ((Config.API_SIGN_PETITION)
+                               ? Config.API_SIGN_PETITION
+                               : `${Config.API_URI}/signatures`)
+      fetch(signingEndpoint, {
         method: 'POST',
-        body: JSON.stringify(petitionSignature)
+        body: JSON.stringify(petitionSignature),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        }
       }).then(completion, (err) => {
         dispatch({
           type: actionTypes.PETITION_SIGNATURE_FAILURE,
@@ -271,7 +279,7 @@ export const loadPetitionSignatures = (petitionSlug, page = 1) => {
         page
       })
     }
-    return fetch(`${Config.API_URI}/api/v1/${urlKey}.json?per_page=10&page=${page}`)
+    return fetch(`${Config.API_URI}/${urlKey}.json?per_page=10&page=${page}`)
       .then(
         (response) => response.json().then((json) => {
           dispatch({

@@ -45,19 +45,22 @@ class SignatureAddForm extends React.Component {
   }
 
   getOsdiSignature() {
-    const { petition, query, user } = this.props
+    const { petition, query, showOptinCheckbox, user } = this.props
     const osdiSignature = {
       petition: {
         name: petition.name,
         petition_id: petition.petition_id,
+        show_optin: showOptinCheckbox,
         _links: petition._links
       },
       person: {
         full_name: this.state.name,
         email_addresses: [],
         postal_addresses: []
-      },
-      comments: this.state.comment
+      }
+    }
+    if (this.state.comment) {
+      osdiSignature.comments = this.state.comment
     }
     if (this.state.name) {
       osdiSignature.person.full_name = this.state.name
@@ -181,6 +184,7 @@ class SignatureAddForm extends React.Component {
     }
     if (this.state.country !== 'United States') {
       delete required.state
+      delete required.zip
     }
     if (changeRequiredFields && doUpdate) {
       this.setState({ required })
@@ -322,7 +326,16 @@ class SignatureAddForm extends React.Component {
                </div>
              ) : ''}
 
-            <textarea className='moveon-track-click' rows='3' cols='20' name='comment' autoComplete='off' placeholder='Comment'></textarea>
+            <textarea
+              className='moveon-track-click'
+              rows='3'
+              cols='20'
+              name='comment'
+              autoComplete='off'
+              onChange={this.updateStateFromValue('comment')}
+              onBlur={this.updateStateFromValue('comment')}
+              placeholder='Comment'
+            ></textarea>
 
             {(petition.collect_volunteers)
               ? (

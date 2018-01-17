@@ -28,7 +28,7 @@ const expectAsync = (promise, done, f) => {
 
 describe('Petition loading', () => {
   nock(BASE_URI)
-    .get('/api/v1/petitions/outkast.json')
+    .get('/petitions/outkast.json')
     .reply(200, samplePetition)
 
   it('creates FETCH_PETITION_SUCCESS when loading petition', (done) => {
