@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
-import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { searchPetitions } from '../actions/petitionActions.js'
 import { actions as petitionActions } from '../actions/petitionActions.js'
+import { appLocation } from '../routes.js'
 
 class SearchResultPagination extends React.Component { 
 
@@ -23,7 +23,7 @@ class SearchResultPagination extends React.Component {
     if(newPage !== this.props.currentPage) {
       const dispatch = this.props.dispatch
       dispatch(petitionActions.searchPetitions(this.props.query, newPage, this.props.selState))
-      this.props.router.push(newUrl)
+      appLocation.push(newUrl)
     }
 
   }
@@ -85,4 +85,4 @@ SearchResultPagination.propTypes = {
   query: PropTypes.string
 }
 
-export default connect()(withRouter(SearchResultPagination))
+export default connect()(SearchResultPagination)

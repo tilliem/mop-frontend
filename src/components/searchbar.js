@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { actions as petitionActions } from '../actions/petitionActions.js'
+import { appLocation } from '../routes.js'
 
 import StateSelect from './form/state-select'
 
@@ -61,7 +61,7 @@ class SearchBar extends React.Component {
     }
     if (queryString.length) {
       const fullQuery = queryString.join('&')
-      this.props.router.push(`/find/?${fullQuery}`)
+      appLocation.push(`/find/?${fullQuery}`)
     }
 
   }
@@ -91,11 +91,10 @@ class SearchBar extends React.Component {
 
 SearchBar.propTypes = {
   size: PropTypes.string,
-  router: PropTypes.object,
   query: PropTypes.string,
   currentPage: PropTypes.string,
   dispatch: PropTypes.func,
   selectState: PropTypes.string
 }
 
-export default connect()(withRouter(SearchBar))
+export default connect()(SearchBar)
