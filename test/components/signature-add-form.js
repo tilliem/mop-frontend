@@ -21,8 +21,8 @@ describe('<SignatureAddForm />', () => {
 
   const propsProfileBase = { petition: outkastPetition, query: {} }
   const propsProfileOpposite = { petition: outkastPetition2, query: {} }
-  const outkastPetition2AsMegapartner = JSON.parse(JSON.stringify(outkastPetition2)) // deepcopy
-  outkastPetition2AsMegapartner._embedded.creator.source = 'M.O.P.' // set as megapartner
+  const outkastPetition2AsMegapartner = JSON.parse(JSON.stringify(outkastPetition2)) // Deepcopy
+  outkastPetition2AsMegapartner._embedded.creator.source = 'M.O.P.' // Set as megapartner
   const petitionProfiles = {
     megapartner_mayoptin: outkastPetition2AsMegapartner,
     mayoptin: outkastPetition2,
@@ -55,8 +55,6 @@ describe('<SignatureAddForm />', () => {
       expect(context.find('input[name="address1"]').length).to.equal(1)
       expect(context.find('input[name="address2"]').length).to.equal(1)
       expect(context.find('input[name="city"]').length).to.equal(1)
-      // not testing state because state is a sub component
-      // expect(context.find('input[name="state"]').length).to.equal(1);
       expect(context.find('input[name="zip"]').length).to.equal(1)
     })
 
@@ -71,8 +69,6 @@ describe('<SignatureAddForm />', () => {
       expect(context.find('input[name="address1"]').length).to.equal(1)
       expect(context.find('input[name="address2"]').length).to.equal(1)
       expect(context.find('input[name="city"]').length).to.equal(1)
-      // not testing state because state is a sub component
-      // expect(context.find('input[name="state"]').length).to.equal(1);
       expect(context.find('input[name="zip"]').length).to.equal(1)
     })
 
@@ -86,15 +82,11 @@ describe('<SignatureAddForm />', () => {
       expect(context.find('input[name="address1"]').length).to.equal(1)
       expect(context.find('input[name="address2"]').length).to.equal(1)
       expect(context.find('input[name="city"]').length).to.equal(1)
-      // not testing state because state is a sub component
-      // expect(context.find('input[name="state"]').length).to.equal(1);
       expect(context.find('input[name="zip"]').length).to.equal(1)
     })
 
-    // it('TODO:local petition without address when user has address', () => {});
-
     it('show optin warning', () => {
-      // should be: megapartner + not recognized user
+      // Should be: megapartner + not recognized user
       const showStore = createMockStore(storeAnonymous)
       const showContext = mount(<SignatureAddForm {...propsProfileOpposite} store={showStore} />)
       let wasShown = false
@@ -141,10 +133,10 @@ describe('<SignatureAddForm />', () => {
       })
     })
     it('optin checkbox or hidden optin: hide profiles', () => {
-      const hideProfiles = [ // should have hidden optin
+      const hideProfiles = [ // Should have hidden optin
         { petition: 'megapartner_mayoptin', query: { source: 'c.123' } },
         { petition: 'megapartner_mayoptin', query: { source: 'c.123', mega_partner: '1' } },
-        { petition: 'mayoptin', query: { source: 'c.123' } } // no mailing_id
+        { petition: 'mayoptin', query: { source: 'c.123' } } // No mailing_id
       ]
       const mockStoreAnon = createMockStore(storeAnonymous)
       hideProfiles.forEach((profile) => {
@@ -166,7 +158,7 @@ describe('<SignatureAddForm />', () => {
         { petition: 'megapartner_mayoptin', query: { source: 'c.123', mailing_id: '123' } },
         { petition: 'megapartner_mayoptin', query: { source: 's.imn', mega_partner: '1' } },
         { petition: 'megapartner_mayoptin', query: {} },
-        // non-megapartner, but still may_optin: true
+        // Non-megapartner, but still may_optin: true
         { petition: 'mayoptin', query: { source: 'c.123', mailing_id: '123' } },
         { petition: 'mayoptin', query: { source: 's.abc' } }
       ]
@@ -191,8 +183,6 @@ describe('<SignatureAddForm />', () => {
               ).to.equal(0)
       })
     })
-
-    // it('TODO:non-US address', () => {});
   })
   describe('<SignatureAddForm /> stateful tests', () => {
     // THESE ARE TESTS WHERE WE CHANGE THE STATE (FILL IN FORM, ETC)
@@ -236,8 +226,6 @@ describe('<SignatureAddForm />', () => {
       expect(component.formIsValid()).to.be.equal(true)
     })
 
-    // it('TODO:typing incomplete fields submit fails and displays validation error messages', () => {})
-    // TODO: osdi data, including comment
     it('submitting petition gives good data', () => {
       // MORE TODO HERE
       const store = createMockStore(storeAnonymous)

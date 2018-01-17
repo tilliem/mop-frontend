@@ -44,8 +44,8 @@ ThanksPage.propTypes = {
   petition: PropTypes.object,
   user: PropTypes.object,
   signatureMessage: PropTypes.object,
-  location: PropTypes.object,
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
+  location: PropTypes.object
 }
 
 function mapStateToProps(store, ownProps) {
@@ -54,6 +54,7 @@ function mapStateToProps(store, ownProps) {
   return {
     petition,
     user: store.userStore,
+    searchQuery: {},
     signatureMessage: (petition.petition_id
                        && store.signatureMessages
                        && store.signatureMessages[petition.petition_id])

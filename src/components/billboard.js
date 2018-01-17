@@ -1,7 +1,7 @@
 import React from 'react'
 import Video from './video'
 
-// to fix font size issue for red button font in chrome browser
+// To fix font size issue for red button font in chrome browser
 
 const billboardButton = {
   fontSize: '99%'

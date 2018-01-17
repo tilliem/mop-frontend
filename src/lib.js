@@ -22,7 +22,7 @@ export const ellipsize = (str, length) => {
     return String(str).substr(0, length)
   }
   if (match[2].length) {
-    // we matched a space instead of the end of string so add ...
+    // We matched a space instead of the end of string so add ...
     return `${match[1]}...`
   }
   return match[1]
