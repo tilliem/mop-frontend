@@ -55,8 +55,6 @@ describe('<SignatureAddForm />', () => {
       expect(context.find('input[name="address1"]').length).to.equal(1)
       expect(context.find('input[name="address2"]').length).to.equal(1)
       expect(context.find('input[name="city"]').length).to.equal(1)
-      // Not testing state because state is a sub component
-      // Expect(context.find('input[name="state"]').length).to.equal(1);
       expect(context.find('input[name="zip"]').length).to.equal(1)
     })
 
@@ -71,8 +69,6 @@ describe('<SignatureAddForm />', () => {
       expect(context.find('input[name="address1"]').length).to.equal(1)
       expect(context.find('input[name="address2"]').length).to.equal(1)
       expect(context.find('input[name="city"]').length).to.equal(1)
-      // Not testing state because state is a sub component
-      // Expect(context.find('input[name="state"]').length).to.equal(1);
       expect(context.find('input[name="zip"]').length).to.equal(1)
     })
 
@@ -86,12 +82,8 @@ describe('<SignatureAddForm />', () => {
       expect(context.find('input[name="address1"]').length).to.equal(1)
       expect(context.find('input[name="address2"]').length).to.equal(1)
       expect(context.find('input[name="city"]').length).to.equal(1)
-      // Not testing state because state is a sub component
-      // Expect(context.find('input[name="state"]').length).to.equal(1);
       expect(context.find('input[name="zip"]').length).to.equal(1)
     })
-
-    // It('TODO:local petition without address when user has address', () => {});
 
     it('show optin warning', () => {
       // Should be: megapartner + not recognized user
@@ -192,7 +184,6 @@ describe('<SignatureAddForm />', () => {
       })
     })
 
-    // It('TODO:non-US address', () => {});
   })
   describe('<SignatureAddForm /> stateful tests', () => {
     // THESE ARE TESTS WHERE WE CHANGE THE STATE (FILL IN FORM, ETC)
@@ -215,8 +206,6 @@ describe('<SignatureAddForm />', () => {
       component.setState({ phone: '123-123-1234' })
       expect(component.formIsValid()).to.be.equal(true)
     })
-
-    // It('TODO:typing incomplete fields submit fails and displays validation error messages', () => {})
 
     it('submitting petition gives good data', () => {
       // MORE TODO HERE
