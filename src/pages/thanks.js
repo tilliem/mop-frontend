@@ -45,7 +45,6 @@ ThanksPage.propTypes = {
   user: PropTypes.object,
   signatureMessage: PropTypes.object,
   dispatch: PropTypes.func,
-  petition: PropTypes.object,
   location: PropTypes.object
 }
 
