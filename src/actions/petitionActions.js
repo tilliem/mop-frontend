@@ -90,7 +90,7 @@ export function searchPetitions(query, pageNumber, selectState) {
             type: actionTypes.SEARCH_PETITIONS_SUCCESS,
             searchResults: json,
             pageNumber: page,
-            query: query,
+            query,
             selectState: selState
           })
         }),

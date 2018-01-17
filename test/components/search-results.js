@@ -16,7 +16,6 @@ describe('<SearchResults />', () => {
     const context = mount(<Provider store={baseStore} children={myComponent} />)
     expect(context.find('#search-results').length).to.equal(1)
     expect(context.find('.result').length).to.equal(0)
-
   })
 
   it('can render a page of results', () => {

@@ -2,11 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import { searchPetitions } from '../actions/petitionActions.js'
 import { actions as petitionActions } from '../actions/petitionActions.js'
 import { appLocation } from '../routes.js'
 
-class SearchResultPagination extends React.Component { 
+class SearchResultPagination extends React.Component {
 
   constructor(props) {
     super(props)
@@ -20,14 +19,12 @@ class SearchResultPagination extends React.Component {
 
 
   changePage(newPage, newUrl) {
-    if(newPage !== this.props.currentPage) {
+    if (newPage !== this.props.currentPage) {
       const dispatch = this.props.dispatch
-      dispatch(petitionActions.searchPetitions(this.props.query, newPage, this.props.selState))
+      dispatch(petitionActions.searchPetitions(this.props.query, newPage, this.props.selectState))
       appLocation.push(newUrl)
     }
-
   }
-
 
 
   debugger
@@ -46,7 +43,7 @@ class SearchResultPagination extends React.Component {
     const numPages = Math.ceil(resultCount / pageSize)
     const pages = []
 
-    if(currentPage == 1) {
+    if (currentPage === 1) {
       pages.push(<li className='disabled prevLink' key={0} ><Link onClick={() => this.changePage(prevPage, prevPageLinkUrl)}>&#171;</Link></li>)
     } else {
       pages.push(<li className='prevLink' key={0} ><Link onClick={() => this.changePage(prevPage, prevPageLinkUrl)}>&#171;</Link></li>)
@@ -82,6 +79,8 @@ SearchResultPagination.propTypes = {
   pageSize: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
   searchNavLinks: PropTypes.object.isRequired,
+  selectState: PropTypes.string,
+  dispatch: PropTypes.func,
   query: PropTypes.string
 }
 

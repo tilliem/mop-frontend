@@ -183,7 +183,6 @@ describe('<SignatureAddForm />', () => {
               ).to.equal(0)
       })
     })
-
   })
   describe('<SignatureAddForm /> stateful tests', () => {
     // THESE ARE TESTS WHERE WE CHANGE THE STATE (FILL IN FORM, ETC)

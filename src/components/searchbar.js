@@ -52,9 +52,9 @@ class SearchBar extends React.Component {
 
     dispatch(petitionActions.searchPetitions(query, currentPage, selState))
 
-    let queryString = []
+    const queryString = []
     if (this.state.query) {
-       queryString.push(`q=${this.state.query}`)
+      queryString.push(`q=${this.state.query}`)
     }
     if (this.state.selectState) {
       queryString.push(`state=${this.state.selectState}`)
@@ -63,7 +63,6 @@ class SearchBar extends React.Component {
       const fullQuery = queryString.join('&')
       appLocation.push(`/find/?${fullQuery}`)
     }
-
   }
 
 
