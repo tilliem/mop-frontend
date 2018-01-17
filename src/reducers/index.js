@@ -32,7 +32,7 @@ const initialSearchState = {
     _embed: [],
     _links: {}
   }
-
+}
 
 const initialUserState = {
   // Possible keys. none of these are guaranteed to be present/available
@@ -84,7 +84,7 @@ function navReducer(state = navState, action) {
         organization: sponsor.organization,
         browser_url: sponsor.browser_url
       } })
-    } 
+    }
     return Object.assign({}, state, { partnerCobrand: null })
   }
   return state
