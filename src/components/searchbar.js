@@ -17,7 +17,8 @@ class SearchBar extends React.Component {
     super(props)
     this.state = {
       query: props.query || '',
-      selectState: props.selectState || ''
+      selectState: props.selectState || '',
+      currentPage: props.currentPage || '1'
     }
 
     this.submitQuery = this.submitQuery.bind(this)
@@ -47,8 +48,9 @@ class SearchBar extends React.Component {
 
     const query = this.state.query
     const selState = this.state.selectState || ''
+    const currentPage = this.state.currentPage || 1
 
-    dispatch(petitionActions.searchPetitions(query, selState))
+    dispatch(petitionActions.searchPetitions(query, currentPage, selState))
 
     let queryString = []
     if (this.state.query) {
@@ -91,6 +93,7 @@ SearchBar.propTypes = {
   size: PropTypes.string,
   router: PropTypes.object,
   query: PropTypes.string,
+  currentPage: PropTypes.string,
   dispatch: PropTypes.func,
   selectState: PropTypes.string
 }

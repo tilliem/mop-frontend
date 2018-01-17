@@ -12,7 +12,7 @@ const SearchPage = ({ query, selectState, pageNumber }) =>
       <div className='span12'>
         <h2 id='title' className='light'>Top petitions</h2>
         <p>You can search for petitions by issue, title, author, target, city, state, or keyword &mdash; or check out <a href='/victories.html'>recent victories</a>.</p>
-        <SearchBar query={query} />
+        <SearchBar query={query} currentPage={pageNumber}/>
         <SearchResults query={query || ''} pageNumber={pageNumber || '1'} selectState={selectState || ''} />
       </div>
     </div>}
