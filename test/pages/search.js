@@ -11,7 +11,7 @@ describe('<SearchPage />', () => {
   const baseStore = createMockStore({ userStore: {} })
 
   it('renders default values with no search query', () => {
-    const searchPageProps = { query: {}, location: { query: { } } } 
+    const searchPageProps = { query: {}, location: { query: { } } }
     const context = shallow(<SearchPage {...searchPageProps} store={baseStore} />)
     expect(context.props().query).to.equal('')
     expect(context.props().pageNumber).to.equal('1')
@@ -19,7 +19,7 @@ describe('<SearchPage />', () => {
   })
 
   it('parses out query', () => {
-    const searchPageProps = { query: {}, location: { query:  { q: 'cats' }  } } 
+    const searchPageProps = { query: {}, location: { query: { q: 'cats' } } }
     const context = shallow(<SearchPage {...searchPageProps} store={baseStore} />)
     expect(context.props().query).to.equal('cats')
     expect(context.props().pageNumber).to.equal('1')
