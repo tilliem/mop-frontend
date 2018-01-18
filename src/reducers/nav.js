@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import { actionTypes as navActionTypes } from '../../actions/navActions.js'
-import { actionTypes as petitionActionTypes } from '../../actions/petitionActions.js'
+import { actionTypes as navActionTypes } from '../actions/navActions.js'
+import { actionTypes as petitionActionTypes } from '../actions/petitionActions.js'
 
 const { FETCH_PETITON_SUCCESS, FETCH_TOP_PETITIONS_SUCCESS } = petitionActionTypes
 const { FETCH_ORG_SUCCESS } = navActionTypes
