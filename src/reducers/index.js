@@ -36,18 +36,23 @@ const initialSearchState = {
 
 const initialUserState = {
   // Possible keys. none of these are guaranteed to be present/available
-  // anonymous: <boolean>
+  // # OSDI fields:
+  // postal_addresses: [{status: "Potential"}] (here when we have an address for this user)
+  // identifiers: <probably a combination of signonId, token, and any other identifiers available>
   // given_name: (first name)
+  //
+  // # LOGIN STATUS fields:
+  // anonymous: <boolean>
+  // signonId: (unique id from signon)
+  // authenticated: If the person is actually logged in
+  // token: (either an id:<signon token> or akid:<akid token>) that can be used for a single action
+  //
+  // # FIELDS SAVED FROM petition signing, e.g.
   // full_name:
-  // emailHash: <the hash of the email address>
   // email:
   // zip:
   // state:
   // country:
-  // postal_addresses: [{status: "Potential"}] (here when we have an address for this user)
-  // signonId: (unique id from signon)
-  // token: (either an id:<signon token> or akid:<akid token>) that can be used for a single action
-  // identifiers: <probably a combination of signonId, token, and any other identifiers available>
 }
 
 function navReducer(state = navState, action) {
@@ -203,17 +208,23 @@ function petitionSearchReducer(state = initialSearchState, action) {
 
 function userReducer(state = initialUserState, action) {
   // Fold in tokens at the top, since it's possible it's for everyone
+  // tokens can be hashedId and akid
   const newData = Object.assign({}, action.tokens || {})
+  if (!newData.token) {
+    // from query parameters
+    if (newData.hashedId) {
+      newData.token = `id:${newData.hashedId}`
+    } else if (newData.akid) {
+      newData.token = `akid:${newData.akid}`
+    }
+  }
   switch (action.type) {
     case sessionActionTypes.UNRECOGNIZE_USER_SESSION:
       return { anonymous: true } // Purposefully destroying current state
     case sessionActionTypes.ANONYMOUS_SESSION_START:
       newData.anonymous = true
       return Object.assign({}, state, newData)
-    // NOTE: the next 4 cases depend on switch-case fall-through
-    // there are no breaks purposefully
     case sessionActionTypes.USER_SESSION_START:
-    case sessionActionTypes.TOKEN_SESSION_START:
       if (action.session) {
         // This should cover any of: given_name, last_name, full_name, etc
         Object.assign(newData, action.session)
@@ -227,9 +238,8 @@ function userReducer(state = initialUserState, action) {
           })
         }
       }
-    // No break here: fall through to the failures
+      return Object.assign({}, state, newData)
     case sessionActionTypes.USER_SESSION_FAILURE:
-    case sessionActionTypes.TOKEN_SESSION_FAILURE:
       return Object.assign({}, state, newData)
     case petitionActionTypes.PETITION_SIGNATURE_SUBMIT:
       // If it's an anonymous user or we get useful session information
