@@ -25,7 +25,7 @@ class ThanksPage extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='moveon-petitions share'>
         {(this.Thanks && this.props.petition ?
           <this.Thanks
             petition={this.props.petition}
