@@ -1,6 +1,7 @@
 module.exports = {
   extends: 'airbnb',
   parser: 'babel-eslint',
+  plugins: ['prefer-object-spread'],
   rules: {
     semi: ['error', 'never'],
     'comma-dangle': ['error', 'never'],
@@ -11,6 +12,7 @@ module.exports = {
     'no-underscore-dangle': ['off'],
     'no-alert': ['off'],
     'jsx-quotes': ['error', 'prefer-single'],
-    'max-len': ['off']
+    'max-len': ['off'],
+    'prefer-object-spread/prefer-object-spread': 2
   }
 }
