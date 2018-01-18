@@ -226,7 +226,7 @@ function userReducer(state = initialUserState, action) {
       return Object.assign({}, state, newData)
     case sessionActionTypes.USER_SESSION_START:
       if (action.session) {
-        // This should cover any of: given_name, last_name, full_name, etc
+        // session might have: given_name, authenticated, postal_addresses
         Object.assign(newData, action.session)
         const { identifiers } = action.session
         if (identifiers && identifiers.length) {
