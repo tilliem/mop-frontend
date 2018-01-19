@@ -55,7 +55,8 @@ function mapStateToProps(store, ownProps) {
     petition,
     user: store.userStore,
     searchQuery: {},
-    signatureMessage: (petition.petition_id
+    signatureMessage: (petition
+                       && petition.petition_id
                        && store.signatureMessages
                        && store.signatureMessages[petition.petition_id])
   }

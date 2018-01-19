@@ -1,19 +1,13 @@
 import { combineReducers } from 'redux'
-import { actionTypes as navActionTypes } from '../actions/navActions.js'
 import { actionTypes as petitionActionTypes } from '../actions/petitionActions.js'
 import { actionTypes as sessionActionTypes } from '../actions/sessionActions.js'
-
+import navStore from './nav'
 // Function fetchPetitionRequest(petitionSlug) {
 //     Return {
 //         Type: FETCH_PETTION_REQUEST,
 //         PetitionSlug
 //     }
 // }
-
-const navState = {
-  partnerCobrand: null, // or {logo, link, name}
-  orgs: {} // organization data by organization slug
-}
 
 const initialPetitionState = {
   petitions: {}, // Keyed by slug AND petition_id for petition route
@@ -55,46 +49,6 @@ const initialUserState = {
   // country:
 }
 
-function navReducer(state = navState, action) {
-  // The goal here is to ignore most actions
-  // And then turn the partner logo on/off depending on the state
-  // However for top petitions, and petition loading
-  // We need to see if we should show a logo or not
-  // If there are other 'megapartner' pages where we show a logo
-  // then we should add loading of their data here, as well
-  // This is a little icky, because it should relate to the view
-  // more than what data we load, but we are taking the perspective
-  // that the actions are about changing the 'presentation' state
-  // rather than the actions being pure 'model' interfaces
-  let petition = null
-  switch (action.type) {
-    case navActionTypes.FETCH_ORG_SUCCESS:
-      return Object.assign({}, {
-        orgs: Object.assign({}, state.orgs, { [action.slug]: action.org })
-      })
-    case petitionActionTypes.FETCH_PETITION_SUCCESS:
-      petition = action.petition
-      break
-    case petitionActionTypes.FETCH_TOP_PETITIONS_SUCCESS:
-      petition = action.petitions[0]
-      break
-    default:
-      break
-  }
-  if (petition) {
-    const sponsor = ((petition._embedded && (petition._embedded.sponsor || petition._embedded.creator) || {}))
-    if (sponsor.logo_image_url) {
-      return Object.assign({}, state, { partnerCobrand: {
-        logo_image_url: sponsor.logo_image_url,
-        organization: sponsor.organization,
-        browser_url: sponsor.browser_url
-      } })
-    }
-    return Object.assign({}, state, { partnerCobrand: null })
-  }
-  return state
-}
-
 function petitionReducer(state = initialPetitionState, action) {
   const {
     type,
@@ -115,53 +69,59 @@ function petitionReducer(state = initialPetitionState, action) {
   }
   switch (type) {
     case petitionActionTypes.FETCH_PETITION_SUCCESS:
-      return Object.assign({}, state, {
-        petitions: Object.assign(
-          {}, state.petitions, {
-            // Key it both by id and by slug, for different lookup needs
-            [slug]: petition,
-            [petition.petition_id]: petition
-          }
-        )
-      })
+      return {
+        ...state,
+        petitions: {
+          ...state.petitions,
+          // Key it both by id and by slug, for different lookup needs
+          [slug]: petition,
+          [petition.petition_id]: petition
+        }
+      }
     case petitionActionTypes.PETITION_SIGNATURE_SUCCESS:
       updateData = {
-        signatureStatus: Object.assign(
-          {}, state.signatureStatus, { [petition.petition_id]: 'success' })
+        signatureStatus: {
+          ...state.signatureStatus,
+          [petition.petition_id]: 'success'
+        }
       }
       if (action.messageId) {
-        updateData.signatureMessages = Object.assign(
-          {}, state.signatureMessages,
-          { [petition.petition_id]: { messageId: action.messageId, messageMd5: action.messageMd5 } })
+        updateData.signatureMessages = {
+          ...state.signatureMessages,
+          [petition.petition_id]: {
+            messageId: action.messageId,
+            messageMd5: action.messageMd5
+          }
+        }
       }
       if (state.nextPetitionsLoaded) {
         updateData.nextPetitions = state.nextPetitions.filter(petId => petId !== petition.petition_id)
       }
-      return Object.assign({}, state, updateData)
+      return {
+        ...state,
+        ...updateData
+      }
     case petitionActionTypes.FETCH_PETITION_SIGNATURES_SUCCESS:
       petition.total_signatures = signatures.count
-      return Object.assign({}, state, {
-        petitionSignatures: Object.assign(
-          {}, state.petitionSignatures, {
-            [slug]: Object.assign(
-              {}, state.petitionSignatures[slug],
-              {
-                // eslint-disable-next-line no-underscore-dangle
-                [page]: signatures._embedded.map((signature) =>
-                  // eslint-disable-next-line no-underscore-dangle
-                  Object.assign(signature, { user: signature._embedded.user })
-                )
-              }
+      return {
+        ...state,
+        petitionSignatures: {
+          ...state.petitionSignatures,
+          [slug]: {
+            ...state.petitionSignatures[slug],
+            // eslint-disable-next-line no-underscore-dangle
+            [page]: signatures._embedded.map((signature) =>
+              // eslint-disable-next-line no-underscore-dangle
+              Object.assign(signature, { user: signature._embedded.user })
             )
           }
-        ),
-        petitions: Object.assign(
-          {}, state.petitions, {
-            [slug]: petition,
-            [petition.petition_id]: petition
-          }
-        )
-      })
+        },
+        petitions: {
+          ...state.petitions,
+          [slug]: petition,
+          [petition.petition_id]: petition
+        }
+      }
     case petitionActionTypes.FETCH_TOP_PETITIONS_SUCCESS:
       if (useCache) {
         return state
@@ -172,9 +132,10 @@ function petitionReducer(state = initialPetitionState, action) {
                                    [topPetition.name]: topPetition,
                                    [topPetition.petition_id]: topPetition
                                  }))),
-        topPetitions: Object.assign({}, state.topPetitions, {
+        topPetitions: {
+          ...state.topPetitions,
           [topPetitionsKey]: petitions.map(topPetition => topPetition.petition_id)
-        }),
+        },
         nextPetitionsLoaded: true
       }
       updateData.nextPetitions = state.nextPetitions.concat(
@@ -183,7 +144,10 @@ function petitionReducer(state = initialPetitionState, action) {
         i === list.indexOf(petId) // Make each item unique on the list
           && !(petId in state.signatureStatus || updateData.petitions[petId].signed) // Exclude signed
       ))
-      return Object.assign({}, state, updateData)
+      return {
+        ...state,
+        ...updateData
+      }
     default:
       return state
   }
@@ -196,11 +160,10 @@ function petitionSearchReducer(state = initialSearchState, action) {
   } = action
   switch (type) {
     case petitionActionTypes.SEARCH_PETITIONS_SUCCESS:
-      return Object.assign({}, state, {
-        searchResults: Object.assign(
-          {}, searchResults
-        )
-      })
+      return {
+        ...state,
+        searchResults: { ...searchResults }
+      }
     default:
       return state
   }
@@ -223,7 +186,7 @@ function userReducer(state = initialUserState, action) {
       return { anonymous: true } // Purposefully destroying current state
     case sessionActionTypes.ANONYMOUS_SESSION_START:
       newData.anonymous = true
-      return Object.assign({}, state, newData)
+      return { ...state, ...newData }
     case sessionActionTypes.USER_SESSION_START:
       if (action.session) {
         // session might have: given_name, authenticated, postal_addresses
@@ -238,9 +201,9 @@ function userReducer(state = initialUserState, action) {
           })
         }
       }
-      return Object.assign({}, state, newData)
+      return { ...state, ...newData }
     case sessionActionTypes.USER_SESSION_FAILURE:
-      return Object.assign({}, state, newData)
+      return { ...state, ...newData }
     case petitionActionTypes.PETITION_SIGNATURE_SUBMIT:
       // If it's an anonymous user or we get useful session information
       // Then copy it into userData
@@ -261,7 +224,7 @@ function userReducer(state = initialUserState, action) {
           newData.state = address.region
           newData.country = address.country_name
         }
-        return Object.assign({}, state, newData)
+        return { ...state, ...newData }
       }
       return state
     default:
@@ -270,7 +233,7 @@ function userReducer(state = initialUserState, action) {
 }
 
 const rootReducer = combineReducers({
-  navStore: navReducer,
+  navStore,
   petitionStore: petitionReducer,
   petitionSearchStore: petitionSearchReducer,
   userStore: userReducer
