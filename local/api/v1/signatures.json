@@ -1,0 +1,11 @@
+{"SendMessageResponse":
+ {"ResponseMetadata": {"RequestId":"ef68abfa-93f0-537d-a564-f9269b810432" },
+  "SendMessageResult":{"MD5OfMessageAttributes":"1856c5914c31e89f58704786a1aa2708",
+                       "MD5OfMessageBody":"d8bd5c72791dbd646df0aa25f7d6cd98",
+                       "MessageId":"b1978522-3ce5-4e7f-9782-e45130c18256",
+                       "SequenceNumber":null
+                      }
+ },
+ "DOCUMENTATION": "This file is a fake sample file of what would be returned in a POST to SQS.",
+ "DOCUMENTATION_USE": "export API_WRITABLE=fake to use this when testing with local data"
+}

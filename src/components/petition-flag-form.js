@@ -11,8 +11,7 @@ class PetitionFlagForm extends React.Component {
     }
   }
 
-  submitFlag(reason) {
-    console.log(reason)
+  submitFlag(/* reason */) {
     // TODO:
     // * form submit with val
     // * implement flag.html

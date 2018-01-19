@@ -6351,7 +6351,8 @@ hr {
   }
   body.sign.moveon-petitions .petition-info-top,
   div.sign.moveon-petitions .petition-info-top,
-  body.confirm.moveon-petitions .petition-info-top {
+  body.confirm.moveon-petitions .petition-info-top,
+  div.confirm.moveon-petitions .petition-info-top {
     margin-left: inherit;
     padding-left: inherit;
   }
@@ -6359,14 +6360,17 @@ hr {
   div.sign.moveon-petitions div.form-wrapper {
     padding-left: 0 !important;
   }
-  body.moveon-petitions.sign div.form-wrapper {
+  body.moveon-petitions.sign div.form-wrapper,
+  div.moveon-petitions.sign div.form-wrapper {
     width: auto;
     margin-left: 0px !important;
   }
-  body.moveon-petitions.sign div.form-wrapper.responsive {
+  body.moveon-petitions.sign div.form-wrapper.responsive,
+  div.moveon-petitions.sign div.form-wrapper.responsive {
     background: white !important;
   }
-  body.confirm.moveon-petitions div.form-wrapper.responsive {
+  body.confirm.moveon-petitions div.form-wrapper.responsive,
+  div.confirm.moveon-petitions div.form-wrapper.responsive {
     margin-left: 0px !important;
     padding-right: 0px !important;
     width: 100%;
@@ -6375,30 +6379,37 @@ hr {
   div.share-email {
     border-right: none;
   }
-  body.moveon-petitions.share .lh-100 {
+  body.moveon-petitions.share .lh-100,
+  div.moveon-petitions.share .lh-100 {
     line-height: 100%;
   }
-  body.moveon-petitions.share div.span5.bump-top-3 {
+  body.moveon-petitions.share div.span5.bump-top-3,
+  div.moveon-petitions.share div.span5.bump-top-3 {
     margin-top: 0;
   }
-  body.moveon-petitions.share .share-area .lanky-header {
+  body.moveon-petitions.share .share-area .lanky-header,
+  div.moveon-petitions.share .share-area .lanky-header {
     display: none !important;
   }
-  body.moveon-petitions.share div.share-email button.xl300 {
+  body.moveon-petitions.share div.share-email button.xl300,
+  div.moveon-petitions.share div.share-email button.xl300 {
     position: relative;
     top: -30px;
     clear: both;
   }
   body.moveon-petitions.share div.share-social-media,
-  body.moveon-petitions.share div.share-social-media {
+  div.moveon-petitions.share div.share-social-media {
     margin-bottom: 30px;
   }
-  body.moveon-petitions div.well.login {
+  body.moveon-petitions div.well.login,
+  div.moveon-petitions div.well.login {
     padding-left: 20px;
   }
   /**Reviewers Dashboard**/
   body.review .table td,
-  body.review .table th {
+  body.review .table th,
+  div.review .table td,
+  div.review .table th {
     line-height: 20px;
     font-size: 14px;
   }
@@ -7563,16 +7574,19 @@ div.wp-pagenavi span.pages {
 }
 /*PETITIONS HOLDING AREA -- some of this may be required by petitions  -- obviously we'd want to modify how some of this is done ... declare as typo classes etc ...*/
 /** widgets change behavior slightly on petitions **/
-body.moveon-petitions .widget {
+body.moveon-petitions .widget,
+div.moveon-petitions .widget {
   padding-left: 0px;
   padding-right: 0px;
   margin-bottom: 10px;
 }
-body.moveon-petitions .widget-top {
+body.moveon-petitions .widget-top,
+div.moveon-petitions .widget-top {
   border: none;
   padding-bottom: 0;
 }
-body.moveon-petitions div.front-content .widget-top {
+body.moveon-petitions div.front-content .widget-top,
+div.moveon-petitions div.front-content .widget-top {
   border-bottom: 1px solid #4d4d4d;
   padding-bottom: 10px;
 }
@@ -7599,20 +7613,24 @@ ul.pager li {
 body.sign input[type="text"],
 div.sign input[type="text"],
 body.confirm input[type="text"],
-body.confirm input[type="password"] {
+div.confirm input[type="text"],
+body.confirm input[type="password"],
+div.confirm input[type="password"] {
   height: 17px;
   margin-bottom: 5px;
   width: 95%;
 }
 body.sign select,
 div.sign select,
-body.confirm select {
+body.confirm select,
+div.confirm select {
   margin: 5px 0 3px 0 ;
   width: 100%;
 }
 body.sign textarea,
 div.sign textarea,
-body.confirm textarea {
+body.confirm textarea,
+div.confirm textarea {
   margin-bottom: 5px;
   margin-top: 5px;
   width: 95%;

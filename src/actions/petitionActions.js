@@ -16,12 +16,16 @@ export const actionTypes = {
   FETCH_TOP_PETITIONS_SUCCESS: 'FETCH_TOP_PETITIONS_SUCCESS',
   FETCH_TOP_PETITIONS_FAILURE: 'FETCH_TOP_PETITIONS_FAILURE',
 
+  SEARCH_PETITIONS_REQUEST: 'SEARCH_PETITIONS_REQUEST',
+  SEARCH_PETITIONS_SUCCESS: 'SEARCH_PETITIONS_SUCCESS',
+  SEARCH_PETITIONS_FAILURE: 'SEARCH_PETITIONS_FAILURE',
+
   PETITION_SIGNATURE_SUBMIT: 'PETITION_SIGNATURE_SUBMIT',
   PETITION_SIGNATURE_SUCCESS: 'PETITION_SIGNATURE_SUCCESS',
   PETITION_SIGNATURE_FAILURE: 'PETITION_SIGNATURE_FAILURE'
 }
 
-export function loadPetition(petitionSlug) {
+export function loadPetition(petitionSlug, forceReload) {
   const urlKey = `petitions/${petitionSlug}`
   if (global && global.preloadObjects && global.preloadObjects[urlKey]) {
     return (dispatch) => {
@@ -32,12 +36,23 @@ export function loadPetition(petitionSlug) {
       })
     }
   }
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({
       type: actionTypes.FETCH_PETITION_REQUEST,
       slug: petitionSlug
     })
-    return fetch(`${Config.API_URI}/api/v1/${urlKey}.json`)
+    const { petitionStore } = getState()
+    if (!forceReload
+        && petitionStore
+        && petitionStore.petitions
+        && petitionStore.petitions[petitionSlug]) {
+      return dispatch({
+        type: actionTypes.FETCH_PETITION_SUCCESS,
+        petition: petitionStore.petitions[petitionSlug],
+        slug: petitionSlug
+      })
+    }
+    return fetch(`${Config.API_URI}/${urlKey}.json`)
       .then(
         (response) => response.json().then((json) => {
           dispatch({
@@ -57,40 +72,84 @@ export function loadPetition(petitionSlug) {
   }
 }
 
-export function loadTopPetitions(pac, megapartner) {
-  let urlKey = 'top-petitions'
-  if (pac) {
-    if (megapartner) {
-      urlKey += `?megapartner=${megapartner}&pac=1`
-    } else {
-      urlKey += '?pac=1'
-    }
-  } else if (megapartner) {
-    urlKey += `?megapartner=${megapartner}`
-  }
-
+export function searchPetitions(query, pageNumber, selectState) {
   return (dispatch) => {
     dispatch({
-      type: actionTypes.FETCH_TOP_PETITIONS_REQUEST,
-      pac,
-      megapartner
+      type: actionTypes.SEARCH_PETITIONS_REQUEST,
+      query, pageNumber, selectState
     })
-    return fetch(`${Config.API_URI}/api/v1/${urlKey}.json`)
+
+    const page = pageNumber ? `&page=${pageNumber}` : ''
+
+    const selState = selectState ? `&state=${selectState}` : ''
+
+    return fetch(`${Config.API_URI}/search/petitions.json?q=${query}${selState}${page}`)
+      .then(
+        (response) => response.json().then((json) => {
+          dispatch({
+            type: actionTypes.SEARCH_PETITIONS_SUCCESS,
+            searchResults: json,
+            pageNumber: page,
+            query,
+            selectState: selState
+          })
+        }),
+        (err) => {
+          dispatch({
+            type: actionTypes.SEARCH_PETITIONS_FAILURE,
+            error: err
+          })
+        }
+      )
+  }
+}
+
+
+export function loadTopPetitions(pac, megapartner, forceReload) {
+  // topPetitionsKey must not just be truthily equal but exact
+  // eslint-disable-next-line no-unneeded-ternary
+  const topPetitionsKey = `${pac ? 1 : 0}--${megapartner ? megapartner : ''}`
+  return (dispatch, getState) => {
+    dispatch({
+      type: actionTypes.FETCH_TOP_PETITIONS_REQUEST,
+      topPetitionsKey
+    })
+    const { userStore, petitionStore } = getState()
+    if (!forceReload
+        && petitionStore
+        && petitionStore.topPetitions
+        && petitionStore.topPetitions[topPetitionsKey]) {
+      return dispatch({
+        type: actionTypes.FETCH_TOP_PETITIONS_SUCCESS,
+        useCache: true,
+        topPetitionsKey
+      })
+    }
+    const query = []
+    if (pac !== null) {
+      query.push(`pac=${pac ? 1 : 0}`)
+    }
+    if (megapartner) {
+      query.push(`megapartner=${megapartner}`)
+    }
+    if (userStore && userStore.signonId) {
+      query.push(`user=${userStore.signonId}`)
+    }
+    const queryString = ((query.length) ? `?${query.join('&')}` : '')
+    return fetch(`${Config.API_URI}/top-petitions.json${queryString}`)
       .then(
         (response) => response.json().then((json) => {
           dispatch({
             type: actionTypes.FETCH_TOP_PETITIONS_SUCCESS,
             petitions: json._embedded,
-            pac,
-            megapartner
+            topPetitionsKey
           })
         }),
         (err) => {
           dispatch({
             type: actionTypes.FETCH_TOP_PETITIONS_FAILURE,
             error: err,
-            pac,
-            megapartner
+            topPetitionsKey
           })
         }
       )
@@ -129,16 +188,20 @@ export function signPetition(petitionSignature, petition, options) {
     })
 
     const completion = (data) => {
-      const finalDispatch = (text) => {
+      const finalDispatch = (json) => {
         const dispatchData = {
           type: actionTypes.PETITION_SIGNATURE_SUCCESS,
           petition,
           signature: petitionSignature
         }
-        if (text) {
-          const sqsResponse = text.match(/<MessageId>(.*)<\/MessageId>/)
+        if (json && json.SendMessageResponse) {
+          const sqsResponse = json.SendMessageResponse.SendMessageResult
           if (sqsResponse) {
-            dispatchData.messageId = sqsResponse[1]
+            dispatchData.messageId = sqsResponse.MessageId
+            dispatchData.messageMd5 = sqsResponse.MD5OfMessageBody
+            // If Error, should we return FAILURE instead?
+            dispatchData.messageError = (sqsResponse.Error
+                                         && sqsResponse.Error.Message)
           }
         }
         const dispatchResult = dispatch(dispatchData)
@@ -146,24 +209,37 @@ export function signPetition(petitionSignature, petition, options) {
           registerSignatureAndThanks(dispatchResult.petition)(dispatch)
         }
       }
-      if (data && typeof data.text === 'function') {
-        data.text().then(finalDispatch)
+      if (data && typeof data.json === 'function') {
+        data.json().then(finalDispatch, finalDispatch)
       } else {
         finalDispatch()
       }
     }
     if (Config.API_WRITABLE) {
-      fetch(`${Config.API_URI}/sign-petition`, {
+      const signingEndpoint = ((Config.API_SIGN_PETITION)
+                               ? Config.API_SIGN_PETITION
+                               : `${Config.API_URI}/signatures.json`)
+      const fetchArgs = {
         method: 'POST',
-        body: JSON.stringify(petitionSignature)
-      }).then(completion, (err) => {
-        dispatch({
-          type: actionTypes.PETITION_SIGNATURE_FAILURE,
-          petition,
-          signature: petitionSignature,
-          error: err
+        body: JSON.stringify(petitionSignature),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        }
+      }
+      if (Config.API_WRITABLE === 'fake') {
+        fetchArgs.method = 'GET'
+        delete fetchArgs.body
+      }
+      fetch(signingEndpoint, fetchArgs)
+        .then(completion, (err) => {
+          dispatch({
+            type: actionTypes.PETITION_SIGNATURE_FAILURE,
+            petition,
+            signature: petitionSignature,
+            error: err
+          })
         })
-      })
     } else {
       completion()
     }
@@ -212,7 +288,7 @@ export const loadPetitionSignatures = (petitionSlug, page = 1) => {
         page
       })
     }
-    return fetch(`${Config.API_URI}/api/v1/${urlKey}.json?per_page=10&page=${page}`)
+    return fetch(`${Config.API_URI}/${urlKey}.json?per_page=10&page=${page}`)
       .then(
         (response) => response.json().then((json) => {
           dispatch({
@@ -241,6 +317,7 @@ export const getSharebanditShareLink = (petitionSharebanditUrl) => {
 export const actions = {
   loadPetition,
   signPetition,
+  searchPetitions,
   registerSignatureAndThanks,
   recordShareClick,
   loadPetitionSignatures,

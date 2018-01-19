@@ -33,7 +33,7 @@ class SignatureAddForm extends React.Component {
       required: {}
     }
     this.validationRegex = {
-      email: /.+@.+\..+/, // forgiving email regex
+      email: /.+@.+\..+/, // Forgiving email regex
       zip: /(\d\D*){5}/,
       phone: /(\d\D*){10}/ // 10-digits
     }
@@ -45,19 +45,22 @@ class SignatureAddForm extends React.Component {
   }
 
   getOsdiSignature() {
-    const { petition, query, user } = this.props
+    const { petition, query, showOptinCheckbox, user } = this.props
     const osdiSignature = {
       petition: {
         name: petition.name,
         petition_id: petition.petition_id,
+        show_optin: showOptinCheckbox,
         _links: petition._links
       },
       person: {
         full_name: this.state.name,
         email_addresses: [],
         postal_addresses: []
-      },
-      comments: this.state.comment
+      }
+    }
+    if (this.state.comment) {
+      osdiSignature.comments = this.state.comment
     }
     if (this.state.name) {
       osdiSignature.person.full_name = this.state.name
@@ -101,7 +104,7 @@ class SignatureAddForm extends React.Component {
     if (customData.length) {
       osdiSignature.person.custom_fields = Object.assign({}, ...customData)
     }
-    // console.log('signature!', osdiSignature)
+    // Console.log('signature!', osdiSignature)
     return osdiSignature
   }
 
@@ -181,6 +184,7 @@ class SignatureAddForm extends React.Component {
     }
     if (this.state.country !== 'United States') {
       delete required.state
+      delete required.zip
     }
     if (changeRequiredFields && doUpdate) {
       this.setState({ required })
@@ -204,7 +208,7 @@ class SignatureAddForm extends React.Component {
     const petitionBy = creator.name + (creator.organization
                                        ? `, ${creator.organization}`
                                        : '')
-    const iframeEmbedText = `<iframe src="http://petitions.moveon.org/embed/widget.html?v=3&amp;name=${petition.slug}" class="moveon-petition" id="petition-embed" width="300px" height="500px"></iframe>` // text to be copy/pasted
+    const iframeEmbedText = `<iframe src="https://petitions.moveon.org/embed/widget.html?v=3&amp;name=${petition.slug}" class="moveon-petition" id="petition-embed" width="300px" height="500px"></iframe>` // Text to be copy/pasted
     return (
       <div className='span4 widget clearfix' id='sign-here'>
         <div className='padding-left-15 form-wrapper background-moveon-light-gray padding-top-1 padding-bottom-1' style={{ paddingRight: 15, position: 'relative', top: -10 }}>
@@ -322,7 +326,16 @@ class SignatureAddForm extends React.Component {
                </div>
              ) : ''}
 
-            <textarea className='moveon-track-click' rows='3' cols='20' name='comment' autoComplete='off' placeholder='Comment'></textarea>
+            <textarea
+              className='moveon-track-click'
+              rows='3'
+              cols='20'
+              name='comment'
+              autoComplete='off'
+              onChange={this.updateStateFromValue('comment')}
+              onBlur={this.updateStateFromValue('comment')}
+              placeholder='Comment'
+            ></textarea>
 
             {(petition.collect_volunteers)
               ? (

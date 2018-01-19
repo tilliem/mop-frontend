@@ -10,7 +10,7 @@ import PetitionFlagForm from './petition-flag-form.js'
 
 class Petition extends React.Component {
   componentDidMount() {
-    // lazy-load thanks page component
+    // Lazy-load thanks page component
     thanksLoader()
   }
 
@@ -23,7 +23,7 @@ class Petition extends React.Component {
                                        : '')
     const outOfDate = (p.tags && p.tags.filter(t => t.name === 'possibly_out_of_date').length)
     return (
-      <div className='container sign'>
+      <div className='container'>
         {(outOfDate) ?
           <div className='message-header'>
             <span className='bell'>This petition has not been edited in a while. As a new legislative session has begun, it&#39;s possible some of the targets of this petition are out of date.</span>

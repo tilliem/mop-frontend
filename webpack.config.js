@@ -47,7 +47,13 @@ var config = {
       staticPath: (process.env.STATIC_ROOT || ''),
       cssPath: (process.env.NODE_ENV == 'production'
                 ? 'https://s3.amazonaws.com/mop-static/css/moui.css'
-                : '/css/moui.css')
+                : '/css/moui.css'),
+      reactJs: (process.env.LOCAL_REACT
+                ? process.env.LOCAL_REACT + 'react.js'
+                : 'https://unpkg.com/react@15.4.1/dist/react.js'),
+      reactDomJs: (process.env.LOCAL_REACT
+                   ? process.env.LOCAL_REACT + 'react-dom.js'
+                   : 'https://unpkg.com/react-dom@15.4.1/dist/react-dom.js')
     }),
     ((process.env.PROD)
      ? new webpack.optimize.UglifyJsPlugin({sourceMap: true})
@@ -56,10 +62,12 @@ var config = {
       'process.env':{
         'NODE_ENV': JSON.stringify(((process.env.PROD) ? 'production' : 'development')),
         'API_URI': JSON.stringify(process.env.API_URI ||
-                                  (process.env.PROD ? '' : '/local')
+                                  (process.env.PROD ? '/api/v1' : '/local/api/v1')
                                  ),
-        'API_WRITABLE': process.env.API_WRITABLE || process.env.PROD,
+        'API_WRITABLE': JSON.stringify(process.env.API_WRITABLE || process.env.PROD),
+        'API_SIGN_PETITION': JSON.stringify(process.env.API_SIGN_PETITION || ''),
         'BASE_APP_PATH': JSON.stringify(process.env.BASE_APP_PATH || '/'),
+        'BASE_URL': JSON.stringify(process.env.BASE_URL || 'https://petitions.moveon.org'),
         'SESSION_COOKIE_NAME': JSON.stringify(process.env.SESSION_COOKIE_NAME || 'SO_SESSION'),
         'STATIC_ROOT': JSON.stringify(process.env.STATIC_ROOT || ''),
         'TRACK_SHARE_URL': JSON.stringify(process.env.TRACK_SHARE_URL || ''),
