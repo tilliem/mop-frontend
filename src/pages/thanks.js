@@ -57,8 +57,8 @@ function mapStateToProps(store, ownProps) {
     searchQuery: {},
     signatureMessage: (petition
                        && petition.petition_id
-                       && store.signatureMessages
-                       && store.signatureMessages[petition.petition_id])
+                       && store.petitionStore.signatureMessages
+                       && store.petitionStore.signatureMessages[petition.petition_id])
   }
 }
 
