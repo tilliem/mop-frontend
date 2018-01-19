@@ -199,6 +199,9 @@ export function signPetition(petitionSignature, petition, options) {
           if (sqsResponse) {
             dispatchData.messageId = sqsResponse.MessageId
             dispatchData.messageMd5 = sqsResponse.MD5OfMessageBody
+            // If Error, should we return FAILURE instead?
+            dispatchData.messageError = (sqsResponse.Error
+                                         && sqsResponse.Error.Message)
           }
         }
         const dispatchResult = dispatch(dispatchData)
@@ -215,7 +218,7 @@ export function signPetition(petitionSignature, petition, options) {
     if (Config.API_WRITABLE) {
       const signingEndpoint = ((Config.API_SIGN_PETITION)
                                ? Config.API_SIGN_PETITION
-                               : `${Config.API_URI}/signatures`)
+                               : `${Config.API_URI}/signatures.json`)
       fetch(signingEndpoint, {
         method: 'POST',
         body: JSON.stringify(petitionSignature),
