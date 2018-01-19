@@ -219,21 +219,27 @@ export function signPetition(petitionSignature, petition, options) {
       const signingEndpoint = ((Config.API_SIGN_PETITION)
                                ? Config.API_SIGN_PETITION
                                : `${Config.API_URI}/signatures.json`)
-      fetch(signingEndpoint, {
+      const fetchArgs = {
         method: 'POST',
         body: JSON.stringify(petitionSignature),
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json'
         }
-      }).then(completion, (err) => {
-        dispatch({
-          type: actionTypes.PETITION_SIGNATURE_FAILURE,
-          petition,
-          signature: petitionSignature,
-          error: err
+      }
+      if (Config.API_WRITABLE === 'fake') {
+        fetchArgs.method = 'GET'
+        delete fetchArgs.body
+      }
+      fetch(signingEndpoint, fetchArgs)
+        .then(completion, (err) => {
+          dispatch({
+            type: actionTypes.PETITION_SIGNATURE_FAILURE,
+            petition,
+            signature: petitionSignature,
+            error: err
+          })
         })
-      })
     } else {
       completion()
     }
