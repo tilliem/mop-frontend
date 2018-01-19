@@ -81,6 +81,28 @@ class Thanks extends React.Component {
     this.setState({ sharedSocially: true })
   }
 
+  generateMailMessage(about, statement, isCreator, shareOpts, fullTarget, petitionLink) {
+    if (shareOpts.email_share) {
+      return shareOpts.email_share
+    }
+    const actedOn = (isCreator ? 'created' : 'signed')
+    const target = (fullTarget.slice(0, 3).map(t => t.name).join(' and ')
+                    + ((fullTarget.length > 3) ? ' and others' : ''))
+    const tooLong = 400 // 1024 for the whole message, so how about 450 for each
+    const petitionAbout = (about.length < tooLong ? `\n${about}` : '')
+    const petitionStatement = (statement.length < tooLong ? `"${statement}"\n` : '')
+    return (`Hi,
+${petitionAbout}
+${petitionAbout ? '\nThat‘s why ' : ''}I ${actedOn} a petition to ${target}${petitionStatement ? ', which says:\n' : ''}
+${petitionStatement}
+Will you sign this petition? Click here:
+
+${petitionLink}
+
+Thanks!
+`)
+  }
+
   render() {
     const { petition, user, signatureMessage, fromSource } = this.props
     const isCreator = false // Maybe test user.id==petition.creator_id or something, if we want to expose that
@@ -94,15 +116,12 @@ class Thanks extends React.Component {
         pre += '.imn'
       }
     }
-    const actedOn = (isCreator ? 'created' : 'signed')
     const link = petition._links.url
     const shortLinkArgs = [
       petition.petition_id,
       user && user.signonId,
       signatureMessage && signatureMessage.messageMd5]
     const twitterShareLink = petitionShortCode((isCreator ? 'c' : 't'), ...shortLinkArgs)
-    const target = (petition.target.slice(0, 3).map(t => t.name).join(' and ')
-                    + ((petition.target.length > 3) ? ' and others' : ''))
     const shareOpts = (petition.share_options && petition.share_options[0]) || {}
     // Convert description to text
     const textDescription = document.createElement('div')
@@ -115,22 +134,13 @@ class Thanks extends React.Component {
       tweet = `${petition.title.slice(0, 140 - suffix.length)} ${suffix}`
     }
 
-    // TODO: previous code for mailToMessage tries a bunch of permutations if this is >1024 characters.
-    // We could possibly implement this by making any of these versions server-side
-    const mailToMessage = (shareOpts.email_share || `Hi,
-
-${textDescription.textContent}
-
-That‘s why I ${actedOn} a petition to ${target}, which says:
-
-"${petition.summary}"
-
-Will you sign this petition? Click here:
-
-${link}?source=${pre}.em.__TYPE__&${this.trackingParams}
-
-Thanks!
-`)
+    const mailToMessage = this.generateMailMessage(textDescription.textContent,
+                                                   petition.summary,
+                                                   isCreator,
+                                                   shareOpts,
+                                                   petition.target,
+                                                   `${link}?source=${pre}.em.__TYPE__&${this.trackingParams}`
+                                                   )
     const copyPasteMessage = `Subject: ${petition.summary}\n\n${mailToMessage.replace('__TYPE__', 'cp')}`
     const mailtoMessage = `mailto:?subject=${encodeURIComponent(petition.summary)}&body=${encodeURIComponent(mailToMessage.replace('__TYPE__', 'mt'))}`
 
