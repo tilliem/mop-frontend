@@ -172,7 +172,7 @@ function petitionSearchReducer(state = initialSearchState, action) {
 function userReducer(state = initialUserState, action) {
   // Fold in tokens at the top, since it's possible it's for everyone
   // tokens can be hashedId and akid
-  const newData = Object.assign({}, action.tokens || {})
+  const newData = { ...(action.tokens || {}) }
   if (!newData.token) {
     // from query parameters
     if (newData.hashedId) {
