@@ -13,10 +13,10 @@ describe('<SignatureListItem />', () => {
   }
   const createdDate = Number(new Date(1836, 11, 10))
 
-  it('is a li.signer', () => {
+  it('is a div.signer', () => {
     const context = shallow(<SignatureListItem user={user} createdDate={createdDate} number={1000} />)
     expect(context.name()).to.equal('li')
-    expect(context.is('.signer')).to.be.true
+    expect(context.find('div.signer').length).to.equal(1)
   })
 
   it('renders the correct number', () => {
