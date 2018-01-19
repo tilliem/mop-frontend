@@ -7,7 +7,7 @@ const billboardButton = {
   fontSize: '99%'
 }
 
-// TODO: make start a petition a <Link>
+// TODO: make start a petition a <Link> when we have implemented petition creation
 
 const BillBoard = () => (
   <div className='container'>

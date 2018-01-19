@@ -215,7 +215,6 @@ function userReducer(state = initialUserState, action) {
         if (action.signature.person.email_addresses
             && action.signature.person.email_addresses.length) {
           newData.email = action.signature.person.email_addresses[0]
-          // TODO: possibly generate an md5hash here
         }
         if (action.signature.person.postal_addresses
             && action.signature.person.postal_addresses.length) {
