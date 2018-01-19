@@ -1,7 +1,7 @@
 import React from 'react'
 
 const PetitionCreatorDashboard = () => (
-  <div>
+  <div className='moveon-petitions'>
     <h2> Petition Creator Dashboard </h2>
   </div>
 )

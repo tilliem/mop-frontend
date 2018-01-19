@@ -6,7 +6,7 @@ import SearchBar from '../components/searchbar'
 import SearchResults from '../components/search-results'
 
 const SearchPage = ({ query, selectState, pageNumber }) =>
-  <div className='container background-moveon-white bump-top-1'>
+  <div className='moveon-petitions container background-moveon-white bump-top-1'>
     {<div className='row'>
       <div className='span12'>
         <h2 id='title' className='light'>Top petitions</h2>

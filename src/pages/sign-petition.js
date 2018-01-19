@@ -22,7 +22,7 @@ class SignPetition extends React.Component {
       )
     }
     return (
-      <div>
+      <div className='moveon-petitions sign'>
         <Petition
           petition={this.props.petition}
           query={this.props.location.query}
