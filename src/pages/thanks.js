@@ -15,10 +15,11 @@ class ThanksPage extends React.Component {
 
     const { dispatch, petition } = this.props
     if (!petition) {
-      if (this.props.location.query.name) {
-        dispatch(petitionActions.loadPetition(this.props.location.query.name))
-      } else if (this.props.location.query.petition_id) {
-        dispatch(petitionActions.loadPetition(this.props.location.query.petition_id))
+      const query = this.props.location.query
+      if (query.name) {
+        dispatch(petitionActions.loadPetition(query.name))
+      } else if (query.petition_id) {
+        dispatch(petitionActions.loadPetition(query.petition_id))
       }
     }
   }
@@ -31,6 +32,7 @@ class ThanksPage extends React.Component {
             petition={this.props.petition}
             user={this.props.user}
             signatureMessage={this.props.signatureMessage}
+            fromSource={this.props.location.query.from_source}
           />
           : ''
         )}

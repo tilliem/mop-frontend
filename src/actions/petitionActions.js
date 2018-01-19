@@ -156,7 +156,7 @@ export function loadTopPetitions(pac, megapartner, forceReload) {
   }
 }
 
-export const registerSignatureAndThanks = (petition) => () => {
+export const registerSignatureAndThanks = (petition, signature) => () => {
   // 1. track petition success
   if (window.fbq) {
     window.fbq('track', 'Lead') // facebook lead
@@ -169,14 +169,16 @@ export const registerSignatureAndThanks = (petition) => () => {
   let thanksUrl = 'thanks.html'
   if (petition.thanks_url) {
     if (/^https?:\/\//.test(petition.thanks_url)) {
-      document.location = petition.thanks_url // TODO: maybe add some query params
+      document.location = petition.thanks_url // FUTURE: maybe add some query params
       return
     }
     thanksUrl = petition.thanks_url
   }
+  const { referrer_data: { source } = {} } = signature
+  const fromSource = (source ? `&from_source=${encodeURIComponent(source)}` : '')
   appLocation.push(`${thanksUrl}?petition_id=${
     petition.petition_id
-  }&name=${petition.name}`)
+  }&name=${petition.name}${fromSource}`)
 }
 
 export function signPetition(petitionSignature, petition, options) {
@@ -206,7 +208,7 @@ export function signPetition(petitionSignature, petition, options) {
         }
         const dispatchResult = dispatch(dispatchData)
         if (options && options.redirectOnSuccess) {
-          registerSignatureAndThanks(dispatchResult.petition)(dispatch)
+          registerSignatureAndThanks(dispatchResult.petition, dispatchResult.signature)(dispatch)
         }
       }
       if (data && typeof data.json === 'function') {

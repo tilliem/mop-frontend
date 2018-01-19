@@ -82,16 +82,25 @@ class Thanks extends React.Component {
   }
 
   render() {
-    const { petition, user, signatureMessage } = this.props
-    const creator = false // Maybe test user.id==petition.creator_id or something, if we want to expose that
-    const pre = (creator ? 'c' : 's') // TODO: based on ?from_source= parameter .icn and .imn, megapartner
-    const actedOn = (creator ? 'created' : 'signed')
+    const { petition, user, signatureMessage, fromSource } = this.props
+    const isCreator = false // Maybe test user.id==petition.creator_id or something, if we want to expose that
+    let pre = (isCreator ? 'c' : 's')
+    const { _embedded: { creator } = {} } = petition
+    if (fromSource) {
+      if (/^(c\.|s\.icn)/.test(fromSource)) {
+        pre += '.icn'
+      } else if (creator && creator.source // megapartner
+                   && (fromSource === 'mo' || /\.imn/.test(fromSource))) {
+        pre += '.imn'
+      }
+    }
+    const actedOn = (isCreator ? 'created' : 'signed')
     const link = petition._links.url
     const shortLinkArgs = [
       petition.petition_id,
       user && user.signonId,
       signatureMessage && signatureMessage.messageMd5]
-    const twitterShareLink = petitionShortCode((creator ? 'c' : 't'), ...shortLinkArgs)
+    const twitterShareLink = petitionShortCode((isCreator ? 'c' : 't'), ...shortLinkArgs)
     const target = (petition.target.slice(0, 3).map(t => t.name).join(' and ')
                     + ((petition.target.length > 3) ? ' and others' : ''))
     const shareOpts = (petition.share_options && petition.share_options[0]) || {}
@@ -122,7 +131,8 @@ ${link}?source=${pre}.em.__TYPE__&${this.trackingParams}
 
 Thanks!
 `)
-    const copyPasteMessage = `Subject: ${petition.summary}\n\n${mailToMessage}` // TODO: replace __TYPE__
+    const copyPasteMessage = `Subject: ${petition.summary}\n\n${mailToMessage.replace('__TYPE__', 'cp')}`
+    const mailtoMessage = `mailto:?subject=${encodeURIComponent(petition.summary)}&body=${encodeURIComponent(mailToMessage.replace('__TYPE__', 'mt'))}`
 
     return (<div className='row'>
       {(this.state.sharedSocially ? <ThanksNextPetition entity={petition.entity || ''} /> : null)}
@@ -130,7 +140,7 @@ Thanks!
         <h1 className='size-superxl lh-100 font-lighter'>Thanks!</h1>
       </div>
       <div className='span5 offset1 bump-top-3 font-lighter lh-24'>
-        Now that you have {((creator) ? 'created' : 'signed')},
+        Now that you have {((isCreator) ? 'created' : 'signed')},
         <span className='font-heavy moveon-bright-red'> help it grow</span> by asking your friends, family, colleagues to sign.
       </div>
       <div className='clear hidden-phone border-bottom'></div>
@@ -174,7 +184,7 @@ Thanks!
         <div className='span7 padding-top-1'>
           <div className='share-email align-center'>
             <div className='lanky-header align-center'><span className='icon-join-default'></span>Email your friends, family and colleagues:</div>
-            <a id='email-button' href='mailto:?subject={encodeURIComponent(petition.summary)}&body={encodeURIComponent(mailToMessage.replace("__TYPE__","mt")}' className='button xl300 background-moveon-bright-red'>Email your friends</a>
+            <a id='email-button' href={mailtoMessage} className='button xl300 background-moveon-bright-red'>Email your friends</a>
             <div className='disclaimer bump-top-3 hidden-phone'>Or copy and paste the text below into a message:</div>
             <textarea
               ref={(input) => { this.emailTextarea = input }}
@@ -193,7 +203,8 @@ Thanks!
 Thanks.propTypes = {
   petition: PropTypes.object,
   user: PropTypes.object,
-  signatureMessage: PropTypes.object
+  signatureMessage: PropTypes.object,
+  fromSource: PropTypes.string
 }
 
 export default Thanks
