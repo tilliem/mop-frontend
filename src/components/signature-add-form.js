@@ -383,7 +383,7 @@ class SignatureAddForm extends React.Component {
 
            {(this.props.showOptinWarning) ? (
              <p className='disclaimer bump-top-1'>
-               <b>Note:</b> This petition is a project of {creator.organization} and MoveOn.org. By signing, you agree to receive email messages from <span id='organization_receive'>{creator.organization}, </span>MoveOn Political Action, and MoveOn Civic Action. You may unsubscribe at any time. [<a href='http://petitions.moveon.org/privacy.html'>privacy policy</a>]
+               <b>Note:</b> This petition is a project of {creator.organization} and MoveOn.org. By signing, you agree to receive email messages from <span id='organization_receive'>{creator.organization}, </span>MoveOn Political Action, and MoveOn Civic Action. You may unsubscribe at any time. [<a href='https://petitions.moveon.org/privacy.html'>privacy policy</a>]
              </p>)
             : (
              <p className='disclaimer bump-top-1'>
