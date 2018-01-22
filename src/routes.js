@@ -1,16 +1,19 @@
 import React from 'react'
 import { IndexRoute, Route, Router, browserHistory, hashHistory } from 'react-router'
 
-import { Config } from './config.js'
-import { loadSession } from './actions/sessionActions.js'
+
+import { Config } from './config'
+import { loadSession } from './actions/sessionActions'
 import { loadOrganization } from './actions/navActions.js'
-import Home from './pages/home.js'
-import SignPetition from './pages/sign-petition.js'
-import ThanksPage from './pages/thanks.js'
-import SearchPage from './pages/search.js'
-import PetitionCreatorDashboard from './pages/petition-creator-dashboard.js'
-import CreatePetitionPage from './pages/create-petition-page.js'
-import Wrapper from './components/wrapper.js'
+import Home from './pages/home'
+import SignPetition from './pages/sign-petition'
+import ThanksPage from './pages/thanks'
+import SearchPage from './pages/search'
+import PetitionCreatorDashboard from './pages/petition-creator-dashboard'
+import CreatePetitionPage from './pages/create-petition-page'
+import PetitionReportPage from './pages/petition-report-page'
+import Wrapper from './components/wrapper'
+
 
 const baseAppPath = process.env.BASE_APP_PATH || '/'
 
@@ -33,6 +36,7 @@ export const routes = (store) => {
         <Route path='/find' component={SearchPage} />
         <Route path='/dashboard.html' component={PetitionCreatorDashboard} />
         <Route path='/create_start.html' component={CreatePetitionPage} />
+        <Route path='/petition_report.html' component={PetitionReportPage} />
         <Route path='/:organization/create_start.html' component={CreatePetitionPage} onEnter={orgLoader} />
         <Route path='/:organization/' component={Home} onEnter={orgLoader} />
       </Route>
