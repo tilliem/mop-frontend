@@ -75,7 +75,7 @@ class Thanks extends React.Component {
 
   shareTwitter() {
     const encodedValue = encodeURIComponent(this.tweetTextArea.value)
-    const url = `http://twitter.com/intent/tweet?text=${encodedValue}`
+    const url = `https://twitter.com/intent/tweet?text=${encodedValue}`
     window.open(url)
     this.recordShare('twitter', `${this.state.pre}.tw`)
     this.setState({ sharedSocially: true })
