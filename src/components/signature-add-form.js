@@ -449,3 +449,4 @@ function mapStateToProps(store, ownProps) {
 }
 
 export default connect(mapStateToProps)(SignatureAddForm)
+export const WrappedComponent = SignatureAddForm

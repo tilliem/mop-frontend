@@ -22,7 +22,10 @@ export const actionTypes = {
 
   PETITION_SIGNATURE_SUBMIT: 'PETITION_SIGNATURE_SUBMIT',
   PETITION_SIGNATURE_SUCCESS: 'PETITION_SIGNATURE_SUCCESS',
-  PETITION_SIGNATURE_FAILURE: 'PETITION_SIGNATURE_FAILURE'
+  PETITION_SIGNATURE_FAILURE: 'PETITION_SIGNATURE_FAILURE',
+
+  FEEDBACK_SUCCESS: 'FEEDBACK_SUCCESS',
+  FEEDBACK_FAILURE: 'FEEDBACK_FAILURE'
 }
 
 export function loadPetition(petitionSlug, forceReload) {
@@ -300,6 +303,52 @@ export const loadPetitionSignatures = (petitionSlug, page = 1) => {
         }, dispatchError),
         dispatchError
       )
+  }
+}
+
+export const flagPetition = (petitionId, reason) => {
+  return (dispatch) => {
+    const form = new FormData()
+    form.append('reason', reason)
+    return fetch(`${Config.API_URI}/petitions/${petitionId}/reviews`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+        Accept: 'application/json'
+      },
+      body: form
+    }).then(
+      (res) => { dispatch({
+        type:actionTypes.FEEDBACK_SUCCESS,
+        petitionId,
+        reason})},
+      (err) => { dispatch({
+        type:actionTypes.FEEDBACK_FAILURE,
+        petitionId,
+        reason})}
+    )
+  }
+}
+
+export const flagComment = (flagUserId) => {
+  return (dispatch) => {
+    const form = new FormData()
+    form.append('user_id', flagUserId)
+    return fetch(`${Config.API_URI}/petitions/reviews`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+        Accept: 'application/json'
+      },
+      body: form
+    }).then(
+      (res) => { dispatch({
+        type:actionTypes.FEEDBACK_SUCCESS,
+        flagUserId})},
+      (err) => { dispatch({
+        type:actionTypes.FEEDBACK_FAILURE,
+        flagUserId})}
+    )
   }
 }
 
