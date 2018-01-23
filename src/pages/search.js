@@ -18,7 +18,6 @@ const SearchPage = ({ query, selectState, pageNumber }) =>
   </div>
 
 SearchPage.propTypes = {
-  user: PropTypes.object,
   dispatch: PropTypes.func,
   params: PropTypes.object,
   query: PropTypes.string,
@@ -38,7 +37,6 @@ function mapStateToProps(store, ownProps) {
   const params = getParams(ownProps)
 
   return {
-    user: store.userStore,
     query: params.query,
     pageNumber: params.page,
     selectState: params.state

@@ -15,7 +15,7 @@ class SearchResults extends React.Component {
 
   render() {
     const { searchResults, currentPage, query } = this.props
-    const resultCount = searchResults.count
+    const resultCount = Number(searchResults.count || 0)
     const pageSize = searchResults.page_size
     const resultsEmbed = searchResults._embed
     const searchNavLinks = searchResults._links
