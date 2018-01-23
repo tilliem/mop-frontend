@@ -7,16 +7,29 @@ import ThanksNextPetition from './thanks-next-petition'
 class Thanks extends React.Component {
   constructor(props) {
     super(props)
+    const { fromSource, petition, signatureMessage, user } = props
     let trackingParams = ''
-    if (props.user && props.user.signonId) {
-      trackingParams = `r_by=${props.user.signonId}`
-    } else if (props.signatureMessage && props.signatureMessage.messageMd5) {
-      const hashToken = md5ToToken(props.signatureMessage.messageMd5)
+    if (user && user.signonId) {
+      trackingParams = `r_by=${user.signonId}`
+    } else if (signatureMessage && signatureMessage.messageMd5) {
+      const hashToken = md5ToToken(signatureMessage.messageMd5)
       trackingParams = `r_hash=${hashToken}`
+    }
+    this.isCreator = false // Maybe test user.id==petition.creator_id or something, if we want to expose that
+    let pre = (this.isCreator ? 'c' : 's')
+    const { _embedded: { creator } = {} } = petition
+    if (fromSource) {
+      if (/^(c\.|s\.icn)/.test(fromSource)) {
+        pre += '.icn'
+      } else if (creator && creator.source // megapartner
+                   && (fromSource === 'mo' || /\.imn/.test(fromSource))) {
+        pre += '.imn'
+      }
     }
     this.trackingParams = trackingParams
     this.state = {
-      sharedSocially: false
+      sharedSocially: false,
+      pre
     }
     this.recordShare = this.recordShare.bind(this)
     this.shareLink = this.shareLink.bind(this)
@@ -104,24 +117,13 @@ Thanks!
   }
 
   render() {
-    const { petition, user, signatureMessage, fromSource } = this.props
-    const isCreator = false // Maybe test user.id==petition.creator_id or something, if we want to expose that
-    let pre = (isCreator ? 'c' : 's')
-    const { _embedded: { creator } = {} } = petition
-    if (fromSource) {
-      if (/^(c\.|s\.icn)/.test(fromSource)) {
-        pre += '.icn'
-      } else if (creator && creator.source // megapartner
-                   && (fromSource === 'mo' || /\.imn/.test(fromSource))) {
-        pre += '.imn'
-      }
-    }
+    const { petition, signatureMessage, user } = this.props
     const link = petition._links.url
     const shortLinkArgs = [
       petition.petition_id,
       user && user.signonId,
       signatureMessage && signatureMessage.messageMd5]
-    const twitterShareLink = petitionShortCode((isCreator ? 'c' : 't'), ...shortLinkArgs)
+    const twitterShareLink = petitionShortCode((this.isCreator ? 'c' : 't'), ...shortLinkArgs)
     const shareOpts = (petition.share_options && petition.share_options[0]) || {}
     // Convert description to text
     const textDescription = document.createElement('div')
@@ -136,10 +138,10 @@ Thanks!
 
     const mailToMessage = this.generateMailMessage(textDescription.textContent,
                                                    petition.summary,
-                                                   isCreator,
+                                                   this.isCreator,
                                                    shareOpts,
                                                    petition.target,
-                                                   `${link}?source=${pre}.em.__TYPE__&${this.trackingParams}`
+                                                   `${link}?source=${this.state.pre}.em.__TYPE__&${this.trackingParams}`
                                                    )
     const copyPasteMessage = `Subject: ${petition.summary}\n\n${mailToMessage.replace('__TYPE__', 'cp')}`
     const mailtoMessage = `mailto:?subject=${encodeURIComponent(petition.summary)}&body=${encodeURIComponent(mailToMessage.replace('__TYPE__', 'mt'))}`
@@ -150,7 +152,7 @@ Thanks!
         <h1 className='size-superxl lh-100 font-lighter'>Thanks!</h1>
       </div>
       <div className='span5 offset1 bump-top-3 font-lighter lh-24'>
-        Now that you have {((isCreator) ? 'created' : 'signed')},
+        Now that you have {((this.isCreator) ? 'created' : 'signed')},
         <span className='font-heavy moveon-bright-red'> help it grow</span> by asking your friends, family, colleagues to sign.
       </div>
       <div className='clear hidden-phone border-bottom'></div>
