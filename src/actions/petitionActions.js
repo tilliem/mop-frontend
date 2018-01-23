@@ -306,50 +306,58 @@ export const loadPetitionSignatures = (petitionSlug, page = 1) => {
   }
 }
 
-export const flagPetition = (petitionId, reason) => {
-  return (dispatch) => {
-    const form = new FormData()
-    form.append('reason', reason)
-    return fetch(`${Config.API_URI}/petitions/${petitionId}/reviews`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
-        Accept: 'application/json'
+export const flagPetition = (petitionId, reason) => (dispatch) => {
+  const form = new FormData()
+  form.append('reason', reason)
+  return fetch(`${Config.API_URI}/petitions/${petitionId}/reviews`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+      Accept: 'application/json'
+    },
+    body: form
+  }).then(
+      (response) => {
+        dispatch({
+          type: actionTypes.FEEDBACK_SUCCESS,
+          petitionId,
+          reason,
+          response })
       },
-      body: form
-    }).then(
-      (res) => { dispatch({
-        type:actionTypes.FEEDBACK_SUCCESS,
-        petitionId,
-        reason})},
-      (err) => { dispatch({
-        type:actionTypes.FEEDBACK_FAILURE,
-        petitionId,
-        reason})}
+      (error) => {
+        dispatch({
+          type: actionTypes.FEEDBACK_FAILURE,
+          petitionId,
+          reason,
+          error })
+      }
     )
-  }
 }
 
-export const flagComment = (flagUserId) => {
-  return (dispatch) => {
-    const form = new FormData()
-    form.append('user_id', flagUserId)
-    return fetch(`${Config.API_URI}/petitions/reviews`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
-        Accept: 'application/json'
+export const flagComment = (commentId) => (dispatch) => {
+  const form = new FormData()
+  form.append('comment_id', commentId)
+  return fetch(`${Config.API_URI}/petitions/reviews`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+      Accept: 'application/json'
+    },
+    body: form
+  }).then(
+      (response) => {
+        dispatch({
+          type: actionTypes.FEEDBACK_SUCCESS,
+          commentId,
+          response })
       },
-      body: form
-    }).then(
-      (res) => { dispatch({
-        type:actionTypes.FEEDBACK_SUCCESS,
-        flagUserId})},
-      (err) => { dispatch({
-        type:actionTypes.FEEDBACK_FAILURE,
-        flagUserId})}
+      (error) => {
+        dispatch({
+          type: actionTypes.FEEDBACK_FAILURE,
+          commentId,
+          error })
+      }
     )
-  }
 }
 
 export const getSharebanditShareLink = (petitionSharebanditUrl) => {

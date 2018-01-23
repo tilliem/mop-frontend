@@ -74,7 +74,7 @@ class SearchResultPagination extends React.Component {
 }
 
 SearchResultPagination.propTypes = {
-  resultCount: PropTypes.string.isRequired,
+  resultCount: PropTypes.number.isRequired,
   pageSize: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
   searchNavLinks: PropTypes.object.isRequired,
