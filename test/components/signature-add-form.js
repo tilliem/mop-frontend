@@ -135,7 +135,8 @@ describe('<SignatureAddForm />', () => {
     it('optin checkbox or hidden optin: hide profiles', () => {
       const hideProfiles = [ // Should have hidden optin
         { petition: 'megapartner_mayoptin', query: { source: 'c.123' } },
-        { petition: 'megapartner_mayoptin', query: { source: 'c.123', mega_partner: '1' } },
+        { petition: 'megapartner_mayoptin', query: { source: 'c.imn.123' } },
+        { petition: 'megapartner_mayoptin', query: {} },
         { petition: 'mayoptin', query: { source: 'c.123' } } // No mailing_id
       ]
       const mockStoreAnon = createMockStore(storeAnonymous)
@@ -155,9 +156,8 @@ describe('<SignatureAddForm />', () => {
     })
     it('optin checkbox or hidden optin: show profiles', () => {
       const showProfiles = [
-        { petition: 'megapartner_mayoptin', query: { source: 'c.123', mailing_id: '123' } },
-        { petition: 'megapartner_mayoptin', query: { source: 's.imn', mega_partner: '1' } },
-        { petition: 'megapartner_mayoptin', query: {} },
+        { petition: 'megapartner_mayoptin', query: { source: 'c.imn.123', mailing_id: '123' } },
+        { petition: 'megapartner_mayoptin', query: { source: 's.imn' } },
         // Non-megapartner, but still may_optin: true
         { petition: 'mayoptin', query: { source: 'c.123', mailing_id: '123' } },
         { petition: 'mayoptin', query: { source: 's.abc' } }
