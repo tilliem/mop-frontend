@@ -11,8 +11,6 @@ import { unwrapReduxComponent } from '../lib'
 
 import SignatureAddForm from '../../src/components/signature-add-form'
 
-import { actions as sessionActions, actionTypes as sessionActionTypes } from '../../src/actions/sessionActions.js'
-
 describe('<SignatureAddForm />', () => {
   // This file is organized into two sub- describe() buckets.
   // 1. for "static tests" which do not involve any state
