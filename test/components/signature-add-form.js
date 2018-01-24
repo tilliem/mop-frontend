@@ -201,7 +201,7 @@ describe('<SignatureAddForm />', () => {
 
     it('logged in shows unrecognize link', () => {
       const store = createMockStore(storeAkid)
-      const context =  mount(<SignatureAddForm {...propsProfileBase} store={store} />)
+      const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
       const component = unwrapReduxComponent(context)
       expect(Boolean(component.props.user.anonymous)).to.be.equal(false)
       expect(Boolean(component.props.showAddressFields)).to.be.equal(true)
@@ -216,7 +216,7 @@ describe('<SignatureAddForm />', () => {
 
     it('logout/unrecognize shows anonymous field list', () => {
       const store = createMockStore(storeAnonymous)
-      const context =  mount(<SignatureAddForm {...propsProfileBase} store={store} />)
+      const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
       const component = unwrapReduxComponent(context)
       expect(Boolean(component.props.user.anonymous)).to.be.equal(true)
       expect(context.find('#recognized').length).to.equal(0)
