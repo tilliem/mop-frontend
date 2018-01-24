@@ -16,7 +16,7 @@ const Home = ({ params, nav }) => {
   return (
     <div className='moveon-petitions container background-moveon-white bump-top-1'>
       {isOrganization ? null : <BillBoard />}
-      <SearchBar />
+      <SearchBar size="long" />
 
       {isOrganization
        ? (
