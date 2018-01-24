@@ -21,7 +21,7 @@ class SearchResults extends React.Component {
     const searchNavLinks = searchResults._links
 
     const resultsList = resultsEmbed.map((result, index) => (
-      <div className='result' key={index} id='search-results'>
+      <div className='result' key={index}>
         <div className='result-text'>
           <p className='result-name'>
             <a className='size-medium-large font-heavy' href={`https://pac.petitions.moveon.org/sign/${result.short_name}/?source=search`}>

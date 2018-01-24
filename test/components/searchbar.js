@@ -12,14 +12,24 @@ describe('<SearchBar />', () => {
   const baseStore = createMockStore({ userStore: {} })
 
 
-  it('basic loading, long searchbar', () => {
-    const context = mount(<SearchBar store={baseStore} />)
+  it('basic loading, short searchbar', () => {
+    const context = mount(<SearchBar isLong={false} store={baseStore} />)
     const component = unwrapReduxComponent(context)
-    expect(context.find('#searchValue').length).to.equal(1)
+    expect(context.find('#search-box2').length).to.equal(1)
     expect(component.props.query).to.equal(undefined)
-    expect(component.props.size).to.equal(undefined)
+    expect(component.props.isLong).to.equal(false)
     expect(component.props.selectState).to.equal(undefined)
+    expect(context.find('#search-form-div').length).to.equal(1)
+  })
+
+  it('basic loading, long searchbar', () => {
+    const context = mount(<SearchBar isLong store={baseStore} />)
+    const component = unwrapReduxComponent(context)
     expect(context.find('#search-bar-large').length).to.equal(1)
+    expect(component.props.query).to.equal(undefined)
+    expect(component.props.isLong).to.equal(true)
+    expect(component.props.selectState).to.equal(undefined)
+    expect(context.find('#searchValue').length).to.equal(1)
   })
 
   it('prepopulates query if passed in', () => {
