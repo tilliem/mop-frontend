@@ -66,7 +66,7 @@ class SearchBar extends React.Component {
   }
 
   render() {
-    const size  = this.props.size
+    const size = this.props.size
 
     const longSearchBar = (
       <div id='search-bar-large' className='container'>
@@ -86,17 +86,17 @@ class SearchBar extends React.Component {
     )
 
     const shortSearchBar = (
-      <div className="search">
-        <form className="" onSubmit={this.submitQuery}>
-          <input name="q" type="text" id="search-box2" className="margin-top-0 margin-right-2" value={this.state.query} onChange={this.selectQuery} />
-          <button type="submit" className="background-moveon-dark-blue"> Search</button>
+      <div className='search'>
+        <form className='' onSubmit={this.submitQuery}>
+          <input name='q' type='text' id='search-box2' className='margin-top-0 margin-right-2' value={this.state.query} onChange={this.selectQuery} />
+          <button type='submit' className='background-moveon-dark-blue'> Search</button>
         </form>
       </div>
     )
 
     return (
-      <div className="search-form-div">
-        { size === "long" ? longSearchBar : shortSearchBar }
+      <div className='search-form-div'>
+        {size === 'long' ? longSearchBar : shortSearchBar}
       </div>
     )
   }
