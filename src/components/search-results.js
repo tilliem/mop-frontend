@@ -13,6 +13,10 @@ class SearchResults extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    window.scrollTo(0, 0)
+  }
+
   render() {
     const { searchResults, currentPage, query } = this.props
     const resultCount = Number(searchResults.count || 0)
