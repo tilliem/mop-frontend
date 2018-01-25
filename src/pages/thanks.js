@@ -26,7 +26,7 @@ class ThanksPage extends React.Component {
 
   render() {
     return (
-      <div className='moveon-petitions share'>
+      <div className='moveon-petitions share container background-moveon-white bump-top-1'>
         {(this.Thanks && this.props.petition ?
           <this.Thanks
             petition={this.props.petition}
