@@ -94,7 +94,7 @@ class Thanks extends React.Component {
     }
     const actedOn = (isCreator ? 'created' : 'signed')
     const target = (fullTarget.slice(0, 3).map(t => t.name).join(' and ')
-                    + ((fullTarget.length > 3) ? ' and others' : ''))
+                    + ((fullTarget.length > 3) ? `, and ${fullTarget.length} others` : ''))
     const tooLong = 400 // 1024 for the whole message, so how about 450 for each
     const petitionAbout = (about.length < tooLong ? `\n${about}` : '')
     const petitionStatement = (statement.length < tooLong ? `"${statement}"\n` : '')
@@ -130,14 +130,14 @@ Thanks!
     }
 
     const mailToMessage = this.generateMailMessage(textDescription.textContent,
-                                                   petition.summary,
+                                                   petition.title,
                                                    this.isCreator,
                                                    shareOpts,
                                                    petition.target,
                                                    `${petition._links.url}?source=${this.state.pre}.em.__TYPE__&${this.trackingParams}`
                                                    )
-    const copyPasteMessage = `Subject: ${petition.summary}\n\n${mailToMessage.replace('__TYPE__', 'cp')}`
-    const mailtoMessage = `mailto:?subject=${encodeURIComponent(petition.summary)}&body=${encodeURIComponent(mailToMessage.replace('__TYPE__', 'mt'))}`
+    const copyPasteMessage = `Subject: ${petition.title}\n\n${mailToMessage.replace('__TYPE__', 'cp')}`
+    const mailtoMessage = `mailto:?subject=${encodeURIComponent(petition.title)}&body=${encodeURIComponent(mailToMessage.replace('__TYPE__', 'mt'))}`
 
     return (<div className='row'>
       {(this.state.sharedSocially ? <ThanksNextPetition entity={petition.entity || ''} /> : null)}
