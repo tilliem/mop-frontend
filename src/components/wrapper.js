@@ -6,7 +6,7 @@ import Nav from './nav.js'
 import Footer from './footer.js'
 
 const Wrapper = ({ children, params }) => (
-  <div>
+  <div className='moveon-petitions'>
     <Nav organization={params && params.organization || ''} />
     <main className='main'>
       {children}
