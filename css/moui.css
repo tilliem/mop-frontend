@@ -6727,9 +6727,9 @@ div.video-container {
   display: block;
   width: 95%;
 }
-.search-page input[type="text"] {
+/*.search-page input[type="text"] {
   width: 85%;
-}
+}*/
 .search-page h1.archive {
   margin-top: 0;
   padding-bottom: 4px;
@@ -8565,4 +8565,45 @@ body.donate label.label-left {
   body.donate input#cc {
     width: 97%;
   }
+}
+
+/*previously search css - now using search-page wrapper*/
+
+.search-page.result {
+  margin-bottom: 10px;
+}
+.search-page > .petition-link {
+  font-size: 18px;
+}
+.search-page > .result-name {
+  margin-bottom: 2px;
+}
+.search-page > .result-url {
+  margin-bottom: 2px;
+  color: green;
+}
+.search-page > .result-blurb {
+  color: gray;
+  font-size: 12px;
+}
+.search-page#search-form-div {
+  margin: auto;
+  width: 60%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.search-page > #title {
+  margin-bottom: 10px;
+}
+.search-page#search-box {
+  width: 80%;
+}
+.search-page > .feature-thumbnail {
+  width: 51px;
+  height: 51px;
+  padding: 0;
+  margin-right: 12px;
+}
+.search-page > .result-text {
+  overflow: hidden;
 }

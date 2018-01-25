@@ -65,31 +65,48 @@ class SearchBar extends React.Component {
     }
   }
 
-
   render() {
+    const { isLong } = this.props
+
+    const longSearchBar = (
+      <div id='search-bar-large' className='container'>
+        <div className='row'>
+          <div className='span7 control-group bump-top-1'>
+            <form className='search' onSubmit={this.submitQuery}>
+              <div className='search'>
+                <input id='searchValue' value={this.state.query} placeholder='Search Petitions' onChange={this.selectQuery} type='text' className='margin-right-1 ' />
+                <StateSelect selectText='All States' style={smallStateSelectStyle} onChange={this.selectState} value={this.state.selectState} />
+                <button type='submit' className='background-moveon-dark-blue margin-left-1'>Search</button>
+              </div>
+            </form>
+          </div>
+          <p className='lanky-header size-medium-small lh-24 bump-top-1'>Search for petitions by any keyword.</p>
+        </div>
+      </div>
+    )
+
+    const shortSearchBar = (
+      <div id='search-form-div' className='search-page'>
+        <form className='form-vertical' onSubmit={this.submitQuery}>
+          <div className='search'>
+            <input name='q' type='text' id='search-box2' className='margin-top-0 margin-right-2' value={this.state.query} onChange={this.selectQuery} />
+            <button type='submit' className='background-moveon-dark-blue'> Search</button>
+          </div>
+        </form>
+      </div>
+    )
+
     return (
       <div>
-        <div id='search-bar-large' className='container'>
-          <div className='row'>
-            <div className='span7 control-group bump-top-1'>
-              <form className='search' onSubmit={this.submitQuery}>
-                <div className='search'>
-                  <input id='searchValue' value={this.state.query} placeholder='Search Petitions' onChange={this.selectQuery} type='text' className='margin-right-1 ' />
-                  <StateSelect selectText='All States' style={smallStateSelectStyle} onChange={this.selectState} value={this.state.selectState} />
-                  <button type='submit' className='background-moveon-dark-blue margin-left-1'>Search</button>
-                </div>
-              </form>
-            </div>
-            <p className='lanky-header size-medium-small lh-24 bump-top-1'>Search for petitions by any keyword.</p>
-          </div>
-        </div>
+        {isLong ? longSearchBar : shortSearchBar}
+        <div className='clear'></div>
       </div>
     )
   }
 }
 
 SearchBar.propTypes = {
-  size: PropTypes.string,
+  isLong: PropTypes.bool,
   query: PropTypes.string,
   currentPage: PropTypes.string,
   dispatch: PropTypes.func,
