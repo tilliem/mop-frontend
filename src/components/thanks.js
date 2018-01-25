@@ -118,12 +118,12 @@ Thanks!
 
   render() {
     const { petition, signatureMessage, user } = this.props
-    const link = petition._links.url
     const shortLinkArgs = [
       petition.petition_id,
       user && user.signonId,
       signatureMessage && signatureMessage.messageMd5]
     const twitterShareLink = petitionShortCode((this.isCreator ? 'c' : 't'), ...shortLinkArgs)
+    const rawShareLink = petitionShortCode((this.isCreator ? 'k' : 'l'), ...shortLinkArgs)
     const shareOpts = (petition.share_options && petition.share_options[0]) || {}
     // Convert description to text
     const textDescription = document.createElement('div')
@@ -141,7 +141,7 @@ Thanks!
                                                    this.isCreator,
                                                    shareOpts,
                                                    petition.target,
-                                                   `${link}?source=${this.state.pre}.em.__TYPE__&${this.trackingParams}`
+                                                   `${petition._links.url}?source=${this.state.pre}.em.__TYPE__&${this.trackingParams}`
                                                    )
     const copyPasteMessage = `Subject: ${petition.summary}\n\n${mailToMessage.replace('__TYPE__', 'cp')}`
     const mailtoMessage = `mailto:?subject=${encodeURIComponent(petition.summary)}&body=${encodeURIComponent(mailToMessage.replace('__TYPE__', 'mt'))}`
@@ -189,7 +189,7 @@ Thanks!
             ref={(input) => { this.linkTextarea = input }}
             onClick={this.shareLink}
             id='link_text'
-            defaultValue={link}
+            defaultValue={rawShareLink}
             readOnly
           ></textarea>
         </div>

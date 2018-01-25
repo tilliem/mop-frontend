@@ -438,13 +438,14 @@ function mapStateToProps(store, ownProps) {
                                                     || (creator.custom_fields && creator.custom_fields.may_optin)))
 
   newProps.hiddenOptin = !!(!user.signonId && ((creator.source && ((newProps.fromCreator && !query.mailing_id)
-                                                                   || query.mega_partner && !newProps.fromMailing))
+                                                                   || !newProps.fromMailing))
                                                || (!creator.source
                                                    && creator.custom_fields && creator.custom_fields.may_optin
                                                    && newProps.fromCreator
                                                    && !query.mailing_id)))
 
   newProps.showOptinCheckbox = !!(!user.signonId && newProps.showOptinWarning && !newProps.hiddenOptin)
+
   return newProps
 }
 
