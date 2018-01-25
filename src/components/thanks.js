@@ -32,6 +32,7 @@ class Thanks extends React.Component {
       pre
     }
     this.recordShare = this.recordShare.bind(this)
+    this.shareLink = this.shareLink.bind(this)
     this.shareEmail = this.shareEmail.bind(this)
     this.openFacebookSharing = this.openFacebookSharing.bind(this)
     this.shareFacebook = this.shareFacebook.bind(this)
@@ -40,6 +41,11 @@ class Thanks extends React.Component {
 
   recordShare(medium, source) {
     petitionActions.recordShareClick(this.props.petition, medium, source, this.props.user)
+  }
+
+  shareLink(evt) {
+    evt.target.select()
+    this.recordShare('email', `${this.state.pre}.ln.cp`)
   }
 
   shareEmail(evt) {
@@ -100,7 +106,7 @@ class Thanks extends React.Component {
     const petitionStatement = (statement.length < tooLong ? `"${statement}"\n` : '')
     return (`Hi,
 ${petitionAbout}
-${petitionAbout ? '\nThat‘s why ' : ''}I ${actedOn} a petition to ${target}${petitionStatement ? ', which says:\n' : ''}
+${petitionAbout ? '\nThat‘s why ' : ''}I ${actedOn} a petition to ${target}${petitionStatement ? ', which says:\n' : '.'}
 ${petitionStatement}
 Will you sign this petition? Click here:
 
@@ -117,6 +123,7 @@ Thanks!
       user && user.signonId,
       signatureMessage && signatureMessage.messageMd5]
     const twitterShareLink = petitionShortCode((this.isCreator ? 'c' : 't'), ...shortLinkArgs)
+    const rawShareLink = petitionShortCode((this.isCreator ? 'k' : 'l'), ...shortLinkArgs)
     const shareOpts = (petition.share_options && petition.share_options[0]) || {}
     // Convert description to text
     const textDescription = document.createElement('div')
@@ -130,7 +137,7 @@ Thanks!
     }
 
     const mailToMessage = this.generateMailMessage(textDescription.textContent,
-                                                   petition.title,
+                                                   petition.summary,
                                                    this.isCreator,
                                                    shareOpts,
                                                    petition.target,
@@ -175,6 +182,16 @@ Thanks!
             ref={(input) => { this.tweetTextArea = input }}
             readOnly
           ></textarea>
+          <div id='hidden_share_link' className='lanky-header bump-top-3 align-center hidden'>
+            Send a link:
+            <textarea
+              ref={(input) => { this.linkTextarea = input }}
+              onClick={this.shareLink}
+              id='link_text'
+              defaultValue={rawShareLink}
+              readOnly
+            ></textarea>
+          </div>
         </div>
         <div className='span7 padding-top-1'>
           <div className='share-email align-center'>
