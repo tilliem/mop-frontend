@@ -85,6 +85,21 @@ describe('<SignatureAddForm />', () => {
       expect(context.find('input[name="zip"]').length).to.equal(1)
     })
 
+    it('local petition without address when user has address', () => {
+      const store = createMockStore(storeAkid)
+      const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
+      const component = unwrapReduxComponent(context)
+      expect(Boolean(component.props.user.anonymous)).to.be.equal(false)
+      expect(context.find('input[name="name"]').length).to.equal(0)
+      expect(context.find('input[name="email"]').length).to.equal(0)
+      expect(context.find('input[name="address1"]').length).to.equal(1)
+      expect(context.find('input[name="address2"]').length).to.equal(1)
+      expect(context.find('input[name="city"]').length).to.equal(1)
+      // not testing state because state is a sub component
+      // expect(context.find('input[name="state"]').length).to.equal(1);
+      expect(context.find('input[name="zip"]').length).to.equal(1)
+    })
+
     it('show optin warning', () => {
       // Should be: megapartner + not recognized user
       const showStore = createMockStore(storeAnonymous)
@@ -183,10 +198,49 @@ describe('<SignatureAddForm />', () => {
               ).to.equal(0)
       })
     })
+
+    it('logged in shows unrecognize link', () => {
+      const store = createMockStore(storeAkid)
+      const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
+      const component = unwrapReduxComponent(context)
+      expect(Boolean(component.props.user.anonymous)).to.be.equal(false)
+      expect(Boolean(component.props.showAddressFields)).to.be.equal(true)
+      expect(context.find('#recognized').length).to.equal(1)
+      expect(context.find('.unrecognized').length).to.equal(0)
+      expect(context.find('input[name="name"]').length).to.equal(0)
+      expect(context.find('input[name="email"]').length).to.equal(0)
+      expect(context.find('input[name="address1"]').length).to.equal(1)
+      expect(context.find('input[name="address2"]').length).to.equal(1)
+      expect(context.find('input[name="city"]').length).to.equal(1)
+    })
+
+    it('logout/unrecognize shows anonymous field list', () => {
+      const store = createMockStore(storeAnonymous)
+      const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
+      const component = unwrapReduxComponent(context)
+      expect(Boolean(component.props.user.anonymous)).to.be.equal(true)
+      expect(context.find('#recognized').length).to.equal(0)
+      expect(context.find('.unrecognized').length).to.equal(1)
+      expect(context.find('input[name="name"]').length).to.equal(1)
+      expect(context.find('input[name="email"]').length).to.equal(1)
+      expect(context.find('input[name="address1"]').length).to.equal(1)
+      expect(context.find('input[name="address2"]').length).to.equal(1)
+      expect(context.find('input[name="city"]').length).to.equal(1)
+    })
   })
   describe('<SignatureAddForm /> stateful tests', () => {
     // THESE ARE TESTS WHERE WE CHANGE THE STATE (FILL IN FORM, ETC)
-    // it('TODO:logout/unrecognize shows anonymous field list', () => {})
+
+    it('typing incomplete fields submit fails and displays validation error messages', () => {
+      const store = createMockStore(storeAnonymous)
+      const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
+      const component = unwrapReduxComponent(context)
+      expect(component.state.validationTried).to.be.equal(false)
+      context.find('#sign').simulate('click')
+      expect(component.formIsValid()).to.be.equal(false)
+      expect(component.state.validationTried).to.be.equal(true)
+      expect(context.find('.alert').length).to.equal(6)
+    })
 
     it('adding a non-US address updates requirements to not require state or zip', () => {
       const store = createMockStore(storeAnonymous)
@@ -207,6 +261,14 @@ describe('<SignatureAddForm />', () => {
       expect(osdiSignature.person.postal_addresses[0].postal_code).to.be.equal('6024')
 
       expect(component.formIsValid()).to.be.equal(true)
+    })
+
+    it('displays errors when required fields are missing', () => {
+      const store = createMockStore(storeAnonymous)
+      const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
+      const component = unwrapReduxComponent(context)
+      component.setState({ country: 'United States', name: 'John Smith', postal: '6024' })
+      expect(component.formIsValid()).to.be.equal(false)
     })
 
     it('checking volunteer requires phone', () => {
