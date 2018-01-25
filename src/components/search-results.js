@@ -13,7 +13,7 @@ class SearchResults extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     window.scrollTo(0, 0)
   }
 
