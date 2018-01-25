@@ -86,7 +86,7 @@ class SearchBar extends React.Component {
     )
 
     const shortSearchBar = (
-      <div id='search-form-div'>
+      <div id='search-form-div' className='search-page'>
         <form className='form-vertical' onSubmit={this.submitQuery}>
           <div className='search'>
             <input name='q' type='text' id='search-box2' className='margin-top-0 margin-right-2' value={this.state.query} onChange={this.selectQuery} />
