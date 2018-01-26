@@ -31,9 +31,9 @@ const Footer = ({ user }) => {
           <div className='row'>
             <div className='span4'>
               <a className='icon-start icon-link-narrow' href='https://petitions.moveon.org/create_start.html?source=bnav'>Start a Petition</a>
-              {user.signonId ? userDashboardLink : guestDashboardLink}
+              {user.authenticated ? userDashboardLink : guestDashboardLink}
               <ul className='nav'>
-                {user.signonId ? userLogoutLink : guestAboutLink}
+                {user.authenticated ? userLogoutLink : guestAboutLink}
                 <li><a href='https://petitions.moveon.org/organizations.html'>Organizations</a></li>
                 <li><a href='https://front.moveon.org/category/victories/'>Victories</a></li>
                 <li><a href='https://civic.moveon.org/donatec4/creditcard.html?cpn_id=511'>Donate</a></li>
