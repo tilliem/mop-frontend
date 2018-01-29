@@ -14,14 +14,10 @@ const percent = (current, goal) => {
 }
 
 const SignatureCount = ({ current, goal }) => current !== undefined && (
-  <div id='therm' className='bump-top-2'>
-    <div className='progress-status clearfix'>
-      <div className='progress-stat progress-current'>
-        <em>Current</em> <strong>{formatNumber(current)}</strong>
-      </div>
-      <div className='progress-stat progress-goal'>
-        <em>Goal</em> <strong>{formatNumber(goal)}</strong>
-      </div>
+  <div id='therm' className='span7 margin-left-0 bump-top-2'>
+    <div className='muted'>
+      There are currently <span className='featured pull-right1 progress-current'>{formatNumber(current)}</span> signatures.
+      NEW goal - We need <span className='progress-goal'>{formatNumber(goal)}</span> signatures.
     </div>
     <div className='progress progress-danger no-bottom-margin'>
       <div className='bar' style={{ width: percent(current, goal) }}></div>
