@@ -16,9 +16,16 @@ export const actionTypes = {
   FETCH_TOP_PETITIONS_SUCCESS: 'FETCH_TOP_PETITIONS_SUCCESS',
   FETCH_TOP_PETITIONS_FAILURE: 'FETCH_TOP_PETITIONS_FAILURE',
 
+  SEARCH_PETITIONS_REQUEST: 'SEARCH_PETITIONS_REQUEST',
+  SEARCH_PETITIONS_SUCCESS: 'SEARCH_PETITIONS_SUCCESS',
+  SEARCH_PETITIONS_FAILURE: 'SEARCH_PETITIONS_FAILURE',
+
   PETITION_SIGNATURE_SUBMIT: 'PETITION_SIGNATURE_SUBMIT',
   PETITION_SIGNATURE_SUCCESS: 'PETITION_SIGNATURE_SUCCESS',
-  PETITION_SIGNATURE_FAILURE: 'PETITION_SIGNATURE_FAILURE'
+  PETITION_SIGNATURE_FAILURE: 'PETITION_SIGNATURE_FAILURE',
+
+  FEEDBACK_SUCCESS: 'FEEDBACK_SUCCESS',
+  FEEDBACK_FAILURE: 'FEEDBACK_FAILURE'
 }
 
 export function loadPetition(petitionSlug, forceReload) {
@@ -67,6 +74,39 @@ export function loadPetition(petitionSlug, forceReload) {
       )
   }
 }
+
+export function searchPetitions(query, pageNumber, selectState) {
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.SEARCH_PETITIONS_REQUEST,
+      query, pageNumber, selectState
+    })
+
+    const page = pageNumber ? `&page=${pageNumber}` : ''
+
+    const selState = selectState ? `&state=${selectState}` : ''
+
+    return fetch(`${Config.API_URI}/search/petitions.json?q=${query}${selState}${page}`)
+      .then(
+        (response) => response.json().then((json) => {
+          dispatch({
+            type: actionTypes.SEARCH_PETITIONS_SUCCESS,
+            searchResults: json,
+            pageNumber: page,
+            query,
+            selectState: selState
+          })
+        }),
+        (err) => {
+          dispatch({
+            type: actionTypes.SEARCH_PETITIONS_FAILURE,
+            error: err
+          })
+        }
+      )
+  }
+}
+
 
 export function loadTopPetitions(pac, megapartner, forceReload) {
   // topPetitionsKey must not just be truthily equal but exact
@@ -119,7 +159,7 @@ export function loadTopPetitions(pac, megapartner, forceReload) {
   }
 }
 
-export const registerSignatureAndThanks = (petition) => () => {
+export const registerSignatureAndThanks = (petition, signature) => () => {
   // 1. track petition success
   if (window.fbq) {
     window.fbq('track', 'Lead') // facebook lead
@@ -132,14 +172,16 @@ export const registerSignatureAndThanks = (petition) => () => {
   let thanksUrl = 'thanks.html'
   if (petition.thanks_url) {
     if (/^https?:\/\//.test(petition.thanks_url)) {
-      document.location = petition.thanks_url // TODO: maybe add some query params
+      document.location = petition.thanks_url // FUTURE: maybe add some query params
       return
     }
     thanksUrl = petition.thanks_url
   }
+  const { referrer_data: { source } = {} } = signature
+  const fromSource = (source ? `&from_source=${encodeURIComponent(source)}` : '')
   appLocation.push(`${thanksUrl}?petition_id=${
     petition.petition_id
-  }&name=${petition.name}`)
+  }&name=${petition.name}${fromSource}`)
 }
 
 export function signPetition(petitionSignature, petition, options) {
@@ -151,25 +193,29 @@ export function signPetition(petitionSignature, petition, options) {
     })
 
     const completion = (data) => {
-      const finalDispatch = (text) => {
+      const finalDispatch = (json) => {
         const dispatchData = {
           type: actionTypes.PETITION_SIGNATURE_SUCCESS,
           petition,
           signature: petitionSignature
         }
-        if (text) {
-          const sqsResponse = text.match(/<MessageId>(.*)<\/MessageId>/)
+        if (json && json.SendMessageResponse) {
+          const sqsResponse = json.SendMessageResponse.SendMessageResult
           if (sqsResponse) {
-            dispatchData.messageId = sqsResponse[1]
+            dispatchData.messageId = sqsResponse.MessageId
+            dispatchData.messageMd5 = sqsResponse.MD5OfMessageBody
+            // If Error, should we return FAILURE instead?
+            dispatchData.messageError = (sqsResponse.Error
+                                         && sqsResponse.Error.Message)
           }
         }
         const dispatchResult = dispatch(dispatchData)
         if (options && options.redirectOnSuccess) {
-          registerSignatureAndThanks(dispatchResult.petition)(dispatch)
+          registerSignatureAndThanks(dispatchResult.petition, dispatchResult.signature)(dispatch)
         }
       }
-      if (data && typeof data.text === 'function') {
-        data.text().then(finalDispatch)
+      if (data && typeof data.json === 'function') {
+        data.json().then(finalDispatch, finalDispatch)
       } else {
         finalDispatch()
       }
@@ -177,18 +223,28 @@ export function signPetition(petitionSignature, petition, options) {
     if (Config.API_WRITABLE) {
       const signingEndpoint = ((Config.API_SIGN_PETITION)
                                ? Config.API_SIGN_PETITION
-                               : `${Config.API_URI}/signatures`)
-      fetch(signingEndpoint, {
+                               : `${Config.API_URI}/signatures.json`)
+      const fetchArgs = {
         method: 'POST',
-        body: JSON.stringify(petitionSignature)
-      }).then(completion, (err) => {
-        dispatch({
-          type: actionTypes.PETITION_SIGNATURE_FAILURE,
-          petition,
-          signature: petitionSignature,
-          error: err
+        body: JSON.stringify(petitionSignature),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        }
+      }
+      if (Config.API_WRITABLE === 'fake') {
+        fetchArgs.method = 'GET'
+        delete fetchArgs.body
+      }
+      fetch(signingEndpoint, fetchArgs)
+        .then(completion, (err) => {
+          dispatch({
+            type: actionTypes.PETITION_SIGNATURE_FAILURE,
+            petition,
+            signature: petitionSignature,
+            error: err
+          })
         })
-      })
     } else {
       completion()
     }
@@ -252,6 +308,60 @@ export const loadPetitionSignatures = (petitionSlug, page = 1) => {
   }
 }
 
+export const flagPetition = (petitionId, reason) => (dispatch) => {
+  const form = new FormData()
+  form.append('reason', reason)
+  return fetch(`${Config.API_URI}/petitions/${petitionId}/reviews`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+      Accept: 'application/json'
+    },
+    body: form
+  }).then(
+      (response) => {
+        dispatch({
+          type: actionTypes.FEEDBACK_SUCCESS,
+          petitionId,
+          reason,
+          response })
+      },
+      (error) => {
+        dispatch({
+          type: actionTypes.FEEDBACK_FAILURE,
+          petitionId,
+          reason,
+          error })
+      }
+    )
+}
+
+export const flagComment = (commentId) => (dispatch) => {
+  const form = new FormData()
+  form.append('comment_id', commentId)
+  return fetch(`${Config.API_URI}/petitions/reviews`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+      Accept: 'application/json'
+    },
+    body: form
+  }).then(
+      (response) => {
+        dispatch({
+          type: actionTypes.FEEDBACK_SUCCESS,
+          commentId,
+          response })
+      },
+      (error) => {
+        dispatch({
+          type: actionTypes.FEEDBACK_FAILURE,
+          commentId,
+          error })
+      }
+    )
+}
+
 export const getSharebanditShareLink = (petitionSharebanditUrl) => {
   const jsonSampleUrl = petitionSharebanditUrl.replace('/r/0/', '/jsonaction/')
   const fallbackResponse = () => petitionSharebanditUrl
@@ -266,6 +376,7 @@ export const getSharebanditShareLink = (petitionSharebanditUrl) => {
 export const actions = {
   loadPetition,
   signPetition,
+  searchPetitions,
   registerSignatureAndThanks,
   recordShareClick,
   loadPetitionSignatures,

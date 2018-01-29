@@ -1,6 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router'
+import { connect } from 'react-redux'
+import { flagPetition } from '../actions/petitionActions'
 
 class PetitionFlagForm extends React.Component {
   constructor(props) {
@@ -11,10 +13,9 @@ class PetitionFlagForm extends React.Component {
     }
   }
 
-  submitFlag(/* reason */) {
-    // TODO:
-    // * form submit with val
-    // * implement flag.html
+  submitFlag(reason) {
+    const { petition, dispatch } = this.props
+    dispatch(flagPetition(petition.petition_id, reason))
     this.setState({ flagged: true })
   }
 
@@ -70,7 +71,9 @@ class PetitionFlagForm extends React.Component {
 }
 
 PetitionFlagForm.propTypes = {
-  petition: PropTypes.object.isRequired
+  petition: PropTypes.object.isRequired,
+  dispatch: PropTypes.func
 }
 
-export default PetitionFlagForm
+export default connect()(PetitionFlagForm)
+export const WrappedComponent = PetitionFlagForm

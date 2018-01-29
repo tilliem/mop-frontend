@@ -33,7 +33,7 @@ class SignatureAddForm extends React.Component {
       required: {}
     }
     this.validationRegex = {
-      email: /.+@.+\..+/, // forgiving email regex
+      email: /.+@.+\..+/, // Forgiving email regex
       zip: /(\d\D*){5}/,
       phone: /(\d\D*){10}/ // 10-digits
     }
@@ -104,7 +104,7 @@ class SignatureAddForm extends React.Component {
     if (customData.length) {
       osdiSignature.person.custom_fields = Object.assign({}, ...customData)
     }
-    // console.log('signature!', osdiSignature)
+    // Console.log('signature!', osdiSignature)
     return osdiSignature
   }
 
@@ -208,7 +208,7 @@ class SignatureAddForm extends React.Component {
     const petitionBy = creator.name + (creator.organization
                                        ? `, ${creator.organization}`
                                        : '')
-    const iframeEmbedText = `<iframe src="http://petitions.moveon.org/embed/widget.html?v=3&amp;name=${petition.slug}" class="moveon-petition" id="petition-embed" width="300px" height="500px"></iframe>` // text to be copy/pasted
+    const iframeEmbedText = `<iframe src="https://petitions.moveon.org/embed/widget.html?v=3&amp;name=${petition.slug}" class="moveon-petition" id="petition-embed" width="300px" height="500px"></iframe>` // Text to be copy/pasted
     return (
       <div className='span4 widget clearfix' id='sign-here'>
         <div className='padding-left-15 form-wrapper background-moveon-light-gray padding-top-1 padding-bottom-1' style={{ paddingRight: 15, position: 'relative', top: -10 }}>
@@ -383,7 +383,7 @@ class SignatureAddForm extends React.Component {
 
            {(this.props.showOptinWarning) ? (
              <p className='disclaimer bump-top-1'>
-               <b>Note:</b> This petition is a project of {creator.organization} and MoveOn.org. By signing, you agree to receive email messages from <span id='organization_receive'>{creator.organization}, </span>MoveOn Political Action, and MoveOn Civic Action. You may unsubscribe at any time. [<a href='http://petitions.moveon.org/privacy.html'>privacy policy</a>]
+               <b>Note:</b> This petition is a project of {creator.organization} and MoveOn.org. By signing, you agree to receive email messages from <span id='organization_receive'>{creator.organization}, </span>MoveOn Political Action, and MoveOn Civic Action. You may unsubscribe at any time. [<a href='https://petitions.moveon.org/privacy.html'>privacy policy</a>]
              </p>)
             : (
              <p className='disclaimer bump-top-1'>
@@ -438,14 +438,16 @@ function mapStateToProps(store, ownProps) {
                                                     || (creator.custom_fields && creator.custom_fields.may_optin)))
 
   newProps.hiddenOptin = !!(!user.signonId && ((creator.source && ((newProps.fromCreator && !query.mailing_id)
-                                                                   || query.mega_partner && !newProps.fromMailing))
+                                                                   || !newProps.fromMailing))
                                                || (!creator.source
                                                    && creator.custom_fields && creator.custom_fields.may_optin
                                                    && newProps.fromCreator
                                                    && !query.mailing_id)))
 
   newProps.showOptinCheckbox = !!(!user.signonId && newProps.showOptinWarning && !newProps.hiddenOptin)
+
   return newProps
 }
 
 export default connect(mapStateToProps)(SignatureAddForm)
+export const WrappedComponent = SignatureAddForm

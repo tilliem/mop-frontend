@@ -30,11 +30,11 @@ const Nav = ({ user, nav, organization }) => {
   )
 
   const userDashboardLink = (
-    <a className='icon-link-narrow icon-managepetitions' href='http://petitions.moveon.org/dashboard.html?source=topnav'> {`${user.given_name}&#39;s`} Dashboard</a>
+    <a className='icon-link-narrow icon-managepetitions' href='https://petitions.moveon.org/dashboard.html?source=topnav'> {`${user.given_name}’s`} Dashboard</a>
   )
 
   const guestDashboardLink = (
-    <a className='icon-link-narrow icon-managepetitions' href='http://petitions.moveon.org/dashboard.html?source=topnav'>Manage Petitions</a>
+    <a className='icon-link-narrow icon-managepetitions' href='https://petitions.moveon.org/dashboard.html?source=topnav'>Manage Petitions</a>
   )
 
   const partnerLogoLinks = (
@@ -60,13 +60,13 @@ const Nav = ({ user, nav, organization }) => {
             <div className='pull-left span2 petitions-partner-logo bump-top-1 margin-right-2 hidden-phone'>
               {partnerLogoLinks}
             </div>
-            <a className='icon-link-narrow icon-start' href='http://petitions.moveon.org/create_start.html?source=topnav'>Start a petition</a>
+            <a className='icon-link-narrow icon-start' href='https://petitions.moveon.org/create_start.html?source=topnav'>Start a petition</a>
             {user.given_name ? userDashboardLink : guestDashboardLink}
           </div>
 
           <div className='pull-left top-icons visible-phone'>
-            <a className='icon-link-narrow icon-start' href='http://petitions.moveon.org/create_start.html?source=topnav-mobile'></a>
-            <a className='icon-link-narrow icon-managepetitions' href='http://petitions.moveon.org/dashboard.html'></a>
+            <a className='icon-link-narrow icon-start' href='https://petitions.moveon.org/create_start.html?source=topnav-mobile'></a>
+            <a className='icon-link-narrow icon-managepetitions' href='https://petitions.moveon.org/dashboard.html'></a>
           </div>
 
           <a className='btn visible-phone pull-right bump-top-2' data-toggle='collapse' data-target='.nav-collapse'>

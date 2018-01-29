@@ -14,9 +14,9 @@ const Home = ({ params, nav }) => {
   const isPac = (organization === 'pac' || (!isOrganization && Config.ENTITY === 'pac'))
   const orgData = (nav && nav.orgs && nav.orgs[organization]) || {}
   return (
-    <div className='container background-moveon-white bump-top-1'>
+    <div className='moveon-petitions container background-moveon-white bump-top-1'>
       {isOrganization ? null : <BillBoard />}
-      <SearchBar />
+      <SearchBar isLong />
 
       {isOrganization
        ? (

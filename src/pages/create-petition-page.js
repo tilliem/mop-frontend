@@ -4,7 +4,9 @@ import CreatePetitionForm from '../components/create-petition-form.js'
 
 
 const CreatePetitionPage = () => (
-  <CreatePetitionForm />
+  <div className='moveon-petitions'>
+    <CreatePetitionForm />
+  </div>
 )
 
 export default CreatePetitionPage

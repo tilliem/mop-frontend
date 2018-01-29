@@ -1,3 +1,4 @@
+/* eslint-disable prefer-object-spread/prefer-object-spread */
 const parent = require('../.eslintrc')
 
 module.exports = Object.assign({}, parent, {

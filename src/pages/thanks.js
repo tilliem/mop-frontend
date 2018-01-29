@@ -15,20 +15,26 @@ class ThanksPage extends React.Component {
 
     const { dispatch, petition } = this.props
     if (!petition) {
-      if (this.props.location.query.name) {
-        dispatch(petitionActions.loadPetition(this.props.location.query.name))
-      } else if (this.props.location.query.petition_id) {
-        dispatch(petitionActions.loadPetition(this.props.location.query.petition_id))
+      const query = this.props.location.query
+      if (query.name) {
+        dispatch(petitionActions.loadPetition(query.name))
+      } else if (query.petition_id) {
+        dispatch(petitionActions.loadPetition(query.petition_id))
       }
     }
   }
 
   render() {
     return (
-      <div>
+      <div className='moveon-petitions share container background-moveon-white bump-top-1'>
         {(this.Thanks && this.props.petition ?
-          <this.Thanks petition={this.props.petition} user={this.props.user} /> :
-          ''
+          <this.Thanks
+            petition={this.props.petition}
+            user={this.props.user}
+            signatureMessage={this.props.signatureMessage}
+            fromSource={this.props.location.query.from_source}
+          />
+          : ''
         )}
       </div>
     )
@@ -39,15 +45,22 @@ class ThanksPage extends React.Component {
 ThanksPage.propTypes = {
   petition: PropTypes.object,
   user: PropTypes.object,
-  location: PropTypes.object,
-  dispatch: PropTypes.func
+  signatureMessage: PropTypes.object,
+  dispatch: PropTypes.func,
+  location: PropTypes.object
 }
 
 function mapStateToProps(store, ownProps) {
   const pkey = ownProps.location.query.name || ownProps.location.query.petition_id
+  const petition = pkey && store.petitionStore.petitions[pkey]
   return {
-    petition: pkey && store.petitionStore.petitions[pkey],
-    user: store.userStore
+    petition,
+    user: store.userStore,
+    searchQuery: {},
+    signatureMessage: (petition
+                       && petition.petition_id
+                       && store.petitionStore.signatureMessages
+                       && store.petitionStore.signatureMessages[petition.petition_id])
   }
 }
 
