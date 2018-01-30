@@ -13,6 +13,7 @@ import PetitionCreatorDashboard from './pages/petition-creator-dashboard'
 import CreatePetitionPage from './pages/create-petition-page'
 import PetitionReportPage from './pages/petition-report-page'
 import Wrapper from './components/wrapper'
+import Register from './pages/register'
 
 
 const baseAppPath = process.env.BASE_APP_PATH || '/'
@@ -68,6 +69,7 @@ export const routes = (store) => {
       <Route path='/petition_report.html' component={PetitionReportPage} />
       <Route path='/:organization/create_start.html' component={CreatePetitionPage} onEnter={orgLoader} />
       <Route path='/:organization/' component={Home} onEnter={orgLoader} />
+      <Route path='/login/register.html' component={Register} />
     </Route>
   )
   updateHistoryObject(appLocation, routeHierarchy)
