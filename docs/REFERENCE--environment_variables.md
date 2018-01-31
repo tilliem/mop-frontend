@@ -5,6 +5,7 @@ API_WRITABLE                      | When true, server actions to submit new data
 APP_ENTRY                         | For WebPack build, file name for app. _Default_: "main".
 API_SIGN_PETITION                 | Full url endpoint to send submitted signatures to.  Without this, it will default to `${API_URI}/signatures`
 BASE_APP_PATH                     | If the app is being served from a path other than the domain root, set this to that path. _Default_: "/".
+ONLY_PROD_ROUTES                  | Only render production-ready routes (marked `prodReady`) and redirect all other paths to petitions.moveon.org
 PROD                              | Boolean value indicating whether site should act as a production environment. _Options_: 0, 1. _Default_: "".
 PUBLIC_ROOT                       | For WebPack dev server, the directory relative to server root where files are found. _Default_: "/".
 SESSION_COOKIE_NAME               | When this cookie is present, user session data will be loaded from `API_URI`'s base. _Default_: "SO_SESSION".

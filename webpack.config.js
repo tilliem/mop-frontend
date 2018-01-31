@@ -69,6 +69,7 @@ var config = {
         'BASE_APP_PATH': JSON.stringify(process.env.BASE_APP_PATH || '/'),
         'BASE_URL': JSON.stringify(process.env.BASE_URL
                                    || (process.env.PROD ? 'https://petitions.moveon.org' : '')),
+        'ONLY_PROD_ROUTES': JSON.stringify(process.env.ONLY_PROD_ROUTES || ''),
         'SESSION_COOKIE_NAME': JSON.stringify(process.env.SESSION_COOKIE_NAME || 'SO_SESSION'),
         'STATIC_ROOT': JSON.stringify(process.env.STATIC_ROOT || ''),
         'TRACK_SHARE_URL': JSON.stringify(process.env.TRACK_SHARE_URL || ''),

@@ -24,7 +24,7 @@ const updateHistoryObject = (historyObj, routes) => {
   // that view yet or if we're in production limits matches
   // to <Route> objects marked with a prodReady property (={true})
   // All <Link>s and appLocation.push calls in the codebase should NOT be relative
-  // -- i.e. they should be absolute links like /thanks.html
+  // -- i.e. they should be absolute paths like /thanks.html
 
   const PROD_URL = 'https://petitions.moveon.org'
   const origPush = historyObj.push
@@ -35,7 +35,7 @@ const updateHistoryObject = (historyObj, routes) => {
       (error, newlocation, props) => {
         if (!error && props) {
           const matchedComponent = props.routes[props.routes.length - 1]
-          if (matchedComponent.prodReady || Config.BASE_URL !== PROD_URL) {
+          if (matchedComponent.prodReady || Config.ONLY_PROD_ROUTES || Config.BASE_URL !== PROD_URL) {
             origPush.call(this, path, state)
             return
           }
@@ -60,7 +60,7 @@ export const routes = (store) => {
       <IndexRoute component={Home} />
       <Route path='/sign/:petition_slug' component={SignPetition} />
       <Route path='/:organization/sign/:petition_slug' component={SignPetition} onEnter={orgLoader} />
-      <Route path='/thanks.html' component={ThanksPage} prodReady />
+      <Route path='/thanks.html' component={ThanksPage} prodReady={false} />
       <Route path='/:organization/thanks.html' component={ThanksPage} onEnter={orgLoader} />
       <Route path='/find' component={SearchPage} />
       <Route path='/dashboard.html' component={PetitionCreatorDashboard} />
