@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const StateSelect = ({
   onChange, selectText, style,
-  name = 'state', id = 'state_id', className = 'span4 state moveon-track-click'
+  name = 'state', id = 'state_id', className = 'span4 state moveon-track-click margin-right-1'
 }) => (
 
   <select
