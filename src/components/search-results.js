@@ -29,7 +29,7 @@ class SearchResults extends React.Component {
             </a>
           </p>
           <p className='size-small'>https://pac.petitions.moveon.org/sign/{result.short_name}/</p>
-          <p className='size-medium'>{result.blurb}</p>
+          <p className='size-medium'>{result.blurb}...</p>
         </div>
       </div>
       )
