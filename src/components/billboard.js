@@ -1,13 +1,6 @@
 import React from 'react'
 import Video from './video'
-
-// To fix font size issue for red button font in chrome browser
-
-const billboardButton = {
-  fontSize: '99%'
-}
-
-// TODO: make start a petition a <Link> when we have implemented petition creation
+import { Link } from 'react-router'
 
 const BillBoard = () => (
   <div className='container'>
@@ -18,9 +11,9 @@ const BillBoard = () => (
           <div className='billboard-text'>
             <h1 className='white big-title'>People Powered Petitions</h1>
             <p className='white size-medium-large'>There are more than 8 million MoveOn members. Tap into our shared people power and create progressive change.</p>
-            <a href='/create_start.html?source=petitionshomepage' className='button button-xl background-moveon-bright-red' style={billboardButton}>
+            <Link to='/create_start.html?source=petitionshomepage' className='button button-xl background-moveon-bright-red'>
               Start a Petition Campaign
-            </a>
+            </Link>
           </div>
         </div>
       </div>
