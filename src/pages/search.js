@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import SearchBar from '../components/searchbar'
 import SearchResults from '../components/search-results'
+import StateCheckBox from '../components/state-check-box'
 import { getStateFullName } from '../components/state-abbrev.js'
 
 const SearchPage = ({ query, selectState, pageNumber }) => {
@@ -19,6 +20,13 @@ const SearchPage = ({ query, selectState, pageNumber }) => {
     return (<h2 id='title' className='light'>Top petitions</h2>)
   }
 
+  const displayStateCheckBox = (s) => {
+    if (s) {
+      return <StateCheckBox selectState={selectState} />
+    }
+    return null
+  }
+
   return (
     <div className='moveon-petitions container background-moveon-white bump-top-1'>
       {<div className='row'>
@@ -26,6 +34,7 @@ const SearchPage = ({ query, selectState, pageNumber }) => {
           {updatedHeader(query, selectState)}
           <p>You can search for petitions by issue, title, author, target, city, state, or keyword &mdash; or check out <a href='/victories.html'>recent victories</a>.</p>
           <SearchBar query={query} currentPage={pageNumber} isLong={false} />
+          {displayStateCheckBox(selectState)}
           <SearchResults query={query || ''} pageNumber={pageNumber || '1'} selectState={selectState || ''} />
         </div>
       </div>}
