@@ -4,15 +4,17 @@ import { connect } from 'react-redux'
 
 import SearchBar from '../components/searchbar'
 import SearchResults from '../components/search-results'
+import { getStateFullName } from '../components/state-abbrev.js'
 
 const SearchPage = ({ query, selectState, pageNumber }) => {
   const updatedHeader = (q, s) => {
+    const stateFullName = getStateFullName(s)
     if (q && !s) {
       return (<h2 id='title' className='light'> TOP PETITIONS MATCHING '{q}' </h2>)
     } else if (q && s) {
-      return (<h2 id='title' className='light'> TOP PETITIONS MATCHING '{q}' FROM {s} </h2>)
+      return (<h2 id='title' className='light'> TOP PETITIONS MATCHING '{q}' FROM {stateFullName} </h2>)
     } else if (s) {
-      return (<h2 id='title' className='light'> TOP PETITIONS FROM {s} </h2>)
+      return (<h2 id='title' className='light'> TOP PETITIONS FROM {stateFullName} </h2>)
     }
     return (<h2 id='title' className='light'>Top petitions</h2>)
   }
