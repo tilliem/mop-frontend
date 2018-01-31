@@ -6,20 +6,18 @@ import SearchBar from '../components/searchbar'
 import SearchResults from '../components/search-results'
 
 const SearchPage = ({ query, selectState, pageNumber }) => {
-
-  const updatedHeader = (query, selectState) => {
-    if(query && !selectState){
-      return (<h2 id='title' className='light'> TOP PETITIONS MATCHING '{query}' </h2>)
-    } else if (query && selectState) {
-      return (<h2 id='title' className='light'> TOP PETITIONS MATCHING '{query}' FROM {selectState} </h2>)
-    } else if (selectState){
-      return (<h2 id='title' className='light'> TOP PETITIONS FROM {selectState} </h2>)
-    } else {
-      return (<h2 id='title' className='light'>Top petitions</h2>)
+  const updatedHeader = (q, s) => {
+    if (q && !s) {
+      return (<h2 id='title' className='light'> TOP PETITIONS MATCHING '{q}' </h2>)
+    } else if (q && s) {
+      return (<h2 id='title' className='light'> TOP PETITIONS MATCHING '{q}' FROM {s} </h2>)
+    } else if (s) {
+      return (<h2 id='title' className='light'> TOP PETITIONS FROM {s} </h2>)
     }
+    return (<h2 id='title' className='light'>Top petitions</h2>)
   }
 
-  return(
+  return (
     <div className='moveon-petitions container background-moveon-white bump-top-1'>
       {<div className='row'>
         <div className='span12'>
