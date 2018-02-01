@@ -18,17 +18,17 @@ class StateCheckBox extends React.Component {
     this.stateBoxChecked = this.stateBoxChecked.bind(this)
   }
 
-  getQueryString(){
+  componentWillMount() {
+    this.getQueryString()
+  }
+
+  getQueryString() {
     const queryUrl = queryString.parse(window.location.hash)
     const q = queryUrl[Object.keys(queryUrl)[0]]
     this.setState({
       query: q
     })
     return queryUrl
-  }
-
-  componentWillMount(){
-    this.getQueryString()
   }
 
   stateBoxChecked(e) {
@@ -45,13 +45,13 @@ class StateCheckBox extends React.Component {
   }
 
   render() {
-    const { selectState, location } = this.props
+    const { selectState } = this.props
     const stateFullName = getStateFullName(selectState)
 
     return (
       <div>
         <label htmlFor='state-checkbox'>
-          <input id='state-checkbox' className='search-filter margin-top-0' type='checkbox' name='state' value={selectState} onChange={this.stateBoxChecked} checked/>
+          <input id='state-checkbox' className='search-filter margin-top-0' type='checkbox' name='state' value={selectState} onChange={this.stateBoxChecked} checked />
           Only petitions from {stateFullName}
         </label>
       </div>
@@ -66,7 +66,6 @@ StateCheckBox.propTypes = {
 }
 
 function mapStateToProps(store, ownProps) {
-  console.log('params:', ownProps);
   return {
     selectState: ownProps.selectState,
     query: ownProps.query
