@@ -134,7 +134,7 @@ class CreatePetitionForm extends React.Component {
       </div>
     )
     const custom = (!customOpen) ? '' : (
-      <div className='more_options'>
+      <div>
         <div id='selected_targets_div' className='selected_targets'></div>
         <div id='more_custom_group'>
           <div className='text wrapper small' id='text_custom_group_name_wrapper'>
