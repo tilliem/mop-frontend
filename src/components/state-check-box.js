@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import queryString from 'query-string'
 
 import { actions as petitionActions } from '../actions/petitionActions.js'
 import { getStateFullName } from './state-abbrev.js'
@@ -11,28 +12,36 @@ class StateCheckBox extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      stateChecked: true,
       query: props.query,
       selectState: props.selectState
     }
     this.stateBoxChecked = this.stateBoxChecked.bind(this)
   }
 
-  stateBoxChecked(e) {
-    const { query, dispatch, selectState } = this.props
-    console.log('location-->', this.props.params);
-    e.preventDefault()
-    if(e){
-      this.setState({
-        stateChecked: false,
-        selectState: '',
-        query: query
-      })
+  getQueryString(){
+    const queryUrl = queryString.parse(window.location.hash)
+    const q = queryUrl[Object.keys(queryUrl)[0]]
+    this.setState({
+      query: q
+    })
+    return queryUrl
+  }
 
-      appLocation.push(`/find/?q=${query}`)
-      const currentPage = 1
-      dispatch(petitionActions.searchPetitions(query, currentPage, this.state.selectState))
-    }
+  componentWillMount(){
+    this.getQueryString()
+  }
+
+  stateBoxChecked(e) {
+    e.preventDefault()
+    const dispatch = this.props.dispatch
+
+    this.setState({
+      selectState: ''
+    })
+
+    appLocation.push(`/find/?q=${this.state.query}`)
+    const currentPage = 1
+    dispatch(petitionActions.searchPetitions(this.state.query, currentPage, ''))
   }
 
   render() {
@@ -42,7 +51,7 @@ class StateCheckBox extends React.Component {
     return (
       <div>
         <label htmlFor='state-checkbox'>
-          <input id='state-checkbox' className='search-filter margin-top-0' type='checkbox' name='state' value={selectState} onChange={this.stateBoxChecked} />
+          <input id='state-checkbox' className='search-filter margin-top-0' type='checkbox' name='state' value={selectState} onChange={this.stateBoxChecked} checked/>
           Only petitions from {stateFullName}
         </label>
       </div>
@@ -52,12 +61,8 @@ class StateCheckBox extends React.Component {
 
 StateCheckBox.propTypes = {
   dispatch: PropTypes.func,
-  params: PropTypes.object,
-  location: PropTypes.object,
   selectState: PropTypes.string,
-  query: PropTypes.string,
-  currentPage: PropTypes.string,
-  dispatch: PropTypes.func
+  query: PropTypes.string
 }
 
 function mapStateToProps(store, ownProps) {
