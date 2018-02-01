@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { actionTypes as petitionActionTypes } from '../actions/petitionActions.js'
 import { actionTypes as sessionActionTypes } from '../actions/sessionActions.js'
+import { actionTypes as accountActionTypes } from '../actions/accountActions.js'
 import navStore from './nav'
 // Function fetchPetitionRequest(petitionSlug) {
 //     Return {
@@ -231,11 +232,25 @@ function userReducer(state = initialUserState, action) {
   }
 }
 
+function accountRegisterReducer(state = {}, action) {
+  switch (action.type) {
+    case accountActionTypes.REGISTER_SUBMIT:
+      return { ...state, isSubmitting: true }
+    case accountActionTypes.REGISTER_SUCCESS:
+      return { ...state, isSubmitting: false }
+    case accountActionTypes.REGISTER_FAILURE:
+      return { ...state, isSubmitting: false, formErrors: action.formErrors }
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   navStore,
   petitionStore: petitionReducer,
   petitionSearchStore: petitionSearchReducer,
-  userStore: userReducer
+  userStore: userReducer,
+  accountRegisterStore: accountRegisterReducer
 })
 
 export default rootReducer

@@ -7,8 +7,8 @@ import { appLocation } from '../routes.js'
 import StateSelect from './form/state-select'
 
 const smallStateSelectStyle = {
-  width: '20%',
-  marginRight: '5px'
+  display: 'inline',
+  width: '100px'
 }
 
 class SearchBar extends React.Component {
@@ -80,7 +80,9 @@ class SearchBar extends React.Component {
               </div>
             </form>
           </div>
-          <p className='lanky-header size-medium-small lh-24 bump-top-1'>Search for petitions by any keyword.</p>
+          <div className='span5'>
+            <p className='lanky-header size-medium-large lh-24 bump-top-1'>Search for petitions by any keyword.</p>
+          </div>
         </div>
       </div>
     )
