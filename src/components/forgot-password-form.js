@@ -59,7 +59,7 @@ class ForgotPasswordForm extends React.Component {
       <div>
         An email has been sent containing a link you can use to reset your
         MoveOn Petitions password.{' '}
-        <b>Thank you for using MoveOn's petition website!</b>
+        <b>Thank you for using MoveOn’s petition website!</b>
       </div>
     )
   }
@@ -68,7 +68,7 @@ class ForgotPasswordForm extends React.Component {
     return (
       <div>
         <p>
-          Enter your email address here and we'll send you a link you can use to
+          Enter your email address here and we’ll send you a link you can use to
           change your password.
         </p>
         <ul className='errors'>{this.errorList()}</ul>
@@ -86,9 +86,8 @@ class ForgotPasswordForm extends React.Component {
               <input
                 ref={email => (this.email = email)}
                 name='email'
-                className='percent-80 validation_error'
+                className='percent-80'
                 type='text'
-                id='inputEmail'
                 placeholder='Email'
               />
             </div>

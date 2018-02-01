@@ -45,7 +45,7 @@ export function register(fields) {
 
 export function forgotPassword(email) {
   // We don't care much about the response in this case
-  return fetch(`${Config.API_URI}/users/forgotPassword.json`, {
+  return fetch(`${Config.API_URI}/users/forgot-password.json`, {
     method: 'POST',
     body: JSON.stringify({ email })
   })
