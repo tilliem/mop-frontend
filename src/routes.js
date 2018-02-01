@@ -14,6 +14,7 @@ import CreatePetitionPage from './pages/create-petition-page'
 import PetitionReportPage from './pages/petition-report-page'
 import Wrapper from './components/wrapper'
 import Register from './pages/register'
+import ForgotPassword from './pages/forgot-password'
 
 
 const baseAppPath = process.env.BASE_APP_PATH || '/'
@@ -41,6 +42,7 @@ export const routes = (store) => {
         <Route path='/:organization/create_start.html' component={CreatePetitionPage} onEnter={orgLoader} />
         <Route path='/:organization/' component={Home} onEnter={orgLoader} />
         <Route path='/login/register.html' component={Register} />
+        <Route path='/login/forgot_password.html' component={ForgotPassword} />
       </Route>
     </Router>
   )
