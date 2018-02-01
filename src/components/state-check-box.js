@@ -1,25 +1,42 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
+import { actions as petitionActions } from '../actions/petitionActions.js'
 import { getStateFullName } from './state-abbrev.js'
+import { appLocation } from '../routes.js'
 
 class StateCheckBox extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      stateChecked: true
+      stateChecked: true,
+      query: props.query,
+      selectState: props.selectState
     }
     this.stateBoxChecked = this.stateBoxChecked.bind(this)
   }
 
   stateBoxChecked(e) {
-    // todo: handle unchecking event
+    const { query, dispatch, selectState } = this.props
+    console.log('location-->', this.props.params);
     e.preventDefault()
+    if(e){
+      this.setState({
+        stateChecked: false,
+        selectState: '',
+        query: query
+      })
+
+      appLocation.push(`/find/?q=${query}`)
+      const currentPage = 1
+      dispatch(petitionActions.searchPetitions(query, currentPage, this.state.selectState))
+    }
   }
 
   render() {
-    const { selectState } = this.props
+    const { selectState, location } = this.props
     const stateFullName = getStateFullName(selectState)
 
     return (
@@ -36,21 +53,19 @@ class StateCheckBox extends React.Component {
 StateCheckBox.propTypes = {
   dispatch: PropTypes.func,
   params: PropTypes.object,
-  checkedState: PropTypes.bool,
-  selectState: PropTypes.string
+  location: PropTypes.object,
+  selectState: PropTypes.string,
+  query: PropTypes.string,
+  currentPage: PropTypes.string,
+  dispatch: PropTypes.func
 }
 
-// function getParams(ownProps) {
-//   return {
-//     state: ownProps.location.query.state || ''
-//   }
-// }
+function mapStateToProps(store, ownProps) {
+  console.log('params:', ownProps);
+  return {
+    selectState: ownProps.selectState,
+    query: ownProps.query
+  }
+}
 
-// function mapStateToProps(store, ownProps) {
-//   const params = getParams(ownProps)
-//   return {
-//     selectState: params.state
-//   }
-// }
-
-export default StateCheckBox
+export default connect(mapStateToProps)(StateCheckBox)
