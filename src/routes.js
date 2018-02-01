@@ -36,7 +36,7 @@ const updateHistoryObject = (historyObj, routes) => {
       (error, newlocation, props) => {
         if (!error && props) {
           const matchedComponent = props.routes[props.routes.length - 1]
-          if (matchedComponent.prodReady || Config.ONLY_PROD_ROUTES || Config.BASE_URL !== PROD_URL) {
+          if (matchedComponent.prodReady || (!Config.ONLY_PROD_ROUTES && Config.BASE_URL !== PROD_URL)) {
             origPush.call(this, path, state)
             return
           }
