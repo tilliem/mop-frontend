@@ -48,14 +48,14 @@ class SignatureList extends React.Component {
     }
     const startNumber = ((page - 1) * 10) + 1
     const previousButton = ((page < 2) ? '' : (
-      <span className='previous'>
-        <a onClick={this.previousPage}>Previous</a>
-      </span>
+      <li className='previous'>
+        <a onClick={this.previousPage}>&lt; &lt; Previous</a>
+      </li>
     ))
     const nextButton = (((startNumber + 10) > signatureCount) ? '' :
-      <span className='next'>
-        <a onClick={this.nextPage}>Next</a>
-      </span>
+      <li className='next'>
+        <a onClick={this.nextPage}>Next &gt; &gt;</a>
+      </li>
     )
     return (
       <div>
@@ -63,10 +63,10 @@ class SignatureList extends React.Component {
           signatures={signatures[page]}
           startNumber={startNumber}
         />
-        <div className='pager'>
+        <ul className='pager'>
           {previousButton}
           {nextButton}
-        </div>
+        </ul>
       </div>
     )
   }
