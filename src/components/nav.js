@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
 
 import NavLink from './nav-link'
 
-const Nav = ({ user, nav, organization }) => {
+const Nav = ({ user, nav, organization, minimal }) => {
   const cobrand = ((organization) ? nav.orgs[organization] : nav.partnerCobrand)
 
   const userLinks = (
@@ -56,24 +57,29 @@ const Nav = ({ user, nav, organization }) => {
             </div>
           </div>
 
-          <div className='pull-left top-icons hidden-phone'>
-            <div className='pull-left span2 petitions-partner-logo bump-top-1 margin-right-2 hidden-phone'>
-              {partnerLogoLinks}
+          {!minimal
+            ? ( // when not minimal, we have a bunch of links for you!
+            <div>
+              <div className='pull-left top-icons hidden-phone'>
+                <div className='pull-left span2 petitions-partner-logo bump-top-1 margin-right-2 hidden-phone'>
+                 {partnerLogoLinks}
+                </div>
+                <Link className='icon-link-narrow icon-start' to='/create_start.html?source=topnav'>Start a petition</Link>
+                {user.given_name ? userDashboardLink : guestDashboardLink}
+              </div>
+
+              <div className='pull-left top-icons visible-phone'>
+                <Link className='icon-link-narrow icon-start' to='/create_start.html?source=topnav-mobile' />
+                <Link className='icon-link-narrow icon-managepetitions' to='/dashboard.html' />
+              </div>
+
+              <a className='btn visible-phone pull-right bump-top-2' data-toggle='collapse' data-target='.nav-collapse'>
+                <span className='icon-th-list'></span>
+              </a>
+
+              {user.signonId ? userLinks : guestLinks}
             </div>
-            <a className='icon-link-narrow icon-start' href='https://petitions.moveon.org/create_start.html?source=topnav'>Start a petition</a>
-            {user.given_name ? userDashboardLink : guestDashboardLink}
-          </div>
-
-          <div className='pull-left top-icons visible-phone'>
-            <a className='icon-link-narrow icon-start' href='https://petitions.moveon.org/create_start.html?source=topnav-mobile'></a>
-            <a className='icon-link-narrow icon-managepetitions' href='https://petitions.moveon.org/dashboard.html'></a>
-          </div>
-
-          <a className='btn visible-phone pull-right bump-top-2' data-toggle='collapse' data-target='.nav-collapse'>
-            <span className='icon-th-list'></span>
-          </a>
-
-          {user.signonId ? userLinks : guestLinks}
+            ) : null}
 
         </div>
       </div>
@@ -91,7 +97,8 @@ const Nav = ({ user, nav, organization }) => {
 Nav.propTypes = {
   user: PropTypes.object,
   nav: PropTypes.object,
-  organization: PropTypes.string
+  organization: PropTypes.string,
+  minimal: PropTypes.bool
 }
 
 function mapStateToProps(store) {
