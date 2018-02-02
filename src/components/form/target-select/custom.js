@@ -1,7 +1,7 @@
 import React from 'react'
 
-const StateTargetSelect = () => (
-  <div className='more_options'>
+const CustomTargetSelect = () => (
+  <div>
     <div id='selected_targets_div' className='selected_targets'></div>
     <div id='more_custom_group'>
       <div className='text wrapper small' id='text_custom_group_name_wrapper'>
@@ -20,4 +20,4 @@ const StateTargetSelect = () => (
   </div>
 )
 
-export default StateTargetSelect
+export default CustomTargetSelect

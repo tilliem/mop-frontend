@@ -9,7 +9,6 @@ import Title from './form/instructions/title'
 import CustomTargetSelect from './form/target-select/custom'
 import NationalTargetSelect from './form/target-select/national'
 import StateTargetSelect from './form/target-select/state'
-import StateSelect from './form/state-select'
 
 const instructionsByField = {
   title: <Title />,

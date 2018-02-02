@@ -1,5 +1,7 @@
 import React from 'react'
 
+import StateSelect from '../state-select'
+
 const StateTargetSelect = () => (
   <div>
     <div className='select wrapper' id='select_target_state_wrapper'>
