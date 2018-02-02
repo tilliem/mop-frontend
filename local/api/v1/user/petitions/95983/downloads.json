@@ -5,7 +5,7 @@
     "previous":null
   },
   "count":1,
-  "page_size"100,
+  "page_size":100,
   "_embedded":[  
     {  
       "_links":{  
