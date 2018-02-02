@@ -1,0 +1,9 @@
+{  
+  "_links":{  
+    "url":"http://localhost:8000/api/v1/mailingtemplates/3.json"
+  },
+  "name":"First template",
+  "status":"active",
+  "subject":"You signed! Yay!",
+  "body":"Just an excuse to test the ordering field..."
+}

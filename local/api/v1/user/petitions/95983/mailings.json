@@ -1,0 +1,33 @@
+{  
+  "_links":{  
+    "url":"http://localhost:8000/api/v1/user/petitions/95983/mailings.json",
+    "next":null,
+    "previous":null
+  },
+  "count":1,
+  "page_size":100,
+  "_embedded":[  
+    {  
+      "_links":{  
+        "url":"http://localhost:8000/api/v1/user/mailings/1.json"
+      },
+      "name":"My first mailing",
+      "status":"normal",
+      "stage":"draft",
+      "subject":"Share share share with all your friends friends friends",
+      "mailing_text":null,
+      "user_count":null,
+      "target_description":"All petition signers",
+      "target_states":null,
+      "target_national_districts":null,
+      "target_state_house_districts":null,
+      "target_state_senate_districts":null,
+      "target_zips":null,
+      "target_zip_radius":null,
+      "target_since":null
+    }
+  ],
+  "total_pages":1,
+  "page":1,
+  "total_records":1
+}

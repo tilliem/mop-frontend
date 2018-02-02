@@ -1,0 +1,41 @@
+{  
+  "_links":{  
+    "url":"http://localhost:8000/api/v1/mailingtemplates.json",
+    "next":null,
+    "previous":null
+  },
+  "count":3,
+  "page_size":100,
+  "_embedded":[  
+    {  
+      "_links":{  
+        "url":"http://localhost:8000/api/v1/mailingtemplates/3.json"
+      },
+      "name":"First template",
+      "status":"active",
+      "subject":"You signed! Yay!",
+      "body":"Just an excuse to test the ordering field..."
+    },
+    {  
+      "_links":{  
+        "url":"http://localhost:8000/api/v1/mailingtemplates/1.json"
+      },
+      "name":"Share your petition",
+      "status":"active",
+      "subject":"Will you sign my petition?",
+      "body":"Please please please"
+    },
+    {  
+      "_links":{  
+        "url":"http://localhost:8000/api/v1/mailingtemplates/2.json"
+      },
+      "name":"Deliver your petition",
+      "status":"active",
+      "subject":"Will you help deliver my petition?",
+      "body":"Please please please please please"
+    }
+  ],
+  "total_pages":1,
+  "page":1,
+  "total_records":3
+}
