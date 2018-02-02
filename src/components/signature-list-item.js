@@ -14,8 +14,10 @@ class SignatureListItem extends React.Component {
   }
 
   flagComment(commentId) {
-    this.props.dispatch(flagComment(commentId))
-    this.setState({ flagged: true })
+    if (confirm('Flag this comment as inappropriate?')) {
+      this.props.dispatch(flagComment(commentId))
+      this.setState({ flagged: true })
+    }
   }
 
   render() {

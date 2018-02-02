@@ -1,12 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const StateSelect = ({ onChange, selectText, style }) => (
+const StateSelect = ({
+  onChange, selectText, style,
+  name = 'state', id = 'state_id', className = 'span4 state moveon-track-click margin-right-1'
+}) => (
 
   <select
-    name='state'
-    id='state_id'
-    className='span4 state moveon-track-click'
+    name={name}
+    id={id}
+    className={className}
     onChange={onChange}
     style={style}
   >
@@ -82,7 +85,10 @@ const StateSelect = ({ onChange, selectText, style }) => (
 StateSelect.propTypes = {
   onChange: PropTypes.func,
   style: PropTypes.object,
-  selectText: PropTypes.string
+  selectText: PropTypes.string,
+  name: PropTypes.string,
+  id: PropTypes.string,
+  className: PropTypes.string
 }
 
 export default StateSelect

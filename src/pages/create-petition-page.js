@@ -1,8 +1,11 @@
 import React from 'react'
 
+import CreatePetitionForm from '../components/create-petition-form.js'
+
+
 const CreatePetitionPage = () => (
   <div className='moveon-petitions'>
-    <h2> Create a Petition </h2>
+    <CreatePetitionForm />
   </div>
 )
 

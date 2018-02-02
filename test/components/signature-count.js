@@ -13,8 +13,8 @@ describe('<SignatureCount />', () => {
 
   it('formats numbers', () => {
     const context = shallow(<SignatureCount current={1000} goal={1000000} />)
-    expect(context.find('.progress-current strong').text()).to.equal('1,000')
-    expect(context.find('.progress-goal strong').text()).to.equal('1,000,000')
+    expect(context.find('.progress-current').text()).to.equal('1,000')
+    expect(context.find('.progress-goal').text()).to.equal('1,000,000')
   })
 
   it('calculates bar width', () => {
