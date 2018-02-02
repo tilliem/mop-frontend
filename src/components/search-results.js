@@ -14,7 +14,12 @@ class SearchResults extends React.Component {
   }
 
   componentDidUpdate() {
-    window.scrollTo(0, 0)
+    const bodyTop = document.body.getBoundingClientRect().top
+    let resultsTop = 0
+    if (this.resultsDiv) {
+      resultsTop = this.resultsDiv.getBoundingClientRect().top
+    }
+    window.scrollTo(0, resultsTop - bodyTop)
   }
 
   render() {
@@ -41,7 +46,7 @@ class SearchResults extends React.Component {
 
 
     return (
-      <div id='search-results'>
+      <div id='search-results' ref={(div) => { this.resultsDiv = div }}>
         {resultsList}
         <SearchResultPagination resultCount={resultCount} pageSize={pageSize} currentPage={currentPage} searchNavLinks={searchNavLinks} query={query} />
       </div>
