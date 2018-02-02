@@ -81,3 +81,8 @@ export const petitionShortCode = (mode, petitionId, userId, responseMd5) => {
   const shortCode = codeParts.join('_')
   return `${Config.BASE_URL}/p/${shortCode}`
 }
+
+export const isValidEmail = (email) => {
+  const regex = /.+@.+\..+/ // Forgiving email regex
+  return regex.test(email)
+}
