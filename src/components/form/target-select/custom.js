@@ -2,13 +2,13 @@ import React from 'react'
 
 class CustomTargetSelect extends React.Component {
   constructor(props) {
-   super(props)
-     this.state = {
-       nameValue: '',
-       emailValue: '',
-       titleValue: '',
-       targets: []
-     }
+    super(props)
+    this.state = {
+      nameValue: '',
+      emailValue: '',
+      titleValue: '',
+      targets: []
+    }
 
     this.addTarget = this.addTarget.bind(this)
     this.updateName = this.updateName.bind(this)
@@ -16,25 +16,25 @@ class CustomTargetSelect extends React.Component {
     this.updateEmail = this.updateEmail.bind(this)
   }
 
-  updateName(e){
+  updateName(e) {
     this.setState({
       nameValue: e.target.value
     })
   }
 
-  updateEmail(e){
+  updateEmail(e) {
     this.setState({
       emailValue: e.target.value
     })
   }
 
-  updateTitle(e){
+  updateTitle(e) {
     this.setState({
       titleValue: e.target.value
     })
   }
 
-  addTarget(e){
+  addTarget(e) {
     const { nameValue, emailValue, titleValue, targets } = this.state
     e.preventDefault()
     const newTarget = {
@@ -44,22 +44,21 @@ class CustomTargetSelect extends React.Component {
     }
 
     targets.push(newTarget)
-    console.log('targets-->', targets);
   }
 
-  render(){
+  render() {
     const targets = this.state.targets
     const addedTargetStyle = {
       backgroundColor: 'rgb(255, 255, 255)'
     }
 
-    return(
+    return (
       <div>
         <div id='selected_targets_div' className='selected_targets'></div>
         <div id='more_custom_group'>
-          {targets ? targets.map( (target, index) => (
+          {targets ? targets.map((target, index) => (
             <div className='checkbox wrapper' key={index}>
-              <label className='target_label' style={addedTargetStyle}> <input type='checkbox' checked/> {target.name}, {target.title} &#40;{target.email}&#41; </label> </div>
+              <label className='target_label' style={addedTargetStyle}> <input type='checkbox' checked /> {target.name}, {target.title} &#40;{target.email}&#41; </label> </div>
           )) : ''}
           <div className='text wrapper small' id='text_custom_group_name_wrapper'>
             <input name='text_custom_group_name' id='custom_name' className='text' type='text' placeholder='Name' onChange={this.updateName} />
@@ -74,7 +73,7 @@ class CustomTargetSelect extends React.Component {
             <a onClick={this.addTarget} className='btn' id='add_this_target'>Add another target</a>
           </div>
         </div>
-    </div>
+      </div>
     )
   }
 }
