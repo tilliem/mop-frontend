@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 
+import { isValidEmail } from '../lib'
+
 class LoginForm extends React.Component {
   constructor(props) {
     super(props)
@@ -19,11 +21,6 @@ class LoginForm extends React.Component {
     this.passwordConfirm.value = ''
   }
 
-  isValidEmail(email) {
-    const regex = /.+@.+\..+/ // Forgiving email regex
-    return regex.test(email)
-  }
-
   /**
    * Validates the form for client side errors.
    * If valid returns true otherwise false.
@@ -33,7 +30,7 @@ class LoginForm extends React.Component {
   validateForm() {
     const { email, password } = this
     const errors = []
-    if (!this.isValidEmail(email.value)) {
+    if (!isValidEmail(email.value)) {
       if (!this.email.value.trim().length) {
         errors.push({ message: 'Missing required entry for the Email field.' })
       } else {
