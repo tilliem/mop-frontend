@@ -19,7 +19,7 @@ describe('<SearchBar />', () => {
     expect(component.props.query).to.equal(undefined)
     expect(component.props.isLong).to.equal(false)
     expect(component.props.selectState).to.equal(undefined)
-    expect(context.find('#search-form-div').length).to.equal(1)
+    expect(context.find('.form-vertical').length).to.equal(1)
   })
 
   it('basic loading, long searchbar', () => {
