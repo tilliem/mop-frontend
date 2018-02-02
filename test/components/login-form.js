@@ -13,8 +13,6 @@ describe('<LoginForm />', () => {
     expect(login.find('input[name="password"]').length).to.equal(1)
   })
 
-  it.skip('does something different when logged in (TODO)', () => {})
-
   it('passed errors are displayed', () => {
     const errors = [{ message: 'There was a login error' }]
     const login = shallow(<LoginForm errors={errors} />)
