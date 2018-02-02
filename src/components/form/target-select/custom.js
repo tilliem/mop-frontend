@@ -11,6 +11,7 @@ class CustomTargetSelect extends React.Component {
     }
 
     this.addTarget = this.addTarget.bind(this)
+    this.deleteTarget = this.deleteTarget.bind(this)
     this.updateName = this.updateName.bind(this)
     this.updateTitle = this.updateTitle.bind(this)
     this.updateEmail = this.updateEmail.bind(this)
@@ -46,8 +47,15 @@ class CustomTargetSelect extends React.Component {
     targets.push(newTarget)
   }
 
-  render() {
+  deleteTarget(e) {
+    e.preventDefault()
     const targets = this.state.targets
+    const indexOfValue = e.target.value
+    targets.splice(indexOfValue, 1)
+  }
+
+  render() {
+    const { targets } = this.state
     const addedTargetStyle = {
       backgroundColor: 'rgb(255, 255, 255)'
     }
@@ -58,7 +66,7 @@ class CustomTargetSelect extends React.Component {
         <div id='more_custom_group'>
           {targets ? targets.map((target, index) => (
             <div className='checkbox wrapper' key={index}>
-              <label className='target_label' style={addedTargetStyle}> <input type='checkbox' checked /> {target.name}, {target.title} &#40;{target.email}&#41; </label> </div>
+              <label className='target_label' style={addedTargetStyle}> <input type='checkbox' value={index} checked onChange={this.deleteTarget} /> {target.name}, {target.title} &#40;{target.email}&#41; </label> </div>
           )) : ''}
           <div className='text wrapper small' id='text_custom_group_name_wrapper'>
             <input name='text_custom_group_name' id='custom_name' className='text' type='text' placeholder='Name' onChange={this.updateName} />
