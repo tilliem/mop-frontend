@@ -61,14 +61,13 @@ class SearchResultPagination extends React.Component {
       }
     }
 
-    console.log("resultCount ", resultCount)
     return (
       <div className='pagination'>
         <ul>
           {pages}
           <li key={endPage} ><Link className='nextLink' onClick={() => this.changePage(nextPage, nextPageLinkUrl)} >&#187;</Link></li>
         </ul>
-        { resultCount === false ? <p><small>Loading ...</small></p> : <p><small>Found {resultCount} results.</small></p> }
+        {resultCount === false ? <p><small>Loading ...</small></p> : <p><small>Found {resultCount} results.</small></p>}
       </div>
     )
   }
