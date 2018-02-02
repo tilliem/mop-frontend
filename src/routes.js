@@ -40,10 +40,10 @@ export const routes = (store) => {
         <Route path='/create_start.html' component={CreatePetitionPage} />
         <Route path='/petition_report.html' component={PetitionReportPage} />
         <Route path='/:organization/create_start.html' component={CreatePetitionPage} onEnter={orgLoader} />
-        <Route path='/:organization/' component={Home} onEnter={orgLoader} />
         <Route path='/login/' component={Login} />
         <Route path='/login/index.html' component={Login} />
         <Route path='/login/register.html' component={Register} />
+        <Route path='/:organization/' component={Home} onEnter={orgLoader} />
       </Route>
     </Router>
   )
