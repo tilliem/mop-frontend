@@ -31,16 +31,16 @@ const Nav = ({ user, nav, organization, minimal }) => {
   )
 
   const userDashboardLink = (
-    <a className='icon-link-narrow icon-managepetitions' href='https://petitions.moveon.org/dashboard.html?source=topnav'> {`${user.given_name}’s`} Dashboard</a>
+    <Link className='icon-link-narrow icon-managepetitions' to='/dashboard.html?source=topnav'> {`${user.given_name}’s`} Dashboard</Link>
   )
 
   const guestDashboardLink = (
-    <a className='icon-link-narrow icon-managepetitions' href='https://petitions.moveon.org/dashboard.html?source=topnav'>Manage Petitions</a>
+    <Link className='icon-link-narrow icon-managepetitions' to='/dashboard.html?source=topnav'>Manage Petitions</Link>
   )
 
   const partnerLogoLinks = (
     (cobrand)
-      ? (<a href={cobrand.browser_url}><img className='org_logo' src={cobrand.logo_image_url} alt={`${cobrand.organization} logo`} /></a>
+      ? (<Link to={cobrand.browser_url}><img className='org_logo' src={cobrand.logo_image_url} alt={`${cobrand.organization} logo`} /></Link>
         ) : null)
 
   return (
@@ -48,12 +48,12 @@ const Nav = ({ user, nav, organization, minimal }) => {
       <div className='container' id='header'>
         <div className='row'>
           <div className='moveon-masthead pull-left hidden-phone'>
-            <a href='/'>MoveOn.org</a>
+            <Link to='/'>MoveOn.org</Link>
           </div>
 
           <div className='mobile visible-phone'>
             <div className='moveon-masthead pull-left'>
-              <a href='/'>MoveOn.org</a>
+              <Link to='/'>MoveOn.org</Link>
             </div>
           </div>
 
@@ -80,7 +80,6 @@ const Nav = ({ user, nav, organization, minimal }) => {
               {user.signonId ? userLinks : guestLinks}
             </div>
             ) : null}
-
         </div>
       </div>
       <div className='container visible-phone'>
