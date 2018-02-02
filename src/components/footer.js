@@ -13,9 +13,9 @@ const Footer = () => (
         <div className='row'>
           <div className='span4'>
             <Link className='icon-start icon-link-narrow' to='/create_start.html?source=bnav'>Start a Petition</Link>
-            <Link className='icon-link-narrow icon-managepetitions' to='/dashboard.html'>Dashboard</Link>
+            <Link className='icon-link-narrow icon-managepetitions' to='/dashboard.html'>Manage Petitions</Link>
             <ul className='nav'>
-              <li><a className='lh-14 navlink' href='/login/do_logout.html?redirect=/index.html'>Logout</a></li>
+              <li><a className='lh-14 navlink' href='https://petitions.moveon.org/about.html'>About</a></li>
               <li><Link to='/organizations.html'>Organizations</Link></li>
               <li><a href='https://front.moveon.org/category/victories/'>Victories</a></li>
               <li><a href='https://civic.moveon.org/donatec4/creditcard.html?cpn_id=511'>Donate</a></li>
