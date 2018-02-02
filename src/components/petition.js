@@ -22,7 +22,6 @@ class Petition extends React.Component {
                                        ? `, ${creator.organization}`
                                        : '')
     const outOfDate = (p.tags && p.tags.filter(t => t.name === 'possibly_out_of_date').length)
-    console.log(p)
     return (
       <div className='container'>
         {(outOfDate) ?
@@ -119,7 +118,7 @@ class Petition extends React.Component {
           <div className='span12'>
             <div id='privacy'>
               <p className='disclaimer bump-top-2'>
-                <strong>Note</strong>: MoveOn {p.entity === 'c4' ? 'Civic' : 'Political'} Action does not necessarily endorse the contents of petitions posted on this site. MoveOn Petitions is an open tool that anyone can use to post a petition advocating any point of view, so long as the petition does not violate our <a href="/terms.html" target="_blank">terms of service</a>
+                <strong>Note</strong>: MoveOn {p.entity === 'c4' ? 'Civic' : 'Political'} Action does not necessarily endorse the contents of petitions posted on this site. MoveOn Petitions is an open tool that anyone can use to post a petition advocating any point of view, so long as the petition does not violate our <a href='/terms.html' target='_blank'>terms of service</a>
               </p>
             </div>
           </div>
