@@ -119,7 +119,7 @@ class Petition extends React.Component {
           <div className='span12'>
             <div id='privacy'>
               <p className='disclaimer bump-top-2'>
-                <strong>Note</strong>: MoveOn {p.entity === 'c4' ? 'Civic' : 'Political'} Action does not necessarily endorse the contents of petitions posted on this site. MoveOn Petitions is an open tool that anyone can use to post a petition advocating any point of view, so long as the petition does not violate our <Link to='/terms.html' target='_blank'>terms of service</Link>.
+                <strong>Note</strong>: MoveOn {p.entity === 'c4' ? 'Civic' : 'Political'} Action does not necessarily endorse the contents of petitions posted on this site. MoveOn Petitions is an open tool that anyone can use to post a petition advocating any point of view, so long as the petition does not violate our <Link to='/terms.html'>terms of service</Link>.
               </p>
             </div>
           </div>
