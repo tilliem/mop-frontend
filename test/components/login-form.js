@@ -35,7 +35,7 @@ describe('<LoginForm />', () => {
     )
   })
 
-  it.only('submitting valid data calls submit function', () => {
+  it('submitting valid data calls submit function', () => {
     const spy = sinon.spy()
     const login = mount(<LoginForm onSubmit={spy} />)
     login.find('input[name="email"]').node.value = 'foo@example.com'
