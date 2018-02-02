@@ -48,22 +48,32 @@ class CustomTargetSelect extends React.Component {
   }
 
   render(){
-    return(<div>
-      <div id='selected_targets_div' className='selected_targets'></div>
-      <div id='more_custom_group'>
-        <div className='text wrapper small' id='text_custom_group_name_wrapper'>
-          <input name='text_custom_group_name' id='custom_name' className='text' type='text' placeholder='Name' onChange={this.updateName} />
+    const targets = this.state.targets
+    const addedTargetStyle = {
+      backgroundColor: 'rgb(255, 255, 255)'
+    }
+
+    return(
+      <div>
+        <div id='selected_targets_div' className='selected_targets'></div>
+        <div id='more_custom_group'>
+          {targets ? targets.map( (target, index) => (
+            <div className='checkbox wrapper' key={index}>
+              <label className='target_label' style={addedTargetStyle}> <input type='checkbox' checked/> {target.name}, {target.title} &#40;{target.email}&#41; </label> </div>
+          )) : ''}
+          <div className='text wrapper small' id='text_custom_group_name_wrapper'>
+            <input name='text_custom_group_name' id='custom_name' className='text' type='text' placeholder='Name' onChange={this.updateName} />
+          </div>
+          <div className='text wrapper small' id='text_custom_group_email_wrapper'>
+            <input name='text_custom_group_email' id='custom_email' className='text' type='text' placeholder='Email Address (optional)' onChange={this.updateEmail} />
+          </div>
+          <div className='text wrapper small' id='text_custom_group_title_wrapper'>
+            <input name='text_custom_group_title' id='custom_title' className='text' type='text' placeholder='Title or Position (optional)' onChange={this.updateTitle} />
+          </div>
+          <div id='someone_else_add'>
+            <a onClick={this.addTarget} className='btn' id='add_this_target'>Add another target</a>
+          </div>
         </div>
-        <div className='text wrapper small' id='text_custom_group_email_wrapper'>
-          <input name='text_custom_group_email' id='custom_email' className='text' type='text' placeholder='Email Address (optional)' onChange={this.updateEmail} />
-        </div>
-        <div className='text wrapper small' id='text_custom_group_title_wrapper'>
-          <input name='text_custom_group_title' id='custom_title' className='text' type='text' placeholder='Title or Position (optional)' onChange={this.updateTitle} />
-        </div>
-        <div id='someone_else_add'>
-          <a onClick={this.addTarget} className='btn' id='add_this_target'>Add another target</a>
-        </div>
-      </div>
     </div>
     )
   }
