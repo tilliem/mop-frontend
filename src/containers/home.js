@@ -7,6 +7,7 @@ import BillBoard from '../components/legacy/billboard'
 import SearchBar from './searchbar'
 import RecentVictoryList from '../components/legacy/recentvictory.js'
 import TopPetitions from './top-petitions'
+import OrganizationHeader from '../components/legacy/organization-header'
 
 const Home = ({ params, nav }) => {
   const { organization } = params
@@ -20,15 +21,7 @@ const Home = ({ params, nav }) => {
         <SearchBar isLong />
       </div>
 
-      {isOrganization
-       ? (
-        <div className='organization-header'>
-          <h2>{orgData.organization}</h2>
-          {orgData.description || `${orgData.organization} is a MoveOn MegaPartner, an invite-only program that lets a partner organization&#39;s members and activists set up their own MoveOn petitions in partnership with the original organization.`}
-          <p className='pull-right'><a href='create_start.html' className='button background-moveon-bright-red'>Create a petition</a></p>
-        </div>
-       ) : null
-      }
+      {isOrganization ? <OrganizationHeader orgData={orgData} /> : null}
 
       <div className='row front-content'>
         <TopPetitions
