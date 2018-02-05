@@ -2,9 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import PetitionPreview from '../components/petition-preview.js'
+import HotPetitons from '../components/legacy/hot-petitions'
 import { loadTopPetitions } from '../actions/petitionActions.js'
-
 
 class TopPetitions extends React.Component {
   componentDidMount() {
@@ -16,17 +15,12 @@ class TopPetitions extends React.Component {
 
   render() {
     const { topPetitions, source, fullWidth } = this.props
-    const petitionList = (topPetitions) ? topPetitions.map(petition => (
-      <PetitionPreview key={petition.petition_id} petition={petition} source={source} />
-    )) : ''
-
     return (
-      <div id='campaign-widget' className={fullWidth ? 'span12 widget clearfix' : 'span6 widget clearfix pull-right'}>
-        <div className='widget-top'>
-          <h3>Hot Petitions</h3>
-        </div>
-        {petitionList}
-      </div>
+      <HotPetitons
+        fullWidth={fullWidth}
+        topPetitions={topPetitions}
+        source={source}
+      />
     )
   }
 }
