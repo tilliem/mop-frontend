@@ -1,6 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-const ShortSearchBar = ({submit, query, change}) =>
+const ShortSearchBar = ({ submit, query, change }) =>
   <div>
     <form className='form-vertical' onSubmit={submit}>
       <div className='search'>
@@ -9,5 +10,11 @@ const ShortSearchBar = ({submit, query, change}) =>
       </div>
     </form>
   </div>
+
+ShortSearchBar.propTypes = {
+  submit: PropTypes.func,
+  query: PropTypes.string,
+  change: PropTypes.func
+}
 
 export default ShortSearchBar

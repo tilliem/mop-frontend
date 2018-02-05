@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import StateSelect from '../form/state-select'
 
@@ -7,7 +8,7 @@ const smallStateSelectStyle = {
   width: '100px'
 }
 
-const LongSearchBar = ({submit, queryValue, stateValue, changeQueryValue, changeQueryState}) =>
+const LongSearchBar = ({ submit, queryValue, stateValue, changeQueryValue, changeQueryState }) =>
   <div id='search-bar-large' className='container'>
     <div className='row'>
       <div className='span7 control-group bump-top-1'>
@@ -24,5 +25,13 @@ const LongSearchBar = ({submit, queryValue, stateValue, changeQueryValue, change
       </div>
     </div>
   </div>
+
+LongSearchBar.propTypes = {
+  submit: PropTypes.func,
+  queryValue: PropTypes.string,
+  stateValue: PropTypes.string,
+  changeQueryValue: PropTypes.func,
+  changeQueryState: PropTypes.func
+}
 
 export default LongSearchBar
