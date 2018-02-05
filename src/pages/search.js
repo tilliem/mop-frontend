@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import SearchBar from '../components/searchbar'
+import SearchBar from '../containers/searchbar'
 import SearchResults from '../components/search-results'
 import StateCheckBox from '../components/state-check-box'
 import { getStateFullName } from '../components/state-abbrev.js'

@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { Config } from '../config.js'
-import BillBoard from '../components/billboard'
-import SearchBar from '../components/searchbar'
-import RecentVictoryList from '../components/recentvictory.js'
-import TopPetitions from '../components/top-petitions'
+import BillBoard from '../components/legacy/billboard'
+import SearchBar from './searchbar'
+import RecentVictoryList from '../components/legacy/recentvictory.js'
+import TopPetitions from './top-petitions'
 
 const Home = ({ params, nav }) => {
   const { organization } = params

@@ -5,7 +5,7 @@ import { IndexRoute, Route, Router, browserHistory, hashHistory, match } from 'r
 import { Config } from './config'
 import { loadSession } from './actions/sessionActions'
 import { loadOrganization } from './actions/navActions.js'
-import Home from './pages/home'
+import Home from './containers/home'
 import SignPetition from './pages/sign-petition'
 import ThanksPage from './pages/thanks'
 import SearchPage from './pages/search'
