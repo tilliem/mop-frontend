@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import HotPetitons from '../components/legacy/hot-petitions'
 import { loadTopPetitions } from '../actions/petitionActions.js'
 
-
 class TopPetitions extends React.Component {
   componentDidMount() {
     const { pac, megapartner, topPetitions, loadPetitions } = this.props
@@ -17,7 +16,11 @@ class TopPetitions extends React.Component {
   render() {
     const { topPetitions, source, fullWidth } = this.props
     return (
-      <HotPetitons fullWidth={fullWidth} topPetitions={topPetitions} source={source} />
+      <HotPetitons
+        fullWidth={fullWidth}
+        topPetitions={topPetitions}
+        source={source}
+      />
     )
   }
 }
