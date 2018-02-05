@@ -23,7 +23,7 @@ const Wrapper = ({ children, params, routes }) => (
 Wrapper.propTypes = {
   children: PropTypes.object.isRequired,
   params: PropTypes.object,
-  routes: PropTypes.object.isRequired
+  routes: PropTypes.array.isRequired
 }
 
 export default Wrapper
