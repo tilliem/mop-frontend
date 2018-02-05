@@ -14,6 +14,7 @@ import CreatePetitionPage from './pages/create-petition-page'
 import PetitionReportPage from './pages/petition-report-page'
 import Wrapper from './components/wrapper'
 import Register from './pages/register'
+import ForgotPassword from './pages/forgot-password'
 import Login from './pages/login'
 
 
@@ -72,6 +73,7 @@ export const routes = (store) => {
       <Route path='/login/' component={Login} />
       <Route path='/login/index.html' component={Login} />
       <Route path='/login/register.html' component={Register} />
+      <Route path='/login/forgot_password.html' component={ForgotPassword} />
       <Route path='/:organization/' component={Home} onEnter={orgLoader} />
     </Route>
   )
