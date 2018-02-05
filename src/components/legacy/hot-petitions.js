@@ -12,15 +12,14 @@ const HotPetitions = ({ fullWidth, topPetitions, source }) => (
     <div className='widget-top'>
       <h3>Hot Petitions</h3>
     </div>
-    {topPetitions
-      ? topPetitions.map(petition => (
-          <PetitionPreview
-            key={petition.petition_id}
-            petition={petition}
-            source={source}
-          />
-        ))
-      : ''}
+    {topPetitions &&
+      topPetitions.map(petition => (
+        <PetitionPreview
+          key={petition.petition_id}
+          petition={petition}
+          source={source}
+        />
+      ))}
   </div>
 )
 
