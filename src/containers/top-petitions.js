@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import PetitionPreview from './petition-preview.js'
+import PetitionPreview from '../components/petition-preview.js'
 import { loadTopPetitions } from '../actions/petitionActions.js'
 
 

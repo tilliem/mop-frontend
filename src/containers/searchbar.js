@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { actions as petitionActions } from '../actions/petitionActions.js'
 import { appLocation } from '../routes.js'
 
-import StateSelect from './form/state-select'
+import StateSelect from '../components/form/state-select'
 
 const smallStateSelectStyle = {
   display: 'inline',
