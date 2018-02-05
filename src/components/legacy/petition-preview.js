@@ -12,7 +12,7 @@ const PetitionPreview = ({ petition, source }) => {
       <article>
         <div>
           <h4><Link to={url} className='signthistitle'>{petition.title}</Link></h4>
-          <p className='blurb'>{statement}</p>
+          <div className='blurb'>{statement}</div>
         </div>
         <div className='pull-left'>
           <Link to={url} className='button background-moveon-bright-red'>Sign this petition</Link>
