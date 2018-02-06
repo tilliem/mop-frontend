@@ -35,7 +35,7 @@ export function loadOrganization(orgSlug, forceReload) {
         slug: orgSlug
       })
     }
-    return fetch(`${Config.API_URI}/api/v1/${urlKey}.json`)
+    return fetch(`${Config.API_URI}/${urlKey}.json`)
       .then(
         (response) => response.json().then((json) => {
           dispatch({
