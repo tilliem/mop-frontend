@@ -1,0 +1,9 @@
+{  
+  "_links":{  
+    "url":"http://localhost:8000/api/v1/mailingtemplates/1.json"
+  },
+  "name":"Share your petition",
+  "status":"active",
+  "subject":"Will you sign my petition?",
+  "body":"Please please please"
+}

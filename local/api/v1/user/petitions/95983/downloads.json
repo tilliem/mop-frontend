@@ -1,0 +1,23 @@
+{  
+  "_links":{  
+    "url":"http://localhost:8000/api/v1/user/petitions/95983/downloads.json",
+    "next":null,
+    "previous":null
+  },
+  "count":1,
+  "page_size":100,
+  "_embedded":[  
+    {  
+      "_links":{  
+        "url":"http://localhost:8000/download_me.csv"
+      },
+      "name":"Georgia: Add Outkast to Stone Mountain!",
+      "requested":"2018-02-01T18:44:00Z",
+      "completed":true,
+      "download_url":"download_me.csv"
+    }
+  ],
+  "total_pages":1,
+  "page":1,
+  "total_records":1
+}

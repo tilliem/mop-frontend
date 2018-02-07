@@ -1,0 +1,108 @@
+{  
+  "_links":{  
+    "url":"http://localhost:8000/api/v1/user/petitions/",
+    "next":null,
+    "previous":null
+  },
+  "count":1,
+  "page_size":5,
+  "_embedded":[  
+    {  
+      "_links":{  
+        "url":"http://localhost:8000/sign/outkast"
+      },
+      "created_date":"2015-07-15T05:02:12Z",
+      "origin_system":"petitions.moveon.org",
+      "identifiers":[  
+        95983,
+        "list_id:96069"
+      ],
+      "name":"outkast",
+      "title":"Georgia: Add Outkast to Stone Mountain!",
+      "summary":"Carve Big Boi and Andre 3000, riding in a Cadillac, into the face of Stone Mountain.",
+      "description":"<p>I believe it&#39;s important to recognize the history and heritage of all Georgians. However, the carving of Davis, Lee, and Jackson on the side of Stone Mountain only represents a small, regrettable time in the history of the Peach State. It&#39;s high time we added a bit more of our history and culture to this monument.</p>\n\n<p>By no means do we wish to erase or destroy the current carving, which, regardless of its context, is an impressive and historic work of art. We simply wish to add new carvings, of  Atlanta hip-hop duo Outkast, to the mountainside. There&#39;s plenty of room.</p>\n\n<p>I believe that Daddy Fat Sacks and Three Stacks should be carved riding in a Cadillac (as is their wont). This will help the new carving blend nicely with the Confederates who are on horseback.</p>\n\n<p>Outkast are two of the greatest Georgians in the history of our state. It&#39;s about time the Empire State of the South paid proper tribute to them, while also improving a great monument and tourist attraction.</p>",
+      "target":[  
+        {  
+          "name":"The GA State Senate"
+        }
+      ],
+      "share_options":[  
+        {  
+          "facebook_share":{  
+            "image":"http://s3.moveon.org/images/20150716_outkaststonemountain(1).png",
+            "description":"Tell Georgia's legislature: Carve Big Boi and Andre 3000, riding in a Cadillac (as is their wont), into the face of Stone Mountain. Click here to add your name."
+          },
+          "twitter_share":{  
+            "message":"Sign It: Tell #Georgia: Add #Outkast to #StoneMountain! [URL] @moveon @BigBoi #StankMountain"
+          }
+        }
+      ],
+      "_embedded":{  
+        "creator":{  
+          "name":"Mack Fooooooo"
+        },
+        "mailings":[  
+          {  
+            "_links":{  
+              "url":"http://localhost:8000/api/v1/user/mailings/1.json"
+            },
+            "name":"My first mailing",
+            "status":"normal",
+            "stage":"draft",
+            "subject":"Share share share with all your friends friends friends",
+            "mailing_text":null,
+            "user_count":null,
+            "target_description":"All petition signers",
+            "target_states":null,
+            "target_national_districts":null,
+            "target_state_house_districts":null,
+            "target_state_senate_districts":null,
+            "target_zips":null,
+            "target_zip_radius":null,
+            "target_since":null
+          }
+        ],
+        "downloads":[  
+          {  
+            "_links":{  
+              "url":"http://localhost:8000/download_me.csv"
+            },
+            "name":"Georgia: Add Outkast to Stone Mountain!",
+            "requested":"2018-02-01T18:44:00Z",
+            "completed":true,
+            "download_url":"download_me.csv"
+          }
+        ],
+        "pdfs":[  
+          {  
+            "_links":{  
+              "url":"http://localhost:8000/None"
+            },
+            "name":"Georgia: Add Outkast to Stone Mountain!",
+            "requested":"2018-02-01T19:03:14Z",
+            "signature_count":123,
+            "completed":false,
+            "download_zip_url":null,
+            "download_pdf_url":null,
+            "download_csv_url":null
+          }
+        ]
+      },
+      "total_signatures":1,
+      "status":"Verified",
+      "contact_name":"Mack Fooooooo",
+      "entity":"c4",
+      "needs_full_addresses":true,
+      "petition_id":95983,
+      "signature_goal":15000,
+      "online":true,
+      "potentially_deliverable":true,
+      "deliver_email":false,
+      "delivery_survey":null,
+      "is_extended":true
+    }
+  ],
+  "total_pages":1,
+  "page":1,
+  "total_records":1
+}
