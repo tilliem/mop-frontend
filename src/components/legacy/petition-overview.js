@@ -65,7 +65,7 @@ const PetitionOverview = ({
         </div>
 
         <div className='size-small'>
-          <Link to='/campaign_tips.html' target='_blank'>
+          <Link to='/campaign_tips.html'>
             campaign tips
           </Link>
         </div>
