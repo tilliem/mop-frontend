@@ -67,7 +67,7 @@ class SearchBar extends React.Component {
     return (
       <div>
         {isLong ? <LongSearchBar submit={this.submitQuery} queryValue={this.state.query} stateValue={this.state.selectState} changeQueryValue={this.selectQuery} changeQueryState={this.selectState} /> :
-          <ShortSearchBar submit={this.submitQuery} change={this.selectQuery} value={this.state.query} />}
+          <ShortSearchBar submit={this.submitQuery} change={this.selectQuery} query={this.state.query} />}
         <div className='clear'></div>
       </div>
     )
