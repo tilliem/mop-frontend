@@ -149,6 +149,17 @@ function petitionReducer(state = initialPetitionState, action) {
         ...state,
         ...updateData
       }
+    case accountActionTypes.FETCH_USER_PETITIONS_SUCCESS:
+      updateData = {
+        petitions: {
+          ...state.petitions,
+          ...petitions.reduce((acc, p) => ({ ...acc, [p.name]: p, [p.petition_id]: p }), {})
+        }
+      }
+      return {
+        ...state,
+        ...updateData
+      }
     default:
       return state
   }
@@ -227,6 +238,10 @@ function userReducer(state = initialUserState, action) {
         return { ...state, ...newData }
       }
       return state
+    case accountActionTypes.FETCH_USER_PETITIONS_SUCCESS:
+      // TODO: merge in new ids, so we can support pagination
+      newData.petitions = action.petitions.map(p => p.petition_id)
+      return { ...state, ...newData }
     default:
       return state
   }
