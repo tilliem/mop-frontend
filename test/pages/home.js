@@ -39,6 +39,12 @@ describe('<Home />', () => {
     expect(context.find('.front-content').find(RecentVictoryList)).to.have.length(1)
   })
 
+  it('renders top petitions', () => {
+    const myComponent = <Home params={{}} />
+    const context = mount(<Provider store={baseStore} children={myComponent} />)
+    expect(context.find(TopPetitions)).to.have.length(1)
+  })
+
   it('renders org content', () => {
     const myComponent = <Home params={{ organization: 'mop' }} />
     const context = mount(<Provider store={orgStore} children={myComponent} />)
