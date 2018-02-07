@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import queryString from 'query-string'
 
 import { actions as petitionActions } from '../actions/petitionActions.js'
 import { getStateFullName } from './state-abbrev.js'
@@ -16,19 +15,6 @@ class StateCheckBox extends React.Component {
       selectState: props.selectState
     }
     this.stateBoxChecked = this.stateBoxChecked.bind(this)
-  }
-
-  componentWillMount() {
-    this.getQueryString()
-  }
-
-  getQueryString() {
-    const queryUrl = queryString.parse(window.location.hash)
-    const q = queryUrl[Object.keys(queryUrl)[0]]
-    this.setState({
-      query: q
-    })
-    return queryUrl
   }
 
   stateBoxChecked(e) {
