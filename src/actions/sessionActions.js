@@ -33,6 +33,15 @@ function callSessionApi(tokens) {
           session: json,
           tokens
         })
+        // segment tracking
+        if (window.analytics && window.analytics.identify
+            && json && json.identifiers && json.identifiers.length) {
+          json.identifiers.forEach((id) => {
+            if (/^actionkit:/.test(id)) {
+              window.analytics.identify(id.substring('actionkit:'.length))
+            }
+          })
+        }
       }),
       (err) => {
         dispatch({
@@ -68,6 +77,24 @@ export const loadSession = ({ location }) => {
     dispatch({
       type: actionTypes.ANONYMOUS_SESSION_START
     })
+  }
+}
+
+export const trackPage = (newLocation) => {
+  // we track at POP -- at PUSH, we haven't arrived yet!
+  if (newLocation.action === 'POP') {
+    if (window.analytics) {
+      // Segment.com tracking
+      // https://segment.com/docs/sources/website/analytics.js/#page
+      window.analytics.page({
+        // overrides any canonical url set
+        location: document.location.href,
+        url: document.location.href
+      })
+    } else if (window.gtag) {
+      // Google analytics tracking
+      window.gtag('event', 'page_view', { page_location: document.location.href })
+    }
   }
 }
 
