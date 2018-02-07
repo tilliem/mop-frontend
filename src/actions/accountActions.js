@@ -70,7 +70,18 @@ export function loadUserPetitions() {
   }
 }
 
+export function forgotPassword(email) {
+  // We don't care much about the response in this case
+  return fetch(`${Config.API_URI}/users/forgot-password.json`, {
+    method: 'POST',
+    body: JSON.stringify({ email })
+  })
+    .then(() => true)
+    .catch(() => true)
+}
+
 export const actions = {
   register,
-  loadUserPetitions
+  loadUserPetitions,
+  forgotPassword
 }

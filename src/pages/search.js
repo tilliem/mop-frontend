@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import SearchBar from '../components/searchbar'
+import SearchBar from '../containers/searchbar'
 import SearchResults from '../components/search-results'
 import StateCheckBox from '../components/state-check-box'
 import { getStateFullName } from '../components/state-abbrev.js'
@@ -28,7 +28,7 @@ const SearchPage = ({ query, selectState, pageNumber }) => {
           <p>You can search for petitions by issue, title, author, target, city, state, or keyword &mdash; or check out <a href='/victories.html'>recent victories</a>.</p>
           <div id='search-form-div' className='search-page'>
             <SearchBar query={query} currentPage={pageNumber} isLong={false} />
-            {selectState ? <StateCheckBox selectState={selectState} /> : ''}
+            {selectState ? <StateCheckBox selectState={selectState} query={query} /> : ''}
           </div>
           <SearchResults query={query || ''} pageNumber={pageNumber || '1'} selectState={selectState || ''} />
         </div>

@@ -4,12 +4,8 @@ import { connect } from 'react-redux'
 import { actions as petitionActions } from '../actions/petitionActions.js'
 import { appLocation } from '../routes.js'
 
-import StateSelect from './form/state-select'
-
-const smallStateSelectStyle = {
-  display: 'inline',
-  width: '100px'
-}
+import ShortSearchBar from '../components/legacy/short-search-bar'
+import LongSearchBar from '../components/legacy/long-search-bar'
 
 class SearchBar extends React.Component {
 
@@ -68,39 +64,10 @@ class SearchBar extends React.Component {
   render() {
     const { isLong } = this.props
 
-    const longSearchBar = (
-      <div id='search-bar-large' className='container'>
-        <div className='row'>
-          <div className='span7 control-group bump-top-1'>
-            <form className='search' onSubmit={this.submitQuery}>
-              <div className='search'>
-                <input id='searchValue' value={this.state.query} placeholder='Search Petitions' onChange={this.selectQuery} type='text' className='margin-right-1 ' />
-                <StateSelect selectText='All States' style={smallStateSelectStyle} onChange={this.selectState} value={this.state.selectState} />
-                <button type='submit' className='background-moveon-dark-blue margin-left-1'>Search</button>
-              </div>
-            </form>
-          </div>
-          <div className='span5'>
-            <p className='lanky-header size-medium-large lh-24 bump-top-1'>Search for petitions by any keyword.</p>
-          </div>
-        </div>
-      </div>
-    )
-
-    const shortSearchBar = (
-      <div>
-        <form className='form-vertical' onSubmit={this.submitQuery}>
-          <div className='search'>
-            <input name='q' type='text' id='search-box2' className='margin-top-0 margin-right-2' value={this.state.query} onChange={this.selectQuery} />
-            <button type='submit' className='background-moveon-dark-blue'> Search</button>
-          </div>
-        </form>
-      </div>
-    )
-
     return (
       <div>
-        {isLong ? longSearchBar : shortSearchBar}
+        {isLong ? <LongSearchBar submit={this.submitQuery} queryValue={this.state.query} stateValue={this.state.selectState} changeQueryValue={this.selectQuery} changeQueryState={this.selectState} /> :
+          <ShortSearchBar submit={this.submitQuery} change={this.selectQuery} query={this.state.query} />}
         <div className='clear'></div>
       </div>
     )

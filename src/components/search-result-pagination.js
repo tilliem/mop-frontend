@@ -67,10 +67,14 @@ class SearchResultPagination extends React.Component {
           {pages}
           <li key={endPage} ><Link className='nextLink' onClick={() => this.changePage(nextPage, nextPageLinkUrl)} >&#187;</Link></li>
         </ul>
-        <p><small>Found {resultCount} results.</small></p>
+        {resultCount === false ? <p><small>Loading ...</small></p> : <p><small>Found {resultCount} results.</small></p>}
       </div>
     )
   }
+}
+
+SearchResultPagination.defaultProps = {
+  resultCount: false
 }
 
 SearchResultPagination.propTypes = {

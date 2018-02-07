@@ -5,7 +5,7 @@ import { mount } from 'enzyme'
 import { unwrapReduxComponent } from '../lib'
 import { createMockStore } from 'redux-test-utils'
 
-import SearchBar from '../../src/components/searchbar'
+import SearchBar from '../../src/containers/searchbar'
 
 
 describe('<SearchBar />', () => {

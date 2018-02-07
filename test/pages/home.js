@@ -5,11 +5,11 @@ import { expect } from 'chai'
 import { mount } from 'enzyme'
 import { createMockStore } from 'redux-test-utils'
 
-import Home from '../../src/pages/home'
-import BillBoard from '../../src/components/billboard'
-import SearchBar from '../../src/components/searchbar'
-import RecentVictoryList from '../../src/components/recentvictory'
-import TopPetitions from '../../src/components/top-petitions'
+import Home from '../../src/containers/home'
+import BillBoard from '../../src/components/legacy/billboard'
+import SearchBar from '../../src/containers/searchbar'
+import RecentVictoryList from '../../src/components/legacy/recentvictory'
+import TopPetitions from '../../src/containers/top-petitions'
 
 
 describe('<Home />', () => {
@@ -37,6 +37,12 @@ describe('<Home />', () => {
     const myComponent = <Home params={{}} />
     const context = mount(<Provider store={baseStore} children={myComponent} />)
     expect(context.find('.front-content').find(RecentVictoryList)).to.have.length(1)
+  })
+
+  it('renders top petitions', () => {
+    const myComponent = <Home params={{}} />
+    const context = mount(<Provider store={baseStore} children={myComponent} />)
+    expect(context.find(TopPetitions)).to.have.length(1)
   })
 
   it('renders org content', () => {
