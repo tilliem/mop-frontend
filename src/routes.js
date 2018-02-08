@@ -3,7 +3,7 @@ import { IndexRoute, Route, Router, browserHistory, hashHistory, match } from 'r
 
 
 import { Config } from './config'
-import { loadSession } from './actions/sessionActions'
+import { loadSession, trackPage } from './actions/sessionActions'
 import { loadOrganization } from './actions/navActions.js'
 import Home from './containers/home'
 import SignPetition from './pages/sign-petition'
@@ -50,6 +50,11 @@ const updateHistoryObject = (historyObj, routes) => {
         }
       })
   }
+  // This is for GA/Segment tracking:
+  // Note: this only triggers on *changes* -- not the first load
+  // The server script loading should take care of the first load
+  // with the boilerplate stuff, which should also setup the tracking id, etc.
+  historyObj.listen(trackPage)
 }
 
 export const routes = (store) => {
