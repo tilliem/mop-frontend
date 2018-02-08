@@ -1,0 +1,14 @@
+{
+  "chromeWebSecurity": false,
+  "env": {
+    "base_url": "https://example.org",
+    "base_login_url": "http://login.example.org/",
+    "users": {
+      "admin": {
+        "email": "admin@example.org",
+        "pass": "super secret passphrase",
+        "first_name": "Admin"
+      }
+    }
+  }
+}
