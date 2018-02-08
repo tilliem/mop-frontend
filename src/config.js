@@ -8,6 +8,7 @@ export const Config = {
   SESSION_COOKIE_NAME: process.env.SESSION_COOKIE_NAME || '',
   TRACK_SHARE_URL: process.env.TRACK_SHARE_URL || '',
   USE_HASH_BROWSING: !process.env.PROD,
-  ENTITY: process.env.ENTITY || window.ENTITY
+  ENTITY: process.env.ENTITY || window.ENTITY,
+  LEGACY_API_URI: process.env.LEGACY_API_URI
 }
 export default Config
