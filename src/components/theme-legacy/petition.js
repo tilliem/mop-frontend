@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { text2paraJsx } from '../lib.js'
-import { thanksLoader } from '../loaders/petition.js'
-import SignatureAddForm from './signature-add-form.js'
-import SignatureCount from './signature-count.js'
-import SignatureList from './signature-list.js'
-import PetitionFlagForm from './petition-flag-form.js'
+import { text2paraJsx } from '../../lib.js'
+import SignatureAddForm from '../signature-add-form.js'
+import SignatureCount from '../signature-count.js'
+import SignatureList from '../signature-list.js'
+import PetitionFlagForm from '../petition-flag-form.js'
 import { Link } from 'react-router'
 
 class Petition extends React.Component {
@@ -27,7 +26,7 @@ class Petition extends React.Component {
       <div className='container'>
         {(outOfDate) ?
           <div className='message-header'>
-            <span className='bell'>This petition has not been edited in a while. As a new legislative session has begun, it&#39;s possible some of the targets of this petition are out of date.</span>
+            <span className='bell'>This petition has not been edited in a while. As a new legislative session has begun, it’s possible some of the targets of this petition are out of date.</span>
           </div>
           : ''}
 
