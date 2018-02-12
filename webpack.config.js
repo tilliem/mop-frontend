@@ -22,7 +22,8 @@ var config = {
     publicPath: process.env.PUBLIC_ROOT || "/",
     //NOTE: when process.env.PROD is true this will be the minified file
     //TODO: maybe we should hash this and figure out a way to pass the hashed version to it
-    filename: APP_ENTRY + '.' + THEME + '.js'
+    filename: APP_ENTRY + '.' + THEME + '.js',
+    chunkFilename: 'chunk-[id]' + '.' + THEME + '.js'
   },
   externals: {
     'react': 'React',
