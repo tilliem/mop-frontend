@@ -126,8 +126,7 @@ const SignatureAddForm = ({
           <div id='recognized' style={{ marginBottom: '1em' }}>
             <strong>Welcome back {user.given_name}!</strong>
             <div>
-              {' '}
-              (Not {user.given_name}? <a onClick={onUnrecognize}>Click here.</a>){' '}
+              (Not {user.given_name}? <a onClick={onUnrecognize}>Click here.</a>)
             </div>
           </div>
         ) : (
@@ -282,18 +281,19 @@ const SignatureAddForm = ({
 
         {showOptinWarning ? (
           <p className='disclaimer bump-top-1'>
-            <b>Note:</b> This petition is a project of {creator.organization}{' '}
-            and MoveOn.org. By signing, you agree to receive email messages from{' '}
+            <b>Note:</b> This petition is a project of {creator.organization} and
+            MoveOn.org. By signing, you agree to receive email messages from
             <span id='organization_receive'>{creator.organization}, </span>MoveOn
             Political Action, and MoveOn Civic Action. You may unsubscribe at
-            any time. [<Link to='/privacy.html'>privacy policy</Link>]
+            any time.{' '}
+            [<Link to='/privacy.html'>Privacy policy</Link>]
           </p>
         ) : (
           <p className='disclaimer bump-top-1'>
             <b>Note:</b> By signing, you agree to receive email messages from
             MoveOn.org Civic Action and MoveOn.org Political Action. You may
-            unsubscribe at any time. [{' '}
-            <Link to='/privacy.html'>Privacy policy</Link> ]
+            unsubscribe at any time.{' '}
+            [<Link to='/privacy.html'>Privacy policy</Link>]
           </p>
         )}
       </form>
@@ -306,7 +306,7 @@ const SignatureAddForm = ({
         id='embedbox'
         className='codebox percent-95 hidden-phone moveon-track-click'
       >
-        {`<iframe src="https://petitions.moveon.org/embed/widget.html?v=3&amp;name=${
+        {`<iframe src="https://petitions.moveon.org/embed/widget.html?v=3&name=${
           petition.slug
         }" class="moveon-petition" id="petition-embed" width="300px" height="500px"></iframe>`}
       </div>
