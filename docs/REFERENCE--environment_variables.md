@@ -11,3 +11,4 @@ PUBLIC_ROOT                       | For WebPack dev server, the directory relati
 SESSION_COOKIE_NAME               | When this cookie is present, user session data will be loaded from `API_URI`'s base. _Default_: "SO_SESSION".
 STATIC_ROOT                       | For WebPack dev server, the relative path from initial page load to JS and other static assets. _Default_: "".
 TRACK_SHARE_URL                   | A url endpoint that share events (e.g. from thanks page) should be sent to with details about the shared page.  (see `src/actions/petitionActions.js`). _Default_: "" (none).
+THEME                             | Controls whether `import A from "Theme/a"` comes from the "theme-giraffe" or "theme-legacy" components. ("giraffe" or "legacy") _Default_: "legacy"
