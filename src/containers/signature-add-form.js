@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
-import CountrySelect from './form/country-select'
-import StateOrRegionInput from './form/state-or-region-input'
-import ZipOrPostalInput from './form/zip-or-postal-input'
+import CountrySelect from '../components/form/country-select'
+import StateOrRegionInput from '../components/form/state-or-region-input'
+import ZipOrPostalInput from '../components/form/zip-or-postal-input'
 import { actions as petitionActions } from '../actions/petitionActions.js'
 import { actions as sessionActions } from '../actions/sessionActions.js'
 
