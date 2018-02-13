@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { formatDate } from '../lib'
+import SignatureListItemComponent from 'LegacyTheme/signature-list-item'
+
 import { flagComment } from '../actions/petitionActions'
 
 class SignatureListItem extends React.Component {
@@ -21,42 +22,21 @@ class SignatureListItem extends React.Component {
   }
 
   render() {
-    const { user, createdDate, number, comments, commentId } = this.props
-    const { city, state, name } = user
+    const { user, createdDate, commentId, comments, number } = this.props
+    const { city, state } = this.props.user
     const location = ((!city) ? state : `${city}, ${state}`)
     const fromLocation = ((location === '') ? '' : `from ${location}`)
-    const date = new Date(createdDate)
 
     return (
-      <li>
-        <div className='signer'>
-          <span className='signer-number'>{number}</span>{' '}
-          <b>{name}</b> {fromLocation} signed this petition on {formatDate(date)}.
-        </div>
-        {comments ?
-          <div className='quoteboxup'>
-            {this.state.flagged
-             ? // clicked to flag
-              <div>
-                <b>Thanks for flagging this comment.</b>
-                <p>If enough users complain about this comment it will be hidden on the site.</p>
-              </div>
-             : // expose flag button
-              <div className='pull-right'>
-                <a
-                  className='btn btn-mini'
-                  title='Flag comment as inappropriate'
-                  onClick={() => this.flagComment(commentId)}
-                >
-                  <i className='icon-flag'></i>
-                </a>
-              </div>
-             }
-            <p>{comments}</p>
-          </div>
-         : null
-        }
-      </li>
+      <SignatureListItemComponent
+        user={user}
+        number={number}
+        fromLocation={fromLocation}
+        date={new Date(createdDate)}
+        isFlagged={this.state.flagged}
+        onFlag={() => this.flagComment(commentId)}
+        comments={comments}
+      />
     )
   }
 }
