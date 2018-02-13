@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { text2paraJsx } from '../../lib.js'
 import SignatureAddForm from '../../containers/signature-add-form.js'
-import SignatureCount from '../signature-count.js'
+import SignatureCount from 'LegacyTheme/signature-count.js'
 import SignatureList from '../../containers/signature-list.js'
 import PetitionFlagForm from '../../containers/petition-flag-form.js'
 import { Link } from 'react-router'
