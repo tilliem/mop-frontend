@@ -3,7 +3,7 @@ import { expect } from 'chai'
 
 import { shallow } from 'enzyme'
 
-import { WrappedComponent as SignatureListItem } from '../../src/components/signature-list-item'
+import { WrappedComponent as SignatureListItem } from '../../src/containers/signature-list-item'
 
 describe('<SignatureListItem />', () => {
   const user = {
