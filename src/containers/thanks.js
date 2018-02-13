@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { actions as petitionActions } from '../actions/petitionActions'
 import { petitionShortCode, md5ToToken } from '../lib'
-import ThanksNextPetition from '../components/thanks-next-petition'
+import ThanksNextPetition from './thanks-next-petition'
 
 class Thanks extends React.Component {
   constructor(props) {
