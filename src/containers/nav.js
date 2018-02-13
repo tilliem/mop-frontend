@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
-import NavLink from './nav-link'
+import NavLink from 'LegacyTheme/nav-link'
 
 const Nav = ({ user, nav, organization, minimal }) => {
   const cobrand = ((organization) ? nav.orgs[organization] : nav.partnerCobrand)
