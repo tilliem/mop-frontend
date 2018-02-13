@@ -3,7 +3,7 @@ import { expect } from 'chai'
 
 import { shallow } from 'enzyme'
 
-import Thanks from '../../src/components/thanks'
+import Thanks from '../../src/containers/thanks'
 
 import outkastPetition from '../../local/api/v1/petitions/outkast.json'
 
