@@ -5,7 +5,7 @@ import { text2paraJsx } from '../../lib.js'
 import SignatureAddForm from '../../containers/signature-add-form.js'
 import SignatureCount from '../signature-count.js'
 import SignatureList from '../signature-list.js'
-import PetitionFlagForm from '../petition-flag-form.js'
+import PetitionFlagForm from '../../containers/petition-flag-form.js'
 import { Link } from 'react-router'
 
 const Petition = ({ petition: p, query, petitionBy, outOfDate }) => (
