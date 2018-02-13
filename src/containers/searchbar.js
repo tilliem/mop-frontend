@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import { actions as petitionActions } from '../actions/petitionActions.js'
 import { appLocation } from '../routes.js'
 
-import ShortSearchBar from '../components/legacy/short-search-bar'
-import LongSearchBar from '../components/legacy/long-search-bar'
+import ShortSearchBar from 'LegacyTheme/short-search-bar'
+import LongSearchBar from 'LegacyTheme/long-search-bar'
 
 class SearchBar extends React.Component {
 

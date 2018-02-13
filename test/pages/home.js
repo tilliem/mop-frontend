@@ -6,9 +6,9 @@ import { mount } from 'enzyme'
 import { createMockStore } from 'redux-test-utils'
 
 import Home from '../../src/containers/home'
-import BillBoard from '../../src/components/legacy/billboard'
+import BillBoard from 'LegacyTheme/billboard'
 import SearchBar from '../../src/containers/searchbar'
-import RecentVictoryList from '../../src/components/legacy/recentvictory'
+import RecentVictoryList from 'LegacyTheme/recentvictory'
 import TopPetitions from '../../src/containers/top-petitions'
 
 

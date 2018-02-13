@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { appLocation } from '../routes.js'
-import PetitionOverview from '../components/legacy/petition-overview'
+import PetitionOverview from 'LegacyTheme/petition-overview'
 import { actions as accountActions } from '../actions/accountActions.js'
 
 class PetitionCreatorDashboard extends Component {
