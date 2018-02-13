@@ -16,8 +16,4 @@ describe('<Login />', () => {
     const context = mount(<Provider store={baseStore} children={myComponent} />)
     expect(context.find(LoginForm)).to.have.length(1)
   })
-
-  it.skip('can log the user in (TODO)', () => {
-    // Implement when logging in is implemented
-  })
 })
