@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { actions as petitionActions } from '../actions/petitionActions'
 import { petitionShortCode, md5ToToken } from '../lib'
-import ThanksNextPetition from './thanks-next-petition'
+
+import ThanksComponent from 'LegacyTheme/thanks'
 
 class Thanks extends React.Component {
   constructor(props) {
@@ -146,69 +147,24 @@ Thanks!
     const copyPasteMessage = `Subject: ${petition.title}\n\n${mailToMessage.replace('__TYPE__', 'cp')}`
     const mailtoMessage = `mailto:?subject=${encodeURIComponent(petition.title)}&body=${encodeURIComponent(mailToMessage.replace('__TYPE__', 'mt'))}`
 
-    return (<div className='row'>
-      {(this.state.sharedSocially ? <ThanksNextPetition entity={petition.entity || ''} /> : null)}
-      <div className='span4'>
-        <h1 className='size-superxl lh-100 font-lighter'>Thanks!</h1>
-      </div>
-      <div className='span5 offset1 bump-top-3 font-lighter lh-24'>
-        Now that you have {((this.isCreator) ? 'created' : 'signed')},
-        <span className='font-heavy moveon-bright-red'> help it grow</span> by asking your friends, family, colleagues to sign.
-      </div>
-      <div className='clear hidden-phone border-bottom'></div>
-      <div className='share-area'>
-        <div className='span4 share-social-media padding-top-1 align-center pull-right'>
-          <div className='lanky-header'>
-            <span className='icon-fb-default'></span>
-            Tell your friends on Facebook:
-          </div>
-          <button
-            id='facebook-button'
-            className='xl300 background-facebook-blue'
-            onClick={this.shareFacebook}
-          >Share on Facebook</button>
-          <div className='lanky-header bump-top-3 align-center'>
-            <span className='icon-twitter-default'></span>
-            Tweet your followers:
-          </div>
-          <button
-            id='twitter-button'
-            className='xl300 background-moveon-bright-red'
-            onClick={this.shareTwitter}
-          >Tweet This</button>
-          <textarea
-            className='hidden' id='tweet_text'
-            defaultValue={tweet}
-            ref={(input) => { this.tweetTextArea = input }}
-            readOnly
-          ></textarea>
-          <div id='hidden_share_link' className='lanky-header bump-top-3 align-center hidden'>
-            Send a link:
-            <textarea
-              ref={(input) => { this.linkTextarea = input }}
-              onClick={this.shareLink}
-              id='link_text'
-              defaultValue={rawShareLink}
-              readOnly
-            ></textarea>
-          </div>
-        </div>
-        <div className='span7 padding-top-1'>
-          <div className='share-email align-center'>
-            <div className='lanky-header align-center'><span className='icon-join-default'></span>Email your friends, family and colleagues:</div>
-            <a id='email-button' href={mailtoMessage} className='button xl300 background-moveon-bright-red'>Email your friends</a>
-            <div className='disclaimer bump-top-3 hidden-phone'>Or copy and paste the text below into a message:</div>
-            <textarea
-              ref={(input) => { this.emailTextarea = input }}
-              className='hidden-phone' id='email-textarea'
-              onClick={this.shareEmail}
-              value={copyPasteMessage.replace('__TYPE__', 'cp')}
-              readOnly
-            ></textarea>
-          </div>
-        </div>
-      </div>
-    </div>)
+    return (
+      <ThanksComponent
+        petition={petition}
+        sharedSocially={this.state.sharedSocially}
+        isCreator={this.isCreator}
+        shareFacebook={this.shareFacebook}
+        shareTwitter={this.shareTwitter}
+        shareLink={this.shareLink}
+        shareEmail={this.shareEmail}
+        mailtoMessage={mailtoMessage}
+        copyPasteMessage={copyPasteMessage}
+        rawShareLink={rawShareLink}
+        tweet={tweet}
+        setTweetRef={input => { this.tweetTextArea = input }}
+        setLinkRef={input => { this.linkTextArea = input }}
+        setEmailRef={input => { this.emailTextArea = input }}
+      />
+    )
   }
 }
 
