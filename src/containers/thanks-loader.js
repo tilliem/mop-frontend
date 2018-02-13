@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { thanksLoader } from '../loaders/petition.js'
 import { actions as petitionActions } from '../actions/petitionActions.js'
 
-class ThanksPage extends React.Component {
+class ThanksLoader extends React.Component {
   componentWillMount() {
     const self = this
     thanksLoader().then((deps) => {
@@ -42,7 +42,7 @@ class ThanksPage extends React.Component {
 
 }
 
-ThanksPage.propTypes = {
+ThanksLoader.propTypes = {
   petition: PropTypes.object,
   user: PropTypes.object,
   signatureMessage: PropTypes.object,
@@ -64,4 +64,4 @@ function mapStateToProps(store, ownProps) {
   }
 }
 
-export default connect(mapStateToProps)(ThanksPage)
+export default connect(mapStateToProps)(ThanksLoader)
