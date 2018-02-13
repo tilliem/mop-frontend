@@ -15,7 +15,7 @@ import PetitionReportPage from './pages/petition-report-page'
 import Wrapper from './components/wrapper'
 import Register from './pages/register'
 import ForgotPassword from './pages/forgot-password'
-import Login from './pages/login'
+import Login from './containers/login'
 
 
 const baseAppPath = process.env.BASE_APP_PATH || '/'

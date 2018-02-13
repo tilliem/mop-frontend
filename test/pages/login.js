@@ -5,7 +5,7 @@ import { expect } from 'chai'
 import { mount } from 'enzyme'
 import { createMockStore } from 'redux-test-utils'
 
-import Login from '../../src/pages/login'
+import Login from '../../src/containers/login'
 import LoginForm from '../../src/components/login-form'
 
 
