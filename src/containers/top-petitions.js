@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import HotPetitons from '../components/legacy/hot-petitions'
+import HotPetitons from 'LegacyTheme/hot-petitions'
 import { loadTopPetitions } from '../actions/petitionActions.js'
 
 class TopPetitions extends React.Component {

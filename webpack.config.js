@@ -6,6 +6,9 @@ var BUILD_DIR = path.resolve(__dirname, 'build');
 var APP_DIR = path.resolve(__dirname, 'src');
 var APP_ENTRY = process.env.APP_ENTRY || "main";
 
+var THEME = process.env.THEME || "legacy";
+var THEME_DIR = path.resolve(__dirname, 'src/components/theme-' + THEME);
+
 var config = {
   entry: {
     javascript: APP_DIR + '/apps/' + APP_ENTRY + '.js'
@@ -19,7 +22,8 @@ var config = {
     publicPath: process.env.PUBLIC_ROOT || "/",
     //NOTE: when process.env.PROD is true this will be the minified file
     //TODO: maybe we should hash this and figure out a way to pass the hashed version to it
-    filename: APP_ENTRY + '.js'
+    filename: APP_ENTRY + '.' + THEME + '.js',
+    chunkFilename: 'chunk-[id]' + '.' + THEME + '.js'
   },
   externals: {
     'react': 'React',
@@ -37,6 +41,12 @@ var config = {
         loader: "file-loader?name=[name].[ext]",
       }
     ]
+  },
+  resolve: {
+    alias: {
+      Theme: THEME_DIR,
+      LegacyTheme: path.resolve(__dirname, "src/components/theme-legacy/")
+    }
   },
   plugins : [
     new HtmlWebpackPlugin({

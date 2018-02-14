@@ -2,6 +2,9 @@ module.exports = {
   extends: 'airbnb',
   parser: 'babel-eslint',
   plugins: ['prefer-object-spread'],
+  settings: {
+    'import/resolver': 'webpack'
+  },
   rules: {
     semi: ['error', 'never'],
     'comma-dangle': ['error', 'never'],
