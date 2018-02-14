@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import RegisterForm from '../components/register-form'
+import RegisterForm from 'LegacyTheme/register-form'
 import { actions as accountActions } from '../actions/accountActions'
 
 import { isValidEmail } from '../lib'
