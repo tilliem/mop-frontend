@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { actions as petitionActions } from '../actions/petitionActions.js'
-import { getStateFullName } from './state-abbrev.js'
-import { appLocation } from '../routes.js'
+import { actions as petitionActions } from '../actions/petitionActions'
+import { getStateFullName } from '../lib'
+import { appLocation } from '../routes'
 
 class StateCheckBox extends React.Component {
 

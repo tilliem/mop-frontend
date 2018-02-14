@@ -5,7 +5,7 @@ import SearchBar from '../../containers/searchbar'
 import SearchResults from '../../containers/search-results'
 import StateCheckBox from '../state-check-box'
 
-import { getStateFullName } from '../state-abbrev.js'
+import { getStateFullName } from '../../lib'
 
 const updatedHeader = (q, s) => {
   const stateFullName = getStateFullName(s)
