@@ -101,7 +101,7 @@ SearchResultPagination.defaultProps = {
 }
 
 SearchResultPagination.propTypes = {
-  resultCount: PropTypes.number.isRequired,
+  resultCount: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired,
   pageSize: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
   searchNavLinks: PropTypes.object.isRequired,

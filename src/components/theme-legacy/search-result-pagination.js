@@ -7,10 +7,7 @@ const SearchResultPagination = ({ pages, onClickNext, resultCount }) => (
     <ul>
       {pages}
       <li>
-        <Link
-          className='nextLink'
-          onClick={onClickNext}
-        >
+        <Link className='nextLink' onClick={onClickNext}>
           &#187;
         </Link>
       </li>
@@ -30,7 +27,7 @@ const SearchResultPagination = ({ pages, onClickNext, resultCount }) => (
 SearchResultPagination.propTypes = {
   pages: PropTypes.array,
   onClickNext: PropTypes.func,
-  resultCount: PropTypes.number
+  resultCount: PropTypes.oneOfType([PropTypes.number, PropTypes.bool])
 }
 
 export default SearchResultPagination
