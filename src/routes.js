@@ -7,7 +7,7 @@ import { loadSession, trackPage } from './actions/sessionActions'
 import { loadOrganization } from './actions/navActions.js'
 import Home from './containers/home'
 import SignPetition from './containers/sign-petition'
-import ThanksLoader from './containers/thanks-loader'
+import ThanksShim from './loaders/thanks-shim'
 import SearchPage from './pages/search'
 import PetitionCreatorDashboard from './containers/petition-creator-dashboard'
 import CreatePetitionPage from './pages/create-petition-page'
@@ -68,8 +68,8 @@ export const routes = (store) => {
       <IndexRoute component={Home} />
       <Route path='/sign/:petition_slug' component={SignPetition} />
       <Route path='/:organization/sign/:petition_slug' component={SignPetition} onEnter={orgLoader} />
-      <Route path='/thanks.html' component={ThanksLoader} prodReady={false} minimalNav />
-      <Route path='/:organization/thanks.html' component={ThanksLoader} onEnter={orgLoader} minimalNav />
+      <Route path='/thanks.html' component={ThanksShim} prodReady={false} minimalNav />
+      <Route path='/:organization/thanks.html' component={ThanksShim} onEnter={orgLoader} minimalNav />
       <Route path='/find' component={SearchPage} />
       <Route path='/dashboard.html' component={PetitionCreatorDashboard} />
       <Route path='/create_start.html' component={CreatePetitionPage} minimalNav />

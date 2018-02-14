@@ -2,10 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { thanksLoader } from '../loaders/petition.js'
+import { thanksLoader } from './petition.js'
 import { actions as petitionActions } from '../actions/petitionActions.js'
 
-class ThanksLoader extends React.Component {
+// This component is used in place of the Thanks component,
+// and handles lazy-loading the actual Thanks component (with thanksLoader)
+class ThanksShim extends React.Component {
   componentWillMount() {
     const self = this
     thanksLoader().then((deps) => {
@@ -42,7 +44,7 @@ class ThanksLoader extends React.Component {
 
 }
 
-ThanksLoader.propTypes = {
+ThanksShim.propTypes = {
   petition: PropTypes.object,
   user: PropTypes.object,
   signatureMessage: PropTypes.object,
@@ -64,4 +66,4 @@ function mapStateToProps(store, ownProps) {
   }
 }
 
-export default connect(mapStateToProps)(ThanksLoader)
+export default connect(mapStateToProps)(ThanksShim)
