@@ -10,7 +10,7 @@ import { createMockStore } from 'redux-test-utils'
 import { mount } from 'enzyme'
 import { unwrapReduxComponent } from '../lib'
 
-import SignatureAddForm from '../../src/components/signature-add-form'
+import SignatureAddForm from '../../src/containers/signature-add-form'
 
 describe('<SignatureAddForm />', () => {
   // This file is organized into two sub- describe() buckets.
