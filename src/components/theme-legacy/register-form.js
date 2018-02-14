@@ -73,7 +73,7 @@ const RegisterForm = ({ errorList, handleSubmit, setRef }) => (
             <strong>
               MoveOn will never sell your personal information to anyone ever.
             </strong>{' '}
-            For petitions, letters to the editor, and surveys you've signed or
+            For petitions, letters to the editor, and surveys you’ve signed or
             completed, we treat your name, city, state, and comments as public
             information, which means anyone can access and view it. We will not
             make your street address publicly available, but we may transmit it
