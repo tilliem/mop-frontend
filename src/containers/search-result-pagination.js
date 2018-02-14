@@ -5,8 +5,9 @@ import { connect } from 'react-redux'
 import { actions as petitionActions } from '../actions/petitionActions.js'
 import { appLocation } from '../routes.js'
 
-class SearchResultPagination extends React.Component {
+import SearchResultPaginationComponent from 'LegacyTheme/search-result-pagination'
 
+class SearchResultPagination extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -17,15 +18,19 @@ class SearchResultPagination extends React.Component {
     this.changePage = this.changePage.bind(this)
   }
 
-
   changePage(newPage, newUrl) {
     if (newPage !== this.props.currentPage) {
       const dispatch = this.props.dispatch
-      dispatch(petitionActions.searchPetitions(this.props.query, newPage, this.props.selectState))
+      dispatch(
+        petitionActions.searchPetitions(
+          this.props.query,
+          newPage,
+          this.props.selectState
+        )
+      )
       appLocation.push(newUrl)
     }
   }
-
 
   render() {
     const q = this.props.query || ''
@@ -43,9 +48,21 @@ class SearchResultPagination extends React.Component {
     const pages = []
 
     if (currentPage === 1) {
-      pages.push(<li className='disabled prevLink' key={0} ><Link onClick={() => this.changePage(prevPage, prevPageLinkUrl)}>&#171;</Link></li>)
+      pages.push(
+        <li className='disabled prevLink' key={0}>
+          <Link onClick={() => this.changePage(prevPage, prevPageLinkUrl)}>
+            &#171;
+          </Link>
+        </li>
+      )
     } else {
-      pages.push(<li className='prevLink' key={0} ><Link onClick={() => this.changePage(prevPage, prevPageLinkUrl)}>&#171;</Link></li>)
+      pages.push(
+        <li className='prevLink' key={0}>
+          <Link onClick={() => this.changePage(prevPage, prevPageLinkUrl)}>
+            &#171;
+          </Link>
+        </li>
+      )
     }
 
     const startPage = Math.max(1, currentPage - 3)
@@ -54,21 +71,27 @@ class SearchResultPagination extends React.Component {
     for (let i = startPage; i <= endPage; i++) {
       if (i === currentPage) {
         const url = `find?q=${q}&page=${currentPage}`
-        pages.push(<li className='active pagelink' key={i}><Link onClick={() => this.changePage(i, url)} >{currentPage} </Link></li>)
+        pages.push(
+          <li className='active pagelink' key={i}>
+            <Link onClick={() => this.changePage(i, url)}>{currentPage} </Link>
+          </li>
+        )
       } else {
         const url = `find?q=${q}&page=${i}`
-        pages.push(<li className='pagelink' key={i} ><Link onClick={() => this.changePage(i, url)} >{i}</Link></li>)
+        pages.push(
+          <li className='pagelink' key={i}>
+            <Link onClick={() => this.changePage(i, url)}>{i}</Link>
+          </li>
+        )
       }
     }
 
     return (
-      <div className='pagination'>
-        <ul>
-          {pages}
-          <li key={endPage} ><Link className='nextLink' onClick={() => this.changePage(nextPage, nextPageLinkUrl)} >&#187;</Link></li>
-        </ul>
-        {resultCount === false ? <p><small>Loading ...</small></p> : <p><small>Found {resultCount} results.</small></p>}
-      </div>
+      <SearchResultPaginationComponent
+        pages={pages}
+        resultCount={resultCount}
+        onClickNext={() => this.changePage(nextPage, nextPageLinkUrl)}
+      />
     )
   }
 }
