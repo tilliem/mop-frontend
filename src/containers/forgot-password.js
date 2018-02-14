@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ForgotPasswordForm from '../components/forgot-password-form'
+import ForgotPasswordForm from 'LegacyTheme/forgot-password-form'
 import { actions as accountActions } from '../actions/accountActions'
 
 import { isValidEmail } from '../lib'

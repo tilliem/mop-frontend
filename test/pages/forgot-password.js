@@ -5,7 +5,7 @@ import { mount } from 'enzyme'
 
 import Config from '../../src/config.js'
 import ForgotPassword from '../../src/containers/forgot-password'
-import ForgotPasswordForm from '../../src/components/forgot-password-form'
+import ForgotPasswordForm from 'LegacyTheme/forgot-password-form'
 
 const BASE_URI = 'http://localhost:8080'
 Config.API_URI = BASE_URI
