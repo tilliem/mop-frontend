@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 
-import { text2paraJsx, ellipsize } from '../../lib.js'
+import { text2paraJsx, ellipsize } from '../../lib'
 
 const PetitionPreview = ({ petition, source }) => {
   const url = `/sign/${petition.name}?source=${source}`
