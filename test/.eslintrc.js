@@ -7,7 +7,11 @@ module.exports = Object.assign({}, parent, {
     node: true,
     mocha: true
   },
+  plugins: [...parent.plugins, 'mocha'],
   rules: Object.assign({}, parent.rules, {
-    'no-unused-expressions': ['off']
+    'no-unused-expressions': ['off'],
+    'mocha/no-skipped-tests': 'error',
+    'mocha/no-exclusive-tests': 'error',
+    'mocha/handle-done-callback': 'warn'
   })
 })
