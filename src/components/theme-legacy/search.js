@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import SearchBar from '../../containers/searchbar'
 import SearchResults from '../../containers/search-results'
-import StateCheckBox from '../state-check-box'
+import StateCheckBox from '../../containers/state-check-box'
 
 import { getStateFullName } from '../../lib'
 
