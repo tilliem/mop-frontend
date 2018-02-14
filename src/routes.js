@@ -14,7 +14,7 @@ import CreatePetitionPage from './pages/create-petition-page'
 import PetitionReportPage from './pages/petition-report-page'
 import Wrapper from 'LegacyTheme/wrapper'
 import Register from './pages/register'
-import ForgotPassword from './pages/forgot-password'
+import ForgotPassword from './containers/forgot-password'
 import Login from './containers/login'
 
 
