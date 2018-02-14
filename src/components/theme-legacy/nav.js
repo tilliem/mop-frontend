@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
-import NavLink from './nav-link'
+import NavLink from 'LegacyTheme/nav-link'
 
 const Nav = ({ user, nav, organization, minimal }) => {
   const cobrand = ((organization) ? nav.orgs[organization] : nav.partnerCobrand)
@@ -100,11 +99,4 @@ Nav.propTypes = {
   minimal: PropTypes.bool
 }
 
-function mapStateToProps(store) {
-  return {
-    user: store.userStore,
-    nav: store.navStore
-  }
-}
-
-export default connect(mapStateToProps)(Nav)
+export default Nav
