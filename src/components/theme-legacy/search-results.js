@@ -55,7 +55,7 @@ SearchResults.propTypes = {
   resultCount: PropTypes.number,
   currentPage: PropTypes.number,
   query: PropTypes.string,
-  searchNavLinks: PropTypes.array,
+  searchNavLinks: PropTypes.object,
   pageSize: PropTypes.number,
   setResultsRef: PropTypes.func
 }
