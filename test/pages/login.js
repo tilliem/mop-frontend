@@ -18,10 +18,6 @@ describe('<Login />', () => {
     expect(context.find(LoginForm)).to.have.length(1)
   })
 
-  it.skip('can log the user in (TODO)', () => {
-    // Implement when logging in is implemented
-  })
-
   it('displays errors when required fields are missing', () => {
     const login = mount(<Provider store={empty} children={<Login />} />)
     login.find('form').simulate('submit')

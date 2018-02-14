@@ -3,7 +3,7 @@ import { Router, Route, browserHistory, hashHistory } from 'react-router'
 
 import { Config } from '../config'
 import { loadSession } from '../actions/sessionActions'
-import Nav from '../components/nav'
+import Nav from '../containers/nav'
 
 
 export const appLocation = (Config.USE_HASH_BROWSING ? hashHistory : browserHistory)
