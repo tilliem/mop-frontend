@@ -5,7 +5,7 @@ import { expect } from 'chai'
 import { mount } from 'enzyme'
 import { createMockStore } from 'redux-test-utils'
 
-import SearchResults from '../../src/components/search-results'
+import SearchResults from '../../src/containers/search-results'
 
 
 describe('<SearchResults />', () => {

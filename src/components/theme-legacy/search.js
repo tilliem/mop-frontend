@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import SearchBar from '../../containers/searchbar'
-import SearchResults from '../search-results'
+import SearchResults from '../../containers/search-results'
 import StateCheckBox from '../state-check-box'
 
 import { getStateFullName } from '../state-abbrev.js'
