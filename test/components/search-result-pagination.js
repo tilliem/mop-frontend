@@ -4,7 +4,7 @@ import { expect } from 'chai'
 import { mount } from 'enzyme'
 import { createMockStore } from 'redux-test-utils'
 
-import SearchResultPagination from '../../src/components/search-result-pagination'
+import SearchResultPagination from '../../src/containers/search-result-pagination'
 
 
 describe('<SearchResultPagination />', () => {

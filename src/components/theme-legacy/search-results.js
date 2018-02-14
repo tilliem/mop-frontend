@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import SearchResultPagination from '../search-result-pagination'
+import SearchResultPagination from '../../containers/search-result-pagination'
 
 const SearchResults = ({
   results,
