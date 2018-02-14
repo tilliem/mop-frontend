@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import StateCheckBoxComponent from 'LegacyTheme/state-check-box'
+
 import { actions as petitionActions } from '../actions/petitionActions'
-import { getStateFullName } from '../lib'
 import { appLocation } from '../routes'
 
 class StateCheckBox extends React.Component {
@@ -31,16 +32,11 @@ class StateCheckBox extends React.Component {
   }
 
   render() {
-    const { selectState } = this.props
-    const stateFullName = getStateFullName(selectState)
-
     return (
-      <div>
-        <label htmlFor='state-checkbox'>
-          <input id='state-checkbox' className='search-filter margin-top-0' type='checkbox' name='state' value={selectState} onChange={this.stateBoxChecked} checked />
-          Only petitions from {stateFullName}
-        </label>
-      </div>
+      <StateCheckBoxComponent
+        selectState={this.props.selectState}
+        onChangeState={this.stateBoxChecked}
+      />
     )
   }
 }
