@@ -28,12 +28,12 @@ class SignPetition extends React.Component {
   checkOrgPathMatches(petition, orgPath) {
     const { creator } = petition._embedded
     // Petition has org that doesn't match URL
-    if (creator.source && (creator.source != orgPath)) {
+    if (creator.source && (creator.source !== orgPath)) {
       appLocation.push(`/${creator.source}/sign/${petition.name}`)
       return false
     }
     // URL has org that doesn't match petition
-    if (orgPath && (orgPath != creator.source)) {
+    if (orgPath && (orgPath !== creator.source)) {
       appLocation.push(`/sign/${petition.name}`)
       return false
     }
