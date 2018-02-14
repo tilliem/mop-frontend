@@ -22,19 +22,19 @@ export function register(fields) {
     })
       .then(response =>
         response.json().then(() => {
-          if (false) {
-            // login user if valid and route user to https://petitions.moveon.org/no_petition.html
-            // otherwise disatch failure with errors
-            dispatch({
-              type: actionTypes.REGISTER_SUCCESS,
-              nice: 'nice'
-            })
-          } else {
-            dispatch({
-              type: actionTypes.REGISTER_FAILURE,
-              formErrors: [{ message: 'failed to register user' }]
-            })
-          }
+          // if (false) {
+          //   // login user if valid and route user to https://petitions.moveon.org/no_petition.html
+          //   // otherwise disatch failure with errors
+          //   dispatch({
+          //     type: actionTypes.REGISTER_SUCCESS,
+          //     nice: 'nice'
+          //   })
+          // } else {
+          dispatch({
+            type: actionTypes.REGISTER_FAILURE,
+            formErrors: [{ message: 'failed to register user' }]
+          })
+          // }
         })
       )
       .catch(() => {
