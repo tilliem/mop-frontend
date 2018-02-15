@@ -13,7 +13,7 @@ import PetitionCreatorDashboard from './containers/petition-creator-dashboard'
 import CreatePetitionPage from './pages/create-petition-page'
 import PetitionReportPage from './pages/petition-report-page'
 import Wrapper from 'LegacyTheme/wrapper'
-import Register from './pages/register'
+import Register from './containers/register'
 import ForgotPassword from './pages/forgot-password'
 import Login from './containers/login'
 
