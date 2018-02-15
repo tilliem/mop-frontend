@@ -28,7 +28,7 @@ const Home = ({ params, nav }) => {
           pac={isPac ? 1 : 0}
           megapartner={organization || ''}
           fullWidth={isOrganization}
-          source='homepage'
+          source='petitionshomepage'
         />
         {isOrganization ? null : <RecentVictoryList />}
       </div>
