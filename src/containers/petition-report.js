@@ -6,7 +6,7 @@ import { loadPetition } from '../actions/petitionActions.js'
 import { petitionReportLoader } from '../loaders/petition.js'
 
 
-class PetitionReportPage extends React.Component {
+class PetitionReport extends React.Component {
 
   componentWillMount() {
     const self = this
@@ -62,7 +62,7 @@ class PetitionReportPage extends React.Component {
   }
 }
 
-PetitionReportPage.propTypes = {
+PetitionReport.propTypes = {
   petition: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   location: PropTypes.object,
   dispatchLoadPetition: PropTypes.func
@@ -80,4 +80,4 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchLoadPetition: (petitionId) => dispatch(loadPetition(petitionId))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(PetitionReportPage)
+export default connect(mapStateToProps, mapDispatchToProps)(PetitionReport)

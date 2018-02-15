@@ -11,7 +11,7 @@ import ThanksPage from './pages/thanks'
 import SearchPage from './pages/search'
 import PetitionCreatorDashboard from './containers/petition-creator-dashboard'
 import CreatePetitionPage from './pages/create-petition-page'
-import PetitionReportPage from './pages/petition-report-page'
+import PetitionReport from './containers/petition-report'
 import Wrapper from 'LegacyTheme/wrapper'
 import Register from './pages/register'
 import ForgotPassword from './pages/forgot-password'
@@ -73,7 +73,7 @@ export const routes = (store) => {
       <Route path='/find' component={SearchPage} />
       <Route path='/dashboard.html' component={PetitionCreatorDashboard} />
       <Route path='/create_start.html' component={CreatePetitionPage} minimalNav />
-      <Route path='/petition_report.html' component={PetitionReportPage} />
+      <Route path='/petition_report.html' component={PetitionReport} />
       <Route path='/:organization/create_start.html' component={CreatePetitionPage} onEnter={orgLoader} minimalNav />
       <Route path='/login/' component={Login} />
       <Route path='/login/index.html' component={Login} />
