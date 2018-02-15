@@ -1,9 +1,10 @@
 import React from 'react'
+import ResponsiveEmbed from 'react-responsive-embed'
 
 const Video = () => (
   <div className='billboard-content' style={{ lineHeight: 0 }}>
     <span className='billboard-video'>
-      <iframe width='564' height='380' src='https://www.youtube.com/embed/oMHH7FL66fo' frameBorder='0' allowFullScreen></iframe>
+      <ResponsiveEmbed src='https://www.youtube.com/embed/oMHH7FL66fo' allowFullScreen />
     </span>
   </div>
 )
