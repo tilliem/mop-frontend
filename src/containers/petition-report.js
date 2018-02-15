@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { loadPetition } from '../actions/petitionActions.js'
-import { petitionReportLoader } from '../loaders/petition.js'
+import { loadPetition } from '../actions/petitionActions'
+import { petitionReportLoader } from '../loaders/petition'
 
 
 class PetitionReport extends React.Component {
