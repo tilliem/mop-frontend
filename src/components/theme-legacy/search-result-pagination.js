@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 
-const SearchResultPagination = ({ pages, onClickNext, resultCount }) => (
+const SearchResultPagination = ({ pages, onClickNext, resultsCount }) => (
   <div className='pagination'>
     <ul>
       {pages}
@@ -12,13 +12,13 @@ const SearchResultPagination = ({ pages, onClickNext, resultCount }) => (
         </Link>
       </li>
     </ul>
-    {resultCount === false ? (
+    {resultsCount === false ? (
       <p>
         <small>Loading ...</small>
       </p>
     ) : (
       <p>
-        <small>Found {resultCount} results.</small>
+        <small>Found {resultsCount} results.</small>
       </p>
     )}
   </div>
@@ -27,7 +27,7 @@ const SearchResultPagination = ({ pages, onClickNext, resultCount }) => (
 SearchResultPagination.propTypes = {
   pages: PropTypes.array,
   onClickNext: PropTypes.func,
-  resultCount: PropTypes.oneOfType([PropTypes.number, PropTypes.bool])
+  resultsCount: PropTypes.oneOfType([PropTypes.number, PropTypes.bool])
 }
 
 export default SearchResultPagination

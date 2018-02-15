@@ -5,7 +5,7 @@ import SearchResultPagination from '../../containers/search-result-pagination'
 
 const SearchResults = ({
   results,
-  resultCount,
+  resultsCount,
   pageSize,
   currentPage,
   searchNavLinks,
@@ -40,7 +40,7 @@ const SearchResults = ({
     >
       {resultsList}
       <SearchResultPagination
-        resultCount={resultCount}
+        resultsCount={resultsCount}
         pageSize={pageSize}
         currentPage={currentPage}
         searchNavLinks={searchNavLinks}
@@ -52,7 +52,7 @@ const SearchResults = ({
 
 SearchResults.propTypes = {
   results: PropTypes.array,
-  resultCount: PropTypes.number,
+  resultsCount: PropTypes.number,
   currentPage: PropTypes.number,
   query: PropTypes.string,
   searchNavLinks: PropTypes.object,

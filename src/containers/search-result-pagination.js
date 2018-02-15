@@ -35,7 +35,7 @@ class SearchResultPagination extends React.Component {
   render() {
     const q = this.props.query || ''
     const currentPage = this.props.currentPage
-    const resultCount = this.props.resultCount
+    const resultsCount = this.props.resultsCount
     const pageSize = this.props.pageSize
 
     const nextPage = currentPage + 1
@@ -44,7 +44,7 @@ class SearchResultPagination extends React.Component {
     const nextPageLinkUrl = `/find?q=${q}&page=${nextPage}`
     const prevPageLinkUrl = `/find?q=${q}&page=${prevPage}`
 
-    const numPages = Math.ceil(resultCount / pageSize)
+    const numPages = Math.ceil(resultsCount / pageSize)
     const pages = []
 
     if (currentPage === 1) {
@@ -89,7 +89,7 @@ class SearchResultPagination extends React.Component {
     return (
       <SearchResultPaginationComponent
         pages={pages}
-        resultCount={resultCount}
+        resultsCount={resultsCount}
         onClickNext={() => this.changePage(nextPage, nextPageLinkUrl)}
       />
     )
@@ -97,11 +97,11 @@ class SearchResultPagination extends React.Component {
 }
 
 SearchResultPagination.defaultProps = {
-  resultCount: false
+  resultsCount: false
 }
 
 SearchResultPagination.propTypes = {
-  resultCount: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired,
+  resultsCount: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired,
   pageSize: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
   searchNavLinks: PropTypes.object.isRequired,
