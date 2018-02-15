@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Video = () => (
-  <div className='billboard-content'>
+  <div className='billboard-content' style={{ lineHeight: 0 }}>
     <span className='billboard-video'>
       <iframe width='560' height='380' src='https://www.youtube.com/embed/oMHH7FL66fo' frameBorder='0' allowFullScreen></iframe>
     </span>
