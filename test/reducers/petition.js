@@ -29,8 +29,8 @@ describe('petition reducer', () => {
     const state = reducer(defaultState, action)
 
     expect(state.petitionStore.topPetitions)
-    	.to.have.property('test1')
-    	.to.deep.equal([95983])
+      .to.have.property('test1')
+      .to.deep.equal([95983])
     expect(Object.keys(state.petitionStore.petitions)).to.deep.equal(['95983', 'outkast'])
   })
 })
