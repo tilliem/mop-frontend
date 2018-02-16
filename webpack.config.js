@@ -83,6 +83,7 @@ var config = {
         'SESSION_COOKIE_NAME': JSON.stringify(process.env.SESSION_COOKIE_NAME || 'SO_SESSION'),
         'STATIC_ROOT': JSON.stringify(process.env.STATIC_ROOT || ''),
         'TRACK_SHARE_URL': JSON.stringify(process.env.TRACK_SHARE_URL || ''),
+        'THEME': JSON.stringify(THEME),
         'PROD': process.env.PROD
       }
     })
