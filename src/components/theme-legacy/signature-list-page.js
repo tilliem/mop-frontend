@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import SignatureListItem from './signature-list-item.js'
+import SignatureListItem from '../../containers/signature-list-item.js'
 
 const SignatureListPage = ({ signatures, startNumber }) => (
   <div className='signature-table'>
