@@ -19,7 +19,7 @@ export const thanksLoader = () => new Promise(resolve => {
   require.ensure([], () => {
     resolve({
       // eslint-disable-next-line global-require
-      Thanks: require('../components/thanks.js')
+      Thanks: require('../containers/thanks.js')
     })
   })
 })
