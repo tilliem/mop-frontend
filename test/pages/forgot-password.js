@@ -4,8 +4,8 @@ import { expect } from 'chai'
 import { mount } from 'enzyme'
 
 import Config from '../../src/config.js'
-import ForgotPassword from '../../src/pages/forgot-password'
-import ForgotPasswordForm from '../../src/components/forgot-password-form'
+import ForgotPassword from '../../src/containers/forgot-password'
+import ForgotPasswordForm from 'LegacyTheme/forgot-password-form'
 
 const BASE_URI = 'http://localhost:8080'
 Config.API_URI = BASE_URI
