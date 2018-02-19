@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 
-import CountrySelect from '../form/country-select'
-import StateOrRegionInput from '../form/state-or-region-input'
-import ZipOrPostalInput from '../form/zip-or-postal-input'
+import CountrySelect from './form/country-select'
+import StateOrRegionInput from './form/state-or-region-input'
+import ZipOrPostalInput from './form/zip-or-postal-input'
 
 const SignatureAddForm = ({
   submit,
