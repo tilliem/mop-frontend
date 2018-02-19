@@ -4,7 +4,7 @@ import { expect } from 'chai'
 import { shallow } from 'enzyme'
 import { createMockStore } from 'redux-test-utils'
 
-import SearchPage from '../../src/pages/search'
+import SearchPage from '../../src/containers/search'
 
 
 describe('<SearchPage />', () => {

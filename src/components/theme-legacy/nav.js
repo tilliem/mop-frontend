@@ -1,16 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import classNames from 'classnames'
 
-import NavLink from './nav-link'
+import NavLink from 'LegacyTheme/nav-link'
 
-const Nav = ({ user, nav, organization, minimal }) => {
+const Nav = ({ user, nav, organization, minimal, toggleOpen, isOpenMobile }) => {
   const cobrand = ((organization) ? nav.orgs[organization] : nav.partnerCobrand)
+
+  const ulClassNames = classNames({
+    nav: true,
+    'collapse nav-collapse': !isOpenMobile
+  })
 
   const userLinks = (
     <div className='pull-right bump-top-1 span-7 top-menu'>
-      <ul className='nav collapse nav-collapse'>
+      <ul className={ulClassNames}>
         <NavLink to='/admin'>Admin</NavLink>
         <NavLink to='/campaign_tips.html'>Campaign Tips</NavLink>
         <NavLink to='/edit_account.html'>Edit account</NavLink>
@@ -22,7 +27,7 @@ const Nav = ({ user, nav, organization, minimal }) => {
 
   const guestLinks = (
     <div className='pull-right bump-top-1 span-7 top-menu'>
-      <ul className='nav collapse nav-collapse'>
+      <ul className={ulClassNames}>
         <NavLink to='/campaign_tips.html'>Campaign Tips</NavLink>
         <NavLink to='/about.html'>About</NavLink>
         <NavLink to='https://civic.moveon.org/donatec4/creditcard.html?cpn_id=511'>Donate</NavLink>
@@ -73,9 +78,9 @@ const Nav = ({ user, nav, organization, minimal }) => {
                 <Link className='icon-link-narrow icon-managepetitions' to='/dashboard.html' />
               </div>
 
-              <a className='btn visible-phone pull-right bump-top-2' data-toggle='collapse' data-target='.nav-collapse'>
+              <Link className='btn visible-phone pull-right bump-top-2' onClick={toggleOpen} >
                 <span className='icon-th-list'></span>
-              </a>
+              </Link>
 
               {user.signonId ? userLinks : guestLinks}
             </div>
@@ -97,14 +102,9 @@ Nav.propTypes = {
   user: PropTypes.object,
   nav: PropTypes.object,
   organization: PropTypes.string,
-  minimal: PropTypes.bool
+  minimal: PropTypes.bool,
+  toggleOpen: PropTypes.func,
+  isOpenMobile: PropTypes.bool
 }
 
-function mapStateToProps(store) {
-  return {
-    user: store.userStore,
-    nav: store.navStore
-  }
-}
-
-export default connect(mapStateToProps)(Nav)
+export default Nav

@@ -1,5 +1,7 @@
 import React from 'react' // needed to get JSX in scope for text2paraJsx
-import Config from './config'
+import Config from '../config'
+
+export { getStateFullName } from './state-abbrev'
 
 export const formatDate = (date) => {
   const monthAbbr = [

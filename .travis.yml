@@ -18,6 +18,7 @@ before_deploy:
   - export PUBLIC_ROOT="https://s3.us-west-1.amazonaws.com/mop-static-stage/js/"
   - export STATIC_ROOT=""
   - export PROD=1
+  - export ONLY_PROD_ROUTES=1
   - npm run dev-build
 deploy:
   on:

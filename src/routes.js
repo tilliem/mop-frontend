@@ -8,14 +8,14 @@ import { loadOrganization } from './actions/navActions.js'
 import Home from './containers/home'
 import SignPetition from './containers/sign-petition'
 import ThanksShim from './loaders/thanks-shim'
-import SearchPage from './pages/search'
+import SearchPage from './containers/search'
 import PetitionCreatorDashboard from './containers/petition-creator-dashboard'
-import CreatePetitionPage from './pages/create-petition-page'
-import PetitionReportPage from './pages/petition-report-page'
-import Wrapper from './components/wrapper'
-import Register from './pages/register'
-import ForgotPassword from './pages/forgot-password'
-import Login from './pages/login'
+import PetitionReport from './containers/petition-report'
+import CreatePetitionPage from './containers/create-petition'
+import Wrapper from 'LegacyTheme/wrapper'
+import ForgotPassword from './containers/forgot-password'
+import Register from './containers/register'
+import Login from './containers/login'
 
 
 const baseAppPath = process.env.BASE_APP_PATH || '/'
@@ -73,7 +73,7 @@ export const routes = (store) => {
       <Route path='/find' component={SearchPage} />
       <Route path='/dashboard.html' component={PetitionCreatorDashboard} />
       <Route path='/create_start.html' component={CreatePetitionPage} minimalNav />
-      <Route path='/petition_report.html' component={PetitionReportPage} />
+      <Route path='/petition_report.html' component={PetitionReport} />
       <Route path='/:organization/create_start.html' component={CreatePetitionPage} onEnter={orgLoader} minimalNav />
       <Route path='/login/' component={Login} />
       <Route path='/login/index.html' component={Login} />

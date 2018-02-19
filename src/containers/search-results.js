@@ -2,14 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { searchPetitions } from '../actions/petitionActions.js'
-import SearchResultPagination from '../components/search-result-pagination'
+
+import SearchResultsComponent from 'LegacyTheme/search-results'
 
 class SearchResults extends React.Component {
-
   componentDidMount() {
     // guarding for a cold page reload: check to see if we have search results, and if not load them
     if (this.props.searchResults !== undefined) {
-      this.props.searchPetitions(this.props.query, this.props.pageNumber, this.props.selectState)
+      this.props.searchPetitions(
+        this.props.query,
+        this.props.pageNumber,
+        this.props.selectState
+      )
     }
   }
 
@@ -24,32 +28,17 @@ class SearchResults extends React.Component {
 
   render() {
     const { searchResults, currentPage, query } = this.props
-    const resultCount = Number(searchResults.count || 0)
-    const pageSize = searchResults.page_size
-    const resultsEmbed = searchResults._embed
-    const searchNavLinks = searchResults._links
-
-    const resultsList = resultsEmbed.map((result, index) => (
-      <div className='result search-page' key={index}>
-        <div className='result-text'>
-          <p className='result-name'>
-            <a className='size-medium-large font-heavy' href={`https://pac.petitions.moveon.org/sign/${result.short_name}/?source=search`}>
-                {result.name}
-            </a>
-          </p>
-          <p className='size-small'>https://pac.petitions.moveon.org/sign/{result.short_name}/</p>
-          <p className='size-medium'>{result.blurb}...</p>
-        </div>
-      </div>
-      )
-    )
-
 
     return (
-      <div id='search-results' ref={(div) => { this.resultsDiv = div }}>
-        {resultsList}
-        <SearchResultPagination resultCount={resultCount} pageSize={pageSize} currentPage={currentPage} searchNavLinks={searchNavLinks} query={query} />
-      </div>
+      <SearchResultsComponent
+        results={searchResults._embed}
+        resultsCount={Number(searchResults.count || 0)}
+        searchNavLinks={searchResults._links}
+        pageSize={searchResults.page_size}
+        currentPage={currentPage}
+        query={query}
+        setResultsRef={div => { this.resultsDiv = div }}
+      />
     )
   }
 }
@@ -72,7 +61,7 @@ const mapStateToProps = (store, ownProps) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   searchPetitions: (query, pageNumber, selectState) =>
     dispatch(searchPetitions(query, pageNumber, selectState))
 })

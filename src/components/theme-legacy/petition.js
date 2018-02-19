@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { text2paraJsx } from '../../lib.js'
-import SignatureAddForm from '../../containers/signature-add-form.js'
-import SignatureCount from 'LegacyTheme/signature-count.js'
-import SignatureList from '../../containers/signature-list.js'
-import PetitionFlagForm from '../../containers/petition-flag-form.js'
+import { text2paraJsx } from '../../lib'
+import SignatureAddForm from '../../containers/signature-add-form'
+import SignatureCount from 'LegacyTheme/signature-count'
+import SignatureList from '../../containers/signature-list'
+import PetitionFlagForm from '../../containers/petition-flag-form'
 import { Link } from 'react-router'
 
 const Petition = ({ petition: p, query, petitionBy, outOfDate }) => (
