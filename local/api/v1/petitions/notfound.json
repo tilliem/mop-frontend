@@ -1,0 +1,5 @@
+{  
+  "error_code":"not_found",
+  "description":"No Petition matches the given query.",
+  "response_code":404
+}

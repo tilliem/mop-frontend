@@ -1,0 +1,5 @@
+{  
+  "error_code":"permission_denied",
+  "description":"You don't have permission to access this resource.",
+  "response_code":403
+}

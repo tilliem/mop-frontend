@@ -1,58 +1,112 @@
 {  
   "_links":{  
-    "url":"http://localhost:8000/api/v1/user/petitions/",
+    "url":"http://localhost:8000/api/v1/user/petitions.json",
     "next":null,
     "previous":null
   },
-  "count":1,
+  "count":3,
   "page_size":5,
   "_embedded":[  
     {  
       "_links":{  
-        "url":"http://localhost:8000/sign/outkast"
+        "url":"http://localhost:8000/sign/morecheese"
       },
-      "created_date":"2015-07-15T05:02:12Z",
+      "created_date":"2016-07-14T13:58:32Z",
       "origin_system":"petitions.moveon.org",
       "identifiers":[  
-        95983,
-        "list_id:96069"
+        112063,
+        "list_id:112688"
       ],
-      "name":"outkast",
-      "title":"Georgia: Add Outkast to Stone Mountain!",
-      "summary":"Carve Big Boi and Andre 3000, riding in a Cadillac, into the face of Stone Mountain.",
-      "description":"<p>I believe it&#39;s important to recognize the history and heritage of all Georgians. However, the carving of Davis, Lee, and Jackson on the side of Stone Mountain only represents a small, regrettable time in the history of the Peach State. It&#39;s high time we added a bit more of our history and culture to this monument.</p>\n\n<p>By no means do we wish to erase or destroy the current carving, which, regardless of its context, is an impressive and historic work of art. We simply wish to add new carvings, of  Atlanta hip-hop duo Outkast, to the mountainside. There&#39;s plenty of room.</p>\n\n<p>I believe that Daddy Fat Sacks and Three Stacks should be carved riding in a Cadillac (as is their wont). This will help the new carving blend nicely with the Confederates who are on horseback.</p>\n\n<p>Outkast are two of the greatest Georgians in the history of our state. It&#39;s about time the Empire State of the South paid proper tribute to them, while also improving a great monument and tourist attraction.</p>",
+      "name":"morecheese",
+      "title":"Annie's Homegrown: We Need More Cheese, Please!",
+      "summary":"Please make individual cheese packets to buy so we can put more cheese on our macaroni. ",
+      "description":"<p>Our family loves Annie&#39;s Mac and Cheese! But we need more cheese for our mac and cheese because sometimes there are a few on the side that don&#39;t get enough cheese. But if you go into a different box to get the cheese from *that* box, then that box won&#39;t have enough cheese, and on and on until you end up with an empty box. If Annie&#39;s makes individual cheese packets, then we can have as much cheese as we need in our mac and cheese and not end up with an empty box. <br />--Kennedy, age 9</p>",
       "target":[  
         {  
-          "name":"The GA State Senate"
+          "name":null
         }
       ],
       "share_options":[  
         {  
-          "facebook_share":{  
-            "image":"http://s3.moveon.org/images/20150716_outkaststonemountain(1).png",
-            "description":"Tell Georgia's legislature: Carve Big Boi and Andre 3000, riding in a Cadillac (as is their wont), into the face of Stone Mountain. Click here to add your name."
+
+        }
+      ],
+      "_embedded":{  
+        "downloads":[  
+
+        ],
+        "mailings":[  
+
+        ],
+        "creator":{  
+          "name":"Kennedy Barrrrrrrrr",
+          "organization_url":"/mop",
+          "organization":"M.O.P.",
+          "custom_fields":{  
+            "may_optin":1
           },
+          "organization_logo_image_url":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Mop-04-mika.jpg/220px-Mop-04-mika.jpg",
+          "source":null
+        },
+        "pdfs":[  
+
+        ]
+      },
+      "total_signatures":0,
+      "status":"Verified",
+      "contact_name":"Kennedy Barrrrrrrrr",
+      "entity":"c4",
+      "needs_full_addresses":false,
+      "petition_id":112063,
+      "signature_goal":200,
+      "online":true,
+      "potentially_deliverable":false,
+      "deliver_email":true,
+      "delivery_survey":null,
+      "is_extended":true
+    },
+    {  
+      "_links":{  
+        "url":"http://localhost:8000/sign/outkast-opposite"
+      },
+      "created_date":"2015-07-15T05:02:12Z",
+      "origin_system":"petitions.moveon.org",
+      "identifiers":[  
+        95984,
+        "list_id:96070"
+      ],
+      "name":"outkast-opposite",
+      "title":"Georgia: Remove Outkast from Stone Mountain!",
+      "summary":"Carve Big Boi and Andre 3000, riding in a Cadillac, into the face of Stone Mountain. This should be the opposite on bifurcation values from outkast.json",
+      "description":"<p>I believe it&#39;s important to recognize the history and heritage of all Georgians. However, the carving of Davis, Lee, and Jackson on the side of Stone Mountain only represents a small, regrettable time in the history of the Peach State. It&#39;s high time we added a bit more of our history and culture to this monument.</p>\n\n<p>By no means do we wish to erase or destroy the current carving, which, regardless of its context, is an impressive and historic work of art. We simply wish to add new carvings, of  Atlanta hip-hop duo Outkast, to the mountainside. There&#39;s plenty of room.</p>",
+      "target":[  
+        {  
+          "name":"The Maker of Decisions"
+        }
+      ],
+      "share_options":[  
+        {  
           "twitter_share":{  
-            "message":"Sign It: Tell #Georgia: Add #Outkast to #StoneMountain! [URL] @moveon @BigBoi #StankMountain"
+            "message":"Tell Georgia to add Outkast to Stone Mountain! [URL]"
           }
         }
       ],
       "_embedded":{  
-        "creator":{  
-          "name":"Mack Fooooooo"
-        },
+        "downloads":[  
+
+        ],
         "mailings":[  
           {  
             "_links":{  
-              "url":"http://localhost:8000/api/v1/user/mailings/1.json"
+              "url":"http://localhost:8000/api/v1/user/mailings/3.json"
             },
-            "name":"My first mailing",
+            "name":"My third mailing",
             "status":"normal",
             "stage":"draft",
-            "subject":"Share share share with all your friends friends friends",
+            "subject":"Share3 share3 share3 with all your friends friends friends",
             "mailing_text":null,
             "user_count":null,
-            "target_description":"All petition signers",
+            "target_description":"Signers of Georgia: Remove Outkast from Stone Mountain!",
             "target_states":null,
             "target_national_districts":null,
             "target_state_house_districts":null,
@@ -62,41 +116,98 @@
             "target_since":null
           }
         ],
-        "downloads":[  
-          {  
-            "_links":{  
-              "url":"http://localhost:8000/download_me.csv"
-            },
-            "name":"Georgia: Add Outkast to Stone Mountain!",
-            "requested":"2018-02-01T18:44:00Z",
-            "completed":true,
-            "download_url":"download_me.csv"
-          }
-        ],
+        "creator":{  
+          "name":"Shake it, M.O.P.",
+          "organization_url":"/mop",
+          "organization":"M.O.P.",
+          "custom_fields":{  
+            "may_optin":1
+          },
+          "organization_logo_image_url":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Mop-04-mika.jpg/220px-Mop-04-mika.jpg",
+          "source":null
+        },
         "pdfs":[  
-          {  
-            "_links":{  
-              "url":"http://localhost:8000/None"
-            },
-            "name":"Georgia: Add Outkast to Stone Mountain!",
-            "requested":"2018-02-01T19:03:14Z",
-            "signature_count":123,
-            "completed":false,
-            "download_zip_url":null,
-            "download_pdf_url":null,
-            "download_csv_url":null
-          }
+
         ]
       },
-      "total_signatures":1,
-      "status":"Verified",
-      "contact_name":"Mack Fooooooo",
+      "total_signatures":2,
+      "status":"Bad",
+      "contact_name":"Shake it, M.O.P.",
       "entity":"c4",
-      "needs_full_addresses":true,
-      "petition_id":95983,
-      "signature_goal":15000,
+      "needs_full_addresses":false,
+      "petition_id":95984,
+      "signature_goal":9999,
       "online":true,
       "potentially_deliverable":true,
+      "deliver_email":false,
+      "delivery_survey":null,
+      "is_extended":true
+    },
+    {  
+      "_links":{  
+        "url":"http://localhost:8000/sign/random"
+      },
+      "created_date":"2015-07-05T05:02:12Z",
+      "origin_system":"petitions.moveon.org",
+      "identifiers":[  
+        123071,
+        "list_id:123072"
+      ],
+      "name":"random",
+      "title":"Just another random petition",
+      "summary":"We need more petitions. More, I tell you!",
+      "description":"<p>about my random test petition</p>",
+      "target":[  
+        {  
+          "name":null
+        }
+      ],
+      "share_options":[  
+        {  
+
+        }
+      ],
+      "_embedded":{  
+        "downloads":[  
+
+        ],
+        "mailings":[  
+          {  
+            "_links":{  
+              "url":"http://localhost:8000/api/v1/user/mailings/2.json"
+            },
+            "name":"My seond mailing",
+            "status":"normal",
+            "stage":"draft",
+            "subject":"Share2 share2 share2 with all your friends friends friends",
+            "mailing_text":null,
+            "user_count":null,
+            "target_description":"Signers of Just another random petition list",
+            "target_states":null,
+            "target_national_districts":null,
+            "target_state_house_districts":null,
+            "target_state_senate_districts":null,
+            "target_zips":null,
+            "target_zip_radius":null,
+            "target_since":null
+          }
+        ],
+        "creator":{  
+          "name":"Hi it's me"
+        },
+        "pdfs":[  
+
+        ]
+      },
+      "total_signatures":0,
+      "status":"Verified",
+      "contact_name":"Hi it's me",
+      "entity":"c4",
+      "needs_full_addresses":false,
+      "petition_id":123071,
+      "signature_goal":15000,
+      "online":true,
+      "potentially_deliverable":false,
       "deliver_email":false,
       "delivery_survey":null,
       "is_extended":true
@@ -104,5 +215,5 @@
   ],
   "total_pages":1,
   "page":1,
-  "total_records":1
+  "total_records":3
 }
