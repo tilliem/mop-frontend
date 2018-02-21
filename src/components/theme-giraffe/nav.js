@@ -8,7 +8,7 @@ import {
   Header,
   Logo,
   MoNav
-} from './components/nav'
+} from 'GiraffeUI/nav'
 
 import DocumentSvg from './svgs/document-add.svg'
 

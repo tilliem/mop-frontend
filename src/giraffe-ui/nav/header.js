@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import BurgerSvg from '../../svgs/burger.svg'
+import BurgerSvg from '../svgs/burger.svg'
 
 export const Header = ({ toggleOpen, children }) => (
   <header id='main-header' className='header'>

@@ -49,7 +49,8 @@ var config = {
   resolve: {
     alias: {
       Theme: THEME_DIR,
-      LegacyTheme: path.resolve(__dirname, "src/components/theme-legacy/")
+      LegacyTheme: path.resolve(__dirname, "src/components/theme-legacy/"),
+      GiraffeUI: path.resolve(__dirname, "src/giraffe-ui")
     }
   },
   plugins : [

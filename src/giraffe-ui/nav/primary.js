@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
 
-import CaretDownSvg from '../../svgs/caret-down.svg'
+import CaretDownSvg from '../svgs/caret-down.svg'
 
 const baseCn = 'mo-nav__primary'
 export const Primary = ({ openSections, toggleSection, children }) => (
