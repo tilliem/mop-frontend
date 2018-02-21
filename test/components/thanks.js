@@ -1,15 +1,15 @@
 import React from 'react'
 import { expect } from 'chai'
 
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 
-import Thanks from '../../src/components/thanks'
+import Thanks from '../../src/containers/thanks'
 
 import outkastPetition from '../../local/api/v1/petitions/outkast.json'
 
 describe('<Thanks />', () => {
   it('renders thanks for petition', () => {
-    const context = shallow(<Thanks petition={outkastPetition} />)
+    const context = mount(<Thanks petition={outkastPetition} />)
     // console.log(context.html())
     expect(context.find('h1').text()).to.equal('Thanks!')
   })
