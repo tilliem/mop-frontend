@@ -20,12 +20,12 @@ Primary.propTypes = {
   children: PropTypes.node
 }
 
-const Section = ({ openSections, toggleSection, topLevel, name, children }) => {
+const Section = ({ openSections, toggleSection, name, children }) => {
   const dropdownCn = section =>
     cn('mo-nav__dropdown', {
       'mo-nav__dropdown--expanded': openSections.indexOf(section) !== -1
     })
-  if (topLevel) return <span>{children}</span>
+
   return (
     <li className={dropdownCn(name)}>
       <a href='#' onClick={toggleSection(name)}>
@@ -45,7 +45,6 @@ Primary.Section = Section
 Section.propTypes = {
   openSections: PropTypes.array,
   toggleSection: PropTypes.func,
-  topLevel: PropTypes.bool,
   name: PropTypes.string,
   children: PropTypes.node
 }
