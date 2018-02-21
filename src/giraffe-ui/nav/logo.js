@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router'
+import Config from '../../config'
 export const Logo = () => (
   <Link to='/' className='logo'>
     <img
-      src='http://moveon-dev.netlify.com/images/logo.svg'
+      src={`${Config.STATIC_ROOT}images/logo.svg`}
       alt='Move On Logo'
     />
   </Link>

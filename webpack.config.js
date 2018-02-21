@@ -92,7 +92,7 @@ var config = {
                                    || (process.env.PROD ? 'https://petitions.moveon.org' : '')),
         'ONLY_PROD_ROUTES': JSON.stringify(process.env.ONLY_PROD_ROUTES || ''),
         'SESSION_COOKIE_NAME': JSON.stringify(process.env.SESSION_COOKIE_NAME || 'SO_SESSION'),
-        'STATIC_ROOT': JSON.stringify(process.env.STATIC_ROOT || ''),
+        'STATIC_ROOT': JSON.stringify(process.env.STATIC_ROOT || '/local/'),
         'TRACK_SHARE_URL': JSON.stringify(process.env.TRACK_SHARE_URL || ''),
         'PROD': process.env.PROD
       }
