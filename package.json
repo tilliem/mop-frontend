@@ -6,8 +6,8 @@
   "repository": "https://github.com/MoveOnOrg/mop-frontend",
   "directories": {},
   "scripts": {
-    "test": "NODE_ENV=test mocha --require babel-core/register --require jsdom-global/register --require isomorphic-fetch test test/*",
-    "test1": "NODE_ENV=test mocha --require babel-core/register --require jsdom-global/register --require isomorphic-fetch test ",
+    "test": "NODE_ENV=test mocha --require babel-core/register --require jsdom-global/register --require isomorphic-fetch --require ./test-setup.js test test/*",
+    "test1": "NODE_ENV=test mocha --require babel-core/register --require jsdom-global/register --require isomorphic-fetch --require ./test-setup.js test ",
     "build": "webpack && THEME=giraffe webpack",
     "dev-build": "webpack -d && THEME=giraffe webpack -d",
     "webpack-watch": "webpack -w",
@@ -63,6 +63,7 @@
     "react-test-renderer": "^15.5.4",
     "redux-mock-store": "^1.2.3",
     "redux-test-utils": "^0.2.2",
+    "require-hacker": "^3.0.1",
     "sinon": "^4.2.2",
     "svg-react-loader": "^0.4.5",
     "webpack": "^2.3.3",
