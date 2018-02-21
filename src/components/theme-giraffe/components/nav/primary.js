@@ -8,6 +8,7 @@ const baseCn = 'mo-nav__primary'
 export const Primary = ({ openSections, toggleSection, children }) => (
   <ul className={baseCn}>
     {React.Children.map(children, child =>
+      // Cloning each child is the only way to apply props that were passed into the parent
       React.cloneElement(child, { openSections, toggleSection })
     )}
   </ul>
