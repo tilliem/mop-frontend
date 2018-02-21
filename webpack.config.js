@@ -62,6 +62,12 @@ var config = {
       cssPath: (process.env.NODE_ENV == 'production'
                 ? 'https://s3.amazonaws.com/mop-static/css/moui.css'
                 : '/css/moui.css'),
+      giraffeCssPath: (process.env.LOCAL_CSS
+        ? 'http://localhost:3000/styles/main.css'
+        : 'http://s3.us-east-2.amazonaws.com/static.moveon.org/giraffe/styles/main.css'),
+      giraffeCssVendorsPath: (process.env.LOCAL_CSS
+        ? 'http://localhost:3000/styles/vendors.css'
+        : 'http://s3.us-east-2.amazonaws.com/static.moveon.org/giraffe/styles/vendors.css'),
       reactJs: (process.env.LOCAL_REACT
                 ? process.env.LOCAL_REACT + 'react.js'
                 : 'https://unpkg.com/react@15.4.1/dist/react.js'),
