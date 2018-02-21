@@ -10,7 +10,7 @@ import {
   MoNav
 } from 'GiraffeUI/nav'
 
-import DocumentSvg from './svgs/document-add.svg'
+import DocumentSvg from 'GiraffeUI/svgs/document-add.svg'
 
 const Nav = ({
   toggleOpen,
