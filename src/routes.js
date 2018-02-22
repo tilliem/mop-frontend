@@ -64,7 +64,7 @@ export const routes = (store) => {
     }
   }
   const routeHierarchy = (
-    <Route path={baseAppPath} component={Wrapper} onEnter={(nextState) => { store.dispatch(loadSession(nextState)) }} >
+    <Route path={window.baseAppPath || baseAppPath} component={Wrapper} onEnter={(nextState) => { store.dispatch(loadSession(nextState)) }} >
       <IndexRoute component={Home} />
       <Route path='/sign/:petition_slug' component={SignPetition} />
       <Route path='/:organization/sign/:petition_slug' component={SignPetition} onEnter={orgLoader} />
