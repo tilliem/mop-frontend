@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import SignatureAddFormComponent from 'LegacyTheme/signature-add-form'
+import SignatureAddFormComponent from 'Theme/signature-add-form'
 
 import { actions as petitionActions } from '../actions/petitionActions.js'
 import { actions as sessionActions } from '../actions/sessionActions.js'

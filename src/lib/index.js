@@ -40,6 +40,13 @@ export const text2paraJsx = (str) => {
   })
 }
 
+// Helps the css work properly
+export const splitIntoSpansJsx = (str) => (
+  str
+  .match(/[\S]+/gi)
+  .map((word, i) => <span key={i}>{word}</span>)
+)
+
 export const moNumber2base62 = (num) => {
   // This converts a number to base62, and will be used to generate petition redirect urls
   // example: 125962 => 'pju'
@@ -87,4 +94,16 @@ export const petitionShortCode = (mode, petitionId, userId, responseMd5) => {
 export const isValidEmail = (email) => {
   const regex = /.+@.+\..+/ // Forgiving email regex
   return regex.test(email)
+}
+
+export const formatNumber = number =>
+  String(number).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+
+export const percent = (numerator, denominator) => {
+  if (denominator <= 0) {
+    return '0%'
+  }
+
+  const v = Math.min(1, numerator / denominator) * 100
+  return `${v.toFixed(2)}%`
 }

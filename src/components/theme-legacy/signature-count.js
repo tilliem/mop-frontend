@@ -1,17 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const formatNumber = number =>
-  String(number).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-
-const percent = (current, goal) => {
-  if (goal <= 0) {
-    return '0%'
-  }
-
-  const v = Math.min(1, current / goal) * 100
-  return `${v.toFixed(2)}%`
-}
+import { formatNumber, percent } from '../../lib'
 
 const SignatureCount = ({ current, goal }) => current !== undefined && (
   <div id='therm' className='span7 margin-left-0 bump-top-2'>

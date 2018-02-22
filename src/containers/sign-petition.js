@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import 'whatwg-fetch'
 import { connect } from 'react-redux'
 
-import Petition from 'LegacyTheme/petition'
+import Petition from 'Theme/petition'
 import { thanksLoader } from '../loaders/petition.js'
 import { actions as petitionActions } from '../actions/petitionActions.js'
 
