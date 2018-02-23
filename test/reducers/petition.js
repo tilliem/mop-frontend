@@ -38,8 +38,8 @@ describe('petition reducer', () => {
   it('adds signature status to petitions state when PETITION_SIGNATURE_SUCCESS', () => {
     const action = {
       type: petitionActionTypes.PETITION_SIGNATURE_SUCCESS,
-      signatureStatus: 'success',
-      petition: samplePetition
+      petition: samplePetition,
+      signatureStatus: samplePetition.petition_id
     }
 
     const state = reducer(defaultState, action)
@@ -49,11 +49,10 @@ describe('petition reducer', () => {
       .to.deep.equal('success')
   })
 
-
   it('adds signature status with message to petitions state when PETITION_SIGNATURE_SUCCESS', () => {
     const action = {
       type: petitionActionTypes.PETITION_SIGNATURE_SUCCESS,
-      signatureStatus: 'success',
+      signatureStatus: samplePetition.petition_id,
       petition: samplePetition,
       messageId: 'yo',
       messageMd5: 'yo yo yo yo yo'
