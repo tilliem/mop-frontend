@@ -1,7 +1,10 @@
 language: node_js
 node_js:
 - '6.1'
-script: npm run lint-and-test
+script:
+  - npm run lint
+  - THEME=legacy npm run test
+  - THEME=giraffe npm run test
 notifications:
   slack:
     rooms:
