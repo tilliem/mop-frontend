@@ -20,7 +20,7 @@ const Footer = () => (
       <Nav>
         <Nav.Links heading='Company'>
           <Link to='https://front.moveon.org/careers'>Careers</Link>
-          <Link to='https://front.moveon.org/frequently-asked-questions-and-contact-information/'>
+          <Link to=' https://petitions.moveon.org/organizations.html'>
             Partner with Us
           </Link>
           <Link to='https://front.moveon.org/blog/'>News</Link>
@@ -32,7 +32,7 @@ const Footer = () => (
           <Link to='https://front.moveon.org/frequently-asked-questions-and-contact-information/'>
             Petition Inquiries
           </Link>
-          <Link to='https://front.moveon.org/frequently-asked-questions-and-contact-information/'>
+          <Link to='https://act.moveon.org/survey/press/'>
             Press Inquiries
           </Link>
         </Nav.Links>
