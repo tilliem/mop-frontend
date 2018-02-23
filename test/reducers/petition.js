@@ -35,7 +35,7 @@ describe('petition reducer', () => {
     expect(Object.keys(state.petitionStore.petitions)).to.deep.equal(['95983', 'outkast'])
   })
 
-  it('adds signature to petitions state when PETITION_SIGNATURE_SUCCESS', () => {
+  it('adds signature status to petitions state when PETITION_SIGNATURE_SUCCESS', () => {
     const action = {
       type: petitionActionTypes.PETITION_SIGNATURE_SUCCESS,
       signatureStatus: 'success',
@@ -47,5 +47,23 @@ describe('petition reducer', () => {
     expect(state.petitionStore.signatureStatus)
       .to.have.property('95983')
       .to.deep.equal('success')
+  })
+
+
+  it('adds signature status with message to petitions state when PETITION_SIGNATURE_SUCCESS', () => {
+    const action = {
+      type: petitionActionTypes.PETITION_SIGNATURE_SUCCESS,
+      signatureStatus: 'success',
+      petition: samplePetition,
+      messageId: 'yo',
+      messageMd5: 'yo yo yo yo yo'
+    }
+
+    const state = reducer(defaultState, action)
+
+    expect(state.petitionStore.signatureMessages)
+      .to.have.property('95983')
+    expect(state.petitionStore.signatureMessages['95983'].messageId).to.deep.equal('yo')
+    expect(state.petitionStore.signatureMessages['95983'].messageMd5).to.deep.equal('yo yo yo yo yo')
   })
 })
