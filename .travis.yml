@@ -3,7 +3,7 @@ node_js:
 - '6.1'
 script:
   - npm run lint
-  - npm run test
+  - THEME=legacy npm run test
   - THEME=giraffe npm run test
 notifications:
   slack:
