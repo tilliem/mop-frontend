@@ -25,7 +25,7 @@ before_deploy:
   - npm run dev-build
 deploy:
   on:
-    branch: master
+    branch: main
   provider: s3
   access_key_id: AKIAITZUUGIJNKLB4PHA
   bucket: mop-static-stage
