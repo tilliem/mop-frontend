@@ -8,8 +8,8 @@
   "scripts": {
     "test": "NODE_ENV=test mocha --require babel-core/register --require jsdom-global/register --require isomorphic-fetch --require ./test-setup.js test test/*",
     "test1": "NODE_ENV=test mocha --require babel-core/register --require jsdom-global/register --require isomorphic-fetch --require ./test-setup.js test ",
-    "build": "webpack && THEME=giraffe webpack",
-    "dev-build": "webpack -d && THEME=giraffe webpack -d",
+    "build": "THEME=legacy webpack && THEME=giraffe webpack",
+    "dev-build": "THEME=legacy webpack -d && THEME=giraffe webpack -d",
     "webpack-watch": "webpack -w",
     "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --progress --colors --port ${PORT:-8080} --inline",
     "lint": "eslint src test .*.js --ignore-pattern='!.eslintrc.js' ",
