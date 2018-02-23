@@ -3,7 +3,7 @@ import { expect } from 'chai'
 
 import { shallow } from 'enzyme'
 
-import SignatureCount from '../../src/components/signature-count'
+import SignatureCount from 'LegacyTheme/signature-count'
 
 describe('<SignatureCount />', () => {
   it('renders nothing if current is undefined', () => {

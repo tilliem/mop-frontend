@@ -5,9 +5,10 @@ import { expect } from 'chai'
 import { mount } from 'enzyme'
 import { createMockStore } from 'redux-test-utils'
 
-import Login from '../../src/pages/login'
-import LoginForm from '../../src/components/login-form'
+import Login from '../../src/containers/login'
+import LoginForm from 'LegacyTheme/login-form'
 
+const empty = createMockStore({ userStore: {} })
 
 describe('<Login />', () => {
   const baseStore = createMockStore({ userStore: {} })
@@ -17,7 +18,19 @@ describe('<Login />', () => {
     expect(context.find(LoginForm)).to.have.length(1)
   })
 
-  it.skip('can log the user in (TODO)', () => {
-    // Implement when logging in is implemented
+  it('displays errors when required fields are missing', () => {
+    const login = mount(<Provider store={empty} children={<Login />} />)
+    login.find('form').simulate('submit')
+    expect(login.find('.errors').find('li').length).to.equal(2)
+  })
+
+  it('validates email', () => {
+    const login = mount(<Provider store={empty} children={<Login />} />)
+    login.find('input[name="email"]').node.value = 'foo'
+    login.find('input[name="password"]').node.value = 'bar'
+    login.find('form').simulate('submit')
+    expect(login.find('.errors').text()).to.equal(
+      'Invalid entry for the Email field.'
+    )
   })
 })

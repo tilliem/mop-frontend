@@ -6,16 +6,16 @@ import { Config } from './config'
 import { loadSession, trackPage } from './actions/sessionActions'
 import { loadOrganization } from './actions/navActions.js'
 import Home from './containers/home'
-import SignPetition from './pages/sign-petition'
-import ThanksPage from './pages/thanks'
-import SearchPage from './pages/search'
+import SignPetition from './containers/sign-petition'
+import ThanksShim from './loaders/thanks-shim'
+import SearchPage from './containers/search'
 import PetitionCreatorDashboard from './containers/petition-creator-dashboard'
-import CreatePetitionPage from './pages/create-petition-page'
-import PetitionReportPage from './pages/petition-report-page'
-import Wrapper from './components/wrapper'
-import Register from './pages/register'
-import ForgotPassword from './pages/forgot-password'
-import Login from './pages/login'
+import PetitionReport from './containers/petition-report'
+import CreatePetitionPage from './containers/create-petition'
+import Wrapper from 'Theme/wrapper'
+import ForgotPassword from './containers/forgot-password'
+import Register from './containers/register'
+import Login from './containers/login'
 
 
 const baseAppPath = process.env.BASE_APP_PATH || '/'
@@ -64,16 +64,16 @@ export const routes = (store) => {
     }
   }
   const routeHierarchy = (
-    <Route path={baseAppPath} component={Wrapper} onEnter={(nextState) => { store.dispatch(loadSession(nextState)) }} >
-      <IndexRoute component={Home} />
+    <Route path={window.baseAppPath || baseAppPath} component={Wrapper} onEnter={(nextState) => { store.dispatch(loadSession(nextState)) }} >
+      <IndexRoute prodReady component={Home} />
       <Route path='/sign/:petition_slug' component={SignPetition} />
       <Route path='/:organization/sign/:petition_slug' component={SignPetition} onEnter={orgLoader} />
-      <Route path='/thanks.html' component={ThanksPage} prodReady={false} minimalNav />
-      <Route path='/:organization/thanks.html' component={ThanksPage} onEnter={orgLoader} minimalNav />
+      <Route path='/thanks.html' component={ThanksShim} prodReady={false} minimalNav />
+      <Route path='/:organization/thanks.html' component={ThanksShim} onEnter={orgLoader} minimalNav />
       <Route path='/find' component={SearchPage} />
       <Route path='/dashboard.html' component={PetitionCreatorDashboard} />
       <Route path='/create_start.html' component={CreatePetitionPage} minimalNav />
-      <Route path='/petition_report.html' component={PetitionReportPage} />
+      <Route path='/petition_report.html' component={PetitionReport} />
       <Route path='/:organization/create_start.html' component={CreatePetitionPage} onEnter={orgLoader} minimalNav />
       <Route path='/login/' component={Login} />
       <Route path='/login/index.html' component={Login} />

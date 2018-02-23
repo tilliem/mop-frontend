@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import StateSelect from '../form/state-select'
+import StateSelect from './form/state-select'
 
 const smallStateSelectStyle = {
   display: 'inline',

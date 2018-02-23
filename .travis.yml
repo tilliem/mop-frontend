@@ -1,7 +1,10 @@
 language: node_js
 node_js:
 - '6.1'
-script: npm run lint-and-test
+script:
+  - npm run lint
+  - THEME=legacy npm run test
+  - THEME=giraffe npm run test
 notifications:
   slack:
     rooms:
@@ -15,19 +18,20 @@ before_deploy:
   - export BASE_APP_PATH="/"
   - export BASE_URL="https://broom.moveon.org"
   - export SESSION_COOKIE_NAME="SO_DEV_SESSION"
-  - export PUBLIC_ROOT="https://s3.us-west-1.amazonaws.com/mop-static-stage/js/"
-  - export STATIC_ROOT=""
+  - export PUBLIC_ROOT="https://s3.us-west-1.amazonaws.com/mop-static-stage/mop-frontend/js/"
+  - export STATIC_ROOT="https://static.moveon.org/giraffe/"
   - export PROD=1
+  - export ONLY_PROD_ROUTES=1
   - npm run dev-build
 deploy:
   on:
-    branch: master
+    branch: main
   provider: s3
   access_key_id: AKIAITZUUGIJNKLB4PHA
   bucket: mop-static-stage
   skip_cleanup: true
   acl: public_read
   local_dir: build
-  upload-dir: js
+  upload-dir: mop-frontend/js
   secret_access_key:
     secure: MEjfUinb8RC50nEHxvnisYoBL15qjZoizNdBUjJ5OThiRQnGNRtiTgbdr1qeC4E2ZZ4Nzc9viNTyBhbRmZ3GViaAIeQ5RlFmL0JP/mXwOdgwJO3lE1ZksZWszrmJVaFSsq2BVlFG5O40Y3kVNmNUdlBOgFVRg8AJzefADIKRXBnf6Td07/36ETG5/lSIBNkLeercN9w5aD49tH5LJp8p83N08A6IDLj09xNdCiazN/yyHDD1KGFvDNQeKMFO5T7gBiywy2mHncTos8CX6gOE/yi3rE8qWirfFKyVVEQqVmbulZnmVxYQPmbJ8UMN3g/FOrhtm1r9fBXslSRKlPP1i4Vb0o6kh4IROkd/mU9cNdEokDqUyCT3NVqPdXd0fisk6Tu/krboHmC+fW6bu1KI1KHNfmg1ltp8FjLykeBVxyUjAxUmlCCepOOEBwsi5U2N0jixbT8cwX9e4++dryuo7LIOm2IPO/10LvhYSGEQgntyKB5g/yiEsw6RGEM3oFwkagfLDR16Fw/RGSYl0ikB2FYVZkN+J6kLMTzhvQwl4iIc5wRswz+ntnuFZlLxV2wKgpd5YBHD6KtN+/4G5O7NaDvJ/xwWQx7rJKDbLji4n+u/+OKIoFJ4cKoM7tyBscFo1jEXQfnuvAQRls3/vxKnFdTx0IPi16FOEz2uiJsA2Tg=

@@ -1,0 +1,75 @@
+{
+  "_links": {
+    "url": "https://broom.moveon.org/api/v1/search/petitions.json?q=fake",
+    "next":
+      "https://broom.moveon.org/api/v1/search/petitions.json?q=fake&page=2"
+  },
+  "count": "112",
+  "page_size": 10,
+  "_embed": [
+    {
+      "short_name": "california-republicans",
+      "blurb":
+        "It is outrageous that Republican legislators in California are using taxpayer dollars to intentionally mislead their constituents, sow fear and confusion, and divert Californians away from CoveredCA.c",
+      "name":
+        "California Republicans: Shut down your fake, misleading Obamacare website IMMEDIATELY"
+    },
+    {
+      "short_name": "tell-facebook-fix-your",
+      "blurb":
+        "Urge Mark Zuckerberg and Facebook to take two concrete steps:\r\n\r\n1) Acknowledge the problem of the proliferation of fake news on Facebook.\r\n\r\n2) Commit to taking action to fix the problem.",
+      "name": "Tell Facebook: Fix Your Fake News Problem"
+    },
+    {
+      "short_name": "tell-congress-drop-fake",
+      "blurb":
+        "Workers need real flexibility \u2013 not the shell game that's The Working Families 'Flexibility' Act of 2017 (HR 1180), sponsored by Rep. Martha Roby (R-Alabama). This fake 'flexibility' Act claims to g",
+      "name":
+        "Tell Congress Drop Fake \"flexibility\" Act and Pass Healthy Families Act"
+    },
+    {
+      "short_name": "stop-fake-news",
+      "blurb":
+        "We want all internet browsers, social media and search engines to label fake news.  We believe news organizations should be rated on their journalistic integrity.  See TrustworthiNEWS.org for all deta",
+      "name": "Stop Fake News"
+    },
+    {
+      "short_name": "ban-fake-caller-id-apps",
+      "blurb":
+        "Fake caller ID apps for android and i-phones are DANGEROUS! Anyone can send a text or place a call from their phone, and make your caller id say its any number you choose. Someone texted a death threa",
+      "name": "Ban Fake Caller ID apps!"
+    },
+    {
+      "short_name": "conf-committee-please",
+      "blurb":
+        "In the final hours of the House debate on SB 737, - the payday lending bill which originally capped interest rates  was changed to focus on a set of industry sponsored \"reforms\".  These provisions are",
+      "name":
+        "Conf Committee please don't get confused by fake industry led reforms  - pass a law that protects Hawaii famililes from 459% interest rates"
+    },
+    {
+      "short_name": "sue-the-current-gop-congress",
+      "blurb":
+        "The GOP congress have not done their jobs.  They keep wasting our tax dollars  on fake investigations, trying to sue the President,  shutting down government and doing absolutely nothing that we the p",
+      "name": "Sue the current GOP congress"
+    },
+    {
+      "short_name": "adobe-called-on-to-stop",
+      "blurb":
+        "It's well past time for Adobe to stop supporting\u00a0hate. Remove Adobe ads from Breitbart.com and adopt a policy to ban advertising on any website that promotes hate.",
+      "name":
+        "Adobe Called on to Stop Advertising on Fake News & Hate Propagating Brietbart.com"
+    },
+    {
+      "short_name": "stop-stop-do-not-pay",
+      "blurb":
+        "Why do we have to HUGE pay the FAKE sign language interpreter for Nelson Mandela's memorial service? We can not allow ANYONE to take advantage of Deaf or Hard of Hearing community. Non-Deaf people can",
+      "name": "STOP! STOP! DO NOT PAY THE \"FAKE\" interpreter!!!"
+    },
+    {
+      "short_name": "fake-news-must-stop",
+      "blurb":
+        "A recent report found that people were more often exposed to fake news than real news on the internet during the past election cycle. Our democracy depends on a well-informed electorate and fake news ",
+      "name": "Fake news must stop"
+    }
+  ]
+}

@@ -1,0 +1,283 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
+import SignatureAddFormComponent from 'LegacyTheme/signature-add-form'
+
+import { actions as petitionActions } from '../actions/petitionActions.js'
+import { actions as sessionActions } from '../actions/sessionActions.js'
+
+
+class SignatureAddForm extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      name: false,
+      email: false,
+      country: 'United States',
+      address1: false,
+      address2: false,
+      city: false,
+      state: false,
+      region: false,
+      zip: false,
+      postal: false,
+      comment: false,
+      volunteer: false,
+      phone: false,
+      validationTried: false,
+      thirdparty_optin: props.hiddenOptin || props.showOptinCheckbox,
+      hidden_optin: props.hiddenOptin,
+      required: {}
+    }
+    this.validationRegex = {
+      email: /.+@.+\..+/, // Forgiving email regex
+      zip: /(\d\D*){5}/,
+      phone: /(\d\D*){10}/ // 10-digits
+    }
+
+    this.volunteer = this.volunteer.bind(this)
+    this.submit = this.submit.bind(this)
+    this.validationError = this.validationError.bind(this)
+    this.updateStateFromValue = this.updateStateFromValue.bind(this)
+  }
+
+  getOsdiSignature() {
+    const { petition, query, showOptinCheckbox, user } = this.props
+    const osdiSignature = {
+      petition: {
+        name: petition.name,
+        petition_id: petition.petition_id,
+        show_optin: showOptinCheckbox,
+        _links: petition._links
+      },
+      person: {
+        full_name: this.state.name,
+        email_addresses: [],
+        postal_addresses: []
+      }
+    }
+    if (this.state.comment) {
+      osdiSignature.comments = this.state.comment
+    }
+    if (this.state.name) {
+      osdiSignature.person.full_name = this.state.name
+    } else if (user.given_name) {
+      osdiSignature.person.given_name = user.given_name
+    }
+    if (this.state.email) {
+      osdiSignature.person.email_addresses.push({
+        address: this.state.email
+      })
+    }
+    if (user.token) {
+      osdiSignature.person.identifiers = [user.token]
+    }
+    if (this.state.phone) {
+      osdiSignature.person.phone_numbers = [this.state.phone]
+    }
+    if (this.state.city) {
+      osdiSignature.person.postal_addresses.push({
+        locality: this.state.city,
+        region: ((this.state.country === 'United States') ? this.state.state : this.state.region),
+        postal_code: ((this.state.country === 'United States') ? this.state.zip : this.state.postal),
+        country_name: this.state.country
+      })
+    }
+    if (this.state.address1) {
+      const lines = [this.state.address1]
+      if (this.state.address2) {
+        lines.push(this.state.address2)
+      }
+      osdiSignature.person.postal_addresses[0].address_lines = lines
+    }
+    const referrerKeys = [
+      'source', 'r_by', 'fb_test', 'abid', 'abver', 'test_group', 'no_mo', 'mailing_id', 'r_hash']
+    const referrerData = referrerKeys.filter(k => query[k]).map(k => ({ [k]: query[k] }))
+    if (referrerData.length) {
+      osdiSignature.referrer_data = Object.assign({}, ...referrerData)
+    }
+    const customFields = ['thirdparty_optin', 'hidden_optin', 'volunteer']
+    const customData = customFields.filter(k => this.state[k]).map(k => ({ [k]: this.state[k] }))
+    if (customData.length) {
+      osdiSignature.person.custom_fields = Object.assign({}, ...customData)
+    }
+    // Console.log('signature!', osdiSignature)
+    return osdiSignature
+  }
+
+  validationError(key) {
+    if (this.state.validationTried) {
+      if (Object.keys(this.state.required).indexOf(key) > -1) {
+        const regex = this.validationRegex[key]
+        if (!this.state[key] || (regex && !regex.test(String(this.state[key])))) {
+          return (
+            <div className='alert alert-danger' role='alert'>{this.state.required[key]}</div>
+          )
+        }
+      }
+    }
+    return null
+  }
+
+  formIsValid() {
+    this.setState({ validationTried: true })
+    this.updateRequiredFields(true)
+    return Object.keys(this.state.required).map(
+      key => !!(this.state[key]
+                && (!this.validationRegex[key]
+                    || this.validationRegex[key].test(String(this.state[key]))))
+    ).reduce((a, b) => a && b, true)
+  }
+
+  updateStateFromValue(field) {
+    return (event) => {
+      this.setState({ [field]: event.target.value })
+    }
+  }
+
+  volunteer(event) {
+    const vol = event.target.checked
+    const req = this.updateRequiredFields(false)
+    if (vol) {
+      req.phone = 'We need a phone number to coordinate volunteers.'
+    } else {
+      delete req.phone
+    }
+    this.setState({ volunteer: vol,
+      required: req })
+  }
+
+  updateRequiredFields(doUpdate) {
+    // This is a separate method because it can change when state or props are changed
+    const { user, requireAddressFields } = this.props
+    const required = this.state.required
+    let changeRequiredFields = false
+    if (!user.signonId) {
+      Object.assign(required, {
+        name: 'Name is required.',
+        email: 'Email address is required.',
+        state: 'State is required.',
+        zip: 'Zip code is required.'
+      })
+      changeRequiredFields = true
+    } else {
+      delete required.name
+      delete required.email
+      delete required.state
+      delete required.zip
+    }
+    if (requireAddressFields) {
+      Object.assign(required, {
+        address1: 'Full address is required.',
+        city: 'City is required.',
+        state: 'State is required.',
+        zip: 'Zip code is required.'
+      })
+      changeRequiredFields = true
+    } else {
+      delete required.address1
+      delete required.city
+      delete required.state
+    }
+    if (this.state.country !== 'United States') {
+      delete required.state
+      delete required.zip
+    }
+    if (changeRequiredFields && doUpdate) {
+      this.setState({ required })
+    }
+    return required
+  }
+
+  submit(event) {
+    event.preventDefault()
+    const { dispatch, petition } = this.props
+    if (this.formIsValid()) {
+      const osdiSignature = this.getOsdiSignature()
+      dispatch(petitionActions.signPetition(osdiSignature, petition, { redirectOnSuccess: true }))
+    }
+    return false
+  }
+
+  render() {
+    const { dispatch, petition, user, query, showAddressFields, requireAddressFields, showOptinCheckbox, showOptinWarning } = this.props
+    const creator = (petition._embedded && petition._embedded.creator || {})
+    const petitionBy = creator.name + (creator.organization
+                                       ? `, ${creator.organization}`
+                                       : '')
+    return (
+      <SignatureAddFormComponent
+        submit={this.submit}
+        creator={creator}
+        petitionBy={petitionBy}
+        petition={petition}
+        user={user}
+        query={query}
+        showAddressFields={showAddressFields}
+        requireAddressFields={requireAddressFields}
+        onUnrecognize={() => { dispatch(sessionActions.unRecognize()) }}
+        volunteer={this.state.volunteer}
+        onClickVolunteer={this.volunteer}
+
+        country={this.state.country}
+        onChangeCountry={event => this.setState({ country: event.target.value })}
+        updateStateFromValue={this.updateStateFromValue}
+        validationError={this.validationError}
+        thirdPartyOptin={this.thirdparty_optin}
+        setThirdPartyOptin={evt =>
+          this.setState({ thirdparty_optin: evt.target.checked })
+        }
+        showOptinWarning={showOptinWarning}
+        showOptinCheckbox={showOptinCheckbox}
+      />
+    )
+  }
+
+}
+
+SignatureAddForm.propTypes = {
+  petition: PropTypes.object.isRequired,
+  user: PropTypes.object,
+  dispatch: PropTypes.func,
+  query: PropTypes.object,
+  showAddressFields: PropTypes.bool,
+  requireAddressFields: PropTypes.bool,
+  fromCreator: PropTypes.bool,
+  fromMailing: PropTypes.bool,
+  showOptinWarning: PropTypes.bool,
+  showOptinCheckbox: PropTypes.bool,
+  hiddenOptin: PropTypes.bool
+}
+
+function mapStateToProps(store, ownProps) {
+  const user = store.userStore
+  const { petition, query } = ownProps
+  const creator = (petition._embedded && petition._embedded.creator || {})
+  const source = query.source || ''
+  const newProps = {
+    user,
+    showAddressFields: (!(user.signonId) || !(user.postal_addresses && user.postal_addresses.length)),
+    requireAddressFields: (petition.needs_full_addresses
+                           && !(user.postal_addresses && user.postal_addresses.length)),
+    fromCreator: (/^c\./.test(source) || /^s\.icn/.test(source)),
+    fromMailing: /\.imn/.test(source)
+  }
+  newProps.showOptinWarning = !!(!user.signonId && (creator.source
+                                                    || (creator.custom_fields && creator.custom_fields.may_optin)))
+
+  newProps.hiddenOptin = !!(!user.signonId && ((creator.source && ((newProps.fromCreator && !query.mailing_id)
+                                                                   || !newProps.fromMailing))
+                                               || (!creator.source
+                                                   && creator.custom_fields && creator.custom_fields.may_optin
+                                                   && newProps.fromCreator
+                                                   && !query.mailing_id)))
+
+  newProps.showOptinCheckbox = !!(!user.signonId && newProps.showOptinWarning && !newProps.hiddenOptin)
+
+  return newProps
+}
+
+export default connect(mapStateToProps)(SignatureAddForm)
+export const WrappedComponent = SignatureAddForm
