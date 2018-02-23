@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { Config } from '../config.js'
-import BillBoard from 'Theme/billboard.js'
+import BillBoard from 'LegacyTheme/billboard.js'
 import SearchBar from './searchbar'
 import RecentVictoryList from 'LegacyTheme/recentvictory'
 import TopPetitions from './top-petitions'

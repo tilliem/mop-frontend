@@ -38,14 +38,19 @@ var config = {
       },
       {
         test: /\.json$/,
-        loader: "file-loader?name=[name].[ext]",
+        loader: "file-loader?name=[name].[ext]"
+      },
+      {
+        test: /\.svg$/,
+        loader: "svg-react-loader"
       }
     ]
   },
   resolve: {
     alias: {
       Theme: THEME_DIR,
-      LegacyTheme: path.resolve(__dirname, "src/components/theme-legacy/")
+      LegacyTheme: path.resolve(__dirname, "src/components/theme-legacy/"),
+      GiraffeUI: path.resolve(__dirname, "src/giraffe-ui")
     }
   },
   plugins : [
@@ -58,6 +63,9 @@ var config = {
       cssPath: (process.env.NODE_ENV == 'production'
                 ? 'https://s3.amazonaws.com/mop-static/css/moui.css'
                 : '/css/moui.css'),
+      giraffeCssPath: (process.env.LOCAL_CSS
+        ? 'http://localhost:3000/styles/main.css'
+        : 'https://static.moveon.org/giraffe/styles/main.css'),
       reactJs: (process.env.LOCAL_REACT
                 ? process.env.LOCAL_REACT + 'react.js'
                 : 'https://unpkg.com/react@15.4.1/dist/react.js'),
@@ -81,7 +89,7 @@ var config = {
                                    || (process.env.PROD ? 'https://petitions.moveon.org' : '')),
         'ONLY_PROD_ROUTES': JSON.stringify(process.env.ONLY_PROD_ROUTES || ''),
         'SESSION_COOKIE_NAME': JSON.stringify(process.env.SESSION_COOKIE_NAME || 'SO_SESSION'),
-        'STATIC_ROOT': JSON.stringify(process.env.STATIC_ROOT || ''),
+        'STATIC_ROOT': JSON.stringify(process.env.STATIC_ROOT || '/local/'),
         'TRACK_SHARE_URL': JSON.stringify(process.env.TRACK_SHARE_URL || ''),
         'PROD': process.env.PROD
       }
