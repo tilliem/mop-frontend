@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import SignatureListPage from 'LegacyTheme/signature-list-page.js'
+import SignatureListPage from 'Theme/signature-list-page.js'
 import { loadPetitionSignatures } from '../actions/petitionActions.js'
 
 class SignatureList extends React.Component {

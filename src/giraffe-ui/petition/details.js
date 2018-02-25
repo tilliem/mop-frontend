@@ -26,7 +26,7 @@ Narrative.propTypes = { children: PropTypes.node, heading: PropTypes.string }
 Details.Narrative = Narrative
 
 export const Comments = ({ children, heading }) => (
-  <div className='petition-details__comments'>
+  <div className='petition-details__comments expanded'>
     <h4 className='petition-details__comments__heading'>{heading}</h4>
     <div className='petition-details__comments__entries'>{children}</div>
     {/* <button className='mo-btn petition-details__comments__toggle'>
