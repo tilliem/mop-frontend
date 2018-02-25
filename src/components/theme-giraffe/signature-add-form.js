@@ -22,6 +22,7 @@ const SignatureAddForm = ({
   requireAddressFields,
   onUnrecognize,
   updateStateFromValue,
+  getValueFromState: getValue,
   validationError
 }) => (
   <form onSubmit={submit} className='sign-form'>
@@ -40,6 +41,7 @@ const SignatureAddForm = ({
         <InputBlock
           name='name'
           label='Name*'
+          value={getValue('name')}
           onChange={updateStateFromValue('name')}
         />
         {validationError('name')}
@@ -47,6 +49,7 @@ const SignatureAddForm = ({
           type='email'
           name='email'
           label='Email*'
+          value={getValue('email')}
           onChange={updateStateFromValue('email')}
         />
         {validationError('email')}
@@ -55,22 +58,29 @@ const SignatureAddForm = ({
 
     {showAddressFields ? (
       <div>
-        <CountrySelect className='always-pad' value={country} onChange={onChangeCountry} />
+        <CountrySelect
+          className='always-pad'
+          value={country}
+          onChange={onChangeCountry}
+        />
         <InputBlock
           name='address1'
           label={requireAddressFields ? 'Address*' : 'Address'}
           onChange={updateStateFromValue('address1')}
+          value={getValue('address1')}
         />
         {validationError('address1')}
         <InputBlock
           name='address2'
           label='Address (cont.)'
           onChange={updateStateFromValue('address2')}
+          value={getValue('address2')}
         />
         <InputBlock
           name='city'
           label={petition.needs_full_addresses ? 'City*' : 'City'}
           onChange={updateStateFromValue('city')}
+          value={getValue('city')}
         />
         {validationError('city')}
         <InputBlock
@@ -85,6 +95,7 @@ const SignatureAddForm = ({
               ? updateStateFromValue('state')
               : updateStateFromValue('region')
           }
+          value={getValue(country === 'United States' ? 'state' : 'region')}
         />
         {validationError('state')}
         <InputBlock
@@ -95,13 +106,18 @@ const SignatureAddForm = ({
               ? updateStateFromValue('zip')
               : updateStateFromValue('postal')
           }
+          value={getValue(country === 'United States' ? 'zip' : 'postal')}
         />
         {validationError('zip')}
       </div>
     ) : (
       ''
     )}
-    <div className='input-block'>
+    <InputBlock
+      name='comment'
+      label='Comment (Optional)'
+      value={getValue('comment')}
+    >
       <textarea
         rows='10'
         name='comment'
@@ -110,8 +126,7 @@ const SignatureAddForm = ({
         onChange={updateStateFromValue('comment')}
         onBlur={updateStateFromValue('comment')}
       />
-      <label htmlFor='comment'>Comment (Optional)</label>
-    </div>
+    </InputBlock>
 
     {petition.collect_volunteers ? (
       <div>
@@ -206,6 +221,7 @@ SignatureAddForm.propTypes = {
   country: PropTypes.string,
   onChangeCountry: PropTypes.func,
   updateStateFromValue: PropTypes.func,
+  getValueFromState: PropTypes.func,
   validationError: PropTypes.func
 }
 
