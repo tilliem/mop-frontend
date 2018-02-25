@@ -43,7 +43,7 @@ describe('<SignatureAddForm />', () => {
       const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
       const component = unwrapReduxComponent(context)
       expect(component.props.user.anonymous).to.be.equal(true)
-      expect(context.find('#sign-here').text().match(/Sign this petition/)[0]).to.equal('Sign this petition')
+      expect(context.text().toLowerCase()).to.contain('sign this petition')
     })
 
     it('anonymous fields displaying', () => {
@@ -105,23 +105,12 @@ describe('<SignatureAddForm />', () => {
       // Should be: megapartner + not recognized user
       const showStore = createMockStore(storeAnonymous)
       const showContext = mount(<SignatureAddForm {...propsProfileOpposite} store={showStore} />)
-      let wasShown = false
-      showContext.find('.disclaimer').forEach((node) => {
-        if (/project of M.O.P./.test(node.text())) {
-          wasShown = true
-        }
-      })
-      expect(wasShown).to.equal(true)
+      expect(showContext.text()).to.contain('project of M.O.P.')
 
       const nowarningStore = createMockStore(storeAkid)
       const nowarningContext = mount(<SignatureAddForm {...propsProfileOpposite} store={nowarningStore} />)
-      wasShown = false
-      nowarningContext.find('.disclaimer').forEach((node) => {
-        if (/project of M.O.P./.test(node.text())) {
-          wasShown = true
-        }
-      })
-      expect(wasShown).to.equal(false)
+
+      expect(nowarningContext.text()).not.to.contain('project of M.O.P.')
     })
 
     it('optin checkbox or hidden optin: normal profiles', () => {
@@ -202,8 +191,7 @@ describe('<SignatureAddForm />', () => {
       const component = unwrapReduxComponent(context)
       expect(Boolean(component.props.user.anonymous)).to.be.equal(false)
       expect(Boolean(component.props.showAddressFields)).to.be.equal(true)
-      expect(context.find('#recognized').length).to.equal(1)
-      expect(context.find('.unrecognized').length).to.equal(0)
+      expect(context.text()).to.contain('Not Three Stacks? Click here.')
       expect(context.find('input[name="name"]').length).to.equal(0)
       expect(context.find('input[name="email"]').length).to.equal(0)
       expect(context.find('input[name="address1"]').length).to.equal(1)
@@ -216,8 +204,7 @@ describe('<SignatureAddForm />', () => {
       const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
       const component = unwrapReduxComponent(context)
       expect(Boolean(component.props.user.anonymous)).to.be.equal(true)
-      expect(context.find('#recognized').length).to.equal(0)
-      expect(context.find('.unrecognized').length).to.equal(1)
+      expect(context.text()).to.not.contain('Click here.')
       expect(context.find('input[name="name"]').length).to.equal(1)
       expect(context.find('input[name="email"]').length).to.equal(1)
       expect(context.find('input[name="address1"]').length).to.equal(1)
@@ -233,7 +220,7 @@ describe('<SignatureAddForm />', () => {
       const context = mount(<SignatureAddForm {...propsProfileBase} store={store} />)
       const component = unwrapReduxComponent(context)
       expect(component.state.validationTried).to.be.equal(false)
-      context.find('#sign').simulate('click')
+      context.find('button[type="submit"]').simulate('click')
       expect(component.formIsValid()).to.be.equal(false)
       expect(component.state.validationTried).to.be.equal(true)
       expect(context.find('.alert').length).to.equal(6)
