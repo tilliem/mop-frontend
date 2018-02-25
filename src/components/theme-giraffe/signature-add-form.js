@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 
-import { InputBlock, CountrySelect } from 'GiraffeUI/petition'
+import { InputBlock, CountrySelect, StateSelect } from 'GiraffeUI/petition'
 import { Button } from 'GiraffeUI/button'
 
 const SignatureAddForm = ({
@@ -83,20 +83,19 @@ const SignatureAddForm = ({
           value={getValue('city')}
         />
         {validationError('city')}
-        <InputBlock
-          name={country === 'United States' ? 'state' : 'region'}
-          label={
-            country === 'United States'
-              ? 'State* (This should be a dropdown)'
-              : 'Region'
-          }
-          onChange={
-            country === 'United States'
-              ? updateStateFromValue('state')
-              : updateStateFromValue('region')
-          }
-          value={getValue(country === 'United States' ? 'state' : 'region')}
-        />
+        {country === 'United States' ? (
+          <StateSelect
+            value={getValue('state')}
+            onChange={updateStateFromValue('state')}
+          />
+        ) : (
+          <InputBlock
+            name={'region'}
+            label={'Region'}
+            onChange={updateStateFromValue('region')}
+            value={getValue('region')}
+          />
+        )}
         {validationError('state')}
         <InputBlock
           name={country === 'United States' ? 'zip' : 'postal'}
