@@ -5,7 +5,6 @@ import { formatDate } from '../../lib'
 
 const SignatureListItem = ({
   user,
-  number,
   comments,
   fromLocation,
   date,
@@ -14,15 +13,26 @@ const SignatureListItem = ({
 }) => (
   <div className='signer'>
     <div className='signer__info'>
-      <div className='signer__author'>{user.name} {fromLocation}</div>
+      <div className='signer__author'>
+        {user.name} {fromLocation}
+      </div>
       <div className='signer__date'>{formatDate(date)}</div>
     </div>
     {comments && (
       <div className='signer__quote'>
-        <p>{isFlagged ? 'Thanks for flagging this comment.' : `"${comments}"`}</p>
+        <p>
+          {isFlagged ? 'Thanks for flagging this comment.' : `"${comments}"`}
+        </p>
         <button onClick={onFlag} className='signer__flag'>
-          Flag
-          {/* {% include 'components/svg' with {class:'flag--outline', id: 'flag-outline'} only %} */}
+          {isFlagged ? (
+            <svg>
+              <use xlinkHref='#flag-solid' />
+            </svg>
+          ) : (
+            <svg>
+              <use xlinkHref='#flag-outline' />
+            </svg>
+          )}
         </button>
       </div>
     )}
