@@ -1,4 +1,4 @@
-const states = {
+export const states = {
   AL: 'Alabama',
   AK: 'Alaska',
   AS: 'American Samoa',
@@ -59,6 +59,15 @@ const states = {
   WI: 'Wisconsin',
   WY: 'Wyoming'
 }
+
+export const armedForcesRegions = [
+  ['AE', 'Armed Forces Africa'],
+  ['AA', 'Armed Forces America'],
+  ['AE', 'Armed Forces Canada'],
+  ['AE', 'Armed Forces Europe'],
+  ['AE', 'Armed Forces Middle East'],
+  ['AP', 'Armed Forces Pacific']
+]
 
 export function getStateFullName(stateAbrv) {
   return states[stateAbrv]
