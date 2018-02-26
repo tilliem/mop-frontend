@@ -1,20 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router'
 
-import FacebookSvg from '../svgs/facebook.svg'
-import TwitterSvg from '../svgs/twitter.svg'
-import InstagramSvg from '../svgs/instagram.svg'
-
 export const Social = () => (
   <div className='footer__social'>
     <Link to='http://www.facebook.com/moveon'>
-      <FacebookSvg />
+      <svg><use xlinkHref='#facebook'></use></svg>
     </Link>
     <Link to='http://www.twitter.com/moveon'>
-      <TwitterSvg />
+      <svg><use xlinkHref='#twitter'></use></svg>
     </Link>
     <Link to='https://www.instagram.com/moveon'>
-      <InstagramSvg />
+      <svg><use xlinkHref='#instagram'></use></svg>
     </Link>
   </div>
 )

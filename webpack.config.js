@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackInlineSVGPlugin = require('html-webpack-inline-svg-plugin');
 
 var BUILD_DIR = path.resolve(__dirname, 'build');
 var APP_DIR = path.resolve(__dirname, 'src');
@@ -73,6 +74,7 @@ var config = {
                    ? process.env.LOCAL_REACT + 'react-dom.js'
                    : 'https://unpkg.com/react-dom@15.4.1/dist/react-dom.js')
     }),
+    new HtmlWebpackInlineSVGPlugin({runPreEmit: true}),
     ((process.env.PROD)
      ? new webpack.optimize.UglifyJsPlugin({sourceMap: true})
      : new webpack.HotModuleReplacementPlugin()),
