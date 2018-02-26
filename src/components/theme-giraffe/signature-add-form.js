@@ -29,6 +29,7 @@ const SignatureAddForm = ({
     <h4>SIGN THIS PETITION</h4>
     {user.signonId ? (
       // Recognized
+      // TODO: Needs design
       <div>
         <strong>Welcome back {user.given_name}!</strong>
         <div>
@@ -59,7 +60,7 @@ const SignatureAddForm = ({
     {showAddressFields ? (
       <div>
         <CountrySelect
-          className='always-pad'
+          className='override-collapse'
           value={country}
           onChange={onChangeCountry}
         />
@@ -127,7 +128,8 @@ const SignatureAddForm = ({
       />
     </InputBlock>
 
-    {petition.collect_volunteers ? (
+    {/* TODO: Design for volunteers checkbox */}
+    {petition.collect_volunteers && (
       <div>
         <input
           type='checkbox'
@@ -139,45 +141,39 @@ const SignatureAddForm = ({
         <label htmlFor='volunteer_box' style={{ display: 'inline' }}>
           {petition.collect_volunteers}
         </label>
-        {volunteer ? (
-          <div id='phone_div'>
-            <input
-              type='text'
+        {volunteer && (
+          <div>
+            <InputBlock
               name='phone'
-              placeholder='Phone*'
-              className='phone moveon-track-click'
+              label='Phone*'
               onChange={updateStateFromValue('phone')}
-              onBlur={updateStateFromValue('phone')}
+              value={getValue('phone')}
+              className='override-collapse'
             />
             {validationError('phone')}
           </div>
-        ) : (
-          ''
         )}
       </div>
-    ) : (
-      ''
     )}
 
     <Button onClick={submit}>SUBMIT</Button>
 
-    {showOptinCheckbox ? (
+    {showOptinCheckbox && (
+      // TODO: Needs design
       <div>
-        <label id='checkbox_label' htmlFor='checkbox' className='bump-top-1'>
-          <input
-            type='checkbox'
-            name='thirdparty_optin'
-            value='1'
-            className='moveon-track-click'
-            checked={thirdPartyOptin}
-            onChange={setThirdPartyOptin}
-          />{' '}
+        <input
+          id='thirdparty_optin'
+          name='thirdparty_optin'
+          type='checkbox'
+          value='1'
+          checked={thirdPartyOptin}
+          onChange={setThirdPartyOptin}
+        />{' '}
+        <label htmlFor='thirdparty_optin' style={{ display: 'inline' }}>
           Receive campaign updates from{' '}
           {creator.organization || 'this organization'}.
         </label>
       </div>
-    ) : (
-      ''
     )}
 
     {showOptinWarning ? (

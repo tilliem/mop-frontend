@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 
-export const InputBlock = ({ name, children, value, label, onChange, type }) => (
-  <div className={cx('input-block', { active: !!value })}>
+export const InputBlock = ({ name, children, value, label, onChange, type, className }) => (
+  <div className={cx('input-block', className, { active: !!value })}>
     {children || <input
       type={type}
       id={name}
@@ -23,5 +23,6 @@ InputBlock.propTypes = {
   value: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   label: PropTypes.string.isRequired,
   type: PropTypes.string,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  className: PropTypes.string
 }
