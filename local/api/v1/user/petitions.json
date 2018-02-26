@@ -63,6 +63,7 @@
       "potentially_deliverable":false,
       "deliver_email":true,
       "delivery_survey":null,
+      "summary_is_editable":true,
       "is_extended":true
     },
     {  
@@ -141,6 +142,7 @@
       "potentially_deliverable":true,
       "deliver_email":false,
       "delivery_survey":null,
+      "summary_is_editable":false,
       "is_extended":true
     },
     {  
@@ -210,6 +212,7 @@
       "potentially_deliverable":false,
       "deliver_email":false,
       "delivery_survey":null,
+      "summary_is_editable":true,
       "is_extended":true
     }
   ],

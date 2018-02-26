@@ -90,5 +90,6 @@
   "potentially_deliverable":true,
   "deliver_email":false,
   "delivery_survey":null,
+  "summary_is_editable":true,
   "is_extended":true
 }
