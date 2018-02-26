@@ -1,7 +1,7 @@
 import React from 'react'
 import { expect } from 'chai'
 
-import { mount, shallow } from 'enzyme'
+import { shallow } from 'enzyme'
 
 import Nav from '../../src/components/theme-giraffe/nav'
 
@@ -16,7 +16,7 @@ describe('<Nav /> (Giraffe)', () => {
   })
 
   it('renders Sections in the Primary Nav', () => {
-    const header = mount(<Nav {...props} />)
+    const header = shallow(<Nav {...props} />)
     const nav = header.find(MoNav)
     const primary = nav.find(Primary)
     expect(primary.length).to.equal(1)
@@ -25,7 +25,7 @@ describe('<Nav /> (Giraffe)', () => {
   })
 
   it('renders Top and Bottom within Secondary', () => {
-    const header = mount(<Nav {...props} />)
+    const header = shallow(<Nav {...props} />)
     const nav = header.find(MoNav)
     const sec = nav.find(Secondary)
     expect(sec.length).to.equal(1)
