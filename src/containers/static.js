@@ -3,12 +3,21 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { loadStaticPage } from '../actions/staticPageActions'
 
-const getId = routes => routes[routes.length - 1].wordpressId
+import StaticComponent from 'LegacyTheme/static'
+
+const getId = routes => routes && routes[routes.length - 1].wordpressId
 
 class Static extends React.Component {
   componentDidMount() {
     this.props.dispatch(loadStaticPage(getId(this.props.routes)))
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (getId(this.props.routes) !== getId(nextProps.routes)) {
+      this.props.dispatch(loadStaticPage(getId(nextProps.routes)))
+    }
+  }
+
   render() {
     if (!this.props.page) return <div />
     return (
