@@ -19,6 +19,11 @@ class SignPetition extends React.Component {
     }
   }
 
+  componentDidMount() {
+    // Lazy-load thanks page component
+    thanksLoader()
+  }
+
   componentWillReceiveProps(nextProps) {
     const { params, petition } = nextProps
     if (petition) {
@@ -39,11 +44,6 @@ class SignPetition extends React.Component {
       return false
     }
     return true
-  }
-
-  componentDidMount() {
-    // Lazy-load thanks page component
-    thanksLoader()
   }
 
   render() {
