@@ -19,18 +19,13 @@ class Static extends React.Component {
   }
 
   render() {
-    if (!this.props.page) return <div />
+    const page = this.props.page
+    if (!this.props.page) return null
     return (
-      <div className='container background-moveon-white bump-top-1'>
-        <div className='row'>
-          <div
-            className='span10 offset1'
-            dangerouslySetInnerHTML={{
-              __html: this.props.page.content.rendered
-            }}
-          />
-        </div>
-      </div>
+      <StaticComponent>
+        <h1>{page.title.rendered}</h1>
+        <div dangerouslySetInnerHTML={{ __html: page.content.rendered }} />
+      </StaticComponent>
     )
   }
 }
