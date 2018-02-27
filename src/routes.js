@@ -16,6 +16,7 @@ import Wrapper from 'Theme/wrapper'
 import ForgotPassword from './containers/forgot-password'
 import Register from './containers/register'
 import Login from './containers/login'
+import Static from './containers/static'
 
 
 const baseAppPath = process.env.BASE_APP_PATH || '/'
@@ -80,6 +81,7 @@ export const routes = (store) => {
       <Route path='/login/register.html' component={Register} />
       <Route path='/login/forgot_password.html' component={ForgotPassword} />
       <Route path='/:organization/' component={Home} onEnter={orgLoader} />
+      <Route path='/about.html' component={Static} wordpressId={60931} />
     </Route>
   )
   updateHistoryObject(appLocation, routeHierarchy)
