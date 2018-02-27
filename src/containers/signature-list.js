@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import SignatureListPage from 'Theme/signature-list-page.js'
+import SignatureListPage from 'Theme/signature-list-page'
+import { NextButton, PreviousButton, Pager } from 'LegacyTheme/signature-list-pagination'
 import { loadPetitionSignatures } from '../actions/petitionActions.js'
 
 class SignatureList extends React.Component {
@@ -48,14 +49,10 @@ class SignatureList extends React.Component {
     }
     const startNumber = ((page - 1) * 10) + 1
     const previousButton = ((page < 2) ? '' : (
-      <li className='previous'>
-        <a onClick={this.previousPage}>&lt; &lt; Previous</a>
-      </li>
+      <PreviousButton onClick={this.previousPage} />
     ))
     const nextButton = (((startNumber + 10) > signatureCount) ? '' :
-      <li className='next'>
-        <a onClick={this.nextPage}>Next &gt; &gt;</a>
-      </li>
+      <NextButton onClick={this.nextPage} />
     )
     return (
       <div>
@@ -63,10 +60,10 @@ class SignatureList extends React.Component {
           signatures={signatures[page]}
           startNumber={startNumber}
         />
-        <ul className='pager'>
-          {previousButton}
-          {nextButton}
-        </ul>
+        <Pager
+          previousButton={previousButton}
+          nextButton={nextButton}
+        />
       </div>
     )
   }
