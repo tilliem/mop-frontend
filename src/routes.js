@@ -68,7 +68,7 @@ export const routes = (store) => {
       <IndexRoute prodReady component={Home} />
       <Route path='/sign/:petition_slug' component={SignPetition} />
       <Route path='/:organization/sign/:petition_slug' component={SignPetition} onEnter={orgLoader} />
-      <Route path='/thanks.html' component={ThanksShim} prodReady={false} minimalNav />
+      <Route path='/thanks.html' component={ThanksShim} prodReady minimalNav />
       <Route path='/:organization/thanks.html' component={ThanksShim} onEnter={orgLoader} minimalNav />
       <Route path='/find' component={SearchPage} />
       <Route path='/dashboard.html' component={PetitionCreatorDashboard} />
