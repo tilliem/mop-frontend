@@ -1,15 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import DocumentTitle from 'react-document-title'
 
 import SearchComponent from 'LegacyTheme/search'
 
 const Search = ({ query, selectState, pageNumber }) => (
-  <SearchComponent
-    query={query}
-    pageNumber={pageNumber}
-    selectState={selectState}
-  />
+  <DocumentTitle title={`${query} - MoveOn Petitions`}>
+    <SearchComponent
+      query={query}
+      pageNumber={pageNumber}
+      selectState={selectState}
+    />
+  </DocumentTitle>
 )
 
 Search.propTypes = {

@@ -1,4 +1,5 @@
 import React from 'react'
+import DocumentTitle from 'react-document-title'
 
 import ForgotPasswordForm from 'LegacyTheme/forgot-password-form'
 import { actions as accountActions } from '../actions/accountActions'
@@ -59,16 +60,18 @@ class ForgotPassword extends React.Component {
 
   render() {
     return (
-      <div className='moveon-petitions'>
-        <ForgotPasswordForm
-          handleSubmit={this.handleSubmit}
-          submitted={this.state.submitted}
-          errorList={this.errorList}
-          getEmailRef={input => {
-            this.email = input
-          }}
-        />
-      </div>
+      <DocumentTitle title='MoveOn Petitions - Forgot Password'>
+        <div className='moveon-petitions'>
+          <ForgotPasswordForm
+            handleSubmit={this.handleSubmit}
+            submitted={this.state.submitted}
+            errorList={this.errorList}
+            getEmailRef={input => {
+              this.email = input
+            }}
+          />
+        </div>
+      </DocumentTitle>
     )
   }
 }

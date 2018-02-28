@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import DocumentTitle from 'react-document-title'
 import { actions as petitionActions } from '../actions/petitionActions'
 import { petitionShortCode, md5ToToken } from '../lib'
 
@@ -148,22 +149,24 @@ Thanks!
     const mailtoMessage = `mailto:?subject=${encodeURIComponent(petition.title)}&body=${encodeURIComponent(mailToMessage.replace('__TYPE__', 'mt'))}`
 
     return (
-      <ThanksComponent
-        petition={petition}
-        sharedSocially={this.state.sharedSocially}
-        isCreator={this.isCreator}
-        shareFacebook={this.shareFacebook}
-        shareTwitter={this.shareTwitter}
-        shareLink={this.shareLink}
-        shareEmail={this.shareEmail}
-        mailtoMessage={mailtoMessage}
-        copyPasteMessage={copyPasteMessage}
-        rawShareLink={rawShareLink}
-        tweet={tweet}
-        setTweetRef={input => { this.tweetTextArea = input }}
-        setLinkRef={input => { this.linkTextArea = input }}
-        setEmailRef={input => { this.emailTextArea = input }}
-      />
+      <DocumentTitle title='MoveOn Petitions - Thanks!'>
+        <ThanksComponent
+          petition={petition}
+          sharedSocially={this.state.sharedSocially}
+          isCreator={this.isCreator}
+          shareFacebook={this.shareFacebook}
+          shareTwitter={this.shareTwitter}
+          shareLink={this.shareLink}
+          shareEmail={this.shareEmail}
+          mailtoMessage={mailtoMessage}
+          copyPasteMessage={copyPasteMessage}
+          rawShareLink={rawShareLink}
+          tweet={tweet}
+          setTweetRef={input => { this.tweetTextArea = input }}
+          setLinkRef={input => { this.linkTextArea = input }}
+          setEmailRef={input => { this.emailTextArea = input }}
+        />
+      </DocumentTitle>
     )
   }
 }
