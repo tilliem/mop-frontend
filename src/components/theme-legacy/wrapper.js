@@ -2,21 +2,24 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
+import DocumentTitle from 'react-document-title'
 import Nav from '../../containers/nav'
 import Footer from 'LegacyTheme/footer.js'
 
 const Wrapper = ({ children, params, routes }) => (
-  <div className='moveon-petitions'>
-    <Nav
-      organization={params && params.organization || ''}
-      minimal={!!routes[routes.length - 1].minimalNav}
-    />
-    <main className='main'>
-      {children}
-    </main>
-    <hr />
-    <Footer />
-  </div>
+  <DocumentTitle title='MoveOn Petitions'>
+    <div className='moveon-petitions'>
+      <Nav
+        organization={params && params.organization || ''}
+        minimal={!!routes[routes.length - 1].minimalNav}
+      />
+      <main className='main'>
+        {children}
+      </main>
+      <hr />
+      <Footer />
+    </div>
+  </DocumentTitle>
 )
 
 
