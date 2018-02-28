@@ -7,17 +7,43 @@ import { connect } from 'react-redux'
 import Petition from 'LegacyTheme/petition'
 import { thanksLoader } from '../loaders/petition.js'
 import { actions as petitionActions } from '../actions/petitionActions.js'
+import { appLocation } from '../routes.js'
 
 class SignPetition extends React.Component {
 
   componentWillMount() {
-    const { dispatch, params } = this.props
+    const { dispatch, params, petition } = this.props
     dispatch(petitionActions.loadPetition(params.petition_slug))
+    if (petition) {
+      this.checkOrgPathMatches(petition, params.organization)
+    }
   }
 
   componentDidMount() {
     // Lazy-load thanks page component
     thanksLoader()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { params, petition } = nextProps
+    if (petition) {
+      this.checkOrgPathMatches(petition, params.organization)
+    }
+  }
+
+  checkOrgPathMatches(petition, orgPath) {
+    const { creator } = petition._embedded
+    // Petition has org that doesn't match URL
+    if (creator.source && (creator.source !== orgPath)) {
+      appLocation.push(`/${creator.source}/sign/${petition.name}`)
+      return false
+    }
+    // URL has org that doesn't match petition
+    if (orgPath && (orgPath !== creator.source)) {
+      appLocation.push(`/sign/${petition.name}`)
+      return false
+    }
+    return true
   }
 
   render() {
