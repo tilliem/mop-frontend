@@ -16,6 +16,7 @@ import Wrapper from 'Theme/wrapper'
 import ForgotPassword from './containers/forgot-password'
 import Register from './containers/register'
 import Login from './containers/login'
+import Static from './containers/static'
 
 
 const baseAppPath = process.env.BASE_APP_PATH || '/'
@@ -80,6 +81,20 @@ export const routes = (store) => {
       <Route path='/login/register.html' component={Register} />
       <Route path='/login/forgot_password.html' component={ForgotPassword} />
       <Route path='/:organization/' component={Home} onEnter={orgLoader} />
+
+      {/* Static pages with content from wordpress api */}
+      <Route path='/about.html' component={Static} wordpressId={60931} />
+      <Route path='/campaign_tips.html' component={Static} wordpressId={60942} />
+      <Route path='/funding.html' component={Static} wordpressId={60943} />
+      <Route path='/howto_campaign.html' component={Static} wordpressId={60944} />
+      <Route path='/howto_communication.html' component={Static} wordpressId={60945} />
+      <Route path='/howto_delivery.html' component={Static} wordpressId={60946} />
+      <Route path='/howto_petition.html' component={Static} wordpressId={60947} />
+      <Route path='/howto_twitter.html' component={Static} wordpressId={60948} />
+      <Route path='/organizations.html' component={Static} wordpressId={60949} />
+      <Route path='/privacy.html' component={Static} wordpressId={60950} />
+      <Route path='/terms.html' component={Static} wordpressId={60951} />
+
     </Route>
   )
   updateHistoryObject(appLocation, routeHierarchy)
