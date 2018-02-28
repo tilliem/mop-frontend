@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import Logo from 'GiraffeUI/logo'
 import {
   Primary,
   Secondary,
   NavLink,
   Header,
-  Logo,
   MoNav
 } from 'GiraffeUI/nav'
 

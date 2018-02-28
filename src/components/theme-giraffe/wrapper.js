@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Nav from '../../containers/nav'
-import Footer from 'LegacyTheme/footer.js'
+import Footer from 'Theme/footer.js'
 
 const Wrapper = ({ children, params, routes }) => (
   <div id='wrapper' className='giraffe petition'>
@@ -12,7 +12,6 @@ const Wrapper = ({ children, params, routes }) => (
     <main id='content'>
       {children}
     </main>
-    <hr />
     <Footer />
   </div>
 )
