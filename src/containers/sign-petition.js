@@ -9,6 +9,14 @@ import { thanksLoader } from '../loaders/petition.js'
 import { actions as petitionActions } from '../actions/petitionActions.js'
 
 class SignPetition extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isSignModalOpen: false
+    }
+    this.openModal = this.openModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
+  }
 
   componentWillMount() {
     const { dispatch, params } = this.props
@@ -18,6 +26,14 @@ class SignPetition extends React.Component {
   componentDidMount() {
     // Lazy-load thanks page component
     thanksLoader()
+  }
+
+  openModal() {
+    this.setState({ isSignModalOpen: true })
+  }
+
+  closeModal() {
+    this.setState({ isSignModalOpen: false })
   }
 
   render() {
@@ -41,6 +57,9 @@ class SignPetition extends React.Component {
           query={this.props.location.query}
           petitionBy={petitionBy}
           outOfDate={outOfDate}
+          isSignModalOpen={this.state.isSignModalOpen}
+          openModal={this.openModal}
+          closeModal={this.closeModal}
         />
       </div>
     )
