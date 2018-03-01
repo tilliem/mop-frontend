@@ -51,7 +51,6 @@
     "eslint-plugin-prefer-object-spread": "^1.2.1",
     "eslint-plugin-react": "^5.2.2",
     "file-loader": "^0.11.1",
-    "html-webpack-inline-svg-plugin": "^1.1.1",
     "html-webpack-plugin": "^2.22.0",
     "isomorphic-fetch": "^2.2.1",
     "jsdom": "11.5.1",

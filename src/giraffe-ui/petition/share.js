@@ -1,6 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router'
 import PropTypes from 'prop-types'
+import MailSvg from '../svgs/mail.svg'
+import FacebookSvg from '../svgs/facebook.svg'
+import TwitterSvg from '../svgs/twitter.svg'
+import LinkSvg from '../svgs/link.svg'
 import cx from 'classnames'
 
 export const Share = ({
@@ -22,19 +26,19 @@ export const Share = ({
           onClick={mail}
           className={cx(elementCn, `${elementCn}--mail`)}
         >
-          <svg><use xlinkHref='#mail'></use></svg>
+          <MailSvg />
           {hasLabels && 'Email'}
         </Link>
         <Link to='#' onClick={facebook} className={elementCn}>
-          <svg><use xlinkHref='#facebook'></use></svg>
+          <FacebookSvg />
           {hasLabels && 'Facebook'}
         </Link>
         <Link to='#' onClick={tweet} className={elementCn}>
-          <svg><use xlinkHref='#twitter'></use></svg>
+          <TwitterSvg />
           {hasLabels && 'Twitter'}
         </Link>
         <Link to='#' onClick={link} className={elementCn}>
-          <svg><use xlinkHref='#link'></use></svg>
+          <LinkSvg />
           {hasLabels && 'Copy Link'}
         </Link>
       </div>
