@@ -67,34 +67,33 @@ export const routes = (store) => {
   const routeHierarchy = (
     <Route path={window.baseAppPath || baseAppPath} component={Wrapper} onEnter={(nextState) => { store.dispatch(loadSession(nextState)) }} >
       <IndexRoute prodReady component={Home} />
-      <Route path='/sign/:petition_slug' component={SignPetition} />
-      <Route path='/:organization/sign/:petition_slug' component={SignPetition} onEnter={orgLoader} />
-      <Route path='/thanks.html' component={ThanksShim} prodReady minimalNav />
-      <Route path='/:organization/thanks.html' component={ThanksShim} onEnter={orgLoader} minimalNav />
-      <Route path='/find' component={SearchPage} />
-      <Route path='/dashboard.html' component={PetitionCreatorDashboard} />
-      <Route path='/create_start.html' component={CreatePetitionPage} minimalNav />
-      <Route path='/petition_report.html' component={PetitionReport} />
-      <Route path='/:organization/create_start.html' component={CreatePetitionPage} onEnter={orgLoader} minimalNav />
-      <Route path='/login/' component={Login} />
-      <Route path='/login/index.html' component={Login} />
-      <Route path='/login/register.html' component={Register} />
-      <Route path='/login/forgot_password.html' component={ForgotPassword} />
-      <Route path='/:organization/' component={Home} onEnter={orgLoader} />
+      <Route path='sign/:petition_slug' component={SignPetition} />
+      <Route path=':organization/sign/:petition_slug' component={SignPetition} onEnter={orgLoader} />
+      <Route path='thanks.html' component={ThanksShim} prodReady minimalNav />
+      <Route path=':organization/thanks.html' component={ThanksShim} onEnter={orgLoader} minimalNav />
+      <Route path='find' component={SearchPage} />
+      <Route path='dashboard.html' component={PetitionCreatorDashboard} />
+      <Route path='create_start.html' component={CreatePetitionPage} minimalNav />
+      <Route path='petition_report.html' component={PetitionReport} />
+      <Route path=':organization/create_start.html' component={CreatePetitionPage} onEnter={orgLoader} minimalNav />
+      <Route path='login/' component={Login} />
+      <Route path='login/index.html' component={Login} />
+      <Route path='login/register.html' component={Register} />
+      <Route path='login/forgot_password.html' component={ForgotPassword} />
+      <Route path=':organization/' component={Home} onEnter={orgLoader} />
 
       {/* Static pages with content from wordpress api */}
-      <Route path='/about.html' component={Static} wordpressId={60931} />
-      <Route path='/campaign_tips.html' component={Static} wordpressId={60942} />
-      <Route path='/funding.html' component={Static} wordpressId={60943} />
-      <Route path='/howto_campaign.html' component={Static} wordpressId={60944} />
-      <Route path='/howto_communication.html' component={Static} wordpressId={60945} />
-      <Route path='/howto_delivery.html' component={Static} wordpressId={60946} />
-      <Route path='/howto_petition.html' component={Static} wordpressId={60947} />
-      <Route path='/howto_twitter.html' component={Static} wordpressId={60948} />
-      <Route path='/organizations.html' component={Static} wordpressId={60949} />
-      <Route path='/privacy.html' component={Static} wordpressId={60950} />
-      <Route path='/terms.html' component={Static} wordpressId={60951} />
-
+      <Route path='about.html' component={Static} wordpressId={60931} />
+      <Route path='campaign_tips.html' component={Static} wordpressId={60942} />
+      <Route path='funding.html' component={Static} wordpressId={60943} />
+      <Route path='howto_campaign.html' component={Static} wordpressId={60944} />
+      <Route path='howto_communication.html' component={Static} wordpressId={60945} />
+      <Route path='howto_delivery.html' component={Static} wordpressId={60946} />
+      <Route path='howto_petition.html' component={Static} wordpressId={60947} />
+      <Route path='howto_twitter.html' component={Static} wordpressId={60948} />
+      <Route path='organizations.html' component={Static} wordpressId={60949} />
+      <Route path='privacy.html' component={Static} wordpressId={60950} />
+      <Route path='terms.html' component={Static} wordpressId={60951} />
     </Route>
   )
   updateHistoryObject(appLocation, routeHierarchy)
