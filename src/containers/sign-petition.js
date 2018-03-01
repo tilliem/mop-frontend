@@ -10,6 +10,14 @@ import { actions as petitionActions } from '../actions/petitionActions.js'
 import { appLocation } from '../routes.js'
 
 class SignPetition extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isSignModalOpen: false
+    }
+    this.openModal = this.openModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
+  }
 
   componentWillMount() {
     const { dispatch, params, petition } = this.props
@@ -46,6 +54,14 @@ class SignPetition extends React.Component {
     return true
   }
 
+  openModal() {
+    this.setState({ isSignModalOpen: true })
+  }
+
+  closeModal() {
+    this.setState({ isSignModalOpen: false })
+  }
+
   render() {
     const p = this.props.petition
     if (!p) {
@@ -67,6 +83,9 @@ class SignPetition extends React.Component {
           query={this.props.location.query}
           petitionBy={petitionBy}
           outOfDate={outOfDate}
+          isSignModalOpen={this.state.isSignModalOpen}
+          openModal={this.openModal}
+          closeModal={this.closeModal}
         />
       </div>
     )

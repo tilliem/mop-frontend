@@ -8,12 +8,21 @@ import {
   SignColumn,
   InfoColumn
 } from 'GiraffeUI/petition'
+import { Modal } from 'GiraffeUI/modal'
 
 import { text2paraJsx, splitIntoSpansJsx, ellipsize } from '../../lib'
 import SignatureAddForm from '../../containers/signature-add-form'
 import SignatureList from '../../containers/signature-list'
 
-const Petition = ({ petition: p, query, petitionBy, outOfDate }) => (
+const Petition = ({
+  petition: p,
+  query,
+  petitionBy,
+  outOfDate,
+  isSignModalOpen,
+  openModal,
+  closeModal
+}) => (
   <div className='mo-container'>
     <Message outOfDate={outOfDate} petition={p} isFwd={query.fwd} />
     <InfoColumn>
@@ -54,6 +63,15 @@ const Petition = ({ petition: p, query, petitionBy, outOfDate }) => (
     <SignColumn>
       <SignatureAddForm petition={p} query={query} />
     </SignColumn>
+    <button onClick={openModal} className='sign-form__modal-toggle'>Sign Now</button>
+    <Modal
+      heading='Sign Now'
+      className='sign-form-modal'
+      onClose={closeModal}
+      visible={isSignModalOpen}
+    >
+      <SignatureAddForm petition={p} query={query} />
+    </Modal>
   </div>
 )
 
@@ -61,7 +79,10 @@ Petition.propTypes = {
   petition: PropTypes.object.isRequired,
   query: PropTypes.object,
   petitionBy: PropTypes.string,
-  outOfDate: PropTypes.string
+  outOfDate: PropTypes.string,
+  isSignModalOpen: PropTypes.bool,
+  openModal: PropTypes.func,
+  closeModal: PropTypes.func
 }
 
 export default Petition
