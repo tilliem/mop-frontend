@@ -2,8 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { actions as petitionActions } from '../actions/petitionActions'
 import { petitionShortCode, md5ToToken } from '../lib'
+import Twitter from './twitter'
 
 import ThanksComponent from 'LegacyTheme/thanks'
+import TwitterButton from 'LegacyTheme/twitter-button'
 
 class Thanks extends React.Component {
   constructor(props) {
@@ -28,19 +30,24 @@ class Thanks extends React.Component {
       }
     }
     this.trackingParams = trackingParams
+    this.shortLinkArgs = [
+      petition.petition_id,
+      user && user.signonId,
+      signatureMessage && signatureMessage.messageMd5]
+
     this.state = {
       sharedSocially: false,
       pre
     }
+
     this.recordShare = this.recordShare.bind(this)
+    this.renderTwitter = this.renderTwitter.bind(this)
     this.shareLink = this.shareLink.bind(this)
     this.shareEmail = this.shareEmail.bind(this)
-    this.openFacebookSharing = this.openFacebookSharing.bind(this)
-    this.shareFacebook = this.shareFacebook.bind(this)
-    this.shareTwitter = this.shareTwitter.bind(this)
   }
 
   recordShare(medium, source) {
+    this.setState({ sharedSocially: true })
     petitionActions.recordShareClick(this.props.petition, medium, source, this.props.user)
   }
 
@@ -52,47 +59,6 @@ class Thanks extends React.Component {
   shareEmail(evt) {
     evt.target.select()
     this.recordShare('email', `${this.state.pre}.em.cp`)
-  }
-
-  openFacebookSharing(urlToShare) {
-    const { user } = this.props
-    const preChar = ((/\?/.test(urlToShare)) ? '&' : '?')
-    let fbUrl = `${urlToShare}${preChar}source=${this.state.pre}.fb`
-    if (user.signonId) {
-      fbUrl = `${fbUrl}&${this.trackingParams}`
-    }
-    window.open(`https://www.facebook.com/share.php?u=${encodeURIComponent(fbUrl)}`)
-    this.setState({ sharedSocially: true })
-  }
-
-  shareFacebook() {
-    const { petition } = this.props
-    const shareOpts = (petition.share_options && petition.share_options[0]) || {}
-    const self = this
-    setTimeout(() => {
-      self.recordShare('facebook', `${self.state.pre}.fb`)
-    }, 100)
-    let fbUrl = petition._links.url
-    if (shareOpts.facebook_share && shareOpts.facebook_share.share_url) {
-      if (shareOpts.facebook_share.sharebandit) { // Non-OSDI feature
-        petitionActions.getSharebanditShareLink(
-          shareOpts.facebook_share.share_url)
-          .then(this.openFacebookSharing)
-        // Prematurely exit, since we will block on the promise
-        return false
-      }
-      fbUrl = shareOpts.facebook_share.share_url
-    }
-    this.openFacebookSharing(fbUrl)
-    return false
-  }
-
-  shareTwitter() {
-    const encodedValue = encodeURIComponent(this.tweetTextArea.value)
-    const url = `https://twitter.com/intent/tweet?text=${encodedValue}`
-    window.open(url)
-    this.recordShare('twitter', `${this.state.pre}.tw`)
-    this.setState({ sharedSocially: true })
   }
 
   generateMailMessage(about, statement, isCreator, shareOpts, fullTarget, petitionLink) {
@@ -117,25 +83,27 @@ Thanks!
 `)
   }
 
+  renderTwitter() {
+    return (<Twitter
+      isCreator={this.isCreator}
+      petition={this.props.petition}
+      pre={this.state.pre}
+      shortLinkArgs={this.shortLinkArgs}
+      recordShare={this.recordShare}
+    >
+      <TwitterButton />
+    </Twitter>
+    )
+  }
+
   render() {
-    const { petition, signatureMessage, user } = this.props
-    const shortLinkArgs = [
-      petition.petition_id,
-      user && user.signonId,
-      signatureMessage && signatureMessage.messageMd5]
-    const twitterShareLink = petitionShortCode((this.isCreator ? 'c' : 't'), ...shortLinkArgs)
-    const rawShareLink = petitionShortCode((this.isCreator ? 'k' : 'l'), ...shortLinkArgs)
+    const { petition } = this.props
+
+    const rawShareLink = petitionShortCode((this.isCreator ? 'k' : 'l'), ...this.shortLinkArgs)
     const shareOpts = (petition.share_options && petition.share_options[0]) || {}
     // Convert description to text
     const textDescription = document.createElement('div')
     textDescription.innerHTML = petition.description
-    let tweet
-    if (shareOpts.twitter_share && shareOpts.twitter_share.message) {
-      tweet = shareOpts.twitter_share.message.replace('[URL]', twitterShareLink)
-    } else {
-      const suffix = ` ${twitterShareLink} @moveon`
-      tweet = `${petition.title.slice(0, 140 - suffix.length)} ${suffix}`
-    }
 
     const mailToMessage = this.generateMailMessage(textDescription.textContent,
                                                    petition.summary,
@@ -152,15 +120,12 @@ Thanks!
         petition={petition}
         sharedSocially={this.state.sharedSocially}
         isCreator={this.isCreator}
-        shareFacebook={this.shareFacebook}
-        shareTwitter={this.shareTwitter}
+        renderTwitter={this.renderTwitter}
         shareLink={this.shareLink}
         shareEmail={this.shareEmail}
         mailtoMessage={mailtoMessage}
         copyPasteMessage={copyPasteMessage}
         rawShareLink={rawShareLink}
-        tweet={tweet}
-        setTweetRef={input => { this.tweetTextArea = input }}
         setLinkRef={input => { this.linkTextArea = input }}
         setEmailRef={input => { this.emailTextArea = input }}
       />

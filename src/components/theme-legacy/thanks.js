@@ -8,16 +8,14 @@ const Thanks = ({
   sharedSocially,
   isCreator,
   shareFacebook,
-  shareTwitter,
   shareLink,
   shareEmail,
   mailtoMessage,
   copyPasteMessage,
   rawShareLink,
-  tweet,
-  setTweetRef,
   setLinkRef,
-  setEmailRef
+  setEmailRef,
+  renderTwitter
 }) => (
   <div className='row'>
     {sharedSocially ? (
@@ -49,20 +47,7 @@ const Thanks = ({
           <span className='icon-twitter-default' />
           Tweet your followers:
         </div>
-        <button
-          id='twitter-button'
-          className='xl300 background-moveon-bright-red'
-          onClick={shareTwitter}
-        >
-          Tweet This
-        </button>
-        <textarea
-          className='hidden'
-          id='tweet_text'
-          defaultValue={tweet}
-          ref={setTweetRef}
-          readOnly
-        />
+        {renderTwitter()}
         <div
           id='hidden_share_link'
           className='lanky-header bump-top-3 align-center hidden'
@@ -112,16 +97,14 @@ Thanks.propTypes = {
   sharedSocially: PropTypes.bool,
   isCreator: PropTypes.bool,
   shareFacebook: PropTypes.func,
-  shareTwitter: PropTypes.func,
   shareLink: PropTypes.func,
   shareEmail: PropTypes.func,
   mailtoMessage: PropTypes.string,
   copyPasteMessage: PropTypes.string,
   rawShareLink: PropTypes.string,
-  tweet: PropTypes.string,
-  setTweetRef: PropTypes.func,
   setLinkRef: PropTypes.func,
-  setEmailRef: PropTypes.func
+  setEmailRef: PropTypes.func,
+  renderTwitter: PropTypes.func
 }
 
 export default Thanks
