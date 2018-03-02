@@ -3,9 +3,11 @@ import PropTypes from 'prop-types'
 import { actions as petitionActions } from '../actions/petitionActions'
 import { petitionShortCode, md5ToToken } from '../lib'
 import Twitter from './twitter'
+import Facebook from './facebook'
 
 import ThanksComponent from 'LegacyTheme/thanks'
 import TwitterButton from 'LegacyTheme/twitter-button'
+import FacebookButton from 'LegacyTheme/facebook-button'
 
 class Thanks extends React.Component {
   constructor(props) {
@@ -42,6 +44,7 @@ class Thanks extends React.Component {
 
     this.recordShare = this.recordShare.bind(this)
     this.renderTwitter = this.renderTwitter.bind(this)
+    this.renderFacebook = this.renderFacebook.bind(this)
     this.shareLink = this.shareLink.bind(this)
     this.shareEmail = this.shareEmail.bind(this)
   }
@@ -96,6 +99,19 @@ Thanks!
     )
   }
 
+  renderFacebook() {
+    return (<Facebook
+      petition={this.props.petition}
+      user={this.props.user}
+      pre={this.state.pre}
+      recordShare={this.recordShare}
+      trackingParams={this.trackingParams}
+    >
+      <FacebookButton />
+    </Facebook>
+    )
+  }
+
   render() {
     const { petition } = this.props
 
@@ -121,6 +137,7 @@ Thanks!
         sharedSocially={this.state.sharedSocially}
         isCreator={this.isCreator}
         renderTwitter={this.renderTwitter}
+        renderFacebook={this.renderFacebook}
         shareLink={this.shareLink}
         shareEmail={this.shareEmail}
         mailtoMessage={mailtoMessage}

@@ -7,7 +7,6 @@ const Thanks = ({
   petition,
   sharedSocially,
   isCreator,
-  shareFacebook,
   shareLink,
   shareEmail,
   mailtoMessage,
@@ -15,7 +14,8 @@ const Thanks = ({
   rawShareLink,
   setLinkRef,
   setEmailRef,
-  renderTwitter
+  renderTwitter,
+  renderFacebook
 }) => (
   <div className='row'>
     {sharedSocially ? (
@@ -36,13 +36,7 @@ const Thanks = ({
           <span className='icon-fb-default' />
           Tell your friends on Facebook:
         </div>
-        <button
-          id='facebook-button'
-          className='xl300 background-facebook-blue'
-          onClick={shareFacebook}
-        >
-          Share on Facebook
-        </button>
+        {renderFacebook()}
         <div className='lanky-header bump-top-3 align-center'>
           <span className='icon-twitter-default' />
           Tweet your followers:
@@ -104,7 +98,8 @@ Thanks.propTypes = {
   rawShareLink: PropTypes.string,
   setLinkRef: PropTypes.func,
   setEmailRef: PropTypes.func,
-  renderTwitter: PropTypes.func
+  renderTwitter: PropTypes.func,
+  renderFacebook: PropTypes.func
 }
 
 export default Thanks
