@@ -15,7 +15,7 @@ import {
 import CaretRightSvg from 'GiraffeUI/svgs/caret-right.svg'
 import DocumentSvg from 'GiraffeUI/svgs/document-add.svg'
 
-const Footer = ({ entity }) => (
+export const Footer = ({ entity }) => (
   <MoFooter>
     <Logo />
     <MoFooter.Top>
