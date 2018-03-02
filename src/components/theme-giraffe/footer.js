@@ -1,19 +1,21 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { connect } from 'react-redux'
+import { Link, withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 
 import {
   Nav,
   Logo,
   Text as FooterText,
   Social,
-  FinePrint,
+  PACFinePrint,
   MoFooter
 } from 'GiraffeUI/footer'
 
 import CaretRightSvg from 'GiraffeUI/svgs/caret-right.svg'
 import DocumentSvg from 'GiraffeUI/svgs/document-add.svg'
 
-const Footer = () => (
+const Footer = ({ entity }) => (
   <MoFooter>
     <Logo />
     <MoFooter.Top>
@@ -65,9 +67,23 @@ const Footer = () => (
     </MoFooter.Top>
     <MoFooter.Bottom>
       <Social />
-      <FinePrint />
+      {entity === 'pac' && <PACFinePrint />}
     </MoFooter.Bottom>
   </MoFooter>
 )
 
-export default Footer
+Footer.propTypes = {
+  entity: PropTypes.string
+}
+
+function mapStateToProps(store, ownProps) {
+  // Fetch the petition only if the route has a `petition_slug` param
+  const petitionSlug = ownProps.params && ownProps.params.petition_slug
+  const petition = petitionSlug && store.petitionStore.petitions[petitionSlug]
+
+  return {
+    entity: petition && petition.entity
+  }
+}
+
+export default withRouter(connect(mapStateToProps)(Footer))

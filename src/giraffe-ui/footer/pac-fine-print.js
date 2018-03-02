@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
-export const FinePrint = () => (
+export const PACFinePrint = () => (
   <div className='footer__fineprint'>
     Paid for in part by{' '}
     <Link to='http://pol.moveon.org/'>
