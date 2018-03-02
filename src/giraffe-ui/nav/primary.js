@@ -28,7 +28,7 @@ const Section = ({ openSections, toggleSection, name, children }) => {
 
   return (
     <li className={dropdownCn(name)}>
-      <a href='#' onClick={toggleSection(name)}>
+      <a onClick={toggleSection(name)}>
         {name}
         <button className={`${baseCn}__caret`}>
           <CaretDownSvg />

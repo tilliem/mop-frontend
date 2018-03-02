@@ -22,22 +22,21 @@ export const Share = ({
       <strong className={`${className}__share-heading`}>Share</strong>
       <div className={`${className}__share-${hasLabels ? 'items' : 'icons'}`}>
         <Link
-          to='#'
           onClick={mail}
           className={cx(elementCn, `${elementCn}--mail`)}
         >
           <MailSvg />
           {hasLabels && 'Email'}
         </Link>
-        <Link to='#' onClick={facebook} className={elementCn}>
+        <Link onClick={facebook} className={elementCn}>
           <FacebookSvg />
           {hasLabels && 'Facebook'}
         </Link>
-        <Link to='#' onClick={tweet} className={elementCn}>
+        <Link onClick={tweet} className={elementCn}>
           <TwitterSvg />
           {hasLabels && 'Twitter'}
         </Link>
-        <Link to='#' onClick={link} className={elementCn}>
+        <Link onClick={link} className={elementCn}>
           <LinkSvg />
           {hasLabels && 'Copy Link'}
         </Link>
