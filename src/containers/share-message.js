@@ -67,7 +67,12 @@ Thanks!
       petition.title
     )}&body=${encodeURIComponent(message.replace('__TYPE__', 'mt'))}`
 
-    return <div>{React.cloneElement(children, { mailtoMessage })}</div>
+    const copyPasteMessage = `Subject: ${petition.title}\n\n${message.replace(
+      '__TYPE__',
+      'cp'
+    )}`
+
+    return <div>{React.cloneElement(children, { mailtoMessage, copyPasteMessage })}</div>
   }
 }
 

@@ -10,6 +10,7 @@ import ThanksComponent from 'LegacyTheme/thanks'
 import TwitterButton from 'LegacyTheme/twitter-button'
 import FacebookButton from 'LegacyTheme/facebook-button'
 import MailButton from 'LegacyTheme/mail-button'
+import CopyPaste from 'LegacyTheme/copy-paste'
 
 class Thanks extends React.Component {
   constructor(props) {
@@ -48,6 +49,7 @@ class Thanks extends React.Component {
     this.renderTwitter = this.renderTwitter.bind(this)
     this.renderFacebook = this.renderFacebook.bind(this)
     this.renderMail = this.renderMail.bind(this)
+    this.renderCopyPaste = this.renderCopyPaste.bind(this)
     this.shareLink = this.shareLink.bind(this)
     this.shareEmail = this.shareEmail.bind(this)
   }
@@ -109,12 +111,24 @@ class Thanks extends React.Component {
     )
   }
 
+  renderCopyPaste() {
+    return (
+      <ShareMessage
+        isCreator={this.isCreator}
+        petition={this.props.petition}
+        pre={this.state.pre}
+        recordShare={this.recordShare}
+        trackingParams={this.trackingParams}
+      >
+        <CopyPaste />
+      </ShareMessage>
+    )
+  }
+
   render() {
     const { petition } = this.props
 
     const rawShareLink = petitionShortCode((this.isCreator ? 'k' : 'l'), ...this.shortLinkArgs)
-
-    // const copyPasteMessage = `Subject: ${petition.title}\n\n${mailToMessage.replace('__TYPE__', 'cp')}`
 
 
     return (
@@ -125,12 +139,11 @@ class Thanks extends React.Component {
         renderTwitter={this.renderTwitter}
         renderFacebook={this.renderFacebook}
         renderMail={this.renderMail}
+        renderCopyPaste={this.renderCopyPaste}
         shareLink={this.shareLink}
         shareEmail={this.shareEmail}
-        copyPasteMessage={''}
         rawShareLink={rawShareLink}
         setLinkRef={input => { this.linkTextArea = input }}
-        setEmailRef={input => { this.emailTextArea = input }}
       />
     )
   }

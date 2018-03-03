@@ -8,14 +8,12 @@ const Thanks = ({
   sharedSocially,
   isCreator,
   shareLink,
-  shareEmail,
-  copyPasteMessage,
   rawShareLink,
   setLinkRef,
-  setEmailRef,
   renderTwitter,
   renderFacebook,
-  renderMail
+  renderMail,
+  renderCopyPaste
 }) => (
   <div className='row'>
     {sharedSocially ? (
@@ -66,14 +64,7 @@ const Thanks = ({
           <div className='disclaimer bump-top-3 hidden-phone'>
             Or copy and paste the text below into a message:
           </div>
-          <textarea
-            ref={setEmailRef}
-            className='hidden-phone'
-            id='email-textarea'
-            onClick={shareEmail}
-            value={copyPasteMessage.replace('__TYPE__', 'cp')}
-            readOnly
-          />
+          {renderCopyPaste()}
         </div>
       </div>
     </div>
@@ -84,17 +75,14 @@ Thanks.propTypes = {
   petition: PropTypes.object,
   sharedSocially: PropTypes.bool,
   isCreator: PropTypes.bool,
-  shareFacebook: PropTypes.func,
   shareLink: PropTypes.func,
-  shareEmail: PropTypes.func,
-  mailtoMessage: PropTypes.string,
-  copyPasteMessage: PropTypes.string,
   rawShareLink: PropTypes.string,
   setLinkRef: PropTypes.func,
   setEmailRef: PropTypes.func,
   renderTwitter: PropTypes.func,
   renderFacebook: PropTypes.func,
-  renderMail: PropTypes.func
+  renderMail: PropTypes.func,
+  renderCopyPaste: PropTypes.func
 }
 
 export default Thanks
