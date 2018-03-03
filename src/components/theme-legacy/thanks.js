@@ -9,13 +9,13 @@ const Thanks = ({
   isCreator,
   shareLink,
   shareEmail,
-  mailtoMessage,
   copyPasteMessage,
   rawShareLink,
   setLinkRef,
   setEmailRef,
   renderTwitter,
-  renderFacebook
+  renderFacebook,
+  renderMail
 }) => (
   <div className='row'>
     {sharedSocially ? (
@@ -62,13 +62,7 @@ const Thanks = ({
             <span className='icon-join-default' />Email your friends, family and
             colleagues:
           </div>
-          <a
-            id='email-button'
-            href={mailtoMessage}
-            className='button xl300 background-moveon-bright-red'
-          >
-            Email your friends
-          </a>
+          {renderMail()}
           <div className='disclaimer bump-top-3 hidden-phone'>
             Or copy and paste the text below into a message:
           </div>
@@ -99,7 +93,8 @@ Thanks.propTypes = {
   setLinkRef: PropTypes.func,
   setEmailRef: PropTypes.func,
   renderTwitter: PropTypes.func,
-  renderFacebook: PropTypes.func
+  renderFacebook: PropTypes.func,
+  renderMail: PropTypes.func
 }
 
 export default Thanks
