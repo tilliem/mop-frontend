@@ -12,7 +12,7 @@ class Twitter extends React.Component {
     const encodedValue = encodeURIComponent(this.tweetTextArea.value)
     const url = `https://twitter.com/intent/tweet?text=${encodedValue}`
     window.open(url)
-    this.props.recordShare('twitter', `${this.props.pre}.tw`)
+    this.props.recordShare()
     this.setState({ sharedSocially: true })
   }
 
@@ -47,7 +47,6 @@ class Twitter extends React.Component {
 
 Twitter.propTypes = {
   petition: PropTypes.object,
-  pre: PropTypes.string,
   shortLinkArgs: PropTypes.array,
   recordShare: PropTypes.func,
   isCreator: PropTypes.bool,

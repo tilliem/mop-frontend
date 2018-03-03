@@ -57,8 +57,10 @@ class Thanks extends React.Component {
   }
 
   recordShare(medium, source) {
-    this.setState({ sharedSocially: true })
-    petitionActions.recordShareClick(this.props.petition, medium, source, this.props.user)
+    return () => {
+      this.setState({ sharedSocially: true })
+      petitionActions.recordShareClick(this.props.petition, medium, source, this.props.user)
+    }
   }
 
   shareLink(evt) {
@@ -76,9 +78,8 @@ class Thanks extends React.Component {
       <Twitter
         isCreator={this.isCreator}
         petition={this.props.petition}
-        pre={this.state.pre}
         shortLinkArgs={this.shortLinkArgs}
-        recordShare={this.recordShare}
+        recordShare={this.recordShare('twitter', `${this.state.pre}.tw`)}
       >
         <TwitterButton />
       </Twitter>
