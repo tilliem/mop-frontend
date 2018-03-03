@@ -17,13 +17,7 @@ class Thanks extends React.Component {
   constructor(props) {
     super(props)
     const { fromSource, petition, signatureMessage, user } = props
-    let trackingParams = ''
-    if (user && user.signonId) {
-      trackingParams = `r_by=${user.signonId}`
-    } else if (signatureMessage && signatureMessage.messageMd5) {
-      const hashToken = md5ToToken(signatureMessage.messageMd5)
-      trackingParams = `r_hash=${hashToken}`
-    }
+
     this.isCreator = false // Maybe test user.id==petition.creator_id or something, if we want to expose that
     let pre = (this.isCreator ? 'c' : 's')
     const { _embedded: { creator } = {} } = petition
@@ -35,7 +29,6 @@ class Thanks extends React.Component {
         pre += '.imn'
       }
     }
-    this.trackingParams = trackingParams
     this.shortLinkArgs = [
       petition.petition_id,
       user && user.signonId,
@@ -52,6 +45,20 @@ class Thanks extends React.Component {
     this.renderMail = this.renderMail.bind(this)
     this.renderCopyPaste = this.renderCopyPaste.bind(this)
     this.renderRawLink = this.renderRawLink.bind(this)
+
+    this.getTrackingParams = this.getTrackingParams.bind(this)
+  }
+
+  getTrackingParams() {
+    const { signatureMessage, user } = this.props
+    let trackingParams = ''
+    if (user && user.signonId) {
+      trackingParams = `r_by=${user.signonId}`
+    } else if (signatureMessage && signatureMessage.messageMd5) {
+      const hashToken = md5ToToken(signatureMessage.messageMd5)
+      trackingParams = `r_hash=${hashToken}`
+    }
+    return trackingParams
   }
 
   recordShare(medium, source) {
@@ -81,7 +88,7 @@ class Thanks extends React.Component {
         user={this.props.user}
         pre={this.state.pre}
         recordShare={this.recordShare('facebook', `${this.state.pre}.fb`)}
-        trackingParams={this.trackingParams}
+        trackingParams={this.getTrackingParams()}
       >
         <FacebookButton />
       </Facebook>
@@ -94,7 +101,7 @@ class Thanks extends React.Component {
         isCreator={this.isCreator}
         petition={this.props.petition}
         pre={this.state.pre}
-        trackingParams={this.trackingParams}
+        trackingParams={this.getTrackingParams()}
       >
         <MailButton />
       </ShareMessage>
@@ -108,7 +115,7 @@ class Thanks extends React.Component {
         petition={this.props.petition}
         pre={this.state.pre}
         recordShare={this.recordShare('email', `${this.state.pre}.em.cp`)}
-        trackingParams={this.trackingParams}
+        trackingParams={this.getTrackingParams()}
       >
         <CopyPaste />
       </ShareMessage>
@@ -122,7 +129,7 @@ class Thanks extends React.Component {
         petition={this.props.petition}
         pre={this.state.pre}
         recordShare={this.recordShare('email', `${this.state.pre}.ln.cp`)}
-        trackingParams={this.trackingParams}
+        trackingParams={this.getTrackingParams()}
         shortLinkArgs={this.shortLinkArgs}
       >
         <RawLink />
