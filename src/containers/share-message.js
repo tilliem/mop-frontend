@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { actions as petitionActions } from '../actions/petitionActions'
+import { petitionShortCode } from '../lib'
 
 class ShareMessage extends React.Component {
   generateMailMessage(
@@ -46,6 +46,7 @@ Thanks!
       pre,
       trackingParams,
       recordShare,
+      shortLinkArgs,
       children
     } = this.props
     const shareOpts =
@@ -63,6 +64,12 @@ Thanks!
       petition.target,
       `${petition._links.url}?source=${pre}.em.__TYPE__&${trackingParams}`
     )
+
+    const rawLink = shortLinkArgs && petitionShortCode(
+      isCreator ? 'k' : 'l',
+      ...shortLinkArgs
+    )
+
     const mailtoMessage = `mailto:?subject=${encodeURIComponent(
       petition.title
     )}&body=${encodeURIComponent(message.replace('__TYPE__', 'mt'))}`
@@ -72,7 +79,15 @@ Thanks!
       'cp'
     )}`
 
-    return <div>{React.cloneElement(children, { mailtoMessage, copyPasteMessage })}</div>
+    return (
+      <div>
+        {React.cloneElement(children, {
+          mailtoMessage,
+          copyPasteMessage,
+          rawLink
+        })}
+      </div>
+    )
   }
 }
 
@@ -81,6 +96,7 @@ ShareMessage.propTypes = {
   trackingParams: PropTypes.string,
   petition: PropTypes.object,
   pre: PropTypes.string,
+  shortLinkArgs: PropTypes.array,
   recordShare: PropTypes.func,
   render: PropTypes.func,
   children: PropTypes.element

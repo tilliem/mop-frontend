@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { actions as petitionActions } from '../actions/petitionActions'
-import { petitionShortCode, md5ToToken } from '../lib'
+import { md5ToToken } from '../lib'
 import Twitter from './twitter'
 import Facebook from './facebook'
 import ShareMessage from './share-message'
@@ -11,6 +11,7 @@ import TwitterButton from 'LegacyTheme/twitter-button'
 import FacebookButton from 'LegacyTheme/facebook-button'
 import MailButton from 'LegacyTheme/mail-button'
 import CopyPaste from 'LegacyTheme/copy-paste'
+import RawLink from 'LegacyTheme/raw-link'
 
 class Thanks extends React.Component {
   constructor(props) {
@@ -50,6 +51,7 @@ class Thanks extends React.Component {
     this.renderFacebook = this.renderFacebook.bind(this)
     this.renderMail = this.renderMail.bind(this)
     this.renderCopyPaste = this.renderCopyPaste.bind(this)
+    this.renderRawLink = this.renderRawLink.bind(this)
     this.shareLink = this.shareLink.bind(this)
     this.shareEmail = this.shareEmail.bind(this)
   }
@@ -125,25 +127,32 @@ class Thanks extends React.Component {
     )
   }
 
+  renderRawLink() {
+    return (
+      <ShareMessage
+        isCreator={this.isCreator}
+        petition={this.props.petition}
+        pre={this.state.pre}
+        recordShare={this.recordShare}
+        trackingParams={this.trackingParams}
+        shortLinkArgs={this.shortLinkArgs}
+      >
+        <RawLink />
+      </ShareMessage>
+    )
+  }
+
   render() {
-    const { petition } = this.props
-
-    const rawShareLink = petitionShortCode((this.isCreator ? 'k' : 'l'), ...this.shortLinkArgs)
-
-
     return (
       <ThanksComponent
-        petition={petition}
+        petition={this.props.petition}
         sharedSocially={this.state.sharedSocially}
         isCreator={this.isCreator}
         renderTwitter={this.renderTwitter}
         renderFacebook={this.renderFacebook}
         renderMail={this.renderMail}
         renderCopyPaste={this.renderCopyPaste}
-        shareLink={this.shareLink}
-        shareEmail={this.shareEmail}
-        rawShareLink={rawShareLink}
-        setLinkRef={input => { this.linkTextArea = input }}
+        renderRawLink={this.renderRawLink}
       />
     )
   }

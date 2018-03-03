@@ -7,9 +7,7 @@ const Thanks = ({
   petition,
   sharedSocially,
   isCreator,
-  shareLink,
-  rawShareLink,
-  setLinkRef,
+  renderRawLink,
   renderTwitter,
   renderFacebook,
   renderMail,
@@ -40,19 +38,7 @@ const Thanks = ({
           Tweet your followers:
         </div>
         {renderTwitter()}
-        <div
-          id='hidden_share_link'
-          className='lanky-header bump-top-3 align-center hidden'
-        >
-          Send a link:
-          <textarea
-            ref={setLinkRef}
-            onClick={shareLink}
-            id='link_text'
-            defaultValue={rawShareLink}
-            readOnly
-          />
-        </div>
+      {renderRawLink()}
       </div>
       <div className='span7 padding-top-1'>
         <div className='share-email align-center'>
@@ -82,7 +68,8 @@ Thanks.propTypes = {
   renderTwitter: PropTypes.func,
   renderFacebook: PropTypes.func,
   renderMail: PropTypes.func,
-  renderCopyPaste: PropTypes.func
+  renderCopyPaste: PropTypes.func,
+  renderRawLink: PropTypes.func
 }
 
 export default Thanks
