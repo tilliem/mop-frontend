@@ -13,22 +13,39 @@ import MailButton from 'LegacyTheme/mail-button'
 import CopyPaste from 'LegacyTheme/copy-paste'
 import RawLink from 'LegacyTheme/raw-link'
 
+function getPre(fromSource, petition) {
+  const isCreator = false // Maybe test user.id==petition.creator_id or something, if we want to expose that
+  let pre = (isCreator ? 'c' : 's')
+  const { _embedded: { creator } = {} } = petition
+  if (fromSource) {
+    if (/^(c\.|s\.icn)/.test(fromSource)) {
+      pre += '.icn'
+    } else if (creator && creator.source // megapartner
+                 && (fromSource === 'mo' || /\.imn/.test(fromSource))) {
+      pre += '.imn'
+    }
+  }
+  return pre
+}
+
+function getTrackingParams(signatureMessage, user) {
+  let trackingParams = ''
+  if (user && user.signonId) {
+    trackingParams = `r_by=${user.signonId}`
+  } else if (signatureMessage && signatureMessage.messageMd5) {
+    const hashToken = md5ToToken(signatureMessage.messageMd5)
+    trackingParams = `r_hash=${hashToken}`
+  }
+  return trackingParams
+}
+
 class Thanks extends React.Component {
   constructor(props) {
     super(props)
-    const { fromSource, petition, signatureMessage, user } = props
+    const { petition, fromSource, signatureMessage, user } = props
 
-    this.isCreator = false // Maybe test user.id==petition.creator_id or something, if we want to expose that
-    let pre = (this.isCreator ? 'c' : 's')
-    const { _embedded: { creator } = {} } = petition
-    if (fromSource) {
-      if (/^(c\.|s\.icn)/.test(fromSource)) {
-        pre += '.icn'
-      } else if (creator && creator.source // megapartner
-                   && (fromSource === 'mo' || /\.imn/.test(fromSource))) {
-        pre += '.imn'
-      }
-    }
+    this.trackingParams = getTrackingParams(signatureMessage, user)
+
     this.shortLinkArgs = [
       petition.petition_id,
       user && user.signonId,
@@ -36,7 +53,7 @@ class Thanks extends React.Component {
 
     this.state = {
       sharedSocially: false,
-      pre
+      pre: getPre(fromSource, petition)
     }
 
     this.recordShare = this.recordShare.bind(this)
@@ -45,20 +62,6 @@ class Thanks extends React.Component {
     this.renderMail = this.renderMail.bind(this)
     this.renderCopyPaste = this.renderCopyPaste.bind(this)
     this.renderRawLink = this.renderRawLink.bind(this)
-
-    this.getTrackingParams = this.getTrackingParams.bind(this)
-  }
-
-  getTrackingParams() {
-    const { signatureMessage, user } = this.props
-    let trackingParams = ''
-    if (user && user.signonId) {
-      trackingParams = `r_by=${user.signonId}`
-    } else if (signatureMessage && signatureMessage.messageMd5) {
-      const hashToken = md5ToToken(signatureMessage.messageMd5)
-      trackingParams = `r_hash=${hashToken}`
-    }
-    return trackingParams
   }
 
   recordShare(medium, source) {
@@ -88,7 +91,7 @@ class Thanks extends React.Component {
         user={this.props.user}
         pre={this.state.pre}
         recordShare={this.recordShare('facebook', `${this.state.pre}.fb`)}
-        trackingParams={this.getTrackingParams()}
+        trackingParams={this.trackingParams}
       >
         <FacebookButton />
       </Facebook>
@@ -101,7 +104,7 @@ class Thanks extends React.Component {
         isCreator={this.isCreator}
         petition={this.props.petition}
         pre={this.state.pre}
-        trackingParams={this.getTrackingParams()}
+        trackingParams={this.trackingParams}
       >
         <MailButton />
       </ShareMessage>
@@ -115,7 +118,7 @@ class Thanks extends React.Component {
         petition={this.props.petition}
         pre={this.state.pre}
         recordShare={this.recordShare('email', `${this.state.pre}.em.cp`)}
-        trackingParams={this.getTrackingParams()}
+        trackingParams={this.trackingParams}
       >
         <CopyPaste />
       </ShareMessage>
@@ -129,7 +132,7 @@ class Thanks extends React.Component {
         petition={this.props.petition}
         pre={this.state.pre}
         recordShare={this.recordShare('email', `${this.state.pre}.ln.cp`)}
-        trackingParams={this.getTrackingParams()}
+        trackingParams={this.trackingParams}
         shortLinkArgs={this.shortLinkArgs}
       >
         <RawLink />
