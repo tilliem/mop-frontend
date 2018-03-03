@@ -53,7 +53,6 @@ class Thanks extends React.Component {
     this.renderCopyPaste = this.renderCopyPaste.bind(this)
     this.renderRawLink = this.renderRawLink.bind(this)
     this.shareLink = this.shareLink.bind(this)
-    this.shareEmail = this.shareEmail.bind(this)
   }
 
   recordShare(medium, source) {
@@ -66,11 +65,6 @@ class Thanks extends React.Component {
   shareLink(evt) {
     evt.target.select()
     this.recordShare('email', `${this.state.pre}.ln.cp`)
-  }
-
-  shareEmail(evt) {
-    evt.target.select()
-    this.recordShare('email', `${this.state.pre}.em.cp`)
   }
 
   renderTwitter() {
@@ -106,7 +100,6 @@ class Thanks extends React.Component {
         isCreator={this.isCreator}
         petition={this.props.petition}
         pre={this.state.pre}
-        recordShare={this.recordShare}
         trackingParams={this.trackingParams}
       >
         <MailButton />
@@ -120,7 +113,7 @@ class Thanks extends React.Component {
         isCreator={this.isCreator}
         petition={this.props.petition}
         pre={this.state.pre}
-        recordShare={this.recordShare}
+        recordShare={this.recordShare('email', `${this.state.pre}.em.cp`)}
         trackingParams={this.trackingParams}
       >
         <CopyPaste />

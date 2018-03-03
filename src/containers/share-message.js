@@ -84,7 +84,8 @@ Thanks!
         {React.cloneElement(children, {
           mailtoMessage,
           copyPasteMessage,
-          rawLink
+          rawLink,
+          onClick: recordShare
         })}
       </div>
     )

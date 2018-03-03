@@ -1,19 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const CopyPaste = ({ shareEmail, copyPasteMessage, setEmailRef }) => (
+const CopyPaste = ({ onClick, copyPasteMessage, setEmailRef }) => (
   <textarea
     ref={setEmailRef}
     className='hidden-phone'
     id='email-textarea'
-    onClick={shareEmail}
+    onClick={e => {
+      e.target.select()
+      onClick(e)
+    }}
     value={copyPasteMessage}
     readOnly
   />
 )
 
 CopyPaste.propTypes = {
-  shareEmail: PropTypes.func,
+  onClick: PropTypes.func,
   copyPasteMessage: PropTypes.string,
   setEmailRef: PropTypes.func
 }
