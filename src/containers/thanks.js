@@ -92,7 +92,7 @@ class Thanks extends React.Component {
         petition={this.props.petition}
         user={this.props.user}
         pre={this.state.pre}
-        recordShare={this.recordShare}
+        recordShare={this.recordShare('facebook', `${this.state.pre}.fb`)}
         trackingParams={this.trackingParams}
       >
         <FacebookButton />

@@ -26,9 +26,7 @@ class Facebook extends React.Component {
     const { petition } = this.props
     const shareOpts =
       (petition.share_options && petition.share_options[0]) || {}
-    setTimeout(() => {
-      this.props.recordShare('facebook', `${this.props.pre}.fb`)
-    }, 100)
+
     let fbUrl = petition._links.url
     if (shareOpts.facebook_share && shareOpts.facebook_share.share_url) {
       if (shareOpts.facebook_share.sharebandit) {
