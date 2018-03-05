@@ -1,4 +1,5 @@
 import React from 'react'
+import DocumentTitle from 'react-document-title'
 
 import CreatePetitionForm from 'LegacyTheme/create-petition-form'
 
@@ -49,18 +50,20 @@ class CreatePetition extends React.Component {
     }
 
     return (
-      <div className='moveon-petitions'>
-        <CreatePetitionForm
-          setSelected={this.setSelected}
-          setRef={this.setRef}
-          toggleOpen={this.toggleOpen}
-          selected={this.state.selected}
-          nationalOpen={this.state.nationalOpen}
-          stateOpen={this.state.stateOpen}
-          customOpen={this.state.customOpen}
-          instructionStyle={instructionStyle}
-        />
-      </div>
+      <DocumentTitle title='MoveOn Petitions - Start your petition!'>
+        <div className='moveon-petitions'>
+          <CreatePetitionForm
+            setSelected={this.setSelected}
+            setRef={this.setRef}
+            toggleOpen={this.toggleOpen}
+            selected={this.state.selected}
+            nationalOpen={this.state.nationalOpen}
+            stateOpen={this.state.stateOpen}
+            customOpen={this.state.customOpen}
+            instructionStyle={instructionStyle}
+          />
+        </div>
+      </DocumentTitle>
     )
   }
 }

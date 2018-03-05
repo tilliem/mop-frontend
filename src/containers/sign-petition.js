@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import 'whatwg-fetch'
 import { connect } from 'react-redux'
+import DocumentTitle from 'react-document-title'
 
 import Petition from 'LegacyTheme/petition'
 import { thanksLoader } from '../loaders/petition.js'
@@ -35,14 +36,16 @@ class SignPetition extends React.Component {
     const outOfDate = (p.tags && p.tags.filter(t => t.name === 'possibly_out_of_date').length)
 
     return (
-      <div className='moveon-petitions sign'>
-        <Petition
-          petition={this.props.petition}
-          query={this.props.location.query}
-          petitionBy={petitionBy}
-          outOfDate={outOfDate}
-        />
-      </div>
+      <DocumentTitle title={`MoveOn Petitions - ${p ? p.title : ''}`}>
+        <div className='moveon-petitions sign'>
+          <Petition
+            petition={this.props.petition}
+            query={this.props.location.query}
+            petitionBy={petitionBy}
+            outOfDate={outOfDate}
+          />
+        </div>
+      </DocumentTitle>
     )
   }
 

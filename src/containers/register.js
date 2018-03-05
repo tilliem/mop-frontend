@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import DocumentTitle from 'react-document-title'
 
 import RegisterForm from 'LegacyTheme/register-form'
 import { actions as accountActions } from '../actions/accountActions'
@@ -81,14 +82,16 @@ class Register extends React.Component {
 
   render() {
     return (
-      <div className='moveon-petitions'>
-        <RegisterForm
-          errorList={this.errorList}
-          handleSubmit={this.handleSubmit}
-          setRef={input => input && (this[input.name] = input)}
-          isSubmitting={this.props.isSubmitting}
-        />
-      </div>
+      <DocumentTitle title='MoveOn Petitions - Sign up'>
+        <div className='moveon-petitions'>
+          <RegisterForm
+            errorList={this.errorList}
+            handleSubmit={this.handleSubmit}
+            setRef={input => input && (this[input.name] = input)}
+            isSubmitting={this.props.isSubmitting}
+          />
+        </div>
+      </DocumentTitle>
     )
   }
 }

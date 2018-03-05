@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import DocumentTitle from 'react-document-title'
 import { loadStaticPage } from '../actions/staticPageActions'
 
 import StaticComponent from 'LegacyTheme/static'
@@ -22,10 +23,12 @@ class Static extends React.Component {
     const page = this.props.page
     if (!this.props.page) return null
     return (
-      <StaticComponent>
-        <h1>{page.title.rendered}</h1>
-        <div dangerouslySetInnerHTML={{ __html: page.content.rendered }} />
-      </StaticComponent>
+      <DocumentTitle title={`MoveOn Petitions - ${page ? page.title.rendered : ''}`}>
+        <StaticComponent>
+          <h1>{page.title.rendered}</h1>
+          <div dangerouslySetInnerHTML={{ __html: page.content.rendered }} />
+        </StaticComponent>
+      </DocumentTitle>
     )
   }
 }

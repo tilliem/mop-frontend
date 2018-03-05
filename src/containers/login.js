@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import DocumentTitle from 'react-document-title'
 
 import LoginForm from 'LegacyTheme/login-form'
 
@@ -71,13 +72,15 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className='moveon-petitions'>
-        <LoginForm
-          errorList={this.errorList}
-          handleSubmit={this.handleSubmit}
-          setRef={input => input && (this[input.name] = input)}
-        />
-      </div>
+      <DocumentTitle title='MoveOn Petitions - Login'>
+        <div className='moveon-petitions'>
+          <LoginForm
+            errorList={this.errorList}
+            handleSubmit={this.handleSubmit}
+            setRef={input => input && (this[input.name] = input)}
+          />
+        </div>
+      </DocumentTitle>
     )
   }
 }

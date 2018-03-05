@@ -22,6 +22,7 @@
     "osdi-client": "MoveOnOrg/osdi-client",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
+    "react-document-title": "^2.0.3",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
     "react-responsive-embed": "^2.1.0",
