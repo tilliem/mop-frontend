@@ -13,10 +13,14 @@ class SignPetition extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isSignModalOpen: false
+      isSignModalOpen: false,
+      width: 0
     }
+    this.setRef = this.setRef.bind(this)
     this.openModal = this.openModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
+    this.onClickFloatingSign = this.onClickFloatingSign.bind(this)
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
   }
 
   componentWillMount() {
@@ -30,6 +34,31 @@ class SignPetition extends React.Component {
   componentDidMount() {
     // Lazy-load thanks page component
     thanksLoader()
+    this.updateWindowDimensions()
+    window.addEventListener('resize', this.updateWindowDimensions)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions)
+  }
+
+  onClickFloatingSign() {
+    // if we are at the mobile breakpoint, show the modal
+    // otherwise, focus the form.
+    if (this.state.width < 768) {
+      this.openModal()
+    } else {
+      const firstInput = this.nameInput || this.countryInput || this.commentInput
+      if (firstInput) firstInput.focus()
+    }
+  }
+
+  setRef(input) {
+    return input && (this[`${input.name}Input`] = input)
+  }
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -84,7 +113,8 @@ class SignPetition extends React.Component {
           petitionBy={petitionBy}
           outOfDate={outOfDate}
           isSignModalOpen={this.state.isSignModalOpen}
-          openModal={this.openModal}
+          onClickFloatingSign={this.onClickFloatingSign}
+          setRef={this.setRef}
           closeModal={this.closeModal}
         />
       </div>
