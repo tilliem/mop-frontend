@@ -20,7 +20,8 @@ const Petition = ({
   petitionBy,
   outOfDate,
   isSignModalOpen,
-  openModal,
+  onClickFloatingSign,
+  setRef,
   closeModal
 }) => (
   <div className='mo-container'>
@@ -61,9 +62,11 @@ const Petition = ({
       </Details>
     </InfoColumn>
     <SignColumn>
-      <SignatureAddForm petition={p} query={query} />
+      <SignatureAddForm setRef={setRef} petition={p} query={query} />
     </SignColumn>
-    <button onClick={openModal} className='sign-form__modal-toggle'>Sign Now</button>
+    <button onClick={onClickFloatingSign} className='sign-form__modal-toggle'>
+      Sign Now
+    </button>
     <Modal
       heading='Sign Now'
       className='sign-form-modal'
@@ -81,8 +84,9 @@ Petition.propTypes = {
   petitionBy: PropTypes.string,
   outOfDate: PropTypes.string,
   isSignModalOpen: PropTypes.bool,
-  openModal: PropTypes.func,
-  closeModal: PropTypes.func
+  onClickFloatingSign: PropTypes.func,
+  closeModal: PropTypes.func,
+  setRef: PropTypes.func
 }
 
 export default Petition
