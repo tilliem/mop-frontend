@@ -4,7 +4,7 @@ import Nav from '../../containers/nav'
 import Footer from 'Theme/footer.js'
 
 const Wrapper = ({ children, params, routes }) => (
-  <div id='wrapper' className='giraffe petition'>
+  <div id='giraffe-wrapper' className='giraffe petition'>
     <Nav
       organization={params && params.organization || ''}
       minimal={!!routes[routes.length - 1].minimalNav}

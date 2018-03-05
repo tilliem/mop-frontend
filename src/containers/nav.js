@@ -20,8 +20,7 @@ class Nav extends React.Component {
   }
 
   toggleSection(name) {
-    return e => {
-      e.preventDefault()
+    return () => {
       this.setState(state => {
         let newArr = state.openSections
         if (newArr.indexOf(name) === -1) newArr.push(name)

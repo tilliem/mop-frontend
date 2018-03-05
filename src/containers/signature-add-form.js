@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import SignatureAddFormComponent from 'LegacyTheme/signature-add-form'
+import SignatureAddFormComponent from 'Theme/signature-add-form'
 
 import { actions as petitionActions } from '../actions/petitionActions.js'
 import { actions as sessionActions } from '../actions/sessionActions.js'
@@ -41,6 +41,7 @@ class SignatureAddForm extends React.Component {
     this.submit = this.submit.bind(this)
     this.validationError = this.validationError.bind(this)
     this.updateStateFromValue = this.updateStateFromValue.bind(this)
+    this.getValueFromState = this.getValueFromState.bind(this)
   }
 
   getOsdiSignature() {
@@ -105,6 +106,10 @@ class SignatureAddForm extends React.Component {
     }
     // Console.log('signature!', osdiSignature)
     return osdiSignature
+  }
+
+  getValueFromState(field) {
+    return this.state[field]
   }
 
   validationError(key) {
@@ -224,6 +229,7 @@ class SignatureAddForm extends React.Component {
         country={this.state.country}
         onChangeCountry={event => this.setState({ country: event.target.value })}
         updateStateFromValue={this.updateStateFromValue}
+        getValueFromState={this.getValueFromState}
         validationError={this.validationError}
         thirdPartyOptin={this.thirdparty_optin}
         setThirdPartyOptin={evt =>
