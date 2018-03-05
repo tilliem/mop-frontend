@@ -23,7 +23,8 @@ const SignatureAddForm = ({
   onUnrecognize,
   updateStateFromValue,
   getValueFromState: getValue,
-  validationError
+  validationError,
+  setRef
 }) => (
   <form onSubmit={submit} className='sign-form'>
     <h4>SIGN THIS PETITION</h4>
@@ -42,6 +43,7 @@ const SignatureAddForm = ({
         <InputBlock
           name='name'
           label='Name*'
+          setRef={setRef}
           value={getValue('name')}
           onChange={updateStateFromValue('name')}
         />
@@ -69,6 +71,7 @@ const SignatureAddForm = ({
           label={requireAddressFields ? 'Address*' : 'Address'}
           onChange={updateStateFromValue('address1')}
           value={getValue('address1')}
+          setRef={setRef}
         />
         {validationError('address1')}
         <InputBlock
@@ -125,6 +128,7 @@ const SignatureAddForm = ({
         autoComplete='off'
         onChange={updateStateFromValue('comment')}
         onBlur={updateStateFromValue('comment')}
+        ref={setRef}
       />
     </InputBlock>
 
@@ -217,7 +221,8 @@ SignatureAddForm.propTypes = {
   onChangeCountry: PropTypes.func,
   updateStateFromValue: PropTypes.func,
   getValueFromState: PropTypes.func,
-  validationError: PropTypes.func
+  validationError: PropTypes.func,
+  setRef: PropTypes.func
 }
 
 export default SignatureAddForm
