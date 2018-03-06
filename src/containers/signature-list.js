@@ -18,9 +18,9 @@ class SignatureList extends React.Component {
   }
 
   loadSignaturesIfNeeded(page) {
-    const { loadSignatures, signatures, petitionSlug } = this.props
+    const { loadSignatures, signatures, petition } = this.props
     if (typeof signatures === 'undefined' || typeof signatures[page] === 'undefined') {
-      loadSignatures(petitionSlug, page)
+      loadSignatures(petition, page)
     }
   }
 
@@ -73,19 +73,19 @@ class SignatureList extends React.Component {
 }
 
 SignatureList.propTypes = {
-  petitionSlug: PropTypes.string,
+  petition: PropTypes.object,
   signatureCount: PropTypes.number,
   signatures: PropTypes.object,
   loadSignatures: PropTypes.func
 }
 
 const mapStateToProps = (store, ownProps) => ({
-  signatures: store.petitionStore.petitionSignatures[ownProps.petitionSlug]
+  signatures: store.petitionStore.petitionSignatures[ownProps.petition.slug]
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  loadSignatures: (petitionSlug, page) =>
-    dispatch(loadPetitionSignatures(petitionSlug, page))
+  loadSignatures: ({ petition, page }) =>
+    dispatch(loadPetitionSignatures(petition, page))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignatureList)

@@ -85,7 +85,7 @@ const Petition = ({ petition: p, query, petitionBy, outOfDate }) => (
             </div>
 
             <SignatureList
-              petitionSlug={p.slug}
+              petition={p}
               signatureCount={p.total_signatures}
             />
 
@@ -111,6 +111,7 @@ const Petition = ({ petition: p, query, petitionBy, outOfDate }) => (
     </div>
   </div>
 )
+
 
 Petition.propTypes = {
   petition: PropTypes.object.isRequired,
