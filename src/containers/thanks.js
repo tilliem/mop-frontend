@@ -4,12 +4,12 @@ import { connect } from 'react-redux'
 import { actions as petitionActions } from '../actions/petitionActions'
 import { md5ToToken, stringifyParams } from '../lib'
 
-import ThanksComponent from 'LegacyTheme/thanks'
-import TwitterButton from 'LegacyTheme/twitter-button'
-import FacebookButton from 'LegacyTheme/facebook-button'
-import MailButton from 'LegacyTheme/mail-button'
-import CopyPaste from 'LegacyTheme/copy-paste'
-import RawLink from 'LegacyTheme/raw-link'
+import ThanksComponent from 'Theme/thanks'
+import TwitterButton from 'Theme/twitter-button'
+import FacebookButton from 'Theme/facebook-button'
+import MailButton from 'Theme/mail-button'
+import CopyPaste from 'Theme/copy-paste'
+import RawLink from 'Theme/raw-link'
 
 function getPre(fromSource, petition, isCreator) {
   let pre = (isCreator ? 'c' : 's')
