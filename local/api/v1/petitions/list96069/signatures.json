@@ -1,0 +1,50 @@
+{
+    "_embedded": [
+        {
+            "_embedded": {
+                "user": {
+                    "_links": {
+                        "url": "https://petitions.moveon.org/person/"
+                    },
+                    "city": "Denver",
+                    "name": "Mr. Mestophales",
+                    "state": "CO"
+                }
+            },
+            "_links": {
+                "url": "https://petitions.moveon.org/signature/whatever"
+            },
+            "comment_id": null,
+            "comments": "",
+            "created_date": "2016-07-14T13:58:32Z"
+        },
+        {
+            "_embedded": {
+                "user": {
+                    "_links": {
+                        "url": "https://petitions.moveon.org/person/"
+                    },
+                    "city": "Birnin Zana",
+                    "name": "Black Panther",
+                    "state": "WA"
+                }
+            },
+            "_links": {
+                "url": "https://petitions.moveon.org/signature/whatever"
+            },
+            "comment_id": 123,
+            "comments": "Would rather it replace the current faces.",
+            "created_date": "2016-07-14T13:58:32Z"
+        }
+    ],
+    "_links": {
+        "next": null,
+        "previous": null,
+        "url": "/api/v1/petitions/list96069/signatures.json"
+    },
+    "count": 2,
+    "page": 1,
+    "page_size": 100,
+    "total_pages": 1,
+    "total_records": 2
+}

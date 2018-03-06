@@ -277,8 +277,10 @@ export const recordShareClick = (petition, medium, source, user) => {
   }
 }
 
-export const loadPetitionSignatures = (petitionSlug, page = 1) => {
-  const urlKey = `petitions/${petitionSlug}/signatures`
+export const loadPetitionSignatures = ({petitionSlug, petitionListId, page = 1}) => {
+  const urlKey = (petitionListId
+                  ? `petitions/list${petitionListId}/signatures`
+                  : `petitions/${petitionSlug}/signatures`)
   return (dispatch) => {
     dispatch({
       type: actionTypes.FETCH_PETITION_SIGNATURES_REQUEST,
