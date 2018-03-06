@@ -38,7 +38,7 @@ const Petition = ({ petition: p, query, petitionBy, outOfDate }) => (
 
         <Details.Comments heading='What Others Are Saying'>
           <SignatureList
-            petitionSlug={p.slug}
+            petition={p}
             signatureCount={p.total_signatures}
           />
         </Details.Comments>

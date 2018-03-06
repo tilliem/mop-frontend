@@ -277,7 +277,21 @@ export const recordShareClick = (petition, medium, source, user) => {
   }
 }
 
-export const loadPetitionSignatures = ({ petitionSlug, petitionListId, page = 1 }) => {
+function getPetitionListId(petition) {
+  // Every petition has a couple of identifiers
+  // slug, petition_id, and also a list_id
+  // which is the object in the database that tracks the owner and signers
+  // Since petition signatures are indexed against list_id, it's
+  // more efficient to load through that value.
+  const petitionListIds = petition.identifiers
+    .filter((ident) => /^list_id:/.test(ident))
+    .map((ident) => ident.substr(8))
+  return (petitionListIds.length ? petitionListIds[0] : null)
+}
+
+export const loadPetitionSignatures = (petition, page = 1) => {
+  const petitionListId = getPetitionListId(petition)
+  const petitionSlug = petition.slug
   const urlKey = (petitionListId
                   ? `petitions/list${petitionListId}/signatures`
                   : `petitions/${petitionSlug}/signatures`)

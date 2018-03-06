@@ -8,13 +8,6 @@ import SignatureList from '../../containers/signature-list'
 import PetitionFlagForm from '../../containers/petition-flag-form'
 import { Link } from 'react-router'
 
-function getPetitionListId(petition) {
-  const petitionListIds = petition.identifiers
-    .filter((ident) => /^list_id:/.test(ident))
-    .map((ident) => ident.substr(8))
-  return (petitionListIds.length ? petitionListIds[0] : null)
-}
-
 const Petition = ({ petition: p, query, petitionBy, outOfDate }) => (
   <div className='container'>
     {(outOfDate) ?
@@ -92,8 +85,7 @@ const Petition = ({ petition: p, query, petitionBy, outOfDate }) => (
             </div>
 
             <SignatureList
-              petitionSlug={p.slug}
-              petitionListId={getPetitionListId(p)}
+              petition={p}
               signatureCount={p.total_signatures}
             />
 
