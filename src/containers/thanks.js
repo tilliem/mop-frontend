@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { actions as petitionActions } from '../actions/petitionActions'
 import { md5ToToken } from '../lib'
-import Twitter from './twitter'
 import Facebook from './facebook'
 import ShareMessage from './share-message'
 
@@ -73,14 +72,12 @@ class Thanks extends React.Component {
 
   renderTwitter() {
     return (
-      <Twitter
+      <TwitterButton
         isCreator={this.isCreator}
         petition={this.props.petition}
         shortLinkArgs={this.shortLinkArgs}
         recordShare={this.recordShare('twitter', `${this.state.pre}.tw`)}
-      >
-        <TwitterButton />
-      </Twitter>
+      />
     )
   }
 

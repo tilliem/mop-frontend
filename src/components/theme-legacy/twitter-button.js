@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { withTwitter } from '../../containers/hoc-twitter'
+
 const TwitterButton = ({ shareTwitter, tweet, setTweetRef }) => (
   <div>
     <button
@@ -26,4 +28,4 @@ TwitterButton.propTypes = {
   setTweetRef: PropTypes.func
 }
 
-export default TwitterButton
+export default withTwitter(TwitterButton)
