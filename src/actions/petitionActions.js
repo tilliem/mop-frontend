@@ -277,7 +277,7 @@ export const recordShareClick = (petition, medium, source, user) => {
   }
 }
 
-export const loadPetitionSignatures = ({petitionSlug, petitionListId, page = 1}) => {
+export const loadPetitionSignatures = ({ petitionSlug, petitionListId, page = 1 }) => {
   const urlKey = (petitionListId
                   ? `petitions/list${petitionListId}/signatures`
                   : `petitions/${petitionSlug}/signatures`)
