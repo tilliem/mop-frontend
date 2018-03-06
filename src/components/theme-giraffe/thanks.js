@@ -29,8 +29,8 @@ const Thanks = ({
         </p>
 
         <div className='share-modal__cta-group'>
-          {renderMail('share-modal__cta')}
-          {renderFacebook('share-modal__cta')}
+          {renderMail()}
+          {renderFacebook()}
         </div>
 
         <p>Or copy and paste the text below into a message:</p>
@@ -38,8 +38,8 @@ const Thanks = ({
         {renderCopyPaste()}
 
         <div className='share-modal__links'>
-          {renderTwitter('mo-btn share-modal__link')}
-          {renderRawLink('mo-btn share-modal__link')}
+          {renderTwitter()}
+          {renderRawLink()}
         </div>
       </div>
     </div>
