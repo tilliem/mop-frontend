@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { actions as petitionActions } from '../actions/petitionActions'
 import { md5ToToken } from '../lib'
-import Facebook from './facebook'
 import ShareMessage from './share-message'
 
 import ThanksComponent from 'LegacyTheme/thanks'
@@ -83,15 +82,13 @@ class Thanks extends React.Component {
 
   renderFacebook() {
     return (
-      <Facebook
+      <FacebookButton
         petition={this.props.petition}
         user={this.props.user}
         pre={this.state.pre}
         recordShare={this.recordShare('facebook', `${this.state.pre}.fb`)}
         trackingParams={this.trackingParams}
-      >
-        <FacebookButton />
-      </Facebook>
+      />
     )
   }
 
