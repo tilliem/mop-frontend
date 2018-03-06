@@ -12,7 +12,6 @@ describe('<Thanks />', () => {
   const store = createMockStore({ petitionStore: {} })
   it('renders thanks for petition', () => {
     const context = mount(<Thanks store={store} petition={outkastPetition} />)
-    // console.log(context.html())
-    expect(context.find('h1').text()).to.equal('Thanks!')
+    expect(context.text()).to.contain('Thank')
   })
 })
