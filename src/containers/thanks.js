@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { actions as petitionActions } from '../actions/petitionActions'
 import { md5ToToken } from '../lib'
-import ShareMessage from './share-message'
 
 import ThanksComponent from 'LegacyTheme/thanks'
 import TwitterButton from 'LegacyTheme/twitter-button'
@@ -94,43 +93,37 @@ class Thanks extends React.Component {
 
   renderMail() {
     return (
-      <ShareMessage
+      <MailButton
         isCreator={this.isCreator}
         petition={this.props.petition}
         pre={this.state.pre}
         trackingParams={this.trackingParams}
-      >
-        <MailButton />
-      </ShareMessage>
+      />
     )
   }
 
   renderCopyPaste() {
     return (
-      <ShareMessage
+      <CopyPaste
         isCreator={this.isCreator}
         petition={this.props.petition}
         pre={this.state.pre}
         recordShare={this.recordShare('email', `${this.state.pre}.em.cp`)}
         trackingParams={this.trackingParams}
-      >
-        <CopyPaste />
-      </ShareMessage>
+      />
     )
   }
 
   renderRawLink() {
     return (
-      <ShareMessage
+      <RawLink
         isCreator={this.isCreator}
         petition={this.props.petition}
         pre={this.state.pre}
         recordShare={this.recordShare('email', `${this.state.pre}.ln.cp`)}
         trackingParams={this.trackingParams}
         shortLinkArgs={this.shortLinkArgs}
-      >
-        <RawLink />
-      </ShareMessage>
+      />
     )
   }
 

@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { withShareMessage } from '../../containers/hoc-share-message'
+
 const RawLink = ({ shareLink, rawLink, setLinkRef }) => (
   <div
     id='hidden_share_link'
@@ -23,4 +25,4 @@ RawLink.propTypes = {
   setLinkRef: PropTypes.func
 }
 
-export default RawLink
+export default withShareMessage(RawLink)

@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { withShareMessage } from '../../containers/hoc-share-message'
+
 const CopyPaste = ({ onClick, copyPasteMessage, setEmailRef }) => (
   <textarea
     ref={setEmailRef}
@@ -21,4 +23,4 @@ CopyPaste.propTypes = {
   setEmailRef: PropTypes.func
 }
 
-export default CopyPaste
+export default withShareMessage(CopyPaste)

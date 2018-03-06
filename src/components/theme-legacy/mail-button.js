@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { withShareMessage } from '../../containers/hoc-share-message'
+
 const MailButton = ({ mailtoMessage }) => (
   <a
     id='email-button'
@@ -15,4 +17,4 @@ MailButton.propTypes = {
   mailtoMessage: PropTypes.string
 }
 
-export default MailButton
+export default withShareMessage(MailButton)
