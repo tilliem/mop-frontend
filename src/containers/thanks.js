@@ -71,8 +71,8 @@ class Thanks extends React.Component {
   renderTwitter() {
     return (
       <TwitterButton
-        isCreator={this.isCreator}
         petition={this.props.petition}
+        shortLinkMode={this.isCreator ? 'c' : 't'}
         shortLinkArgs={this.shortLinkArgs}
         recordShare={this.recordShare('twitter', `${this.state.pre}.tw`)}
       />

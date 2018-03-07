@@ -6,33 +6,20 @@ export function withTwitter(WrappedComponent) {
   class Twitter extends React.Component {
     constructor(props) {
       super(props)
+      this.getTweet = this.getTweet.bind(this)
       this.shareTwitter = this.shareTwitter.bind(this)
     }
 
-    shareTwitter() {
-      const encodedValue = encodeURIComponent(this.tweetTextArea.value)
-      const url = `https://twitter.com/intent/tweet?text=${encodedValue}`
-      window.open(url)
-      this.props.recordShare()
-      this.setState({ sharedSocially: true })
-    }
+    getTweet() {
+      const { petition, shortLinkMode, shortLinkArgs } = this.props
 
-    render() {
-      const {
-        petition,
-        isCreator,
-        shortLinkArgs,
-        recordShare, // eslint-disable-line no-unused-vars
-        // (just to remove from otherProps)
-        ...otherProps
-      } = this.props
       const twitterShareLink = petitionShortCode(
-        isCreator ? 'c' : 't',
+        shortLinkMode,
         ...shortLinkArgs
       )
       const shareOpts =
         (petition.share_options && petition.share_options[0]) || {}
-      // Convert description to text
+
       let tweet
       if (shareOpts.twitter_share && shareOpts.twitter_share.message) {
         tweet = shareOpts.twitter_share.message.replace(
@@ -44,21 +31,37 @@ export function withTwitter(WrappedComponent) {
         tweet = `${petition.title.slice(0, 140 - suffix.length)} ${suffix}`
       }
 
-      return (
-        <WrappedComponent
-          {...otherProps}
-          tweet={tweet}
-          onClick={this.shareTwitter}
-          setTweetRef={input => input && (this.tweetTextArea = input)}
-        />
-      )
+      return tweet
+    }
+
+    shareTwitter() {
+      const encodedValue = encodeURIComponent(this.getTweet())
+      const url = `https://twitter.com/intent/tweet?text=${encodedValue}`
+      window.open(url)
+      this.props.recordShare()
+      this.setState({ sharedSocially: true })
+    }
+
+    render() {
+      /* eslint-disable no-unused-vars */
+      // remove props we don't want to pass through
+      const {
+        petition,
+        shortLinkMode,
+        shortLinkArgs,
+        recordShare,
+        // (just to remove from otherProps)
+        ...otherProps
+      } = this.props
+      /* eslint-enable */
+      return <WrappedComponent {...otherProps} onClick={this.shareTwitter} />
     }
   }
   Twitter.propTypes = {
     petition: PropTypes.object,
     shortLinkArgs: PropTypes.array,
-    recordShare: PropTypes.func,
-    isCreator: PropTypes.bool
+    shortLinkMode: PropTypes.string,
+    recordShare: PropTypes.func
   }
   return Twitter
 }
