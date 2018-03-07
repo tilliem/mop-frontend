@@ -11,10 +11,13 @@ export function withFacebook(WrappedComponent) {
     }
 
     openFacebookSharing(urlToShare) {
-      const { user, pre, trackingParams } = this.props
+      const { prefix, suffix, trackingParams } = this.props
       const preChar = /\?/.test(urlToShare) ? '&' : '?'
-      let fbUrl = `${urlToShare}${preChar}source=${pre}.fb`
-      if (user.signonId) {
+      let fbUrl = `${urlToShare}${preChar}source=${prefix}.fb`
+      if (suffix) {
+        fbUrl = `${fbUrl}.${suffix}`
+      }
+      if (trackingParams) {
         fbUrl = `${fbUrl}&${trackingParams}`
       }
       window.open(
@@ -48,10 +51,10 @@ export function withFacebook(WrappedComponent) {
       /* eslint-disable no-unused-vars */
       // remove props we don't want to pass through
       const {
-        user,
         trackingParams,
         petition,
-        pre,
+        prefix,
+        suffix,
         recordShare,
         ...otherProps
       } = this.props
@@ -61,12 +64,11 @@ export function withFacebook(WrappedComponent) {
   }
 
   Facebook.propTypes = {
-    user: PropTypes.object,
     trackingParams: PropTypes.string,
     petition: PropTypes.object,
-    pre: PropTypes.string,
-    recordShare: PropTypes.func,
-    render: PropTypes.func
+    prefix: PropTypes.string,
+    suffix: PropTypes.string,
+    recordShare: PropTypes.func
   }
 
   return Facebook
