@@ -10,8 +10,7 @@ import MailButton from 'LegacyTheme/mail-button'
 import CopyPaste from 'LegacyTheme/copy-paste'
 import RawLink from 'LegacyTheme/raw-link'
 
-function getPre(fromSource, petition) {
-  const isCreator = false // Maybe test user.id==petition.creator_id or something, if we want to expose that
+function getPre(fromSource, petition, isCreator) {
   let pre = (isCreator ? 'c' : 's')
   const { _embedded: { creator } = {} } = petition
   if (fromSource) {
@@ -43,6 +42,8 @@ class Thanks extends React.Component {
 
     this.trackingParams = getTrackingParams(signatureMessage, user)
 
+    this.isCreator = false // Maybe test user.id==petition.creator_id or something, if we want to expose that
+
     this.shortLinkArgs = [
       petition.petition_id,
       user && user.signonId,
@@ -50,7 +51,7 @@ class Thanks extends React.Component {
 
     this.state = {
       sharedSocially: false,
-      pre: getPre(fromSource, petition)
+      pre: getPre(fromSource, petition, this.isCreator)
     }
 
     this.recordShare = this.recordShare.bind(this)
