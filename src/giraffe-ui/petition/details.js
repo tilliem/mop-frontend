@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 
 // import CaretDownSvg from '../svgs/caret-down.svg'
 import CaretRightSvg from '../svgs/caret-right.svg'
-import { Share } from './share'
 
 export const Details = ({ children }) => (
   <div className='petition-details'>
@@ -50,8 +49,6 @@ export const Author = ({ name, link }) => (
 )
 Author.propTypes = { name: PropTypes.string, link: PropTypes.string }
 Details.Author = Author
-
-Details.Share = Share
 
 export const Disclaimer = ({ children }) => (
   <div className='petition-details__disclaimer'>{children}</div>

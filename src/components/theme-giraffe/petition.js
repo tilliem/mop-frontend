@@ -10,6 +10,8 @@ import {
 } from 'GiraffeUI/petition'
 import { Modal } from 'GiraffeUI/modal'
 
+import { Share } from './petition-share'
+
 import { text2paraJsx, splitIntoSpansJsx, ellipsize } from '../../lib'
 import SignatureAddForm from '../../containers/signature-add-form'
 import SignatureList from '../../containers/signature-list'
@@ -31,6 +33,7 @@ const Petition = ({
         heading={splitIntoSpansJsx(p.title)}
         currentSignatures={p.total_signatures}
         goalSignatures={p.signature_goal}
+        renderShare={<Share className='petition-card' />}
       >
         <p>To be delivered to {p.target.map(t => t.name).join(', ')}</p>
 
@@ -57,7 +60,7 @@ const Petition = ({
           name={petitionBy}
           link={`/contact_creator.html?petition_id=${p.petition_id}`}
         />
-        <Details.Share className='petition-details' hasLabels />
+        <Share className='petition-details' hasLabels />
         <Details.Disclaimer />
       </Details>
     </InfoColumn>

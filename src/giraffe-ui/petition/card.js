@@ -4,13 +4,13 @@ import PropTypes from 'prop-types'
 import { formatNumber, percent } from '../../lib'
 
 import CaretRightSvg from 'GiraffeUI/svgs/caret-right.svg'
-import { Share } from './share'
 
 export const Card = ({
   heading,
   children,
   currentSignatures,
-  goalSignatures
+  goalSignatures,
+  renderShare
 }) => (
   <div className='petition-card'>
     <div className='petition-card__content'>
@@ -39,13 +39,14 @@ export const Card = ({
         MOST RECENT SIGNERS
         <CaretRightSvg />
       </button>
-      <Share className='petition-card' />
+      {renderShare}
     </div>
   </div>
 )
 
 Card.propTypes = {
   children: PropTypes.node,
+  renderShare: PropTypes.node,
   heading: PropTypes.node,
   currentSignatures: PropTypes.number,
   goalSignatures: PropTypes.number
