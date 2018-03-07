@@ -23,6 +23,7 @@ const CopyLink = withShareLink(({ rawLink, ...rest }) => (
 ))
 
 export const Share = ({ hasLabels, className, petition, user }) => (
+  // TODO: find out if they are creator or signer for prefix
   <MoShare className={className} hasLabels={hasLabels}>
     <Mail
       petition={petition}
@@ -31,15 +32,13 @@ export const Share = ({ hasLabels, className, petition, user }) => (
     />
     <Facebook
       petition={petition}
-      prefix='n' // TODO: find out if they are creator or signer for prefix
+      prefix='n'
       suffix='p'
-      recordShare={() => { /* TODO?*/ }}
     />
     <Twitter
       petition={petition}
       shortLinkMode='n'
       shortLinkArgs={[petition.petition_id, user && user.id, false]}
-      recordShare={() => { /* TODO?*/ }}
     />
     <CopyLink
       shortLinkMode='n'
