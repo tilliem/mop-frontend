@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { withFacebook } from '../../containers/hoc-facebook'
 
-const FacebookButton = ({ shareFacebook }) => (
+const FacebookButton = ({ onClick: shareFacebook }) => (
   <button
     id='facebook-button'
     className='xl300 background-facebook-blue'
@@ -14,7 +14,7 @@ const FacebookButton = ({ shareFacebook }) => (
 )
 
 FacebookButton.propTypes = {
-  shareFacebook: PropTypes.func
+  onClick: PropTypes.func
 }
 
 export default withFacebook(FacebookButton)

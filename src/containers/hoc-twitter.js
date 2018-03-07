@@ -37,7 +37,7 @@ export function withTwitter(WrappedComponent) {
       return (
         <WrappedComponent
           tweet={tweet}
-          shareTwitter={this.shareTwitter}
+          onClick={this.shareTwitter}
           setTweetRef={input => input && (this.tweetTextArea = input)}
         />
       )

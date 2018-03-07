@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { withTwitter } from '../../containers/hoc-twitter'
 
-const TwitterButton = ({ shareTwitter, tweet, setTweetRef }) => (
+const TwitterButton = ({ onClick: shareTwitter, tweet, setTweetRef }) => (
   <div>
     <button
       id='twitter-button'
@@ -23,7 +23,7 @@ const TwitterButton = ({ shareTwitter, tweet, setTweetRef }) => (
 )
 
 TwitterButton.propTypes = {
-  shareTwitter: PropTypes.func,
+  onClick: PropTypes.func,
   tweet: PropTypes.string,
   setTweetRef: PropTypes.func
 }

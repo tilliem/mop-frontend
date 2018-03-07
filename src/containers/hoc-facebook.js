@@ -47,7 +47,7 @@ export function withFacebook(WrappedComponent) {
     render() {
       return (
         <WrappedComponent
-          shareFacebook={this.shareFacebook}
+          onClick={this.shareFacebook}
         />
       )
     }
