@@ -1,8 +1,12 @@
-[![Build Status](https://travis-ci.org/MoveOnOrg/mop-frontend.svg?branch=master)](https://travis-ci.org/MoveOnOrg/mop-frontend)
+[![Build Status](https://travis-ci.org/MoveOnOrg/mop-frontend.svg?branch=main)](https://travis-ci.org/MoveOnOrg/mop-frontend)
 
 # MoveOn Petitions (MOP) Front-end
 
-This is the browser-based, JavaScript implementation of the MoveOn Petitions platform. This uses React, Babel, and Webpack.
+This is the interface for [petitions.moveon.org](https://petitions.moveon.org/), a React app. Some parts of the site are already running this code, while others are using a legacy system. Our goal is to eventually drive the interface for the entire site with this app, and retire the legacy system.
+
+# Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 # Install
 
@@ -21,30 +25,6 @@ This is the browser-based, JavaScript implementation of the MoveOn Petitions pla
 
 * $ `npm test`
 
-# Local development environment
+# Local development
 
-If you are just developing the client, then you should not have to set any variables.
-
-Just run:
-
-```bash
-  npm run dev  
-```
-
-and hot-reloading will work, then go to http://localhost:8080/#/sign/outkast
-
-
-## Developing with a Server Backend
-When running locally, you should set the following environment variables:
-
-```
-export API_URI="https://petitions.example.com"
-export BASE_APP_PATH="/Users/yourusername/Sites/mop-frontend/local/"
-export STATIC_ROOT="../../build/"
-```
-
-`API_URI` can either point at a hosted version of the API (as in the example), or a local instance of mop (something like `http://0.0.0.0:8000`).
-
-`BASE_APP_PATH` is everything that comes after `file://` in your browser's local file URL, up to and including `/local/`.
-
-`STATIC_ROOT` is the path from the HTML file you're testing to the compiled JavaScript. e.g. for `/local/thanks.html`, the relative path is `../js/`, but for `/local/sign/economic-disparity-campaign`, the relative path is one more step away, `../../js/`
+The most simple local development is just `npm run dev` and then go to a page on http://localhost:8080/, e.g. http://localhost:8080/#/sign/outkast. For more complex options, see [How to Develop with a Server Backend](docs/HOWTO--server-backend.md) and [Environment Variables Reference](docs/REFERENCE--environment-variables.md).
