@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { withShareMessage } from '../../containers/hoc-share-message'
+import { withShareLink } from '../../containers/hoc-share-link'
 import LinkSvg from 'GiraffeUI/svgs/link.svg'
 
 const RawLink = ({ rawLink }) => (
   <a
-    href='#'
     className='mo-btn share-modal__link'
     onClick={() => prompt('Here is your link to share:', rawLink)}
   >
@@ -19,4 +18,4 @@ RawLink.propTypes = {
   rawLink: PropTypes.string
 }
 
-export default withShareMessage(RawLink)
+export default withShareLink(RawLink)
