@@ -7,11 +7,7 @@ import TwitterSvg from '../svgs/twitter.svg'
 import LinkSvg from '../svgs/link.svg'
 import cx from 'classnames'
 
-export const Share = ({
-  className,
-  hasLabels,
-  children
-}) => {
+export const Share = ({ className, hasLabels, children }) => {
   const el = hasLabels ? 'share__item' : 'share-icon'
   const elementCn = `${className}__${el}`
   return (
@@ -27,15 +23,25 @@ export const Share = ({
   )
 }
 
+Share.propTypes = {
+  hasLabels: PropTypes.bool,
+  className: PropTypes.string,
+  children: PropTypes.node
+}
+
+const childPropTypes = {
+  onClick: PropTypes.func,
+  hasLabels: PropTypes.bool,
+  elementCn: PropTypes.string
+}
+
 const Mail = ({ onClick, hasLabels, elementCn }) => (
-  <Link
-    onClick={onClick}
-    className={cx(elementCn, `${elementCn}--mail`)}
-  >
+  <Link onClick={onClick} className={cx(elementCn, `${elementCn}--mail`)}>
     <MailSvg />
     {hasLabels && 'Email'}
   </Link>
 )
+Mail.propTypes = childPropTypes
 Share.Mail = Mail
 
 const Facebook = ({ onClick, hasLabels, elementCn }) => (
@@ -44,6 +50,7 @@ const Facebook = ({ onClick, hasLabels, elementCn }) => (
     {hasLabels && 'Facebook'}
   </Link>
 )
+Facebook.propTypes = childPropTypes
 Share.Facebook = Facebook
 
 const Twitter = ({ onClick, hasLabels, elementCn }) => (
@@ -52,6 +59,7 @@ const Twitter = ({ onClick, hasLabels, elementCn }) => (
     {hasLabels && 'Twitter'}
   </Link>
 )
+Twitter.propTypes = childPropTypes
 Share.Twitter = Twitter
 
 const CopyLink = ({ onClick, hasLabels, elementCn }) => (
@@ -60,13 +68,5 @@ const CopyLink = ({ onClick, hasLabels, elementCn }) => (
     {hasLabels && 'Copy Link'}
   </Link>
 )
+CopyLink.propTypes = childPropTypes
 Share.CopyLink = CopyLink
-
-Share.propTypes = {
-  hasLabels: PropTypes.bool,
-  className: PropTypes.string,
-  mail: PropTypes.func,
-  facebook: PropTypes.func,
-  tweet: PropTypes.func,
-  link: PropTypes.func
-}
