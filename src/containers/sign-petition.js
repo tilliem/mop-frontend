@@ -10,6 +10,18 @@ import { actions as petitionActions } from '../actions/petitionActions.js'
 import { appLocation } from '../routes.js'
 
 class SignPetition extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isSignModalOpen: false,
+      width: 0
+    }
+    this.setRef = this.setRef.bind(this)
+    this.openModal = this.openModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
+    this.onClickFloatingSign = this.onClickFloatingSign.bind(this)
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
+  }
 
   componentWillMount() {
     const { dispatch, params, petition } = this.props
@@ -22,6 +34,8 @@ class SignPetition extends React.Component {
   componentDidMount() {
     // Lazy-load thanks page component
     thanksLoader()
+    this.updateWindowDimensions()
+    window.addEventListener('resize', this.updateWindowDimensions)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -29,6 +43,29 @@ class SignPetition extends React.Component {
     if (petition) {
       this.checkOrgPathMatches(petition, params.organization)
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions)
+  }
+
+  onClickFloatingSign() {
+    // if we are at the mobile breakpoint, show the modal
+    // otherwise, focus the form.
+    if (this.state.width < 768) {
+      this.openModal()
+    } else {
+      const firstInput = this.nameInput || this.countryInput || this.commentInput
+      if (firstInput) firstInput.focus()
+    }
+  }
+
+  setRef(input) {
+    return input && (this[`${input.name}Input`] = input)
+  }
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth })
   }
 
   checkOrgPathMatches(petition, orgPath) {
@@ -44,6 +81,14 @@ class SignPetition extends React.Component {
       return false
     }
     return true
+  }
+
+  openModal() {
+    this.setState({ isSignModalOpen: true })
+  }
+
+  closeModal() {
+    this.setState({ isSignModalOpen: false })
   }
 
   render() {
@@ -67,6 +112,10 @@ class SignPetition extends React.Component {
           query={this.props.location.query}
           petitionBy={petitionBy}
           outOfDate={outOfDate}
+          isSignModalOpen={this.state.isSignModalOpen}
+          onClickFloatingSign={this.onClickFloatingSign}
+          setRef={this.setRef}
+          closeModal={this.closeModal}
         />
       </div>
     )
