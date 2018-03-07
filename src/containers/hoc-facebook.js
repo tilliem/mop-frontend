@@ -23,7 +23,9 @@ export function withFacebook(WrappedComponent) {
       window.open(
         `https://www.facebook.com/share.php?u=${encodeURIComponent(fbUrl)}`
       )
-      this.setState({ sharedSocially: true })
+      const { recordShare, afterShare } = this.props
+      if (recordShare) recordShare()
+      if (afterShare) afterShare()
     }
 
     shareFacebook() {
@@ -68,7 +70,8 @@ export function withFacebook(WrappedComponent) {
     petition: PropTypes.object,
     prefix: PropTypes.string,
     suffix: PropTypes.string,
-    recordShare: PropTypes.func
+    recordShare: PropTypes.func,
+    afterShare: PropTypes.func
   }
 
   return Facebook

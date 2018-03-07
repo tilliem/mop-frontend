@@ -38,8 +38,9 @@ export function withTwitter(WrappedComponent) {
       const encodedValue = encodeURIComponent(this.getTweet())
       const url = `https://twitter.com/intent/tweet?text=${encodedValue}`
       window.open(url)
-      this.props.recordShare()
-      this.setState({ sharedSocially: true })
+      const { recordShare, afterShare } = this.props
+      if (recordShare) recordShare()
+      if (afterShare) afterShare()
     }
 
     render() {
@@ -61,7 +62,8 @@ export function withTwitter(WrappedComponent) {
     petition: PropTypes.object,
     shortLinkArgs: PropTypes.array,
     shortLinkMode: PropTypes.string,
-    recordShare: PropTypes.func
+    recordShare: PropTypes.func,
+    afterShare: PropTypes.func
   }
   return Twitter
 }

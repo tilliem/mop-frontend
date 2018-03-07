@@ -63,10 +63,7 @@ class Thanks extends React.Component {
   }
 
   recordShare(medium, source) {
-    return () => {
-      this.setState({ sharedSocially: true })
-      petitionActions.recordShareClick(this.props.petition, medium, source, this.props.user)
-    }
+    return () => petitionActions.recordShareClick(this.props.petition, medium, source, this.props.user)
   }
 
   renderTwitter() {
@@ -76,6 +73,7 @@ class Thanks extends React.Component {
         shortLinkMode={this.isCreator ? 'c' : 't'}
         shortLinkArgs={this.shortLinkArgs}
         recordShare={this.recordShare('twitter', `${this.state.pre}.tw`)}
+        afterShare={() => this.setState({ sharedSocially: true })}
       />
     )
   }
@@ -85,8 +83,9 @@ class Thanks extends React.Component {
       <FacebookButton
         petition={this.props.petition}
         prefix={this.state.pre}
-        recordShare={this.recordShare('facebook', `${this.state.pre}.fb`)}
         trackingParams={this.trackingParams}
+        recordShare={this.recordShare('facebook', `${this.state.pre}.fb`)}
+        afterShare={() => this.setState({ sharedSocially: true })}
       />
     )
   }
@@ -108,8 +107,8 @@ class Thanks extends React.Component {
         isCreator={this.isCreator}
         petition={this.props.petition}
         prefix={this.state.pre}
-        recordShare={this.recordShare('email', `${this.state.pre}.em.cp`)}
         trackingParams={this.trackingParams}
+        recordShare={this.recordShare('email', `${this.state.pre}.em.cp`)}
       />
     )
   }
