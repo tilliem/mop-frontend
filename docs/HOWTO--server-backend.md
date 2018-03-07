@@ -3,12 +3,12 @@
 When running locally, you should set the following environment variables:
 
 ```
-export API_URI="https://petitions.example.com"
-export BASE_APP_PATH="/Users/yourusername/Sites/mop-frontend/local/"
+export API_URI="https://petitions.moveon.org"
+export BASE_APP_PATH="/path/to/your/local/mop-frontend/local/"
 export STATIC_ROOT="../../build/"
 ```
 
-`API_URI` can either point at a hosted version of the API (as in the example), or a local instance of mop (something like `http://0.0.0.0:8000`).
+`API_URI` can either point at a hosted version of the API (as in the example), or a local instance of mop (if you have access) like `http://0.0.0.0:8000`.
 
 `BASE_APP_PATH` is everything that comes after `file://` in your browser's local file URL, up to and including `/local/`.
 
