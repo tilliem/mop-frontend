@@ -45,11 +45,18 @@ export function withFacebook(WrappedComponent) {
     }
 
     render() {
-      return (
-        <WrappedComponent
-          onClick={this.shareFacebook}
-        />
-      )
+      /* eslint-disable no-unused-vars */
+      // remove props we don't want to pass through
+      const {
+        user,
+        trackingParams,
+        petition,
+        pre,
+        recordShare,
+        ...otherProps
+      } = this.props
+      /* eslint-enable */
+      return <WrappedComponent {...otherProps} onClick={this.shareFacebook} />
     }
   }
 

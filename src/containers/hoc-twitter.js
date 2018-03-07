@@ -18,17 +18,27 @@ export function withTwitter(WrappedComponent) {
     }
 
     render() {
-      const { petition, isCreator } = this.props
+      const {
+        petition,
+        isCreator,
+        shortLinkArgs,
+        recordShare, // eslint-disable-line no-unused-vars
+        // (just to remove from otherProps)
+        ...otherProps
+      } = this.props
       const twitterShareLink = petitionShortCode(
         isCreator ? 'c' : 't',
-        ...this.props.shortLinkArgs
+        ...shortLinkArgs
       )
       const shareOpts =
         (petition.share_options && petition.share_options[0]) || {}
       // Convert description to text
       let tweet
       if (shareOpts.twitter_share && shareOpts.twitter_share.message) {
-        tweet = shareOpts.twitter_share.message.replace('[URL]', twitterShareLink)
+        tweet = shareOpts.twitter_share.message.replace(
+          '[URL]',
+          twitterShareLink
+        )
       } else {
         const suffix = ` ${twitterShareLink} @moveon`
         tweet = `${petition.title.slice(0, 140 - suffix.length)} ${suffix}`
@@ -36,6 +46,7 @@ export function withTwitter(WrappedComponent) {
 
       return (
         <WrappedComponent
+          {...otherProps}
           tweet={tweet}
           onClick={this.shareTwitter}
           setTweetRef={input => input && (this.tweetTextArea = input)}

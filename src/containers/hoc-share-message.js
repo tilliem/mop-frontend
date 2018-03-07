@@ -47,7 +47,8 @@ Thanks!
         pre,
         trackingParams,
         recordShare,
-        shortLinkArgs
+        shortLinkArgs,
+        ...otherProps
       } = this.props
       const shareOpts =
         (petition.share_options && petition.share_options[0]) || {}
@@ -81,6 +82,7 @@ Thanks!
 
       return (
         <WrappedComponent
+          {...otherProps}
           mailtoMessage={mailtoMessage}
           copyPasteMessage={copyPasteMessage}
           rawLink={rawLink}
@@ -91,12 +93,12 @@ Thanks!
   }
 
   ShareMessage.propTypes = {
-    isCreator: PropTypes.bool,
-    trackingParams: PropTypes.string,
     petition: PropTypes.object,
+    isCreator: PropTypes.bool,
     pre: PropTypes.string,
-    shortLinkArgs: PropTypes.array,
+    trackingParams: PropTypes.string,
     recordShare: PropTypes.func,
+    shortLinkArgs: PropTypes.array,
     render: PropTypes.func
   }
 
