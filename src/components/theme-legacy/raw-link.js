@@ -1,17 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { withShareMessage } from '../../containers/hoc-share-message'
+import { withShareLink } from '../../containers/hoc-share-link'
 
-const RawLink = ({ shareLink, rawLink, setLinkRef }) => (
+const RawLink = ({ rawLink }) => (
   <div
     id='hidden_share_link'
     className='lanky-header bump-top-3 align-center hidden'
   >
     Send a link:
     <textarea
-      ref={setLinkRef}
-      onClick={shareLink}
       id='link_text'
       defaultValue={rawLink}
       readOnly
@@ -25,4 +23,4 @@ RawLink.propTypes = {
   setLinkRef: PropTypes.func
 }
 
-export default withShareMessage(RawLink)
+export default withShareLink(RawLink)

@@ -83,8 +83,7 @@ class Thanks extends React.Component {
     return (
       <FacebookButton
         petition={this.props.petition}
-        user={this.props.user}
-        pre={this.state.pre}
+        prefix={this.state.pre}
         recordShare={this.recordShare('facebook', `${this.state.pre}.fb`)}
         trackingParams={this.trackingParams}
       />
@@ -96,7 +95,7 @@ class Thanks extends React.Component {
       <MailButton
         isCreator={this.isCreator}
         petition={this.props.petition}
-        pre={this.state.pre}
+        prefix={this.state.pre}
         trackingParams={this.trackingParams}
       />
     )
@@ -107,7 +106,7 @@ class Thanks extends React.Component {
       <CopyPaste
         isCreator={this.isCreator}
         petition={this.props.petition}
-        pre={this.state.pre}
+        prefix={this.state.pre}
         recordShare={this.recordShare('email', `${this.state.pre}.em.cp`)}
         trackingParams={this.trackingParams}
       />
@@ -117,11 +116,7 @@ class Thanks extends React.Component {
   renderRawLink() {
     return (
       <RawLink
-        isCreator={this.isCreator}
-        petition={this.props.petition}
-        pre={this.state.pre}
-        recordShare={this.recordShare('email', `${this.state.pre}.ln.cp`)}
-        trackingParams={this.trackingParams}
+        shortLinkMode={this.isCreator ? 'k' : 'l'}
         shortLinkArgs={this.shortLinkArgs}
       />
     )

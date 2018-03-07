@@ -1,36 +1,32 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { petitionShortCode } from '../lib'
 
-export function withShareMessage(WrappedComponent) {
-  class ShareMessage extends React.Component {
-    generateMailMessage(
-      about,
-      statement,
-      isCreator,
-      shareOpts,
-      fullTarget,
-      petitionLink
-    ) {
-      if (shareOpts.email_share) {
-        return shareOpts.email_share
-      }
-      const actedOn = isCreator ? 'created' : 'signed'
-      const target =
-        fullTarget
-          .slice(0, 3)
-          .map(t => t.name)
-          .join(' and ') +
-        (fullTarget.length > 3 ? `, and ${fullTarget.length} others` : '')
-      const tooLong = 400 // 1024 for the whole message, so how about 450 for each
-      const petitionAbout = about.length < tooLong ? `\n${about}` : ''
-      const petitionStatement =
-        statement.length < tooLong ? `"${statement}"\n` : ''
-      return `Hi,
+function generateMailMessage(
+  about,
+  statement,
+  isCreator,
+  shareOpts,
+  fullTarget,
+  petitionLink
+) {
+  if (shareOpts.email_share) {
+    return shareOpts.email_share
+  }
+  const actedOn = isCreator ? 'created' : 'signed'
+  const target =
+    fullTarget
+      .slice(0, 3)
+      .map(t => t.name)
+      .join(' and ') +
+    (fullTarget.length > 3 ? `, and ${fullTarget.length} others` : '')
+  const tooLong = 400 // 1024 for the whole message, so how about 450 for each
+  const petitionAbout = about.length < tooLong ? `\n${about}` : ''
+  const petitionStatement = statement.length < tooLong ? `"${statement}"\n` : ''
+  return `Hi,
 ${petitionAbout}
 ${petitionAbout ? '\nThat‘s why ' : ''}I ${actedOn} a petition to ${target}${
-      petitionStatement ? ', which says:\n' : '.'
-    }
+    petitionStatement ? ', which says:\n' : '.'
+  }
 ${petitionStatement}
 Will you sign this petition? Click here:
 
@@ -38,18 +34,36 @@ ${petitionLink}
 
 Thanks!
 `
+}
+
+export function withShareMessage(WrappedComponent) {
+  class ShareMessage extends React.Component {
+    getLink() {
+      const { petition, prefix, suffix, trackingParams } = this.props
+      let url = `${petition._links.url}?source=${prefix}.em`
+
+      if (suffix) url = `${url}.${suffix}`
+
+      url = `${url}.__TYPE__`
+
+      if (trackingParams) url = `${url}&${trackingParams}`
+
+      return url
     }
 
     render() {
       const {
+        /* eslint-disable no-unused-vars */
+        // remove props we don't want to pass through
         petition,
         isCreator,
-        pre,
+        prefix,
+        suffix,
         trackingParams,
         recordShare,
-        shortLinkArgs,
         ...otherProps
       } = this.props
+      /* eslint-enable */
       const shareOpts =
         (petition.share_options && petition.share_options[0]) || {}
 
@@ -57,18 +71,13 @@ Thanks!
       const textDescription = document.createElement('div')
       textDescription.innerHTML = petition.description
 
-      const message = this.generateMailMessage(
+      const message = generateMailMessage(
         textDescription.textContent,
         petition.summary,
         isCreator,
         shareOpts,
         petition.target,
-        `${petition._links.url}?source=${pre}.em.__TYPE__&${trackingParams}`
-      )
-
-      const rawLink = shortLinkArgs && petitionShortCode(
-        isCreator ? 'k' : 'l',
-        ...shortLinkArgs
+        this.getLink()
       )
 
       const mailtoMessage = `mailto:?subject=${encodeURIComponent(
@@ -85,7 +94,6 @@ Thanks!
           {...otherProps}
           mailtoMessage={mailtoMessage}
           copyPasteMessage={copyPasteMessage}
-          rawLink={rawLink}
           onClick={recordShare}
         />
       )
@@ -95,11 +103,10 @@ Thanks!
   ShareMessage.propTypes = {
     petition: PropTypes.object,
     isCreator: PropTypes.bool,
-    pre: PropTypes.string,
+    prefix: PropTypes.string,
+    suffix: PropTypes.string,
     trackingParams: PropTypes.string,
-    recordShare: PropTypes.func,
-    shortLinkArgs: PropTypes.array,
-    render: PropTypes.func
+    recordShare: PropTypes.func
   }
 
   return ShareMessage
