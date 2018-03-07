@@ -49,11 +49,6 @@ const Thanks = ({
 Thanks.propTypes = {
   petition: PropTypes.object,
   sharedSocially: PropTypes.bool,
-  isCreator: PropTypes.bool,
-  shareLink: PropTypes.func,
-  rawShareLink: PropTypes.string,
-  setLinkRef: PropTypes.func,
-  setEmailRef: PropTypes.func,
   renderTwitter: PropTypes.func,
   renderFacebook: PropTypes.func,
   renderMail: PropTypes.func,

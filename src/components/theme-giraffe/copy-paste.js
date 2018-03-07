@@ -3,9 +3,8 @@ import PropTypes from 'prop-types'
 
 import { withShareMessage } from '../../containers/hoc-share-message'
 
-const CopyPaste = ({ onClick, copyPasteMessage, setEmailRef }) => (
+const CopyPaste = ({ onClick, copyPasteMessage }) => (
   <textarea
-    ref={setEmailRef}
     className='share-modal__text'
     id='email-textarea'
     onClick={e => {
@@ -19,8 +18,7 @@ const CopyPaste = ({ onClick, copyPasteMessage, setEmailRef }) => (
 
 CopyPaste.propTypes = {
   onClick: PropTypes.func,
-  copyPasteMessage: PropTypes.string,
-  setEmailRef: PropTypes.func
+  copyPasteMessage: PropTypes.string
 }
 
 export default withShareMessage(CopyPaste)
