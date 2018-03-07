@@ -3,13 +3,13 @@ import { expect } from 'chai'
 
 import { shallow } from 'enzyme'
 
-import Footer from '../../src/components/theme-giraffe/footer'
+import { Footer } from '../../src/components/theme-giraffe/footer'
 
 import {
   Nav,
   Text,
   Social,
-  FinePrint,
+  PACFinePrint,
   MoFooter
 } from 'GiraffeUI/footer'
 
@@ -44,9 +44,15 @@ describe('<Footer /> (Giraffe)', () => {
     expect(top.find(Social).length).to.equal(1)
   })
 
-  it('renders the footer <FinePrint />', () => {
-    const footer = shallow(<Footer />)
+  it('renders the footer <FinePrint /> if entity is pac', () => {
+    const footer = shallow(<Footer entity='pac' />)
     const top = footer.find(MoFooter.Bottom)
-    expect(top.find(FinePrint).length).to.equal(1)
+    expect(top.find(PACFinePrint).length).to.equal(1)
+  })
+
+  it('doesnt render the footer <FinePrint /> if entity is c4', () => {
+    const footer = shallow(<Footer entity='c4' />)
+    const top = footer.find(MoFooter.Bottom)
+    expect(top.find(PACFinePrint).length).to.equal(0)
   })
 })
