@@ -114,6 +114,7 @@ class Thanks extends React.Component {
   }
 
   renderRawLink() {
+    // Only used for theme-giraffe
     return (
       <RawLink
         shortLinkMode={this.isCreator ? 'k' : 'l'}

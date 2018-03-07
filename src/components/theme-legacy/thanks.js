@@ -7,7 +7,6 @@ const Thanks = ({
   petition,
   sharedSocially,
   isCreator,
-  renderRawLink,
   renderTwitter,
   renderFacebook,
   renderMail,
@@ -38,7 +37,6 @@ const Thanks = ({
           Tweet your followers:
         </div>
         {renderTwitter()}
-      {renderRawLink()}
       </div>
       <div className='span7 padding-top-1'>
         <div className='share-email align-center'>
