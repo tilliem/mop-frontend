@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import { withTwitter } from '../../containers/hoc-twitter'
 import TwitterSvg from 'GiraffeUI/svgs/twitter.svg'
 
-const TwitterButton = ({ shareTwitter, tweet, setTweetRef }) => (
-  <a href='#' className='mo-btn share-modal__link' onClick={shareTwitter}>
+const TwitterButton = ({ onClick, tweet, setTweetRef }) => (
+  <a href='#' className='mo-btn share-modal__link' onClick={onClick}>
     <TwitterSvg />
     Twitter
     <textarea
@@ -19,7 +19,7 @@ const TwitterButton = ({ shareTwitter, tweet, setTweetRef }) => (
 )
 
 TwitterButton.propTypes = {
-  shareTwitter: PropTypes.func,
+  onClick: PropTypes.func,
   tweet: PropTypes.string,
   setTweetRef: PropTypes.func
 }
