@@ -42,9 +42,9 @@ export function withShareMessage(WrappedComponent) {
       const { petition, prefix, suffix, trackingParams } = this.props
       let url = `${petition._links.url}?source=${prefix}.em`
 
-      if (suffix) url = `${url}.${suffix}`
-
       url = `${url}.__TYPE__`
+
+      if (suffix) url = `${url}.${suffix}`
 
       if (trackingParams) url = `${url}&${trackingParams}`
 
