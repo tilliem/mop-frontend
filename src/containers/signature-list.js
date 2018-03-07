@@ -84,7 +84,7 @@ const mapStateToProps = (store, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  loadSignatures: ({ petition, page }) =>
+  loadSignatures: (petition, page) =>
     dispatch(loadPetitionSignatures(petition, page))
 })
 
