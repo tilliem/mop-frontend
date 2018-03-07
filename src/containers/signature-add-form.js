@@ -207,7 +207,7 @@ class SignatureAddForm extends React.Component {
   }
 
   render() {
-    const { dispatch, petition, user, query, showAddressFields, requireAddressFields, showOptinCheckbox, showOptinWarning, setRef } = this.props
+    const { dispatch, petition, user, query, showAddressFields, requireAddressFields, showOptinCheckbox, showOptinWarning } = this.props
     const creator = (petition._embedded && petition._embedded.creator || {})
     const petitionBy = creator.name + (creator.organization
                                        ? `, ${creator.organization}`
@@ -237,7 +237,6 @@ class SignatureAddForm extends React.Component {
         }
         showOptinWarning={showOptinWarning}
         showOptinCheckbox={showOptinCheckbox}
-        setRef={setRef}
       />
     )
   }
@@ -255,8 +254,7 @@ SignatureAddForm.propTypes = {
   fromMailing: PropTypes.bool,
   showOptinWarning: PropTypes.bool,
   showOptinCheckbox: PropTypes.bool,
-  hiddenOptin: PropTypes.bool,
-  setRef: PropTypes.func
+  hiddenOptin: PropTypes.bool
 }
 
 function mapStateToProps(store, ownProps) {
