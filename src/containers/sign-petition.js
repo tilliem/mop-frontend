@@ -38,6 +38,13 @@ class SignPetition extends React.Component {
     window.addEventListener('resize', this.updateWindowDimensions)
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { params, petition } = nextProps
+    if (petition) {
+      this.checkOrgPathMatches(petition, params.organization)
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions)
   }
@@ -59,13 +66,6 @@ class SignPetition extends React.Component {
 
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth })
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { params, petition } = nextProps
-    if (petition) {
-      this.checkOrgPathMatches(petition, params.organization)
-    }
   }
 
   checkOrgPathMatches(petition, orgPath) {
