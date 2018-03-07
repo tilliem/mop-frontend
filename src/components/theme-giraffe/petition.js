@@ -19,6 +19,7 @@ import SignatureList from '../../containers/signature-list'
 const Petition = ({
   petition: p,
   query,
+  user,
   petitionBy,
   outOfDate,
   isSignModalOpen,
@@ -33,7 +34,7 @@ const Petition = ({
         heading={splitIntoSpansJsx(p.title)}
         currentSignatures={p.total_signatures}
         goalSignatures={p.signature_goal}
-        renderShare={<Share className='petition-card' />}
+        renderShare={<Share className='petition-card' user={user} petition={p} />}
       >
         <p>To be delivered to {p.target.map(t => t.name).join(', ')}</p>
 
@@ -60,7 +61,7 @@ const Petition = ({
           name={petitionBy}
           link={`/contact_creator.html?petition_id=${p.petition_id}`}
         />
-        <Share className='petition-details' hasLabels />
+        <Share className='petition-details' hasLabels user={user} petition={p} />
         <Details.Disclaimer />
       </Details>
     </InfoColumn>
@@ -83,6 +84,7 @@ const Petition = ({
 
 Petition.propTypes = {
   petition: PropTypes.object.isRequired,
+  user: PropTypes.object,
   query: PropTypes.object,
   petitionBy: PropTypes.string,
   outOfDate: PropTypes.string,
