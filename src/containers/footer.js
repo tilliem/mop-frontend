@@ -18,15 +18,3 @@ Footer.propTypes = {
   petitionEntity: PropTypes.string,
   location: PropTypes.object
 }
-
-function mapStateToProps(store, ownProps) {
-  // Fetch the petition only if the route has a `petition_slug` param
-  const petitionSlug = ownProps.params && ownProps.params.petition_slug
-  const petition = petitionSlug && store.petitionStore.petitions[petitionSlug]
-
-  return {
-    petitionEntity: petition && petition.entity
-  }
-}
-
-export default withRouter(connect(mapStateToProps)(Footer))
