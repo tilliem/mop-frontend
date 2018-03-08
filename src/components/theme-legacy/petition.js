@@ -16,7 +16,7 @@ const Petition = ({ petition: p, query, petitionBy, outOfDate }) => (
       </div>
       : ''}
 
-    {(p.status !== 'Verified') ?
+    {(p.status !== 'Verified' && p.status !== 'Bad') ?
       <div className='message-header'>
         <PetitionFlagForm petition={p} />
       </div>

@@ -17,7 +17,7 @@ export const Message = ({ outOfDate, petition: p, isFwd }) => (
       ''
     )}
 
-    {p.status !== 'Verified' ? (
+    {(p.status !== 'Verified' && p.status !== 'Bad') ? (
       <div className='message-header'>
         <PetitionFlagForm petition={p} />
       </div>
