@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 
 import { withFacebook } from '../../containers/hoc-facebook'
 
-const FacebookButton = ({ onClick: shareFacebook }) => (
+const FacebookButton = ({ onClick }) => (
   <button
     id='facebook-button'
     className='xl300 background-facebook-blue'
-    onClick={shareFacebook}
+    onClick={onClick}
   >
     Share on Facebook
   </button>
