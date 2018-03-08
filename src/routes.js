@@ -40,7 +40,7 @@ const updateHistoryObject = (historyObj, routes) => {
   // eslint-disable-next-line no-param-reassign
   historyObj.push = (path, state) => {
     let matchPath = path
-    if (baseAppPath !== '/') {
+    if (baseAppPath !== '/' && path.substring(0, 4) !== 'http') {
       matchPath = baseAppPath + (path[0] === '/' ? path.substring(1) : path)
     }
     match(
