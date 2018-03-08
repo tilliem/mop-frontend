@@ -3,7 +3,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Nav from '../../containers/nav'
-import Footer from 'LegacyTheme/footer.js'
+import Footer from '../../containers/footer'
 
 const Wrapper = ({ children, params, routes }) => (
   <div className='moveon-petitions'>

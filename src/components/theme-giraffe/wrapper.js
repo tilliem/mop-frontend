@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Nav from '../../containers/nav'
-import Footer from 'Theme/footer.js'
+import Footer from '../../containers/footer'
 
 const Wrapper = ({ children, params, routes }) => (
   <div id='giraffe-wrapper' className='giraffe petition'>
