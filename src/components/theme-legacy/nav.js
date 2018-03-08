@@ -5,7 +5,7 @@ import classNames from 'classnames'
 
 import NavLink from 'LegacyTheme/nav-link'
 
-const Nav = ({ user, nav, organization, minimal, toggleOpen, isOpenMobile }) => {
+const Nav = ({ user, nav, organization, minimal, toggleOpen, isOpenMobile, entity }) => {
   const cobrand = ((organization) ? nav.orgs[organization] : nav.partnerCobrand)
 
   const ulClassNames = classNames({
@@ -85,6 +85,14 @@ const Nav = ({ user, nav, organization, minimal, toggleOpen, isOpenMobile }) => 
               {user.signonId ? userLinks : guestLinks}
             </div>
             ) : null}
+        {entity === 'pac' && (
+          <div
+            className='span12 bold-header moveon-medium-gray size-small hidden-phone'
+            style={{ marginTop: '-5px', marginBottom: '25px', paddingLeft: '90px' }}
+          >
+            <em>Political Action Edition</em>
+          </div>
+        )}
         </div>
       </div>
       <div className='container visible-phone'>
@@ -104,7 +112,8 @@ Nav.propTypes = {
   organization: PropTypes.string,
   minimal: PropTypes.bool,
   toggleOpen: PropTypes.func,
-  isOpenMobile: PropTypes.bool
+  isOpenMobile: PropTypes.bool,
+  entity: PropTypes.string
 }
 
 export default Nav
