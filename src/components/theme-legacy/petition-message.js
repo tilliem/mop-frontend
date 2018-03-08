@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import PetitionFlagForm from '../../containers/petition-flag-form'
 
-export const Message = ({ outOfDate, petition: p, isFwd }) => (
+export const PetitionMessage = ({ outOfDate, petition: p, isFwd }) => (
   <div>
     {outOfDate ? (
       <div className='message-header'>
@@ -70,10 +70,10 @@ export const Message = ({ outOfDate, petition: p, isFwd }) => (
   </div>
 )
 
-Message.propTypes = {
+PetitionMessage.propTypes = {
   outOfDate: PropTypes.bool,
   petition: PropTypes.object,
   isFwd: PropTypes.bool
 }
 
-export default Message
+export default PetitionMessage
