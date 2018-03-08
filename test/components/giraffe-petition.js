@@ -11,9 +11,9 @@ const props = {
 }
 
 describe('<Petition /> (Giraffe)', () => {
-  it('renders <Message />', () => {
+  it('renders <PetitionMessage />', () => {
     const petition = shallow(<Petition {...props} />)
-    expect(petition.find('Message').length).to.equal(1)
+    expect(petition.find('PetitionMessage').length).to.equal(1)
   })
 
   it('renders <Card /> components', () => {
