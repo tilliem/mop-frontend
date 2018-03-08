@@ -11,7 +11,7 @@ import OrganizationHeader from 'LegacyTheme/organization-header'
 
 const Home = ({ params, nav, isPac }) => {
   const { organization } = params
-  const isOrganization = Boolean(organization && organization !== 'pac')
+  const isOrganization = Boolean(organization)
   const orgData = (nav && nav.orgs && nav.orgs[organization]) || {}
   return (
     <div className='moveon-petitions container background-moveon-white bump-top-1'>
@@ -24,7 +24,7 @@ const Home = ({ params, nav, isPac }) => {
 
       <div className='row front-content'>
         <TopPetitions
-          pac={(isPac || (!isOrganization && Config.ENTITY === 'pac')) ? 1 : 0}
+          pac={isPac || Config.ENTITY === 'pac'}
           megapartner={organization || ''}
           fullWidth={isOrganization}
           source='petitionshomepage'
