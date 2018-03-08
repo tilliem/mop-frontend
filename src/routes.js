@@ -61,7 +61,7 @@ const updateHistoryObject = (historyObj, routes) => {
 
 export const routes = (store) => {
   const orgLoader = (nextState) => {
-    if (nextState.params && nextState.params.organization && nextState.params.organization !== 'pac') {
+    if (nextState.params && nextState.params.organization) {
       store.dispatch(loadOrganization(nextState.params.organization))
     }
   }
