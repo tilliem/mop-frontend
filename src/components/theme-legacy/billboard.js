@@ -5,7 +5,7 @@ import { Link } from 'react-router'
 const BillBoard = () => (
   <div className='container'>
     <div className='row'>
-      <div className='span12 billboard-background bump-bottom-1 clearfix'>
+      <div className='span12 billboard-background bump-bottom-1 clearfix' style={{ float: 'left' }}>
         <div className='billboard-video text-center center clearfix'>
           <Video />
           <div className='billboard-text'>
