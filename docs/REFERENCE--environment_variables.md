@@ -13,5 +13,6 @@ SESSION_COOKIE_NAME               | When this cookie is present, user session da
 STATIC_ROOT                       | For WebPack dev server, the relative path from initial page load to JS and other static assets. _Default_: "".
 TRACK_SHARE_URL                   | A url endpoint that share events (e.g. from thanks page) should be sent to with details about the shared page.  (see `src/actions/petitionActions.js`). _Default_: "" (none).
 THEME                             | Controls whether `import A from "Theme/a"` comes from the "theme-giraffe" or "theme-legacy" components. ("giraffe" or "legacy") _Default_: "legacy"
+USE_HASH_BROWSING                 | Whether you want to use react-router HashHistory _Default_: false
 LOCAL_REACT                       | Dev only: a path with react.js and react-dom.js, if you want to develop offline _Default_: Loads react from unpkg.com CDN
 LOCAL_CSS                         | Dev only: a theme-giraffe style.css. E.g. `http://localhost:3000/styles/main.css`, as served by `gulp watch` in the giraffe repo, so you can change css and/or develop offline. _Default_: Loads css from the mop-static-stage s3 bucket
