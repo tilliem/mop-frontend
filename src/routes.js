@@ -19,14 +19,19 @@ import Login from './containers/login'
 import Static from './containers/static'
 
 
-const baseAppPath = process.env.BASE_APP_PATH || '/'
+const baseAppPath = window.baseAppPath || process.env.BASE_APP_PATH || '/'
 
 export const appLocation = (Config.USE_HASH_BROWSING ? hashHistory : browserHistory)
 
 const updateHistoryObject = (historyObj, routes) => {
-  // This overrides <Link> routes and router.push() calls if we haven't implemented
-  // that view yet or if we're in production limits matches
-  // to <Route> objects marked with a prodReady property (={true})
+  // This overrides <Link> routes and router.push() calls to navigate away from the
+  // react app to PROD_URL/path (not respecting baseAppPath)
+  //  - if we haven't implemented that view yet
+  //  - or, if we're in production, limits matches to <Route> objects marked with a
+  //    prodReady property (={true})
+  //
+  // It also rewrites match locations to include baseAppPath (like /2018/)
+  //
   // All <Link>s and appLocation.push calls in the codebase should NOT be relative
   // -- i.e. they should be absolute paths like /thanks.html
 
@@ -34,13 +39,17 @@ const updateHistoryObject = (historyObj, routes) => {
   const origPush = historyObj.push
   // eslint-disable-next-line no-param-reassign
   historyObj.push = (path, state) => {
+    let matchPath = path
+    if (baseAppPath !== '/') {
+      matchPath = baseAppPath + (path[0] === '/' ? path.substring(1) : path)
+    }
     match(
-      { location: path, routes },
+      { location: matchPath, routes },
       (error, newlocation, props) => {
         if (!error && props) {
           const matchedComponent = props.routes[props.routes.length - 1]
           if (matchedComponent.prodReady || (!Config.ONLY_PROD_ROUTES && Config.BASE_URL !== PROD_URL)) {
-            origPush.call(this, path, state)
+            origPush.call(this, matchPath, state)
             return
           }
         }
@@ -65,7 +74,7 @@ export const routes = (store) => {
     }
   }
   const routeHierarchy = (
-    <Route path={window.baseAppPath || baseAppPath} component={Wrapper} onEnter={(nextState) => { store.dispatch(loadSession(nextState)) }} >
+    <Route path={baseAppPath} component={Wrapper} onEnter={(nextState) => { store.dispatch(loadSession(nextState)) }} >
       <IndexRoute prodReady component={Home} />
       <Route path='sign/:petition_slug' component={SignPetition} />
       <Route path=':organization/sign/:petition_slug' component={SignPetition} onEnter={orgLoader} />
