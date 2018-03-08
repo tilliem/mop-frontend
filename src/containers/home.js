@@ -9,10 +9,9 @@ import RecentVictoryList from 'LegacyTheme/recentvictory'
 import TopPetitions from './top-petitions'
 import OrganizationHeader from 'LegacyTheme/organization-header'
 
-const Home = ({ params, nav }) => {
+const Home = ({ params, nav, isPac }) => {
   const { organization } = params
   const isOrganization = Boolean(organization && organization !== 'pac')
-  const isPac = (organization === 'pac' || (!isOrganization && Config.ENTITY === 'pac'))
   const orgData = (nav && nav.orgs && nav.orgs[organization]) || {}
   return (
     <div className='moveon-petitions container background-moveon-white bump-top-1'>
@@ -25,7 +24,7 @@ const Home = ({ params, nav }) => {
 
       <div className='row front-content'>
         <TopPetitions
-          pac={isPac ? 1 : 0}
+          pac={(isPac || (!isOrganization && Config.ENTITY === 'pac')) ? 1 : 0}
           megapartner={organization || ''}
           fullWidth={isOrganization}
           source='petitionshomepage'
@@ -38,7 +37,8 @@ const Home = ({ params, nav }) => {
 
 Home.propTypes = {
   nav: PropTypes.object,
-  params: PropTypes.object
+  params: PropTypes.object,
+  isPac: PropTypes.bool
 }
 
 function mapStateToProps(store) {

@@ -6,6 +6,7 @@ import { Config } from './config'
 import { loadSession, trackPage } from './actions/sessionActions'
 import { loadOrganization } from './actions/navActions.js'
 import Home from './containers/home'
+import PacHome from './containers/pac-home'
 import SignPetition from './containers/sign-petition'
 import ThanksShim from './loaders/thanks-shim'
 import SearchPage from './containers/search'
@@ -60,13 +61,14 @@ const updateHistoryObject = (historyObj, routes) => {
 
 export const routes = (store) => {
   const orgLoader = (nextState) => {
-    if (nextState.params && nextState.params.organization) {
+    if (nextState.params && nextState.params.organization && nextState.params.organization !== 'pac') {
       store.dispatch(loadOrganization(nextState.params.organization))
     }
   }
   const routeHierarchy = (
     <Route path={window.baseAppPath || baseAppPath} component={Wrapper} onEnter={(nextState) => { store.dispatch(loadSession(nextState)) }} >
       <IndexRoute prodReady component={Home} />
+      <Route path='pac/' component={PacHome} />
       <Route path='sign/:petition_slug' component={SignPetition} />
       <Route path=':organization/sign/:petition_slug' component={SignPetition} onEnter={orgLoader} />
       <Route path='thanks.html' component={ThanksShim} prodReady minimalNav />
