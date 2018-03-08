@@ -5,7 +5,7 @@ import { withShareMessage } from '../../containers/hoc-share-message'
 import MailSvg from 'GiraffeUI/svgs/mail.svg'
 
 const MailButton = ({ mailtoMessage }) => (
-  <a className='share-modal__cta' href={mailtoMessage}>
+  <a className='petition-thanks__cta' href={mailtoMessage}>
     <MailSvg />
     Email Petition
   </a>

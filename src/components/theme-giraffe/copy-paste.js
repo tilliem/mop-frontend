@@ -5,7 +5,7 @@ import { withShareMessage } from '../../containers/hoc-share-message'
 
 const CopyPaste = ({ onClick, copyPasteMessage }) => (
   <textarea
-    className='share-modal__text'
+    className='petition-thanks__text'
     id='email-textarea'
     onClick={e => {
       e.target.select()

@@ -6,7 +6,7 @@ import LinkSvg from 'GiraffeUI/svgs/link.svg'
 
 const RawLink = ({ rawLink }) => (
   <a
-    className='mo-btn share-modal__link'
+    className='mo-btn petition-thanks__link'
     onClick={() => prompt('Here is your link to share:', rawLink)}
   >
     <LinkSvg />
