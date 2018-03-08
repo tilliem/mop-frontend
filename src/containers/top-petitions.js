@@ -26,7 +26,7 @@ class TopPetitions extends React.Component {
 }
 
 TopPetitions.propTypes = {
-  pac: PropTypes.number,
+  pac: PropTypes.bool,
   megapartner: PropTypes.string,
   source: PropTypes.string,
   topPetitions: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
@@ -36,19 +36,22 @@ TopPetitions.propTypes = {
 
 const mapStateToProps = (store, ownProps) => {
   const { pac, megapartner } = ownProps
-  const topPetitionsState = (store.petitionStore.topPetitions || {})
+  const topPetitionsState = store.petitionStore.topPetitions || {}
   // TopPetitionsKey must not just be truthily equal but exact
   // eslint-disable-next-line no-unneeded-ternary
   const topPetitionsKey = `${pac ? 1 : 0}--${megapartner ? megapartner : ''}`
-  const topPetitionsProp = (
-    typeof topPetitionsState[topPetitionsKey] === 'undefined'
-  ) ? false : topPetitionsState[topPetitionsKey].map(petitionId => store.petitionStore.petitions[petitionId])
-  return {
-    topPetitions: topPetitionsProp
+  let topPetitions
+  if (typeof topPetitionsState[topPetitionsKey] === 'undefined') {
+    topPetitions = false
+  } else {
+    topPetitions = topPetitionsState[topPetitionsKey].map(
+      petitionId => store.petitionStore.petitions[petitionId]
+    )
   }
+  return { topPetitions }
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   loadPetitions: (pac, megapartner) =>
     dispatch(loadTopPetitions(pac, megapartner))
 })
