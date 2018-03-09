@@ -7,10 +7,8 @@ import { loadTopPetitions } from '../actions/petitionActions.js'
 
 class TopPetitions extends React.Component {
   componentDidMount() {
-    const { pac, megapartner, topPetitions, loadPetitions } = this.props
-    if (!topPetitions) {
-      loadPetitions(pac, megapartner)
-    }
+    const { pac, megapartner, loadPetitions } = this.props
+    loadPetitions(pac, megapartner)
   }
 
   render() {
@@ -37,18 +35,16 @@ TopPetitions.propTypes = {
 const mapStateToProps = (store, ownProps) => {
   const { pac, megapartner } = ownProps
   const topPetitionsState = store.petitionStore.topPetitions || {}
-  // TopPetitionsKey must not just be truthily equal but exact
+
   // eslint-disable-next-line no-unneeded-ternary
   const topPetitionsKey = `${pac ? 1 : 0}--${megapartner ? megapartner : ''}`
-  let topPetitions
-  if (typeof topPetitionsState[topPetitionsKey] === 'undefined') {
-    topPetitions = false
-  } else {
-    topPetitions = topPetitionsState[topPetitionsKey].map(
+  const topPetitionIds = topPetitionsState[topPetitionsKey] || []
+
+  return {
+    topPetitions: topPetitionIds.map(
       petitionId => store.petitionStore.petitions[petitionId]
     )
   }
-  return { topPetitions }
 }
 
 const mapDispatchToProps = dispatch => ({
