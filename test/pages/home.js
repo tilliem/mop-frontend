@@ -51,7 +51,7 @@ describe('<Home />', () => {
     const orgHeader = context.find('.organization-header')
     expect(orgHeader).to.have.length(1)
     expect(orgHeader.find('h2').text()).to.be.equal('M.O.P.')
-    expect(context.find(TopPetitions).props().pac).to.be.equal(false)
+    expect(context.find(TopPetitions).props().pac).to.not.be.equal(true)
     expect(context.find(TopPetitions).props().megapartner).to.be.equal('mop')
   })
 })

@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { Config } from '../config.js'
 import BillBoard from 'LegacyTheme/billboard.js'
 import SearchBar from './searchbar'
 import RecentVictoryList from 'LegacyTheme/recentvictory'
@@ -24,7 +23,7 @@ const Home = ({ params, nav, isPac }) => {
 
       <div className='row front-content'>
         <TopPetitions
-          pac={isPac || Config.ENTITY === 'pac'}
+          pac={isPac}
           megapartner={organization || ''}
           fullWidth={isOrganization}
           source='petitionshomepage'
