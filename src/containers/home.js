@@ -2,17 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { Config } from '../config.js'
 import BillBoard from 'LegacyTheme/billboard.js'
 import SearchBar from './searchbar'
 import RecentVictoryList from 'LegacyTheme/recentvictory'
 import TopPetitions from './top-petitions'
 import OrganizationHeader from 'LegacyTheme/organization-header'
 
-const Home = ({ params, nav }) => {
+const Home = ({ params, nav, isPac }) => {
   const { organization } = params
-  const isOrganization = Boolean(organization && organization !== 'pac')
-  const isPac = (organization === 'pac' || (!isOrganization && Config.ENTITY === 'pac'))
+  const isOrganization = Boolean(organization)
   const orgData = (nav && nav.orgs && nav.orgs[organization]) || {}
   return (
     <div className='moveon-petitions container background-moveon-white bump-top-1'>
@@ -25,7 +23,7 @@ const Home = ({ params, nav }) => {
 
       <div className='row front-content'>
         <TopPetitions
-          pac={isPac ? 1 : 0}
+          pac={isPac}
           megapartner={organization || ''}
           fullWidth={isOrganization}
           source='petitionshomepage'
@@ -38,7 +36,8 @@ const Home = ({ params, nav }) => {
 
 Home.propTypes = {
   nav: PropTypes.object,
-  params: PropTypes.object
+  params: PropTypes.object,
+  isPac: PropTypes.bool
 }
 
 function mapStateToProps(store) {

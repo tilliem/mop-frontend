@@ -36,13 +36,14 @@ class Nav extends React.Component {
   }
 
   render() {
-    const { user, nav, organization, minimal } = this.props
+    const { user, nav, organization, minimal, entity } = this.props
     return (
       <NavComponent
         user={user}
         nav={nav}
         organization={organization}
         minimal={minimal}
+        entity={entity}
         close={this.close}
         toggleOpen={this.toggleOpen}
         isOpenMobile={this.state.isOpenMobile}
@@ -57,7 +58,8 @@ Nav.propTypes = {
   user: PropTypes.object,
   nav: PropTypes.object,
   organization: PropTypes.string,
-  minimal: PropTypes.bool
+  minimal: PropTypes.bool,
+  entity: PropTypes.string
 }
 
 function mapStateToProps(store) {

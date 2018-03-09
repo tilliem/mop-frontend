@@ -1,6 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router'
+import { Link } from 'react-router'
 import PropTypes from 'prop-types'
 
 import {
@@ -76,14 +75,4 @@ Footer.propTypes = {
   entity: PropTypes.string
 }
 
-function mapStateToProps(store, ownProps) {
-  // Fetch the petition only if the route has a `petition_slug` param
-  const petitionSlug = ownProps.params && ownProps.params.petition_slug
-  const petition = petitionSlug && store.petitionStore.petitions[petitionSlug]
-
-  return {
-    entity: petition && petition.entity
-  }
-}
-
-export default withRouter(connect(mapStateToProps)(Footer))
+export default Footer
