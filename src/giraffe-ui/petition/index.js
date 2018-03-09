@@ -1,4 +1,3 @@
-export { Message } from './message'
 export { Card } from './card'
 export { Details } from './details'
 export { InputBlock } from './input-block'

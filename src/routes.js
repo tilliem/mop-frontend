@@ -6,13 +6,14 @@ import { Config } from './config'
 import { loadSession, trackPage } from './actions/sessionActions'
 import { loadOrganization } from './actions/navActions.js'
 import Home from './containers/home'
+import PacHome from './containers/pac-home'
 import SignPetition from './containers/sign-petition'
 import ThanksShim from './loaders/thanks-shim'
 import SearchPage from './containers/search'
 import PetitionCreatorDashboard from './containers/petition-creator-dashboard'
 import PetitionReport from './containers/petition-report'
 import CreatePetitionPage from './containers/create-petition'
-import Wrapper from 'Theme/wrapper'
+import Wrapper from './containers/wrapper'
 import ForgotPassword from './containers/forgot-password'
 import Register from './containers/register'
 import Login from './containers/login'
@@ -76,6 +77,7 @@ export const routes = (store) => {
   const routeHierarchy = (
     <Route path={baseAppPath} component={Wrapper} onEnter={(nextState) => { store.dispatch(loadSession(nextState)) }} >
       <IndexRoute prodReady component={Home} />
+      <Route path='pac/' component={PacHome} />
       <Route path='sign/:petition_slug' component={SignPetition} />
       <Route path=':organization/sign/:petition_slug' component={SignPetition} onEnter={orgLoader} />
       <Route path='thanks.html' component={ThanksShim} prodReady minimalNav />

@@ -3,27 +3,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Nav from '../../containers/nav'
-import Footer from 'LegacyTheme/footer.js'
+import Footer from 'LegacyTheme/footer'
 
-const Wrapper = ({ children, params, routes }) => (
+const Wrapper = ({ children, organization, minimalNav, entity }) => (
   <div className='moveon-petitions'>
-    <Nav
-      organization={params && params.organization || ''}
-      minimal={!!routes[routes.length - 1].minimalNav}
-    />
+    <Nav organization={organization} minimal={minimalNav} entity={entity} />
     <main className='main'>
       {children}
     </main>
     <hr />
-    <Footer />
+    <Footer entity={entity} />
   </div>
 )
 
 
 Wrapper.propTypes = {
   children: PropTypes.object.isRequired,
-  params: PropTypes.object,
-  routes: PropTypes.array.isRequired
+  organization: PropTypes.string,
+  minimalNav: PropTypes.bool,
+  entity: PropTypes.string
 }
 
 export default Wrapper

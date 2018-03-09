@@ -1,8 +1,8 @@
 import React from 'react'
+import PetitionMessage from 'LegacyTheme/petition-message'
 import PropTypes from 'prop-types'
 
 import {
-  Message,
   Card,
   Details,
   SignColumn,
@@ -25,8 +25,8 @@ const Petition = ({
   closeModal
 }) => (
   <div className='mo-container'>
-    <Message outOfDate={outOfDate} petition={p} isFwd={query.fwd} />
     <InfoColumn>
+      <PetitionMessage outOfDate={outOfDate} petition={p} isFwd={query.fwd} />
       <Card
         heading={splitIntoSpansJsx(p.title)}
         currentSignatures={p.total_signatures}

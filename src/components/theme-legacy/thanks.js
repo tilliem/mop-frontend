@@ -7,17 +7,10 @@ const Thanks = ({
   petition,
   sharedSocially,
   isCreator,
-  shareFacebook,
-  shareTwitter,
-  shareLink,
-  shareEmail,
-  mailtoMessage,
-  copyPasteMessage,
-  rawShareLink,
-  tweet,
-  setTweetRef,
-  setLinkRef,
-  setEmailRef
+  renderTwitter,
+  renderFacebook,
+  renderMail,
+  renderCopyPaste
 }) => (
   <div className='row'>
     {sharedSocially ? (
@@ -38,44 +31,12 @@ const Thanks = ({
           <span className='icon-fb-default' />
           Tell your friends on Facebook:
         </div>
-        <button
-          id='facebook-button'
-          className='xl300 background-facebook-blue'
-          onClick={shareFacebook}
-        >
-          Share on Facebook
-        </button>
+        {renderFacebook()}
         <div className='lanky-header bump-top-3 align-center'>
           <span className='icon-twitter-default' />
           Tweet your followers:
         </div>
-        <button
-          id='twitter-button'
-          className='xl300 background-moveon-bright-red'
-          onClick={shareTwitter}
-        >
-          Tweet This
-        </button>
-        <textarea
-          className='hidden'
-          id='tweet_text'
-          defaultValue={tweet}
-          ref={setTweetRef}
-          readOnly
-        />
-        <div
-          id='hidden_share_link'
-          className='lanky-header bump-top-3 align-center hidden'
-        >
-          Send a link:
-          <textarea
-            ref={setLinkRef}
-            onClick={shareLink}
-            id='link_text'
-            defaultValue={rawShareLink}
-            readOnly
-          />
-        </div>
+        {renderTwitter()}
       </div>
       <div className='span7 padding-top-1'>
         <div className='share-email align-center'>
@@ -83,24 +44,11 @@ const Thanks = ({
             <span className='icon-join-default' />Email your friends, family and
             colleagues:
           </div>
-          <a
-            id='email-button'
-            href={mailtoMessage}
-            className='button xl300 background-moveon-bright-red'
-          >
-            Email your friends
-          </a>
+          {renderMail()}
           <div className='disclaimer bump-top-3 hidden-phone'>
             Or copy and paste the text below into a message:
           </div>
-          <textarea
-            ref={setEmailRef}
-            className='hidden-phone'
-            id='email-textarea'
-            onClick={shareEmail}
-            value={copyPasteMessage.replace('__TYPE__', 'cp')}
-            readOnly
-          />
+          {renderCopyPaste()}
         </div>
       </div>
     </div>
@@ -111,17 +59,15 @@ Thanks.propTypes = {
   petition: PropTypes.object,
   sharedSocially: PropTypes.bool,
   isCreator: PropTypes.bool,
-  shareFacebook: PropTypes.func,
-  shareTwitter: PropTypes.func,
   shareLink: PropTypes.func,
-  shareEmail: PropTypes.func,
-  mailtoMessage: PropTypes.string,
-  copyPasteMessage: PropTypes.string,
   rawShareLink: PropTypes.string,
-  tweet: PropTypes.string,
-  setTweetRef: PropTypes.func,
   setLinkRef: PropTypes.func,
-  setEmailRef: PropTypes.func
+  setEmailRef: PropTypes.func,
+  renderTwitter: PropTypes.func,
+  renderFacebook: PropTypes.func,
+  renderMail: PropTypes.func,
+  renderCopyPaste: PropTypes.func,
+  renderRawLink: PropTypes.func
 }
 
 export default Thanks
