@@ -12,7 +12,7 @@ export const Wrapper = ({
   routes
 }) => {
   let entity = petitionEntity
-  if (location.pathname === '/pac/') {
+  if (location.pathname.indexOf('/pac/') !== -1) {
     entity = 'pac'
   }
 
