@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
 import WrapperComponent from 'Theme/wrapper'
@@ -46,4 +45,4 @@ function mapStateToProps(store, ownProps) {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(Wrapper))
+export default connect(mapStateToProps)(Wrapper)
