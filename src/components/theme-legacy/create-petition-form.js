@@ -28,7 +28,11 @@ const CreatePetitionForm = ({
   customOpen,
   instructionStyle,
   setRef,
-  toggleOpen
+  toggleOpen,
+  errors,
+  getValue,
+  onChange,
+  onPreview
 }) => {
   const instructions = instructionsByField[selected]
 
@@ -40,12 +44,16 @@ const CreatePetitionForm = ({
     <div className='container'>
       <div className='row'>
         <div className='background-moveon-light-gray span6 start-form'>
-          <form id='petition_form'>
+          <form id='petition_form' onSubmit={onPreview}>
+            {/* TODO: Do we need to move these to the state to submit? */}
             <input value='' name='targets' id='targets_json' type='hidden' />
             <input value='' name='skin' type='hidden' />
             <input value='' name='source' type='hidden' />
             <input value='' name='cloned_from_id' type='hidden' />
             <input value='' name='solicit_id' type='hidden' />
+            <ul className='errors'>
+              {errors.map(err => <li key={err}>{err}</li>)}
+            </ul>
             <fieldset id='start'>
               <span className='circle-number'>1</span>
               <span className='lanky-header moveon-dark-blue'>
@@ -54,12 +62,14 @@ const CreatePetitionForm = ({
               </span>
               <div className='text wrapper big' id='text_name_wrapper'>
                 <input
-                  name='name'
+                  name='title'
                   id='name_field'
                   className='span6'
                   type='text'
                   title='Your Petition Title'
                   placeholder='Petition title'
+                  value={getValue('name_field')}
+                  onChange={onChange}
                   onClick={setSelected('title')}
                   ref={setRef('titleInput')}
                 />
@@ -67,10 +77,12 @@ const CreatePetitionForm = ({
               <div className='text wrapper' id='text_statement_wrapper'>
                 <textarea
                   className='span6 '
-                  name='text_statement'
+                  name='summary'
                   placeholder='What&rsquo;s the text of your petition? (Try to keep it to 1-2 sentences.)'
                   id='text_statement_field'
                   title='Text of your Petition'
+                  value={getValue('text_statement')}
+                  onChange={onChange}
                   onClick={setSelected('statement')}
                   ref={setRef('statementInput')}
                 />
@@ -90,7 +102,7 @@ const CreatePetitionForm = ({
                 >
                   <label htmlFor='national_group' id='national_group_label'>
                     <input
-                      name='national_group_checkbox'
+                      name='checkbox_national_group'
                       id='national_group'
                       type='checkbox'
                       className='reveal_more_options'
@@ -109,7 +121,7 @@ const CreatePetitionForm = ({
                 >
                   <label htmlFor='state_group' id='state_group_label'>
                     <input
-                      name='state_group'
+                      name='checkbox_state_group'
                       id='state_group'
                       type='checkbox'
                       className='reveal_more_options'
@@ -151,17 +163,19 @@ const CreatePetitionForm = ({
               <div className='text wrapper' id='text_about_wrapper'>
                 <textarea
                   className='span6'
-                  name='text_about'
+                  name='description'
                   id='text_about_field'
                   placeholder='What&rsquo;s your petition about? Have you been personally affected by the issue?'
                   title='Petition Background'
+                  value={getValue('text_about')}
+                  onChange={onChange}
                   onClick={setSelected('about')}
                   ref={setRef('aboutInput')}
                 />
               </div>
             </fieldset>
             <button
-              type='button'
+              type='submit'
               className='xl300 center display-block background-moveon-bright-red'
               value='Preview The Petition'
               name='submit_button'
@@ -191,7 +205,11 @@ CreatePetitionForm.propTypes = {
   customOpen: PropTypes.bool,
   instructionStyle: PropTypes.object,
   setRef: PropTypes.func,
-  toggleOpen: PropTypes.func
+  toggleOpen: PropTypes.func,
+  errors: PropTypes.array.isRequired,
+  getValue: PropTypes.func,
+  onChange: PropTypes.func,
+  onPreview: PropTypes.func
 }
 
 export default CreatePetitionForm

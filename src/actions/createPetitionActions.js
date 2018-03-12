@@ -2,9 +2,20 @@ import 'whatwg-fetch'
 import Config from '../config.js'
 
 export const actionTypes = {
+  CREATE_PETITION_PREVIEW_SUBMIT: 'CREATE_PETITION_PREVIEW_SUBMIT',
   FETCH_TARGETS_REQUEST: 'FETCH_TARGETS_REQUEST',
   FETCH_TARGETS_SUCCESS: 'FETCH_TARGETS_SUCCESS',
   FETCH_TARGETS_FAILURE: 'FETCH_TARGETS_FAILURE'
+}
+
+export function previewSubmit({ title, summary, description, target }) {
+  return {
+    type: actionTypes.CREATE_PETITION_PREVIEW_SUBMIT,
+    title,
+    summary,
+    description,
+    target
+  }
 }
 
 export function loadTargets(group, geoState) {
