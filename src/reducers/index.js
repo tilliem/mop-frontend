@@ -5,6 +5,7 @@ import navStore from './nav'
 import staticPageReducer from './static-pages'
 import userReducer from './user'
 import petitionTargetsReducer from './petition-targets'
+import petitionCreateReducer from './petition-create'
 
 // Function fetchPetitionRequest(petitionSlug) {
 //     Return {
@@ -169,7 +170,8 @@ const rootReducer = combineReducers({
   petitionSearchStore: petitionSearchReducer,
   userStore: userReducer,
   staticPageStore: staticPageReducer,
-  petitionTargetsStore: petitionTargetsReducer
+  petitionTargetsStore: petitionTargetsReducer,
+  petitionCreateStore: petitionCreateReducer
 })
 
 export default rootReducer
