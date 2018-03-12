@@ -104,7 +104,7 @@ function petitionReducer(state = initialPetitionState, action) {
         ...updateData
       }
     case petitionActionTypes.FETCH_PETITION_SIGNATURES_SUCCESS:
-      petition.total_signatures = signatures.count
+      petition = { ...petition, total_signatures: signatures.count }
       return {
         ...state,
         petitionSignatures: {
