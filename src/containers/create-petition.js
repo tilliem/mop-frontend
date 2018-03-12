@@ -13,7 +13,7 @@ const ERRORS = {
   text_about: 'Please provide background info for your petition.'
 }
 
-class CreatePetition extends React.Component {
+export class CreatePetition extends React.Component {
   constructor(props) {
     super(props)
     this.state = {

@@ -46,7 +46,7 @@ const STATE = [
   }
 ]
 
-class CreatePetitionTarget extends React.Component {
+export class CreatePetitionTarget extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -103,7 +103,7 @@ class CreatePetitionTarget extends React.Component {
               value: this.getAllCheckedTargets()
             }
           })
-      )
+        )
     }
   }
 
