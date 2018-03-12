@@ -1,4 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
+import { loadTargets } from '../actions/createPetitionActions'
 
 import CreatePetitionForm from 'LegacyTheme/create-petition-form'
 
@@ -14,6 +18,11 @@ class CreatePetition extends React.Component {
     this.setSelected = this.setSelected.bind(this)
     this.setRef = this.setRef.bind(this)
     this.toggleOpen = this.toggleOpen.bind(this)
+  }
+
+  componentDidMount() {
+    // Preload congress for autocomplete
+    this.props.dispatch(loadTargets('national'))
   }
 
   setSelected(name) {
@@ -65,4 +74,8 @@ class CreatePetition extends React.Component {
   }
 }
 
-export default CreatePetition
+CreatePetition.propTypes = {
+  dispatch: PropTypes.func
+}
+
+export default connect()(CreatePetition)
