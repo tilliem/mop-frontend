@@ -15,6 +15,9 @@ var config = {
   },
   devServer: {
     host: "0.0.0.0",
+    historyApiFallback: {
+      disableDotRule: true
+    }
   },
   devtool: 'sourcemap',
   output: {
@@ -92,6 +95,7 @@ var config = {
         'SESSION_COOKIE_NAME': JSON.stringify(process.env.SESSION_COOKIE_NAME || 'SO_SESSION'),
         'STATIC_ROOT': JSON.stringify(process.env.STATIC_ROOT || '/local/'),
         'TRACK_SHARE_URL': JSON.stringify(process.env.TRACK_SHARE_URL || ''),
+        'USE_HASH_BROWSING': JSON.stringify(process.env.USE_HASH_BROWSING || false),
         'PROD': process.env.PROD
       }
     })
