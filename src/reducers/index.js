@@ -4,6 +4,8 @@ import { actionTypes as sessionActionTypes } from '../actions/sessionActions.js'
 import { actionTypes as accountActionTypes } from '../actions/accountActions.js'
 import navStore from './nav'
 import staticPageReducer from './static-pages'
+import petitionTargetsReducer from './petition-targets'
+
 // Function fetchPetitionRequest(petitionSlug) {
 //     Return {
 //         Type: FETCH_PETTION_REQUEST,
@@ -267,7 +269,8 @@ const rootReducer = combineReducers({
   petitionSearchStore: petitionSearchReducer,
   userStore: userReducer,
   accountRegisterStore: accountRegisterReducer,
-  staticPageStore: staticPageReducer
+  staticPageStore: staticPageReducer,
+  petitionTargetsStore: petitionTargetsReducer
 })
 
 export default rootReducer
