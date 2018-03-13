@@ -11,7 +11,9 @@ const NationalTargetSelect = ({ selected, onSelect, items }) => (
           <label>
             <input
               type='checkbox'
-              onChange={() => onSelect('national')({ ...selectedItem, checked: !selectedItem.checked })}
+              onChange={() =>
+                onSelect({ ...selectedItem, checked: !selectedItem.checked })
+              }
               checked={selectedItem.checked}
             />{' '}
             {selectedItem.label}
@@ -22,7 +24,7 @@ const NationalTargetSelect = ({ selected, onSelect, items }) => (
     <div className='autocomplete_wrapper text wrapper small'>
       <LegislatorAutocomplete
         group='national'
-        onChange={onSelect('national')}
+        onChange={onSelect}
         items={items}
       />
     </div>
