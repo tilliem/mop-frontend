@@ -2,18 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import CustomTargetSelect from './custom'
-import NationalTargetSelect from './national'
 import StateTargetSelect from './state'
 
 export const TargetForm = ({
   setSelected,
   toggleOpen,
   setRef,
-  nationalOpen,
   stateOpen,
   customOpen,
-  selectedNational,
-  onSelect
+  renderNational
 }) => (
   <div id='target_wrapper' className='' title='Choosing a Target'>
     <fieldset id='target' className=''>
@@ -38,7 +35,7 @@ export const TargetForm = ({
           />{' '}
           The White House or Congress
         </label>
-        {nationalOpen && <NationalTargetSelect selected={selectedNational} onSelect={onSelect} />}
+        {renderNational()}
       </div>
       <div
         className='checkbox wrapper'
@@ -85,9 +82,7 @@ TargetForm.propTypes = {
   setSelected: PropTypes.func,
   toggleOpen: PropTypes.func,
   setRef: PropTypes.func,
-  nationalOpen: PropTypes.bool,
   stateOpen: PropTypes.bool,
   customOpen: PropTypes.bool,
-  selectedNational: PropTypes.array,
-  onSelect: PropTypes.func
+  renderNational: PropTypes.func
 }
