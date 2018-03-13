@@ -1,8 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
+import { loadTargets } from '../actions/createPetitionActions'
 
 import { TargetForm } from 'LegacyTheme/form/target-select'
 import NationalTargetSelect from 'LegacyTheme/form/target-select/national'
+import StateTargetSelect from 'LegacyTheme/form/target-select/state'
+import { getStateFullName } from '../lib'
 
 const NATIONAL = [
   {
@@ -22,6 +27,24 @@ const NATIONAL = [
   }
 ]
 
+const STATE = [
+  {
+    label: 'The entire __STATE__ House',
+    default: true,
+    checked: false
+  },
+  {
+    label: 'The entire __STATE__ Senate',
+    default: true,
+    checked: false
+  },
+  {
+    label: 'Governor of __STATE__',
+    default: true,
+    checked: false
+  }
+]
+
 class CreatePetitionTarget extends React.Component {
   constructor(props) {
     super(props)
@@ -29,12 +52,21 @@ class CreatePetitionTarget extends React.Component {
       nationalOpen: false,
       stateOpen: false,
       customOpen: false,
-      national: NATIONAL
+      national: NATIONAL,
+      geoState: null,
+      geoStateSelected: []
     }
 
     this.toggleOpen = this.toggleOpen.bind(this)
     this.onSelect = this.onSelect.bind(this)
+    this.getAllCheckedTargets = this.getAllCheckedTargets.bind(this)
     this.renderNational = this.renderNational.bind(this)
+    this.renderGeoState = this.renderGeoState.bind(this)
+  }
+
+  componentDidMount() {
+    // Preload congress for autocomplete
+    this.props.dispatch(loadTargets('national'))
   }
 
   onSelect(group) {
@@ -57,15 +89,22 @@ class CreatePetitionTarget extends React.Component {
           return { [group]: newGroup }
         },
         () =>
-          // Fire onChange with every checked/selected target
           this.props.onChange({
             target: {
               name: 'target',
-              value: this.state[group].filter(obj => obj.checked)
+              value: this.getAllCheckedTargets()
             }
           })
       )
     }
+  }
+
+  getAllCheckedTargets() {
+    const groups = [this.state.national, this.state.geoStateSelected]
+    return groups.reduce(
+      (acc, group) => [...acc, ...group.filter(obj => obj.checked)],
+      []
+    )
   }
 
   toggleOpen(key) {
@@ -73,14 +112,42 @@ class CreatePetitionTarget extends React.Component {
   }
 
   renderNational() {
-    if (!this.state.nationalOpen) return null
-    return <NationalTargetSelect selected={this.state.national} onSelect={this.onSelect} />
+    const { nationalOpen, national } = this.state
+    if (!nationalOpen) return null
+    return (
+      <NationalTargetSelect
+        selected={national}
+        onSelect={this.onSelect('national')}
+      />
+    )
+  }
+
+  renderGeoState() {
+    const { stateOpen, geoState, geoStateSelected } = this.state
+    if (!stateOpen) return null
+    return (
+      <StateTargetSelect
+        selected={geoStateSelected}
+        onSelect={this.onSelect('geoStateSelected')}
+        geoState={geoState}
+        onChangeGeoState={event => {
+          const { value } = event.target
+          this.props.dispatch(loadTargets('state', value))
+          this.setState({
+            geoState: value,
+            geoStateSelected: STATE.map(obj => ({
+              ...obj,
+              label: obj.label.replace('__STATE__', getStateFullName(value))
+            }))
+          })
+        }}
+      />
+    )
   }
 
   render() {
     const { setSelected, setRef } = this.props
     const openVars = {
-      stateOpen: this.state.stateOpen,
       customOpen: this.state.customOpen,
       toggleOpen: this.toggleOpen
     }
@@ -89,6 +156,7 @@ class CreatePetitionTarget extends React.Component {
         setSelected={setSelected}
         setRef={setRef}
         renderNational={this.renderNational}
+        renderGeoState={this.renderGeoState}
         {...openVars}
       />
     )
@@ -102,4 +170,4 @@ CreatePetitionTarget.propTypes = {
   dispatch: PropTypes.func
 }
 
-export default CreatePetitionTarget
+export default connect()(CreatePetitionTarget)
