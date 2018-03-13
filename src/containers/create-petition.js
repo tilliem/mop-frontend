@@ -18,9 +18,6 @@ class CreatePetition extends React.Component {
     super(props)
     this.state = {
       selected: 'title',
-      nationalOpen: false,
-      stateOpen: false,
-      customOpen: false,
       errors: [],
       data: {
         title: '',
@@ -31,7 +28,6 @@ class CreatePetition extends React.Component {
     }
     this.setSelected = this.setSelected.bind(this)
     this.setRef = this.setRef.bind(this)
-    this.toggleOpen = this.toggleOpen.bind(this)
     this.onPreview = this.onPreview.bind(this)
     this.onInputChange = this.onInputChange.bind(this)
     this.getValue = this.getValue.bind(this)
@@ -84,14 +80,6 @@ class CreatePetition extends React.Component {
     return true
   }
 
-  toggleOpen(section) {
-    return () =>
-      this.setState(prevState => {
-        const prev = prevState[section]
-        return { [section]: !prev }
-      })
-  }
-
   render() {
     const elementByField = {
       title: this.titleInput,
@@ -116,11 +104,7 @@ class CreatePetition extends React.Component {
         <CreatePetitionForm
           setSelected={this.setSelected}
           setRef={this.setRef}
-          toggleOpen={this.toggleOpen}
           selected={this.state.selected}
-          nationalOpen={this.state.nationalOpen}
-          stateOpen={this.state.stateOpen}
-          customOpen={this.state.customOpen}
           instructionStyle={instructionStyle}
           errors={this.state.errors}
           getValue={this.getValue}
