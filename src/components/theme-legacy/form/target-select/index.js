@@ -1,15 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import CustomTargetSelect from './custom'
-
 export const TargetForm = ({
   setSelected,
   toggleOpen,
   setRef,
-  customOpen,
   renderNational,
-  renderGeoState
+  renderGeoState,
+  renderCustom
 }) => (
   <div id='target_wrapper' className='' title='Choosing a Target'>
     <fieldset id='target' className=''>
@@ -71,7 +69,7 @@ export const TargetForm = ({
           />{' '}
           Someone else (like a local official or corporate CEO)
         </label>
-        {customOpen && <CustomTargetSelect />}
+        {renderCustom()}
       </div>
     </fieldset>
   </div>
@@ -81,7 +79,7 @@ TargetForm.propTypes = {
   setSelected: PropTypes.func,
   toggleOpen: PropTypes.func,
   setRef: PropTypes.func,
-  customOpen: PropTypes.bool,
   renderNational: PropTypes.func,
-  renderGeoState: PropTypes.func
+  renderGeoState: PropTypes.func,
+  renderCustom: PropTypes.func
 }

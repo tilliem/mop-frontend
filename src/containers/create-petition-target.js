@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { loadTargets } from '../actions/createPetitionActions'
+import { getStateFullName } from '../lib'
 
 import { TargetForm } from 'LegacyTheme/form/target-select'
 import NationalTargetSelect from 'LegacyTheme/form/target-select/national'
 import StateTargetSelect from 'LegacyTheme/form/target-select/state'
-import { getStateFullName } from '../lib'
+import CustomTargetSelect from '../components/theme-legacy/form/target-select/custom'
 
 const NATIONAL = [
   {
@@ -54,7 +55,9 @@ class CreatePetitionTarget extends React.Component {
       customOpen: false,
       national: NATIONAL,
       geoState: null,
-      geoStateSelected: []
+      geoStateSelected: [],
+      customInputs: { name: '', email: '', title: '' },
+      customSelected: []
     }
 
     this.toggleOpen = this.toggleOpen.bind(this)
@@ -62,6 +65,7 @@ class CreatePetitionTarget extends React.Component {
     this.getAllCheckedTargets = this.getAllCheckedTargets.bind(this)
     this.renderNational = this.renderNational.bind(this)
     this.renderGeoState = this.renderGeoState.bind(this)
+    this.renderCustom = this.renderCustom.bind(this)
   }
 
   componentDidMount() {
@@ -71,17 +75,21 @@ class CreatePetitionTarget extends React.Component {
 
   onSelect(group) {
     return target => {
-      if (!target.label) return
+      if (!target.label && !(target.target_type === 'custom' && target.name)) {
+        // target is invalid
+        return
+      }
 
       this.setState(
         state => {
           const newGroup = [...state[group]]
-          // Try to up the existing index by label
-          const existing = newGroup.findIndex(old => old.label === target.label)
+          // Try to up the existing index by label or name (custom)
+          const existing = target.label
+            ? newGroup.findIndex(old => old.label === target.label)
+            : newGroup.findIndex(old => old.name === target.name)
 
           if (existing === -1) {
-            // Add it if the target isn't in the list
-            newGroup.push(target)
+            newGroup.push(target) // Add it if the target isn't in the list
           } else {
             // Else replace the target with new data ("checked" may have changed)
             newGroup[existing] = target
@@ -145,6 +153,27 @@ class CreatePetitionTarget extends React.Component {
     )
   }
 
+  renderCustom() {
+    const { customOpen, customInputs, customSelected } = this.state
+    if (!customOpen) return null
+    return (
+      <CustomTargetSelect
+        selected={customSelected}
+        onSelect={target => {
+          this.onSelect('customSelected')(target)
+          this.setState({ customInputs: { name: '', email: '', title: '' } })
+        }}
+        customInputs={customInputs}
+        onChangeInputs={event => {
+          const { name, value } = event.target
+          this.setState(state => ({
+            customInputs: { ...state.customInputs, [name]: value }
+          }))
+        }}
+      />
+    )
+  }
+
   render() {
     const { setSelected, setRef } = this.props
     const openVars = {
@@ -157,6 +186,7 @@ class CreatePetitionTarget extends React.Component {
         setRef={setRef}
         renderNational={this.renderNational}
         renderGeoState={this.renderGeoState}
+        renderCustom={this.renderCustom}
         {...openVars}
       />
     )
