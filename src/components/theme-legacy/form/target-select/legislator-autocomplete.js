@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Downshift from 'downshift'
 
 const container = {
-  marginTop: '-3px',
+  marginTop: '-11px',
   padding: '2px',
   borderRadius: '4px',
   position: 'absolute',
@@ -52,6 +52,7 @@ export const LegislatorAutocomplete = ({ onChange, group, state, items }) => (
     }) => (
       <div>
         <input
+          type='text'
           {...getInputProps({
             placeholder: 'Or, enter a specific legislator’s name',
             onChange: () =>
