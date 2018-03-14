@@ -10,6 +10,7 @@ const StateTargetSelect = () => (
         name='select_target_state'
         id='state'
         className=''
+        onlyStates
       />
     </div>
     <div id='state_group_checkboxes'>
