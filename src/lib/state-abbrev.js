@@ -1,18 +1,14 @@
 export const states = {
   AL: 'Alabama',
   AK: 'Alaska',
-  AS: 'American Samoa',
   AZ: 'Arizona',
   AR: 'Arkansas',
   CA: 'California',
   CO: 'Colorado',
   CT: 'Connecticut',
   DE: 'Delaware',
-  DC: 'District Of Columbia',
-  FM: 'Federated States Of Micronesia',
   FL: 'Florida',
   GA: 'Georgia',
-  GU: 'Guam',
   HI: 'Hawaii',
   ID: 'Idaho',
   IL: 'Illinois',
@@ -22,7 +18,6 @@ export const states = {
   KY: 'Kentucky',
   LA: 'Louisiana',
   ME: 'Maine',
-  MH: 'Marshall Islands',
   MD: 'Maryland',
   MA: 'Massachusetts',
   MI: 'Michigan',
@@ -38,13 +33,10 @@ export const states = {
   NY: 'New York',
   NC: 'North Carolina',
   ND: 'North Dakota',
-  MP: 'Northern Mariana Islands',
   OH: 'Ohio',
   OK: 'Oklahoma',
   OR: 'Oregon',
-  PW: 'Palau',
   PA: 'Pennsylvania',
-  PR: 'Puerto Rico',
   RI: 'Rhode Island',
   SC: 'South Carolina',
   SD: 'South Dakota',
@@ -52,12 +44,23 @@ export const states = {
   TX: 'Texas',
   UT: 'Utah',
   VT: 'Vermont',
-  VI: 'Virgin Islands',
   VA: 'Virginia',
   WA: 'Washington',
   WV: 'West Virginia',
   WI: 'Wisconsin',
   WY: 'Wyoming'
+}
+
+export const miscRegions = {
+  AS: 'American Samoa',
+  DC: 'District Of Columbia',
+  FM: 'Federated States Of Micronesia',
+  GU: 'Guam',
+  MH: 'Marshall Islands',
+  MP: 'Northern Mariana Islands',
+  PW: 'Palau',
+  PR: 'Puerto Rico',
+  VI: 'Virgin Islands'
 }
 
 export const armedForcesRegions = [
@@ -70,5 +73,32 @@ export const armedForcesRegions = [
 ]
 
 export function getStateFullName(stateAbrv) {
-  return states[stateAbrv]
+  return states[stateAbrv] || miscRegions[stateAbrv]
+}
+
+function getRegionsUncached(onlyStates) {
+  const statesArr = Object.keys(states).map(key => [key, states[key]])
+  if (onlyStates) return statesArr
+
+  return [
+    ...statesArr,
+    ...Object.keys(miscRegions).map(key => [key, miscRegions[key]])
+  ].sort((a, b) => a[1].localeCompare(b[1]))
+}
+
+// We'll cache the result in memory
+let ALL_REGIONS = null
+let STATES = null
+
+/**
+ * Gets an array of regions or states. Uses an array because the list is alphabetized
+ * @param {boolean} onlyStates - If true, returns the 50 US states, otherwise also returns territories, etc.
+ * @return {array} An array of arrays, element[i][0] is abbreviation, element[i][1] is full name
+ */
+export function getRegions(onlyStates) {
+  if (onlyStates) {
+    return STATES || (STATES = getRegionsUncached(true))
+  }
+
+  return ALL_REGIONS || (ALL_REGIONS = getRegionsUncached(false))
 }
