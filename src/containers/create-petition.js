@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { previewSubmit } from '../actions/createPetitionActions'
+import { appLocation } from '../routes'
 
 import CreatePetitionForm from 'LegacyTheme/create-petition-form'
 
@@ -44,6 +45,7 @@ export class CreatePetition extends React.Component {
     event.preventDefault()
     if (this.formIsValid()) {
       this.props.dispatch(previewSubmit(this.state.data))
+      appLocation.push('/create_preview.html')
     }
   }
 

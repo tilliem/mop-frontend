@@ -1,7 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export const CreatePreview = () => (
+function getTargets(target) {
+  return target.length === 1
+    ? target[0].label
+    : target.map(t => t.label).join(', ')
+}
+
+export const CreatePreview = ({ petition }) => (
   <div className='container background-moveon-white bump-top-1'>
     <div className='container background-moveon-white bump-top-1'>
       <div className='row'>
@@ -18,12 +24,12 @@ export const CreatePreview = () => (
               <p id='to-target' className='lh-16 margin-0 disclaimer'>
                 Petition statement to be delivered to{' '}
                 <span id='all-targets'>
-                  <strong>The Arizona State House</strong>
+                  <strong>{getTargets(petition.target)}</strong>
                 </span>:
               </p>
 
               <h1 id='petition-title' className='moveon-bright-red big-title'>
-                hello
+                {petition.title}
               </h1>
             </div>
 
@@ -108,12 +114,12 @@ export const CreatePreview = () => (
               >
                 Petition statement to be delivered to{' '}
                 <span id='all-targets'>
-                  <strong>The Arizona State House</strong>
+                  <strong>{getTargets(petition.target)}</strong>
                 </span>:
               </p>
 
               <h1 id='petition-title' className='moveon-bright-red big-title'>
-                hello
+                {petition.title}
               </h1>
             </div>
 
@@ -121,7 +127,7 @@ export const CreatePreview = () => (
               id='pet-statement'
               className='lh-36 blockquote padding-bottom-1'
             >
-              rew
+              {petition.summary}
             </div>
           </div>
 
@@ -131,7 +137,7 @@ export const CreatePreview = () => (
                 <div className='widget-top'>
                   <h3 className='moveon-bright-red'>Petition Background</h3>
                 </div>
-                <p className='lh-30'>fff</p>
+                <p className='lh-30'>{petition.description}</p>
               </div>
             </div>
           </div>
@@ -141,4 +147,6 @@ export const CreatePreview = () => (
   </div>
 )
 
-CreatePreview.propTypes = {}
+CreatePreview.propTypes = {
+  petition: PropTypes.object
+}
