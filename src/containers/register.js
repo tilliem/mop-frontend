@@ -73,7 +73,9 @@ class Register extends React.Component {
         fields[zip.name] = zip.value
         fields[phone.name] = phone.value
       }
-      this.props.dispatch(accountActions.register(fields, this.props.registerCallback))
+
+      const action = this.props.registerAction || accountActions.register
+      this.props.dispatch(action(fields))
     }
   }
 
@@ -105,7 +107,7 @@ Register.propTypes = {
   isSubmitting: PropTypes.bool,
   form: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
   includeZipAndPhone: PropTypes.bool,
-  registerCallback: PropTypes.func
+  registerAction: PropTypes.func
 }
 
 function mapStateToProps({ accountRegisterStore = {} }) {

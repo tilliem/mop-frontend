@@ -1,8 +1,12 @@
 import 'whatwg-fetch'
 import Config from '../config.js'
 
+import { actionTypes as accountActionTypes } from './accountActions'
+
 export const actionTypes = {
   CREATE_PETITION_PREVIEW_SUBMIT: 'CREATE_PETITION_PREVIEW_SUBMIT',
+  CREATE_SUCCESS: 'CREATE_PETITION_SUCCESS',
+  CREATE_FAILURE: 'CREATE_PETITION_FAILURE',
   FETCH_TARGETS_REQUEST: 'FETCH_TARGETS_REQUEST',
   FETCH_TARGETS_SUCCESS: 'FETCH_TARGETS_SUCCESS',
   FETCH_TARGETS_FAILURE: 'FETCH_TARGETS_FAILURE'
@@ -18,12 +22,50 @@ export function previewSubmit({ title, summary, description, target }) {
   }
 }
 
-export function submitPetition() {
+function checkFor200(res) {
+  if (res.status !== 200) return Promise.reject()
+  return Promise.resolve()
+}
+
+export function registerAndSubmitPetition(userFields) {
   return (dispatch, getState) => {
-    const { petitionCreateStore, userStore } = getState()
+    const { petitionCreateStore: petitionFields } = getState()
     console.log('hey hey hey, lets submit the petition')
-    console.log(petitionCreateStore)
-    console.log(userStore)
+    console.log(petitionFields)
+    console.log(userFields)
+    return (
+      fetch(`${Config.API_URI}/users/register.json`, {
+        method: 'POST',
+        body: JSON.stringify(userFields)
+      })
+        .then(checkFor200)
+        .then(res => res.json())
+        .then(res => {
+          dispatch({
+            type: accountActionTypes.REGISTER_SUCCESS,
+            nice: 'nice' // this one should log them in
+          })
+          return res
+        })
+        .then(
+          fetch(`${Config.API_URI}/users/petitions.json`, {
+            method: 'POST',
+            body: JSON.stringify({ petition: petitionFields })
+          })
+        )
+        .then(res => res.json())
+        .then(res => {
+          dispatch({
+            type: actionTypes.CREATE_SUCCESS,
+            nice: 'nice2'
+          })
+        })
+        .catch(err => {
+          dispatch({
+            type: actionTypes.CREATE_FAILURE
+          })
+        })
+    )
   }
 }
 
@@ -53,10 +95,9 @@ export function loadTargets(group, geoState) {
       })
     }
 
-
-    return fetch(url)
-      .then(
-        (response) => response.json().then((json) => {
+    return fetch(url).then(
+      response =>
+        response.json().then(json => {
           dispatch({
             type: actionTypes.FETCH_TARGETS_SUCCESS,
             targets: json,
@@ -65,14 +106,14 @@ export function loadTargets(group, geoState) {
             storeKey
           })
         }),
-        (err) => {
-          dispatch({
-            type: actionTypes.FETCH_TARGETS_FAILURE,
-            error: err,
-            group,
-            geoState
-          })
-        }
-      )
+      err => {
+        dispatch({
+          type: actionTypes.FETCH_TARGETS_FAILURE,
+          error: err,
+          group,
+          geoState
+        })
+      }
+    )
   }
 }

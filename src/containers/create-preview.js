@@ -3,22 +3,31 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { appLocation } from '../routes.js'
 
-import { submitPetition } from '../actions/createPetitionActions'
+import { registerAndSubmitPetition } from '../actions/createPetitionActions'
 
 import { CreatePreview as CreatePreviewComponent } from 'LegacyTheme/create-preview'
 
 class CreatePreview extends React.Component {
+  constructor(props) {
+    super(props)
+    this.registerAction = this.registerAction.bind(this)
+  }
   componentDidMount() {
     if (!this.props.hasPetition) appLocation.push('/create_start.html')
   }
 
-  onClickLaunch() {
-    this.props.dispatch(submitPetition())
+  registerAction(userFields) {
+    return registerAndSubmitPetition(userFields)
   }
 
   render() {
     if (!this.props.hasPetition) return null // We will also redirect in componentDidMount
-    return <CreatePreviewComponent petition={this.props.petition} />
+    return (
+      <CreatePreviewComponent
+        petition={this.props.petition}
+        registerAction={this.registerAction}
+      />
+    )
   }
 }
 

@@ -15,7 +15,7 @@ const inputStyle = {
   width: '95%'
 }
 
-export const CreatePreview = ({ petition }) => (
+export const CreatePreview = ({ petition, registerAction }) => (
   <div className='container background-moveon-white bump-top-1'>
     <div className='container background-moveon-white bump-top-1'>
       <div className='row'>
@@ -42,6 +42,7 @@ export const CreatePreview = ({ petition }) => (
             </div>
 
             <Register
+              registerAction={registerAction}
               form={({ errorList, handleSubmit, setRef }) => (
                 <form onSubmit={handleSubmit}>
                   <ul className='errors'>{errorList && errorList()}</ul>
