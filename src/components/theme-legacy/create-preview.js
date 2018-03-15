@@ -1,10 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import Register from '../../containers/register'
+
 function getTargets(target) {
   return target.length === 1
     ? target[0].label
     : target.map(t => t.label).join(', ')
+}
+
+const inputStyle = {
+  height: '17px',
+  marginBottom: '5px',
+  width: '95%'
 }
 
 export const CreatePreview = ({ petition }) => (
@@ -33,72 +41,84 @@ export const CreatePreview = ({ petition }) => (
               </h1>
             </div>
 
-            <form
-              action='do_create_account.html'
-              method='post'
-              id='preview-user-form'
-              style={{ marginTop: 0 }}
-            >
-              <input
-                required='required'
-                name='name'
-                type='text'
-                placeholder='Name'
-              />
-              <input
-                required='required'
-                name='email'
-                type='text'
-                placeholder='Email'
-              />
-              <input
-                autoComplete='off'
-                name='phone'
-                type='text'
-                placeholder='Phone (optional)'
-              />
-              <input
-                required='required'
-                name='zip'
-                type='text'
-                placeholder='ZIP Code'
-              />
-              <input
-                required='required'
-                autoComplete='off'
-                name='password'
-                type='password'
-                placeholder='Password'
-              />
-              <input
-                required='required'
-                autoComplete='off'
-                name='password_confirm'
-                type='password'
-                placeholder='Confirm Password'
-              />
+            <Register
+              form={({ errorList, handleSubmit, setRef }) => (
+                <form onSubmit={handleSubmit}>
+                  <ul className='errors'>{errorList && errorList()}</ul>
+                  <input
+                    ref={setRef}
+                    required='required'
+                    name='name'
+                    type='text'
+                    placeholder='Name'
+                    style={inputStyle}
+                  />
+                  <input
+                    ref={setRef}
+                    required='required'
+                    name='email'
+                    type='text'
+                    placeholder='Email'
+                    style={inputStyle}
+                  />
+                  <input
+                    ref={setRef}
+                    autoComplete='off'
+                    name='phone'
+                    type='text'
+                    placeholder='Phone (optional)'
+                    style={inputStyle}
+                  />
+                  <input
+                    ref={setRef}
+                    required='required'
+                    name='zip'
+                    type='text'
+                    placeholder='ZIP Code'
+                    style={inputStyle}
+                  />
+                  <input
+                    ref={setRef}
+                    required='required'
+                    autoComplete='off'
+                    name='password'
+                    type='password'
+                    placeholder='Password'
+                    style={inputStyle}
+                  />
+                  <input
+                    ref={setRef}
+                    required='required'
+                    autoComplete='off'
+                    name='passwordConfirm'
+                    type='password'
+                    placeholder='Confirm Password'
+                    style={inputStyle}
+                  />
 
-              <button
-                type='submit'
-                className='xl percent-100 bump-top-3 background-moveon-bright-red'
-                id='sign-here-button'
-              >
-                Launch petition
-              </button>
+                  <button
+                    type='submit'
+                    className='xl percent-100 bump-top-3 background-moveon-bright-red'
+                    id='sign-here-button'
+                  >
+                    Launch petition
+                  </button>
+                </form>
+              )}
+            />
 
-              <div className='bump-top-2 align-center percent-100'>
-                <a href='create_revise.html?skin=' className='size-small'>
-                  <span className='triangle'>◀</span> Go back and fix something
-                </a>
-              </div>
+            <div className='bump-top-2 align-center percent-100'>
+              <a href='create_revise.html?skin=' className='size-small'>
+                <span className='triangle'>◀</span> Go back and fix something
+              </a>
+            </div>
 
-              <p className='bump-top-2 disclaimer align-center'>
-                By creating this petition, you agree to the Terms of Service
-                (see below) and to receive email messages from MoveOn.org Civic
-                Action and MoveOn.org Political Action. (You may unsubscribe at
-                any time.)
-              </p>
-            </form>
+            <p className='bump-top-2 disclaimer align-center'>
+              By creating this petition, you agree to the Terms of Service (see
+              below) and to receive email messages from MoveOn.org Civic Action
+              and MoveOn.org Political Action. (You may unsubscribe at any
+              time.)
+            </p>
           </div>
         </div>
 
