@@ -108,7 +108,7 @@ export class CreatePetitionTarget extends React.Component {
   }
 
   getAllCheckedTargets() {
-    const groups = [this.state.national, this.state.geoStateSelected]
+    const groups = [this.state.national, this.state.geoStateSelected, this.state.customSelected]
     return groups.reduce(
       (acc, group) => [...acc, ...group.filter(obj => obj.checked)],
       []
