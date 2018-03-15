@@ -95,6 +95,7 @@ export const routes = (store) => {
 
       {/* Static pages with content from wordpress api */}
       <Route path='about.html' component={Static} wordpressId={60931} />
+      <Route path='brandmerge.html' component={Static} wordpressId={61002} />
       <Route path='campaign_tips.html' component={Static} wordpressId={60942} />
       <Route path='funding.html' component={Static} wordpressId={60943} />
       <Route path='howto_campaign.html' component={Static} wordpressId={60944} />
@@ -105,6 +106,7 @@ export const routes = (store) => {
       <Route path='organizations.html' component={Static} wordpressId={60949} />
       <Route path='privacy.html' component={Static} wordpressId={60950} />
       <Route path='terms.html' component={Static} wordpressId={60951} />
+      <Route path='victories.html' component={Static} wordpressId={61001} />
     </Route>
   )
   updateHistoryObject(appLocation, routeHierarchy)
