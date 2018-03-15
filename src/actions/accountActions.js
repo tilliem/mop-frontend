@@ -11,7 +11,7 @@ export const actionTypes = {
   FETCH_USER_PETITIONS_FAILURE: 'FETCH_USER_PETITIONS_FAILURE'
 }
 
-export function register(fields) {
+export function register(fields, successCallback) {
   return dispatch => {
     dispatch({
       type: actionTypes.REGISTER_SUBMIT
@@ -20,22 +20,30 @@ export function register(fields) {
       method: 'POST',
       body: JSON.stringify(fields)
     })
-      .then(response =>
-        response.json().then(() => {
+      .then(response => {
+        dispatch({
+          type: actionTypes.REGISTER_SUCCESS,
+          nice: 'nice'
+        })
+        console.log('registered, but does ')
+        return successCallback && successCallback()
+      }
+
+        // response.json().then(() => {
           // if (false) {
           //   // login user if valid and route user to https://petitions.moveon.org/no_petition.html
           //   // otherwise disatch failure with errors
-          //   dispatch({
-          //     type: actionTypes.REGISTER_SUCCESS,
-          //     nice: 'nice'
-          //   })
+            // dispatch({
+            //   type: actionTypes.REGISTER_SUCCESS,
+            //   nice: 'nice'
+            // })
           // } else {
-          dispatch({
-            type: actionTypes.REGISTER_FAILURE,
-            formErrors: [{ message: 'failed to register user' }]
-          })
+          // dispatch({
+          //   type: actionTypes.REGISTER_FAILURE,
+          //   formErrors: [{ message: 'failed to register user' }]
+          // })
           // }
-        })
+        // })
       )
       .catch(() => {
         dispatch({
