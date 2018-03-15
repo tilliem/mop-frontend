@@ -176,10 +176,7 @@ export class CreatePetitionTarget extends React.Component {
 
   render() {
     const { setSelected, setRef } = this.props
-    const openVars = {
-      customOpen: this.state.customOpen,
-      toggleOpen: this.toggleOpen
-    }
+
     return (
       <TargetForm
         setSelected={setSelected}
@@ -187,7 +184,7 @@ export class CreatePetitionTarget extends React.Component {
         renderNational={this.renderNational}
         renderGeoState={this.renderGeoState}
         renderCustom={this.renderCustom}
-        {...openVars}
+        toggleOpen={this.toggleOpen}
       />
     )
   }
