@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { loadTargets, previewSubmit } from '../actions/createPetitionActions'
+import { previewSubmit } from '../actions/createPetitionActions'
 
 import CreatePetitionForm from 'LegacyTheme/create-petition-form'
 
@@ -31,11 +31,6 @@ export class CreatePetition extends React.Component {
     this.onPreview = this.onPreview.bind(this)
     this.onInputChange = this.onInputChange.bind(this)
     this.getValue = this.getValue.bind(this)
-  }
-
-  componentDidMount() {
-    // Preload congress for autocomplete
-    this.props.dispatch(loadTargets('national'))
   }
 
   onInputChange(event) {
