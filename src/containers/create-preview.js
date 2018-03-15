@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { appLocation } from '../routes.js'
 
+import { submitPetition } from '../actions/createPetitionActions'
+
 import { CreatePreview as CreatePreviewComponent } from 'LegacyTheme/create-preview'
 
 class CreatePreview extends React.Component {
@@ -10,6 +12,9 @@ class CreatePreview extends React.Component {
     if (!this.props.hasPetition) {
       appLocation.push('/create_start.html')
     }
+
+  onClickLaunch() {
+    this.props.dispatch(submitPetition())
   }
 
   render() {
@@ -23,7 +28,8 @@ class CreatePreview extends React.Component {
 
 CreatePreview.propTypes = {
   hasPetition: PropTypes.bool,
-  petition: PropTypes.object
+  petition: PropTypes.object,
+  dispatch: PropTypes.func
 }
 
 function mapStateToProps({ petitionCreateStore }) {

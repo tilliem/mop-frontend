@@ -18,6 +18,15 @@ export function previewSubmit({ title, summary, description, target }) {
   }
 }
 
+export function submitPetition() {
+  return (dispatch, getState) => {
+    const { petitionCreateStore, userStore } = getState()
+    console.log('hey hey hey, lets submit the petition')
+    console.log(petitionCreateStore)
+    console.log(userStore)
+  }
+}
+
 export function loadTargets(group, geoState) {
   return (dispatch, getState) => {
     dispatch({
