@@ -8,21 +8,17 @@ import { submitPetition } from '../actions/createPetitionActions'
 import { CreatePreview as CreatePreviewComponent } from 'LegacyTheme/create-preview'
 
 class CreatePreview extends React.Component {
-  componentWillMount() {
-    if (!this.props.hasPetition) {
-      appLocation.push('/create_start.html')
-    }
+  componentDidMount() {
+    if (!this.props.hasPetition) appLocation.push('/create_start.html')
+  }
 
   onClickLaunch() {
     this.props.dispatch(submitPetition())
   }
 
   render() {
-    return (
-      <CreatePreviewComponent
-        petition={this.props.petition}
-      />
-    )
+    if (!this.props.hasPetition) return null // We will also redirect in componentDidMount
+    return <CreatePreviewComponent petition={this.props.petition} />
   }
 }
 
