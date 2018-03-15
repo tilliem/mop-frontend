@@ -67,6 +67,7 @@ const CustomTargetSelect = ({
           onClick={() => {
             onSelect({
               target_type: 'custom',
+              checked: true,
               ...customInputs
             })
           }}
