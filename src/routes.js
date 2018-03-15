@@ -12,7 +12,8 @@ import ThanksShim from './loaders/thanks-shim'
 import SearchPage from './containers/search'
 import PetitionCreatorDashboard from './containers/petition-creator-dashboard'
 import PetitionReport from './containers/petition-report'
-import CreatePetitionPage from './containers/create-petition'
+import CreatePetition from './containers/create-petition'
+import CreatePreview from './containers/create-preview'
 import Wrapper from './containers/wrapper'
 import ForgotPassword from './containers/forgot-password'
 import Register from './containers/register'
@@ -84,9 +85,11 @@ export const routes = (store) => {
       <Route path=':organization/thanks.html' component={ThanksShim} onEnter={orgLoader} minimalNav />
       <Route path='find' component={SearchPage} />
       <Route path='dashboard.html' component={PetitionCreatorDashboard} />
-      <Route path='create_start.html' component={CreatePetitionPage} minimalNav />
       <Route path='petition_report.html' component={PetitionReport} />
-      <Route path=':organization/create_start.html' component={CreatePetitionPage} onEnter={orgLoader} minimalNav />
+      <Route path='create_start.html' component={CreatePetition} minimalNav />
+      <Route path='create_preview.html' component={CreatePreview} minimalNav />
+      <Route path=':organization/create_start.html' component={CreatePetition} onEnter={orgLoader} minimalNav />
+      <Route path=':organization/create_preview.html' component={CreatePreview} onEnter={orgLoader} minimalNav />
       <Route path='login/' component={Login} />
       <Route path='login/index.html' component={Login} />
       <Route path='login/register.html' component={Register} />
