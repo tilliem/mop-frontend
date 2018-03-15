@@ -11,7 +11,7 @@ export const actionTypes = {
   FETCH_USER_PETITIONS_FAILURE: 'FETCH_USER_PETITIONS_FAILURE'
 }
 
-export function register(fields, successCallback) {
+export function register(fields) {
   return dispatch => {
     dispatch({
       type: actionTypes.REGISTER_SUBMIT
@@ -20,14 +20,13 @@ export function register(fields, successCallback) {
       method: 'POST',
       body: JSON.stringify(fields)
     })
-      .then(response => {
+      .then(response =>
         dispatch({
           type: actionTypes.REGISTER_SUCCESS,
           nice: 'nice'
         })
-        console.log('registered, but does ')
-        return successCallback && successCallback()
-      }
+        // console.log('registered, but does ')
+
 
         // response.json().then(() => {
           // if (false) {
