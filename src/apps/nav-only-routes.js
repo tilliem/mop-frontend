@@ -1,6 +1,7 @@
 import React from 'react'
 import { Router, Route, browserHistory, hashHistory } from 'react-router'
 
+import './polyfills'
 import { Config } from '../config'
 import { loadSession } from '../actions/sessionActions'
 import Nav from '../containers/nav'

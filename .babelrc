@@ -1,7 +1,7 @@
 {
   "presets" : ["es2015", "react"],
   "plugins": [
-    ["transform-object-rest-spread", { "useBuiltIns": true }]
+    ["transform-object-rest-spread", { "useBuiltIns": false }]
   ],
   "env": {
     "test": {
