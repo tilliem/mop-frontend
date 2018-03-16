@@ -252,8 +252,12 @@ export function signPetition(petitionSignature, petition, options) {
 }
 
 export const recordShareClick = (petition, medium, source, user) => {
-  if (window._gaq) {
-    window._gaq.push(['_trackEvent', 'share', medium, petition.petition_id, 1])
+  if (window.gtag) {
+    window.gtag('event', 'share', {
+      method: medium,
+      content_type: 'petition',
+      content_id: String(petition.petition_id)
+    })
   }
   if (Config.TRACK_SHARE_URL) {
     const params = {
