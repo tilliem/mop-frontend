@@ -1,7 +1,7 @@
 import React from 'react'
 
-const imgArticle = {
-  width: '75% !important'
+const article = {
+  maxWidth: '100%'
 }
 const RecentVictoryList = () => (
   <div id='current-stories' className='span6 widget clearfix pull-left'>
@@ -9,9 +9,9 @@ const RecentVictoryList = () => (
       <h3>Recent Victories</h3>
       <a className='more-small' href='https://front.moveon.org/category/victories/'>+more</a>
     </div>
-    <article className='blurb-block'>
+    <article className='blurb-block' style={article}>
       <a href='https://front.moveon.org/category/victories/#.U4z0eK1dUuo'>
-        <img src='https://front.moveon.org/wp-content/uploads/2014/06/CCMC.So_.Cal_.Summit.2014.04.06.1.jpg' style={imgArticle} className='attachment-featured_thumb wp-post-image' alt='Cal_Summit' />
+        <img src='https://front.moveon.org/wp-content/uploads/2014/06/CCMC.So_.Cal_.Summit.2014.04.06.1.jpg' className='attachment-featured_thumb wp-post-image' alt='Cal_Summit' />
         <h4>VICTORY: Gov. Brown Signs Dark Money Disclosure Bill into Law</h4>
       </a>
       <p className='blurb'>
@@ -20,9 +20,9 @@ const RecentVictoryList = () => (
       </p>
     </article>
 
-    <article className='blurb-block'>
+    <article className='blurb-block' style={article}>
       <a href='https://front.moveon.org/victory-hawaii-increases-the-minimum-wage/#.U4z2KK1dUuo'>
-        <img src='https://front.moveon.org/wp-content/uploads/2014/06/HI.needs_.a.raise_-620x394.jpg' style={imgArticle} className='attachment-featured_thumb wp-post-image' alt='HI_minwage' />
+        <img src='https://front.moveon.org/wp-content/uploads/2014/06/HI.needs_.a.raise_-620x394.jpg' className='attachment-featured_thumb wp-post-image' alt='HI_minwage' />
         <h4>VICTORY: Hawaii Increases the Minimum Wage!</h4>
       </a>
       <p className='blurb'>
@@ -31,9 +31,9 @@ const RecentVictoryList = () => (
       </p>
     </article>
 
-    <article className='blurb-block'>
+    <article className='blurb-block' style={article}>
       <a href='https://front.moveon.org/victory-ny-times-works-to-inform-readers-on-budget/?rc=petitionshp'>
-        <img src='https://front.moveon.org/wp-content/uploads/2013/11/NYTimes.jpg' style={imgArticle} className='attachment-featured_thumb wp-post-image' alt='Tribune' />
+        <img src='https://front.moveon.org/wp-content/uploads/2013/11/NYTimes.jpg' className='attachment-featured_thumb wp-post-image' alt='Tribune' />
         <h4>VICTORY: New York Times Works to Inform Readers on Budget</h4>
       </a>
       <p className='blurb'>
@@ -42,9 +42,9 @@ const RecentVictoryList = () => (
       </p>
     </article>
 
-    <article className='blurb-block'>
+    <article className='blurb-block' style={article}>
       <a href='https://front.moveon.org/victory-governor-corbett-releases-education-dollars-to-philadelphia-schools/?rc=petitionshp'>
-        <img src='https://front.moveon.org/wp-content/uploads/2013/11/Philly.jpg' style={imgArticle} className='attachment-featured_thumb wp-post-image' alt='Tribune' height='200' />
+        <img src='https://front.moveon.org/wp-content/uploads/2013/11/Philly.jpg' className='attachment-featured_thumb wp-post-image' alt='Tribune' height='200' />
         <h4>VICTORY: Governor Corbett Releases Education Dollars To Philadelphia Schools</h4>
       </a>
       <p className='blurb'>
@@ -53,9 +53,9 @@ const RecentVictoryList = () => (
       </p>
     </article>
 
-    <article className='blurb-block'>
+    <article className='blurb-block' style={article}>
       <a href='https://front.moveon.org/51832/?rc=petitionshp'>
-        <img src='https://front.moveon.org/wp-content/uploads/2013/09/Los_Angeles_Times_interior_with_globe.1.jpg' style={imgArticle} className='attachment-featured_thumb wp-post-image' alt='Tribune' />
+        <img src='https://front.moveon.org/wp-content/uploads/2013/09/Los_Angeles_Times_interior_with_globe.1.jpg' className='attachment-featured_thumb wp-post-image' alt='Tribune' />
         <h4>VICTORY: Tribune Papers Spared From Koch Empire</h4>
       </a>
       <p className='blurb'>
@@ -64,9 +64,9 @@ const RecentVictoryList = () => (
       </p>
     </article>
 
-    <article className='blurb-block'>
+    <article className='blurb-block' style={article}>
       <a href='https://front.moveon.org/victory-defend-the-vote-campaign-secures-support-for-voting-rights-amendment-act/#.U4z4Ia1dUup'>
-        <img src='https://front.moveon.org/wp-content/uploads/2014/02/DefendVote-V10.png' style={imgArticle} className='attachment-featured_thumb wp-post-image' alt='voting_rights' />
+        <img src='https://front.moveon.org/wp-content/uploads/2014/02/DefendVote-V10.png' className='attachment-featured_thumb wp-post-image' alt='voting_rights' />
         <h4>VICTORY: Defend the Vote Campaign Secures Support for Voting Rights Amendment Act</h4>
       </a>
       <p className='blurb'>
