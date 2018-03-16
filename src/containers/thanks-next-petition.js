@@ -39,7 +39,7 @@ class ThanksNextPetition extends React.Component {
   startCountdown() {
     window.removeEventListener('focus', this.startCountdown)
     // Guard against running twice -- countdown should be a singleton
-    if (this.props.nextPetition && this.state.secondsLeft > this.startSeconds) {
+    if (this.state.secondsLeft > this.startSeconds) {
       if (this.state.intervalListener) {
         clearInterval(this.state.intervalListener)
       }
