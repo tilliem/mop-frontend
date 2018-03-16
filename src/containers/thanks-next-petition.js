@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Portal } from 'react-portal'
 
 import { loadTopPetitions } from '../actions/petitionActions'
 import { appLocation } from '../routes.js'
@@ -86,11 +87,13 @@ class ThanksNextPetition extends React.Component {
       return null
     }
     return (
-      <div className='message-header advancing_message'>
-        We&#39;ve found another petition which may interest you. We&#39;ll forward you there in <span className='countdown_clock'>
-        {this.state.secondsLeft}
-        </span> seconds. [ <a onClick={() => this.setState({ cancelled: true })} className='control_advance_cancel'>cancel</a> ]
-      </div>
+      <Portal node={document && document.getElementById('message-portal')}>
+        <div className='message-header advancing_message'>
+          We&#39;ve found another petition which may interest you. We&#39;ll forward you there in <span className='countdown_clock'>
+          {this.state.secondsLeft}
+          </span> seconds. [ <a onClick={() => this.setState({ cancelled: true })} className='control_advance_cancel'>cancel</a> ]
+        </div>
+      </Portal>
     )
   }
 }
