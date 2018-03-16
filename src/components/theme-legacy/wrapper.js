@@ -7,15 +7,15 @@ import Footer from 'LegacyTheme/footer'
 
 const Wrapper = ({ children, organization, minimalNav, entity }) => (
   <div className='moveon-petitions'>
+    <div id='message-portal'>
+      {/* This div will be used to render petition message (currently the share redirect) in theme-legacy */}
+    </div>
     <Nav organization={organization} minimal={minimalNav} entity={entity} />
-    <main className='main'>
-      {children}
-    </main>
+    <main className='main'>{children}</main>
     <hr />
     <Footer entity={entity} />
   </div>
 )
-
 
 Wrapper.propTypes = {
   children: PropTypes.object.isRequired,
