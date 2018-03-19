@@ -108,3 +108,8 @@ export const percent = (numerator, denominator) => {
   const v = Math.min(1, numerator / denominator) * 100
   return `${v.toFixed(2)}%`
 }
+
+export const stringifyParams = obj =>
+  Object.keys(obj)
+    .map(key => `${key}=${encodeURIComponent(obj[key])}`)
+    .join('&')

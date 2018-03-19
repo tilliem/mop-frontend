@@ -251,36 +251,6 @@ export function signPetition(petitionSignature, petition, options) {
   }
 }
 
-export const recordShareClick = (petition, medium, source, user) => {
-  if (window.gtag) {
-    window.gtag('event', 'share', {
-      method: medium,
-      content_type: 'petition',
-      content_id: String(petition.petition_id)
-    })
-  }
-  if (Config.TRACK_SHARE_URL) {
-    const params = {
-      page: window.location.pathname,
-      petition_id: petition.petition_id,
-      user_id: user && user.signonId,
-      medium,
-      source
-    }
-    const form = new FormData()
-    Object.keys(params).forEach(p => {
-      form.append(p, params[p])
-    })
-    fetch(Config.TRACK_SHARE_URL, { // "/record_share_click.html"
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-      },
-      body: form
-    })
-  }
-}
-
 function getPetitionListId(petition) {
   // Every petition has a couple of identifiers
   // slug, petition_id, and also a list_id
@@ -291,6 +261,37 @@ function getPetitionListId(petition) {
     .filter((ident) => /^list_id:/.test(ident))
     .map((ident) => ident.substr(8))
   return (petitionListIds.length ? petitionListIds[0] : null)
+}
+
+export const recordShareClick = (petition, tracking, medium, source, user) => {
+  if (window.gtag) {
+    window.gtag('event', 'share', {
+      method: medium,
+      content_type: 'petition',
+      content_id: String(petition.petition_id)
+    })
+  }
+  // Params are not sent if the value is falsy
+  const params = {
+    page: window.location.pathname,
+    petition_id: petition.petition_id,
+    list_id: getPetitionListId(petition),
+    user_id: user && user.signonId,
+    r_hash: tracking && tracking.r_hash,
+    medium,
+    source
+  }
+  if (Config.TRACK_SHARE_URL) {
+    const form = new FormData()
+    Object.keys(params).forEach(p => params[p] && form.append(p, params[p]))
+    fetch(Config.TRACK_SHARE_URL, { // "/record_share_click.html"
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+      },
+      body: form
+    })
+  }
 }
 
 export const loadPetitionSignatures = (petition, page = 1) => {
