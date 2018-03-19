@@ -38,7 +38,7 @@ export function registerAndSubmitPetition(userFields) {
     return (
       fetch(`${Config.API_URI}/users/register.json`, {
         method: 'POST',
-        body: JSON.stringify(userFields)
+        body: JSON.stringify({ user: userFields })
       })
         // .then(handleErrors)
         // .then(res => res.json())
@@ -47,6 +47,7 @@ export function registerAndSubmitPetition(userFields) {
             type: accountActionTypes.REGISTER_SUCCESS,
             nice: 'nice' // this one should log them in
           })
+          // TODO add cookies
           return fetch(`${Config.API_URI}/users/petitions.json`, {
             method: 'POST',
             body: JSON.stringify({ petition: petitionFields })
