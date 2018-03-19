@@ -271,6 +271,7 @@ export const recordShareClick = (petition, tracking, medium, source, user) => {
       content_id: String(petition.petition_id)
     })
   }
+  // Params are not sent if the value is falsy
   const params = {
     page: window.location.pathname,
     petition_id: petition.petition_id,
@@ -282,9 +283,7 @@ export const recordShareClick = (petition, tracking, medium, source, user) => {
   }
   if (Config.TRACK_SHARE_URL) {
     const form = new FormData()
-    Object.keys(params).forEach(p => {
-      form.append(p, params[p])
-    })
+    Object.keys(params).forEach(p => params[p] && form.append(p, params[p]))
     fetch(Config.TRACK_SHARE_URL, { // "/record_share_click.html"
       method: 'POST',
       headers: {
