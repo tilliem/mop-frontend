@@ -22,9 +22,11 @@ export function previewSubmit({ title, summary, description, target }) {
   }
 }
 
-function checkFor200(res) {
-  if (res.status !== 200) return Promise.reject()
-  return Promise.resolve()
+function handleErrors(response) {
+  if (!response.ok) {
+    throw Error(response.statusText)
+  }
+  return response
 }
 
 export function registerAndSubmitPetition(userFields) {
@@ -38,21 +40,19 @@ export function registerAndSubmitPetition(userFields) {
         method: 'POST',
         body: JSON.stringify(userFields)
       })
-        .then(checkFor200)
-        .then(res => res.json())
+        // .then(handleErrors)
+        // .then(res => res.json())
         .then(res => {
           dispatch({
             type: accountActionTypes.REGISTER_SUCCESS,
             nice: 'nice' // this one should log them in
           })
-          return res
-        })
-        .then(
-          fetch(`${Config.API_URI}/users/petitions.json`, {
+          return fetch(`${Config.API_URI}/users/petitions.json`, {
             method: 'POST',
             body: JSON.stringify({ petition: petitionFields })
           })
-        )
+        })
+        .then(handleErrors)
         .then(res => res.json())
         .then(res => {
           dispatch({
@@ -64,6 +64,7 @@ export function registerAndSubmitPetition(userFields) {
           dispatch({
             type: actionTypes.CREATE_FAILURE
           })
+          throw err
         })
     )
   }
