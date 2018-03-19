@@ -111,5 +111,5 @@ export const percent = (numerator, denominator) => {
 
 export const stringifyParams = obj =>
   Object.keys(obj)
-    .map(key => `${key}=${obj[key]}`)
+    .map(key => `${key}=${encodeURIComponent(obj[key])}`)
     .join('&')
