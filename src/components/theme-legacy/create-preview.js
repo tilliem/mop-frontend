@@ -42,6 +42,7 @@ export const CreatePreview = ({ petition, registerAction }) => (
             </div>
 
             <Register
+              includeZipAndPhone
               registerAction={registerAction}
               form={({ errorList, handleSubmit, setRef }) => (
                 <form onSubmit={handleSubmit}>
