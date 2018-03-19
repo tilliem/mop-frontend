@@ -1,24 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
-import { states, armedForcesRegions } from '../../lib/state-abbrev'
+import { getRegions, armedForcesRegions } from '../../lib'
 
 import CaretDownSvg from '../svgs/caret-down.svg'
 
-export const StateSelect = ({ value, onChange, className }) => (
+export const StateSelect = ({ value, onChange, className, onlyStates }) => (
   <div className={cx('input-block', className, { active: !!value })}>
     <select name='state' id='state' className={className} onChange={onChange}>
-      <option></option>
-      {Object.keys(states).map(val => (
+      <option />
+      {getRegions(onlyStates).map(([val, text]) => (
         <option key={val} value={val}>
-          {states[val]}
-        </option>
-      ))}
-      {armedForcesRegions.map(([val, text]) => (
-        <option key={text} value={val}>
           {text}
         </option>
       ))}
+      {!onlyStates &&
+        armedForcesRegions.map(([val, text]) => (
+          <option key={text} value={val}>
+            {text}
+          </option>
+        ))}
     </select>
     <CaretDownSvg className='select-caret' />
     <label htmlFor='country'>State*</label>
@@ -28,5 +29,6 @@ export const StateSelect = ({ value, onChange, className }) => (
 StateSelect.propTypes = {
   onChange: PropTypes.func,
   value: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  className: PropTypes.string
+  className: PropTypes.string,
+  onlyStates: PropTypes.bool
 }
