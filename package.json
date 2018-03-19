@@ -19,6 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "classnames": "^2.2.5",
+    "core-js": "^2.5.3",
     "osdi-client": "MoveOnOrg/osdi-client",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
