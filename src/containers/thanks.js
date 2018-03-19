@@ -63,7 +63,14 @@ class Thanks extends React.Component {
   }
 
   recordShare(medium, source) {
-    return () => petitionActions.recordShareClick(this.props.petition, medium, source, this.props.user)
+    return () =>
+      petitionActions.recordShareClick(
+        this.props.petition,
+        this.trackingParams,
+        medium,
+        source,
+        this.props.user
+      )
   }
 
   renderTwitter() {
