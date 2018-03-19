@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { actions as petitionActions } from '../actions/petitionActions'
-import { md5ToToken } from '../lib'
+import { md5ToToken, stringifyParams } from '../lib'
 
 import ThanksComponent from 'LegacyTheme/thanks'
 import TwitterButton from 'LegacyTheme/twitter-button'
@@ -25,12 +25,11 @@ function getPre(fromSource, petition, isCreator) {
 }
 
 function getTrackingParams(signatureMessage, user) {
-  let trackingParams = ''
+  const trackingParams = {}
   if (user && user.signonId) {
-    trackingParams = `r_by=${user.signonId}`
+    trackingParams.r_by = user.signonId
   } else if (signatureMessage && signatureMessage.messageMd5) {
-    const hashToken = md5ToToken(signatureMessage.messageMd5)
-    trackingParams = `r_hash=${hashToken}`
+    trackingParams.r_hash = md5ToToken(signatureMessage.messageMd5)
   }
   return trackingParams
 }
@@ -41,6 +40,7 @@ class Thanks extends React.Component {
     const { petition, fromSource, signatureMessage, user } = props
 
     this.trackingParams = getTrackingParams(signatureMessage, user)
+    this.trackingParamsString = stringifyParams(this.trackingParams)
 
     this.isCreator = false // Maybe test user.id==petition.creator_id or something, if we want to expose that
 
@@ -83,7 +83,7 @@ class Thanks extends React.Component {
       <FacebookButton
         petition={this.props.petition}
         prefix={this.state.pre}
-        trackingParams={this.trackingParams}
+        trackingParams={this.trackingParamsString}
         recordShare={this.recordShare('facebook', `${this.state.pre}.fb`)}
         afterShare={() => this.setState({ sharedSocially: true })}
       />
@@ -96,7 +96,7 @@ class Thanks extends React.Component {
         isCreator={this.isCreator}
         petition={this.props.petition}
         prefix={this.state.pre}
-        trackingParams={this.trackingParams}
+        trackingParams={this.trackingParamsString}
       />
     )
   }
@@ -107,7 +107,7 @@ class Thanks extends React.Component {
         isCreator={this.isCreator}
         petition={this.props.petition}
         prefix={this.state.pre}
-        trackingParams={this.trackingParams}
+        trackingParams={this.trackingParamsString}
         recordShare={this.recordShare('email', `${this.state.pre}.em.cp`)}
       />
     )
