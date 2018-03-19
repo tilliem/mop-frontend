@@ -113,3 +113,19 @@ export const stringifyParams = obj =>
   Object.keys(obj)
     .map(key => `${key}=${encodeURIComponent(obj[key])}`)
     .join('&')
+
+export const getPageLoadTime = () => {
+  if (
+    window &&
+    window.performance &&
+    window.performance.timing &&
+    window.performance.timing.loadEventEnd &&
+    window.performance.timing.fetchStart
+  ) {
+    return (
+      window.performance.timing.loadEventEnd -
+      window.performance.timing.fetchStart
+    )
+  }
+  return null
+}

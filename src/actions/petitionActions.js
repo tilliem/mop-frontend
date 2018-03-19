@@ -1,6 +1,7 @@
 import 'whatwg-fetch'
 
 import Config from '../config.js'
+import { getPageLoadTime } from '../lib'
 import { appLocation } from '../routes.js'
 
 export const actionTypes = {
@@ -224,6 +225,11 @@ export function signPetition(petitionSignature, petition, options) {
       const signingEndpoint = ((Config.API_SIGN_PETITION)
                                ? Config.API_SIGN_PETITION
                                : `${Config.API_URI}/signatures.json`)
+      const body = petitionSignature
+      const pageLoadTime = getPageLoadTime()
+      if (pageLoadTime) {
+        body.loadTime = pageLoadTime
+      }
       const fetchArgs = {
         method: 'POST',
         body: JSON.stringify(petitionSignature),
