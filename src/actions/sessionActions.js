@@ -80,24 +80,24 @@ export const loadSession = (location) => {
   }
 }
 
-export const trackPage = (newLocation) => {
-  // we track at POP -- at PUSH, we haven't arrived yet!
-  if (newLocation.action === 'POP') {
-    if (window.analytics || window.gtag) {
-      const href = String(document.location.href)
-        .replace(/([?&])source=/, (full, op) => `${op}utm_source=`)
-      if (window.analytics) {
-        // Segment.com tracking
-        // https://segment.com/docs/sources/website/analytics.js/#page
-        window.analytics.page({
-          // overrides any canonical url set
-          location: href,
-          url: href
-        })
-      } else if (window.gtag) {
-        // Google analytics tracking
-        window.gtag('event', 'page_view', { page_location: href })
-      }
+export const trackPage = () => {
+  // This will track both when they navigate to a new page OR use the back button
+  if (window.analytics || window.gtag) {
+    const href = String(document.location.href)
+      .replace(/([?&])source=/, (full, op) => `${op}utm_source=`)
+    const pathname = document.location.pathname
+    if (window.analytics) {
+      // Segment.com tracking
+      // https://segment.com/docs/sources/website/analytics.js/#page
+      window.analytics.page({
+        // overrides any canonical url set
+        location: href,
+        page: pathname,
+        url: href
+      })
+    } else if (window.gtag) {
+      // Google analytics tracking
+      window.gtag('event', 'page_view', { page_location: href })
     }
   }
 }
