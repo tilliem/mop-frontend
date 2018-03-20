@@ -3,7 +3,7 @@ import { IndexRoute, Route, Router, browserHistory, hashHistory, match } from 'r
 
 
 import { Config } from './config'
-import { loadSession, trackPage } from './actions/sessionActions'
+import { trackPage } from './actions/sessionActions'
 import { loadOrganization } from './actions/navActions.js'
 import Home from './containers/home'
 import PacHome from './containers/pac-home'
@@ -75,7 +75,7 @@ export const routes = (store) => {
     }
   }
   const routeHierarchy = (
-    <Route path={baseAppPath} component={Wrapper} onEnter={(nextState) => { store.dispatch(loadSession(nextState)) }} >
+    <Route path={baseAppPath} component={Wrapper}>
       <IndexRoute prodReady component={Home} />
       <Route path='pac/' component={PacHome} />
       <Route path='sign/:petition_slug' component={SignPetition} />

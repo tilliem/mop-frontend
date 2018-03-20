@@ -54,8 +54,8 @@ function callSessionApi(tokens) {
   }
 }
 
-export const loadSession = ({ location }) => {
-  // Called straigt from top route onEnter, so it's done only once on first-load
+export const loadSession = (location) => {
+  // Called from Wrapper container, so it's done only once on first-load
 
   // A cookie doesn't actually indicate authenticated -- we just mark the session differently
   const cookie = String(document.cookie).match(new RegExp(`${Config.SESSION_COOKIE_NAME}=([^;]+)`))

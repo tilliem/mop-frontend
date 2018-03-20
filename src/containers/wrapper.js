@@ -2,29 +2,32 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
+import { loadSession } from '../actions/sessionActions'
+
 import WrapperComponent from 'Theme/wrapper'
 
-export const Wrapper = ({
-  petitionEntity,
-  location,
-  children,
-  params,
-  routes
-}) => {
-  let entity = petitionEntity
-  if (location.pathname.indexOf('/pac/') !== -1) {
-    entity = 'pac'
+class Wrapper extends React.Component {
+  componentDidMount() {
+    this.props.dispatch(loadSession(this.props.location))
   }
 
-  return (
-    <WrapperComponent
-      entity={entity}
-      organization={(params && params.organization) || ''}
-      minimalNav={!!routes[routes.length - 1].minimalNav}
-    >
-      {children}
-    </WrapperComponent>
-  )
+  render() {
+    const { petitionEntity, location, children, params, routes } = this.props
+    let entity = petitionEntity
+    if (location.pathname.indexOf('/pac/') !== -1) {
+      entity = 'pac'
+    }
+
+    return (
+      <WrapperComponent
+        entity={entity}
+        organization={(params && params.organization) || ''}
+        minimalNav={!!routes[routes.length - 1].minimalNav}
+      >
+        {children}
+      </WrapperComponent>
+    )
+  }
 }
 
 Wrapper.propTypes = {
@@ -32,7 +35,8 @@ Wrapper.propTypes = {
   location: PropTypes.object,
   children: PropTypes.object.isRequired,
   params: PropTypes.object,
-  routes: PropTypes.array.isRequired
+  routes: PropTypes.array.isRequired,
+  dispatch: PropTypes.func.isRequired
 }
 
 function mapStateToProps(store, ownProps) {
