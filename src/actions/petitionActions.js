@@ -277,16 +277,16 @@ export const recordShareClick = (petition, tracking, medium, source, user) => {
       content_id: String(petition.petition_id)
     })
   }
-  // Params are not sent if the value is falsy
   const params = {
     page: window.location.pathname,
     petition_id: petition.petition_id,
     list_id: getPetitionListId(petition),
-    user_id: user && user.signonId,
-    r_hash: tracking && tracking.r_hash,
     medium,
     source
   }
+  if (user && user.signonId) params.user_id = user.signonId
+  if (tracking && tracking.r_hash) params.r_hash = tracking.r_hash
+
   if (Config.TRACK_SHARE_URL) {
     fetch(Config.TRACK_SHARE_URL, { // "/record_share_click.html"
       method: 'POST',
