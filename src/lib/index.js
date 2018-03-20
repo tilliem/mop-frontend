@@ -111,7 +111,7 @@ export const percent = (numerator, denominator) => {
 
 export const stringifyParams = obj =>
   Object.keys(obj)
-    .map(key => `${key}=${encodeURIComponent(obj[key])}`)
+    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`)
     .join('&')
 
 export const getPageLoadTime = () => {

@@ -1,7 +1,7 @@
 import 'whatwg-fetch'
 
 import Config from '../config.js'
-import { getPageLoadTime } from '../lib'
+import { getPageLoadTime, stringifyParams } from '../lib'
 import { appLocation } from '../routes.js'
 
 export const actionTypes = {
@@ -288,14 +288,12 @@ export const recordShareClick = (petition, tracking, medium, source, user) => {
     source
   }
   if (Config.TRACK_SHARE_URL) {
-    const form = new FormData()
-    Object.keys(params).forEach(p => params[p] && form.append(p, params[p]))
     fetch(Config.TRACK_SHARE_URL, { // "/record_share_click.html"
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
       },
-      body: form
+      body: stringifyParams(params)
     })
   }
 }
@@ -335,16 +333,14 @@ export const loadPetitionSignatures = (petition, page = 1) => {
   }
 }
 
-export const flagPetition = (petitionId, reason) => (dispatch) => {
-  const form = new FormData()
-  form.append('reason', reason)
-  return fetch(`${Config.API_URI}/petitions/${petitionId}/reviews`, {
+export const flagPetition = (petitionId, reason) => (dispatch) =>
+  fetch(`${Config.API_URI}/petitions/${petitionId}/reviews`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
       Accept: 'application/json'
     },
-    body: form
+    body: stringifyParams({ reason })
   }).then(
       (response) => {
         dispatch({
@@ -361,18 +357,15 @@ export const flagPetition = (petitionId, reason) => (dispatch) => {
           error })
       }
     )
-}
 
-export const flagComment = (commentId) => (dispatch) => {
-  const form = new FormData()
-  form.append('comment_id', commentId)
-  return fetch(`${Config.API_URI}/petitions/reviews`, {
+export const flagComment = (commentId) => (dispatch) =>
+  fetch(`${Config.API_URI}/petitions/reviews`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
       Accept: 'application/json'
     },
-    body: form
+    body: stringifyParams({ comment_id: commentId })
   }).then(
       (response) => {
         dispatch({
@@ -387,7 +380,6 @@ export const flagComment = (commentId) => (dispatch) => {
           error })
       }
     )
-}
 
 export const getSharebanditShareLink = (petitionSharebanditUrl) => {
   const jsonSampleUrl = petitionSharebanditUrl.replace('/r/0/', '/jsonaction/')
