@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import SignatureListPage from 'Theme/signature-list-page'
-import { NextButton, PreviousButton, Pager } from 'LegacyTheme/signature-list-pagination'
+import { NextButton, PreviousButton, Pager } from 'Theme/signature-list-pagination'
 import { loadPetitionSignatures } from '../actions/petitionActions.js'
 
 class SignatureList extends React.Component {
@@ -47,12 +47,15 @@ class SignatureList extends React.Component {
         <div id='pet-signers-loading' className='bump-top-1'><b>Loading...</b></div>
       )
     }
-    const startNumber = ((page - 1) * 10) + 1
-    const previousButton = ((page < 2) ? '' : (
-      <PreviousButton onClick={this.previousPage} />
-    ))
-    const nextButton = (((startNumber + 10) > signatureCount) ? '' :
-      <NextButton onClick={this.nextPage} />
+    const startNumber = (page - 1) * 10 + 1
+    const previousButton = (
+      <PreviousButton onClick={this.previousPage} visible={page >= 2} />
+    )
+    const nextButton = (
+      <NextButton
+        onClick={this.nextPage}
+        visible={startNumber + 10 <= signatureCount}
+      />
     )
     return (
       <div>
