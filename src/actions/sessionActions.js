@@ -80,9 +80,8 @@ export const loadSession = ({ location }) => {
   }
 }
 
-export const trackPage = (newLocation) => {
-  // we track at POP -- at PUSH, we haven't arrived yet!
-  if (newLocation.action === 'POP') {
+export const trackPage = () => {
+  // This will track both when they navigate to a new page OR use the back button
     if (window.analytics || window.gtag) {
       const href = String(document.location.href)
         .replace(/([?&])source=/, (full, op) => `${op}utm_source=`)
