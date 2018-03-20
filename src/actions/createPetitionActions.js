@@ -43,6 +43,7 @@ export function registerAndSubmitPetition(userFields) {
         // .then(handleErrors)
         // .then(res => res.json())
         .then(res => {
+          console.warn(res)
           dispatch({
             type: accountActionTypes.REGISTER_SUCCESS,
             nice: 'nice' // this one should log them in
@@ -56,6 +57,7 @@ export function registerAndSubmitPetition(userFields) {
         .then(handleErrors)
         .then(res => res.json())
         .then(res => {
+          console.warn(res)
           dispatch({
             type: actionTypes.CREATE_SUCCESS,
             nice: 'nice2'

@@ -20,11 +20,13 @@ export function register(fields) {
       method: 'POST',
       body: JSON.stringify(fields)
     })
-      .then(response =>
+      .then(response => {
         dispatch({
           type: actionTypes.REGISTER_SUCCESS,
           nice: 'nice'
         })
+        console.log(response)
+      }
         // console.log('registered, but does ')
 
 

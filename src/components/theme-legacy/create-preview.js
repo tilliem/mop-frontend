@@ -170,5 +170,6 @@ export const CreatePreview = ({ petition, registerAction }) => (
 )
 
 CreatePreview.propTypes = {
-  petition: PropTypes.object
+  petition: PropTypes.object,
+  registerAction: PropTypes.func
 }
