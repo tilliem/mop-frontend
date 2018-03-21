@@ -1,9 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { Portal } from 'react-portal'
 
-import { loadTopPetitions } from '../actions/petitionActions'
 import { appLocation } from '../routes.js'
 
 /* A nice description of how/when this works from the Platform Team:
@@ -29,9 +27,6 @@ class ThanksNextPetition extends React.Component {
   }
 
   componentWillMount() {
-    if (!this.props.nextPetitionsLoaded) {
-      this.props.dispatch(loadTopPetitions(this.props.entity === 'pac' ? 1 : 0, '', false))
-    }
     // Start countdown on refocusing to this window
     window.addEventListener('focus', this.startCountdown)
   }
@@ -39,7 +34,7 @@ class ThanksNextPetition extends React.Component {
   startCountdown() {
     window.removeEventListener('focus', this.startCountdown)
     // Guard against running twice -- countdown should be a singleton
-    if (this.props.nextPetition && this.state.secondsLeft > this.startSeconds) {
+    if (this.state.secondsLeft > this.startSeconds) {
       if (this.state.intervalListener) {
         clearInterval(this.state.intervalListener)
       }
@@ -99,19 +94,7 @@ class ThanksNextPetition extends React.Component {
 }
 
 ThanksNextPetition.propTypes = {
-  dispatch: PropTypes.func,
-  nextPetition: PropTypes.object,
-  nextPetitionsLoaded: PropTypes.bool,
-  entity: PropTypes.string
+  nextPetition: PropTypes.object
 }
 
-function mapStateToProps(store) {
-  const { nextPetitionsLoaded, nextPetitions, petitions } = store.petitionStore
-  let nextPetition = null
-  if (nextPetitions && nextPetitions.length && nextPetitions[0]) {
-    nextPetition = petitions[nextPetitions[0]]
-  }
-  return { nextPetition, nextPetitionsLoaded }
-}
-
-export default connect(mapStateToProps)(ThanksNextPetition)
+export default ThanksNextPetition
