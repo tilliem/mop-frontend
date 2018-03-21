@@ -1,13 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { withShareLink } from '../../containers/hoc-share-link'
+import { withCopyLink } from '../../containers/hoc-copy-link'
 import LinkSvg from 'GiraffeUI/svgs/link.svg'
 
-const RawLink = ({ rawLink }) => (
+const RawLink = ({ rawLink, onClick, copied, clearCopied }) => (
   <a
-    className='mo-btn petition-thanks__link'
-    onClick={() => prompt('Here is your link to share:', rawLink)}
+    href={rawLink}
+    onClick={onClick}
+    className='mo-btn petition-thanks__link tooltipped tooltipped-up'
+    aria-label={copied ? 'Copied to clipboard!' : 'Click to copy link'}
+    onMouseOut={clearCopied}
   >
     <LinkSvg />
     Copy Link
@@ -15,7 +18,10 @@ const RawLink = ({ rawLink }) => (
 )
 
 RawLink.propTypes = {
-  rawLink: PropTypes.string
+  rawLink: PropTypes.string,
+  copied: PropTypes.bool,
+  onClick: PropTypes.func,
+  clearCopied: PropTypes.func
 }
 
-export default withShareLink(RawLink)
+export default withCopyLink(RawLink)
