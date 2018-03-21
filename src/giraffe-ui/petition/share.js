@@ -32,7 +32,8 @@ Share.propTypes = {
 const childPropTypes = {
   onClick: PropTypes.func,
   hasLabels: PropTypes.bool,
-  elementCn: PropTypes.string
+  elementCn: PropTypes.string,
+  className: PropTypes.string
 }
 
 const Mail = ({ onClick, hasLabels, elementCn }) => (
@@ -62,8 +63,8 @@ const Twitter = ({ onClick, hasLabels, elementCn }) => (
 Twitter.propTypes = childPropTypes
 Share.Twitter = Twitter
 
-const CopyLink = ({ onClick, hasLabels, elementCn }) => (
-  <Link onClick={onClick} className={elementCn}>
+const CopyLink = ({ onClick, hasLabels, elementCn, className, ...rest }) => (
+  <Link onClick={onClick} className={cx(elementCn, className)} {...rest}>
     <LinkSvg />
     {hasLabels && 'Copy Link'}
   </Link>
