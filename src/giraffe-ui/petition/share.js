@@ -13,7 +13,7 @@ export const Share = ({ className, hasLabels, children }) => {
   return (
     <div className={`${className}__share`}>
       <strong className={`${className}__share-heading`}>Share</strong>
-      <div className={`${className}__share-${hasLabels ? 'items' : 'icons'}`}>
+      <div className={`${className}__share${hasLabels ? '__links' : '-icons'}`}>
         {React.Children.map(children, child =>
           // Cloning each child is the only way to apply props that were passed into the parent
           React.cloneElement(child, { hasLabels, elementCn })
