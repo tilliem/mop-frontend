@@ -24,7 +24,7 @@ const Petition = ({
   setRef,
   closeModal
 }) => (
-  <div className='mo-container'>
+  <div className='row mt-5'>
     <InfoColumn>
       <PetitionMessage outOfDate={outOfDate} petition={p} isFwd={query.fwd} />
       <Card
