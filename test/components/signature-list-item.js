@@ -15,26 +15,30 @@ describe('<SignatureListItem />', () => {
 
   it('is a div.signer', () => {
     const context = mount(<SignatureListItem user={user} createdDate={createdDate} number={1000} />)
-    expect(context.find('li').length).to.equal(1)
     expect(context.find('div.signer').length).to.equal(1)
   })
 
-  it('renders the correct number', () => {
+  it('renders the correct number (legacy only)', () => {
+    if (process.env.THEME === 'giraffe') return
+
     const context = mount(<SignatureListItem user={user} createdDate={createdDate} number={1000} />)
     expect(context.find('.signer-number').text())
 			.to.equal('1000')
   })
 
-  it('renders name in bold', () => {
+  it('renders name', () => {
     const context = mount(<SignatureListItem user={user} createdDate={createdDate} number={1000} />)
-    expect(context.find('b').text())
-			.to.equal(user.name)
+    expect(context.text()).to.contain(user.name)
   })
 
   it('renders readable text with city and state', () => {
     const context = mount(<SignatureListItem user={user} createdDate={createdDate} number={1000} />)
-    expect(context.text())
-			.to.equal('1000 Ada Lovelace from Nottingham, England signed this petition on Dec 10, 1836.')
+    expect(context.text()).to.contain('Ada Lovelace from Nottingham, England')
+  })
+
+  it('renders the date', () => {
+    const context = mount(<SignatureListItem user={user} createdDate={createdDate} number={1000} />)
+    expect(context.text()).to.contain('Dec 10, 1836')
   })
 
   it('renders readable text with only state', () => {
@@ -43,7 +47,6 @@ describe('<SignatureListItem />', () => {
       name: 'Ada Lovelace'
     }
     const context = mount(<SignatureListItem user={noCity} createdDate={createdDate} number={1000} />)
-    expect(context.text())
-			.to.equal('1000 Ada Lovelace from England signed this petition on Dec 10, 1836.')
+    expect(context.text()).to.contain('Ada Lovelace from England')
   })
 })

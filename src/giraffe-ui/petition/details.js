@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router'
 import PropTypes from 'prop-types'
 
-// import CaretDownSvg from '../svgs/caret-down.svg'
 import CaretRightSvg from '../svgs/caret-right.svg'
 
 export const Details = ({ children }) => (
@@ -25,13 +24,9 @@ Narrative.propTypes = { children: PropTypes.node, heading: PropTypes.string }
 Details.Narrative = Narrative
 
 export const Comments = ({ children, heading }) => (
-  <div className='petition-details__comments'>
+  <div className='petition-details__comments' id='comments'>
     <h4 className='petition-details__comments__heading'>{heading}</h4>
     <div className='petition-details__comments__entries'>{children}</div>
-    {/* <button className='mo-btn petition-details__comments__toggle'>
-      More Reasons for Signing
-      <CaretDownSvg />
-    </button> */}
   </div>
 )
 Comments.propTypes = { children: PropTypes.node, heading: PropTypes.string }

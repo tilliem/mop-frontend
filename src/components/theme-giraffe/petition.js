@@ -1,13 +1,9 @@
 import React from 'react'
 import PetitionMessage from 'LegacyTheme/petition-message'
 import PropTypes from 'prop-types'
+import Scrollchor from 'react-scrollchor'
 
-import {
-  Card,
-  Details,
-  SignColumn,
-  InfoColumn
-} from 'GiraffeUI/petition'
+import { Card, Details, SignColumn, InfoColumn } from 'GiraffeUI/petition'
 import { Modal } from 'GiraffeUI/modal'
 
 import { Share } from './petition-share'
@@ -35,6 +31,15 @@ const Petition = ({
         currentSignatures={p.total_signatures}
         goalSignatures={p.signature_goal}
         renderShare={<Share className='petition-card' user={user} petition={p} />}
+        renderSignersButton={({ className, CaretRight }) => (
+          <Scrollchor
+            className={className}
+            to='#comments'
+            animate={{ offset: -150 }}
+          >
+            MOST RECENT SIGNERS <CaretRight />
+          </Scrollchor>
+        )}
       >
         <p>To be delivered to {p.target.map(t => t.name).join(', ')}</p>
 
@@ -51,10 +56,7 @@ const Petition = ({
         </Details.Narrative>
 
         <Details.Comments heading='What Others Are Saying'>
-          <SignatureList
-            petition={p}
-            signatureCount={p.total_signatures}
-          />
+          <SignatureList petition={p} signatureCount={p.total_signatures} />
         </Details.Comments>
 
         <Details.Author

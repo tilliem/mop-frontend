@@ -10,7 +10,8 @@ export const Card = ({
   children,
   currentSignatures,
   goalSignatures,
-  renderShare
+  renderShare,
+  renderSignersButton
 }) => (
   <div className='petition-card'>
     <div className='petition-card__content'>
@@ -34,11 +35,10 @@ export const Card = ({
         </div>
       </div>
 
-      {/* TODO: Implement some action for this CTA */}
-      <button className='mo-btn petition-card__cta' data-modal='signers-modal'>
-        MOST RECENT SIGNERS
-        <CaretRightSvg />
-      </button>
+      {renderSignersButton({
+        className: 'mo-btn petition-card__cta',
+        CaretRight: CaretRightSvg
+      })}
       {renderShare}
     </div>
   </div>
@@ -49,7 +49,8 @@ Card.propTypes = {
   renderShare: PropTypes.node,
   heading: PropTypes.node,
   currentSignatures: PropTypes.number,
-  goalSignatures: PropTypes.number
+  goalSignatures: PropTypes.number,
+  renderSignersButton: PropTypes.func
 }
 
 export const Media = ({ imageUrl }) => (
