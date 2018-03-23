@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { flagPetition } from '../actions/petitionActions'
-import { PetitionFlag } from 'LegacyTheme/petition-flag'
+import { PetitionFlag } from 'Theme/petition-flag'
 
 class PetitionFlagForm extends React.Component {
   constructor(props) {
