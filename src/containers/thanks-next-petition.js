@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Portal } from 'react-portal'
+
+import { ThanksNextPetition as ThanksNextPetitionComponent } from 'LegacyTheme/thanks-next-petition'
 
 import { appLocation } from '../routes.js'
 
@@ -48,7 +49,8 @@ class ThanksNextPetition extends React.Component {
         clearInterval(this.state.intervalListener)
         this.setState({
           intervalListener: null,
-          secondsLeft: this.startSeconds + 1 })
+          secondsLeft: this.startSeconds + 1
+        })
       }
       return
     }
@@ -61,9 +63,7 @@ class ThanksNextPetition extends React.Component {
 
   nextUrl() {
     const { nextPetition } = this.props
-    return ((nextPetition)
-            ? `/sign/${nextPetition.name}?source=share_chain`
-            : '')
+    return nextPetition ? `/sign/${nextPetition.name}?source=share_chain` : ''
   }
 
   redirectToNext() {
@@ -82,13 +82,10 @@ class ThanksNextPetition extends React.Component {
       return null
     }
     return (
-      <Portal node={document && document.getElementById('message-portal')}>
-        <div className='message-header advancing_message'>
-          We&#39;ve found another petition which may interest you. We&#39;ll forward you there in <span className='countdown_clock'>
-          {this.state.secondsLeft}
-          </span> seconds. [ <a onClick={() => this.setState({ cancelled: true })} className='control_advance_cancel'>cancel</a> ]
-        </div>
-      </Portal>
+      <ThanksNextPetitionComponent
+        secondsLeft={this.state.secondsLeft}
+        onCancel={() => this.setState({ cancelled: true })}
+      />
     )
   }
 }
