@@ -6,7 +6,7 @@ import CaretRightSvg from '../svgs/caret-right.svg'
 import { Share } from './share'
 
 export const Details = ({ children }) => (
-  <div className='petition-details'>
+  <div className='petition-details col-10 col-lg-12 my-5'>
     <div className='petition-details__content'>{children}</div>
   </div>
 )

@@ -3,7 +3,13 @@ import PetitionMessage from 'LegacyTheme/petition-message'
 import PropTypes from 'prop-types'
 import Scrollchor from 'react-scrollchor'
 
-import { Card, Details, SignColumn, InfoColumn } from 'GiraffeUI/petition'
+import {
+  Card,
+  Details,
+  Container,
+  SignColumn,
+  InfoColumn
+} from 'GiraffeUI/petition'
 import { Modal } from 'GiraffeUI/modal'
 
 import { text2paraJsx, splitIntoSpansJsx, ellipsize } from '../../lib'
@@ -20,7 +26,7 @@ const Petition = ({
   setRef,
   closeModal
 }) => (
-  <div className='row mt-5'>
+  <Container>
     <InfoColumn>
       <PetitionMessage outOfDate={outOfDate} petition={p} isFwd={query.fwd} />
       <Card
@@ -77,7 +83,7 @@ const Petition = ({
     >
       <SignatureAddForm petition={p} query={query} />
     </Modal>
-  </div>
+  </Container>
 )
 
 Petition.propTypes = {
