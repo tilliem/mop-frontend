@@ -4,19 +4,13 @@ import PropTypes from 'prop-types'
 
 export const PetitionFlag = ({
   petition,
+  reasonsArray,
   isOpen,
   setOpen,
   setClosed,
   flagged,
   submitFlag
 }) => {
-  const reasonsArray = [
-    ['spam', 'Commercial/spam'],
-    ['offensive', 'Offensive'],
-    ['language', 'Profane'],
-    ['hate', 'Hate speech'],
-    ['illegal', 'Illegal']
-  ]
   const reasons = reasonsArray.map(([reason, description]) => (
     <span key={reason}>
       <button
@@ -86,6 +80,7 @@ export const PetitionFlag = ({
 
 PetitionFlag.propTypes = {
   petition: PropTypes.object,
+  reasonsArray: PropTypes.array,
   isOpen: PropTypes.bool,
   setOpen: PropTypes.func,
   setClosed: PropTypes.func,

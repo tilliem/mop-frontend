@@ -24,6 +24,13 @@ class PetitionFlagForm extends React.Component {
     return (
       <PetitionFlag
         petition={this.props.petition}
+        reasonsArray={[
+          ['spam', 'Commercial/spam'],
+          ['offensive', 'Offensive'],
+          ['language', 'Profane'],
+          ['hate', 'Hate speech'],
+          ['illegal', 'Illegal']
+        ]}
         isOpen={this.state.open}
         setOpen={() => this.setState({ open: true })}
         setClosed={() => this.setState({ open: false })}
