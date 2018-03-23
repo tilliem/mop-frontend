@@ -47,14 +47,15 @@ class SignatureList extends React.Component {
         <div id='pet-signers-loading' className='bump-top-1'><b>Loading...</b></div>
       )
     }
-    const startNumber = (page - 1) * 10 + 1
+    const startIndex = (page - 1) * 10
+    const startNumber = signatureCount - startIndex
     const previousButton = (
       <PreviousButton onClick={this.previousPage} visible={page >= 2} />
     )
     const nextButton = (
       <NextButton
         onClick={this.nextPage}
-        visible={startNumber + 10 <= signatureCount}
+        visible={startIndex + 10 < signatureCount}
       />
     )
     return (

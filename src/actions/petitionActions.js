@@ -399,5 +399,6 @@ export const actions = {
   registerSignatureAndThanks,
   recordShareClick,
   loadPetitionSignatures,
-  getSharebanditShareLink
+  getSharebanditShareLink,
+  loadTopPetitions
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { actions as petitionActions } from '../actions/petitionActions'
 import { md5ToToken, stringifyParams } from '../lib'
 
@@ -60,6 +61,12 @@ class Thanks extends React.Component {
     this.renderMail = this.renderMail.bind(this)
     this.renderCopyPaste = this.renderCopyPaste.bind(this)
     this.renderRawLink = this.renderRawLink.bind(this)
+  }
+
+  componentDidMount() {
+    if (!this.props.nextPetitionsLoaded) {
+      this.props.dispatch(petitionActions.loadTopPetitions(this.props.petition.entity === 'pac' ? 1 : 0, '', false))
+    }
   }
 
   recordShare(medium, source) {
@@ -133,7 +140,6 @@ class Thanks extends React.Component {
   render() {
     return (
       <ThanksComponent
-        petition={this.props.petition}
         sharedSocially={this.state.sharedSocially}
         isCreator={this.isCreator}
         renderTwitter={this.renderTwitter}
@@ -141,6 +147,7 @@ class Thanks extends React.Component {
         renderMail={this.renderMail}
         renderCopyPaste={this.renderCopyPaste}
         renderRawLink={this.renderRawLink}
+        nextPetition={this.props.nextPetition}
       />
     )
   }
@@ -150,7 +157,19 @@ Thanks.propTypes = {
   petition: PropTypes.object,
   user: PropTypes.object,
   signatureMessage: PropTypes.object,
-  fromSource: PropTypes.string
+  fromSource: PropTypes.string,
+  nextPetitionsLoaded: PropTypes.bool,
+  nextPetition: PropTypes.object,
+  dispatch: PropTypes.func
 }
 
-export default Thanks
+function mapStateToProps(store) {
+  const { nextPetitionsLoaded, nextPetitions, petitions } = store.petitionStore
+  let nextPetition = null
+  if (nextPetitions && nextPetitions.length && nextPetitions[0]) {
+    nextPetition = petitions[nextPetitions[0]]
+  }
+  return { nextPetition, nextPetitionsLoaded }
+}
+
+export default connect(mapStateToProps)(Thanks)
