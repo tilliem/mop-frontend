@@ -8,7 +8,8 @@ import {
   Details,
   Container,
   SignColumn,
-  InfoColumn
+  InfoColumn,
+  MobileSign
 } from 'GiraffeUI/petition'
 
 import { text2paraJsx, splitIntoSpansJsx, ellipsize } from '../../lib'
@@ -49,6 +50,10 @@ const Petition = ({
         </Card.Description>
       </Card>
 
+      <MobileSign>
+        <SignatureAddForm setRef={setRef({ isMobile: true })} petition={p} query={query} />
+      </MobileSign>
+
       <Details>
         <Details.Narrative heading='Background'>
           <div dangerouslySetInnerHTML={{ __html: p.description }} />
@@ -67,7 +72,7 @@ const Petition = ({
       </Details>
     </InfoColumn>
     <SignColumn>
-      <SignatureAddForm setRef={setRef} petition={p} query={query} />
+      <SignatureAddForm setRef={setRef({ isMobile: false })} petition={p} query={query} />
     </SignColumn>
     <button onClick={onClickFloatingSign} className='sign-form__fixed-button'>
       Sign Now
