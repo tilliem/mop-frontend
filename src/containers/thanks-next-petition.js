@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { ThanksNextPetition as ThanksNextPetitionComponent } from 'LegacyTheme/thanks-next-petition'
+import { ThanksNextPetition as ThanksNextPetitionComponent } from 'Theme/thanks-next-petition'
 
 import { appLocation } from '../routes.js'
 
