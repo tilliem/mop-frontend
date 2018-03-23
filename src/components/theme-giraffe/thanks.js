@@ -4,19 +4,17 @@ import PropTypes from 'prop-types'
 import ThanksNextPetition from '../../containers/thanks-next-petition'
 
 const Thanks = ({
-  petition,
   sharedSocially,
   renderRawLink,
   renderTwitter,
   renderFacebook,
   renderMail,
-  renderCopyPaste
+  renderCopyPaste,
+  nextPetition
 }) => (
   <div className='row justify-content-center'>
+    {sharedSocially && <ThanksNextPetition nextPetition={nextPetition} />}
     <div className='col-10 col-md-7 petition-thanks__container'>
-      {sharedSocially ? (
-        <ThanksNextPetition entity={petition.entity || ''} />
-      ) : null}
       <div className='petition-thanks__heading'>ONE MORE STEP…</div>
 
       <div className='petition-thanks__content'>
@@ -47,13 +45,13 @@ const Thanks = ({
 )
 
 Thanks.propTypes = {
-  petition: PropTypes.object,
   sharedSocially: PropTypes.bool,
   renderTwitter: PropTypes.func,
   renderFacebook: PropTypes.func,
   renderMail: PropTypes.func,
   renderCopyPaste: PropTypes.func,
-  renderRawLink: PropTypes.func
+  renderRawLink: PropTypes.func,
+  nextPetition: PropTypes.object
 }
 
 export default Thanks
