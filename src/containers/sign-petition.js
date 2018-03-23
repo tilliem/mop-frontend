@@ -13,12 +13,9 @@ class SignPetition extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isSignModalOpen: false,
       width: 0
     }
     this.setRef = this.setRef.bind(this)
-    this.openModal = this.openModal.bind(this)
-    this.closeModal = this.closeModal.bind(this)
     this.onClickFloatingSign = this.onClickFloatingSign.bind(this)
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
   }
@@ -50,10 +47,10 @@ class SignPetition extends React.Component {
   }
 
   onClickFloatingSign() {
-    // if we are at the mobile breakpoint, show the modal
+    // if we are at the mobile breakpoint, TODO
     // otherwise, focus the form.
     if (this.state.width < 768) {
-      this.openModal()
+      // TODO
     } else {
       const firstInput = this.nameInput || this.countryInput || this.commentInput
       if (firstInput) firstInput.focus()
@@ -83,14 +80,6 @@ class SignPetition extends React.Component {
     return true
   }
 
-  openModal() {
-    this.setState({ isSignModalOpen: true })
-  }
-
-  closeModal() {
-    this.setState({ isSignModalOpen: false })
-  }
-
   render() {
     const p = this.props.petition
     if (!p) {
@@ -112,10 +101,8 @@ class SignPetition extends React.Component {
           query={this.props.location.query}
           petitionBy={petitionBy}
           outOfDate={outOfDate}
-          isSignModalOpen={this.state.isSignModalOpen}
           onClickFloatingSign={this.onClickFloatingSign}
           setRef={this.setRef}
-          closeModal={this.closeModal}
         />
       </div>
     )
