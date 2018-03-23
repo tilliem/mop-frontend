@@ -13,7 +13,7 @@ export const Card = ({
   goalSignatures,
   renderSignersButton
 }) => (
-  <div className='petition-card'>
+  <div className='petition-card col-12'>
     <div className='petition-card__content'>
       <div className='petition-card__heading'>{heading}</div>
 
