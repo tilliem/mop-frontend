@@ -106,7 +106,7 @@ class SignPetition extends React.Component {
     const outOfDate = (p.tags && p.tags.filter(t => t.name === 'possibly_out_of_date').length)
 
     return (
-      <div className='moveon-petitions sign'>
+      <div className='moveon-petitions sign container'>
         <Petition
           petition={this.props.petition}
           query={this.props.location.query}

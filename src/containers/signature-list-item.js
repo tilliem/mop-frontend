@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import SignatureListItemComponent from 'LegacyTheme/signature-list-item'
+import SignatureListItemComponent from 'Theme/signature-list-item'
 
 import { flagComment } from '../actions/petitionActions'
 
