@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import FlagOutlineSvg from 'GiraffeUI/svgs/flag-outline.svg'
+import FlagSolidSvg from 'GiraffeUI/svgs/flag-solid.svg'
+
 import { formatDate } from '../../lib'
 
 const SignatureListItem = ({
@@ -24,15 +27,7 @@ const SignatureListItem = ({
           {isFlagged ? 'Thanks for flagging this comment.' : `"${comments}"`}
         </p>
         <button onClick={onFlag} className='signer__flag'>
-          {isFlagged ? (
-            <svg>
-              <use xlinkHref='#flag-solid' />
-            </svg>
-          ) : (
-            <svg>
-              <use xlinkHref='#flag-outline' />
-            </svg>
-          )}
+          {isFlagged ? <FlagSolidSvg /> : <FlagOutlineSvg />}
         </button>
       </div>
     )}
