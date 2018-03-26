@@ -63,6 +63,7 @@ var config = {
       //hash: true,
       filename: 'index.html',
       staticPath: (process.env.STATIC_ROOT || ''),
+      theme: THEME,
       cssPath: (process.env.NODE_ENV == 'production'
                 ? 'https://s3.amazonaws.com/mop-static/css/moui.css'
                 : '/css/moui.css'),
