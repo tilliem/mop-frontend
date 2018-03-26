@@ -132,52 +132,36 @@ const SignatureAddForm = ({
       />
     </InputBlock>
 
-    {/* TODO: Design for volunteers checkbox */}
     {petition.collect_volunteers && (
+      <InputBlock
+        name='volunteer'
+        type='checkbox'
+        label={petition.collect_volunteers}
+        onChange={onClickVolunteer}
+      />
+    )}
+    {volunteer && (
       <div>
-        <input
-          type='checkbox'
-          id='volunteer_box'
-          name='volunteer'
-          value='1'
-          onClick={onClickVolunteer}
-        />{' '}
-        <label htmlFor='volunteer_box' style={{ display: 'inline' }}>
-          {petition.collect_volunteers}
-        </label>
-        {volunteer && (
-          <div>
-            <InputBlock
-              name='phone'
-              label='Phone*'
-              onChange={updateStateFromValue('phone')}
-              value={getValue('phone')}
-              className='override-collapse'
-            />
-            {validationError('phone')}
-          </div>
-        )}
+        <InputBlock
+          name='phone'
+          label='Phone*'
+          onChange={updateStateFromValue('phone')}
+          value={getValue('phone')}
+          className='override-collapse'
+        />
+        {validationError('phone')}
       </div>
     )}
 
     <Button onClick={submit}>SUBMIT</Button>
 
     {showOptinCheckbox && (
-      // TODO: Needs design
-      <div>
-        <input
-          id='thirdparty_optin'
-          name='thirdparty_optin'
-          type='checkbox'
-          value='1'
-          checked={thirdPartyOptin}
-          onChange={setThirdPartyOptin}
-        />{' '}
-        <label htmlFor='thirdparty_optin' style={{ display: 'inline' }}>
-          Receive campaign updates from{' '}
-          {creator.organization || 'this organization'}.
-        </label>
-      </div>
+      <InputBlock
+        name='thirdparty_optin'
+        type='checkbox'
+        label={`Receive campaign updates from ${creator.organization || 'this organization'}`}
+        onChange={updateStateFromValue('thirdparty_optin')}
+      />
     )}
 
     {showOptinWarning ? (
