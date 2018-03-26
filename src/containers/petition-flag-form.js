@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { flagPetition } from '../actions/petitionActions'
-import { PetitionFlag } from 'LegacyTheme/petition-flag'
+import { PetitionFlag } from 'Theme/petition-flag'
 
 class PetitionFlagForm extends React.Component {
   constructor(props) {
@@ -24,6 +24,13 @@ class PetitionFlagForm extends React.Component {
     return (
       <PetitionFlag
         petition={this.props.petition}
+        reasonsArray={[
+          ['spam', 'Commercial/spam'],
+          ['offensive', 'Offensive'],
+          ['language', 'Profane'],
+          ['hate', 'Hate speech'],
+          ['illegal', 'Illegal']
+        ]}
         isOpen={this.state.open}
         setOpen={() => this.setState({ open: true })}
         setClosed={() => this.setState({ open: false })}

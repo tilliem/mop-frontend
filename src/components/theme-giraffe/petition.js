@@ -1,5 +1,5 @@
 import React from 'react'
-import PetitionMessage from 'LegacyTheme/petition-message'
+import PetitionMessage from 'Theme/petition-message'
 import PropTypes from 'prop-types'
 import Scrollchor from 'react-scrollchor'
 
@@ -30,8 +30,8 @@ const Petition = ({
   closeModal
 }) => (
   <Container>
+    <PetitionMessage outOfDate={outOfDate} petition={p} isFwd={query.fwd} />
     <InfoColumn>
-      <PetitionMessage outOfDate={outOfDate} petition={p} isFwd={query.fwd} />
       <Card
         heading={splitIntoSpansJsx(p.title)}
         currentSignatures={p.total_signatures}

@@ -44,13 +44,13 @@ const Thanks = ({
 )
 
 Thanks.propTypes = {
-  nextPetition: PropTypes.object,
   sharedSocially: PropTypes.bool,
   renderTwitter: PropTypes.func,
   renderFacebook: PropTypes.func,
   renderMail: PropTypes.func,
   renderCopyPaste: PropTypes.func,
-  renderRawLink: PropTypes.func
+  renderRawLink: PropTypes.func,
+  nextPetition: PropTypes.object
 }
 
 export default Thanks
