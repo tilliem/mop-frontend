@@ -12,8 +12,6 @@ const SignatureAddForm = ({
   user,
   volunteer,
   onClickVolunteer,
-  thirdPartyOptin,
-  setThirdPartyOptin,
   country,
   onChangeCountry,
   showOptinWarning,
@@ -22,7 +20,6 @@ const SignatureAddForm = ({
   requireAddressFields,
   onUnrecognize,
   updateStateFromValue,
-  getValueFromState: getValue,
   validationError,
   setRef
 }) => (
@@ -30,12 +27,9 @@ const SignatureAddForm = ({
     <h4>SIGN THIS PETITION</h4>
     {user.signonId ? (
       // Recognized
-      // TODO: Needs design
       <div>
-        <strong>Welcome back {user.given_name}!</strong>
-        <div>
-          (Not {user.given_name}? <a onClick={onUnrecognize}>Click here.</a>)
-        </div>
+        <p>Welcome back {user.given_name}!</p>
+        <p>(Not {user.given_name}? <a onClick={onUnrecognize}>Click here.</a>)</p>
       </div>
     ) : (
       // Anonymous
@@ -44,7 +38,6 @@ const SignatureAddForm = ({
           name='name'
           label='Name*'
           setRef={setRef}
-          value={getValue('name')}
           onChange={updateStateFromValue('name')}
         />
         {validationError('name')}
@@ -52,7 +45,6 @@ const SignatureAddForm = ({
           type='email'
           name='email'
           label='Email*'
-          value={getValue('email')}
           onChange={updateStateFromValue('email')}
         />
         {validationError('email')}
@@ -63,14 +55,12 @@ const SignatureAddForm = ({
       <div>
         <CountrySelect
           className='override-collapse'
-          value={country}
           onChange={onChangeCountry}
         />
         <InputBlock
           name='address1'
           label={requireAddressFields ? 'Address*' : 'Address'}
           onChange={updateStateFromValue('address1')}
-          value={getValue('address1')}
           setRef={setRef}
         />
         {validationError('address1')}
@@ -78,18 +68,15 @@ const SignatureAddForm = ({
           name='address2'
           label='Address (cont.)'
           onChange={updateStateFromValue('address2')}
-          value={getValue('address2')}
         />
         <InputBlock
           name='city'
           label={petition.needs_full_addresses ? 'City*' : 'City'}
           onChange={updateStateFromValue('city')}
-          value={getValue('city')}
         />
         {validationError('city')}
         {country === 'United States' ? (
           <StateSelect
-            value={getValue('state')}
             onChange={updateStateFromValue('state')}
           />
         ) : (
@@ -97,7 +84,6 @@ const SignatureAddForm = ({
             name={'region'}
             label={'Region'}
             onChange={updateStateFromValue('region')}
-            value={getValue('region')}
           />
         )}
         {validationError('state')}
@@ -109,7 +95,6 @@ const SignatureAddForm = ({
               ? updateStateFromValue('zip')
               : updateStateFromValue('postal')
           }
-          value={getValue(country === 'United States' ? 'zip' : 'postal')}
         />
         {validationError('zip')}
       </div>
@@ -119,7 +104,6 @@ const SignatureAddForm = ({
     <InputBlock
       name='comment'
       label='Comment (Optional)'
-      value={getValue('comment')}
     >
       <textarea
         rows='10'
@@ -132,52 +116,35 @@ const SignatureAddForm = ({
       />
     </InputBlock>
 
-    {/* TODO: Design for volunteers checkbox */}
     {petition.collect_volunteers && (
+      <InputBlock
+        name='volunteer'
+        type='checkbox'
+        label={petition.collect_volunteers}
+        onChange={onClickVolunteer}
+      />
+    )}
+    {volunteer && (
       <div>
-        <input
-          type='checkbox'
-          id='volunteer_box'
-          name='volunteer'
-          value='1'
-          onClick={onClickVolunteer}
-        />{' '}
-        <label htmlFor='volunteer_box' style={{ display: 'inline' }}>
-          {petition.collect_volunteers}
-        </label>
-        {volunteer && (
-          <div>
-            <InputBlock
-              name='phone'
-              label='Phone*'
-              onChange={updateStateFromValue('phone')}
-              value={getValue('phone')}
-              className='override-collapse'
-            />
-            {validationError('phone')}
-          </div>
-        )}
+        <InputBlock
+          name='phone'
+          label='Phone*'
+          onChange={updateStateFromValue('phone')}
+          className='override-collapse'
+        />
+        {validationError('phone')}
       </div>
     )}
 
     <Button onClick={submit}>SUBMIT</Button>
 
     {showOptinCheckbox && (
-      // TODO: Needs design
-      <div>
-        <input
-          id='thirdparty_optin'
-          name='thirdparty_optin'
-          type='checkbox'
-          value='1'
-          checked={thirdPartyOptin}
-          onChange={setThirdPartyOptin}
-        />{' '}
-        <label htmlFor='thirdparty_optin' style={{ display: 'inline' }}>
-          Receive campaign updates from{' '}
-          {creator.organization || 'this organization'}.
-        </label>
-      </div>
+      <InputBlock
+        name='thirdparty_optin'
+        type='checkbox'
+        label={`Receive campaign updates from ${creator.organization || 'this organization'}`}
+        onChange={updateStateFromValue('thirdparty_optin')}
+      />
     )}
 
     {showOptinWarning ? (
@@ -215,12 +182,9 @@ SignatureAddForm.propTypes = {
   hiddenOptin: PropTypes.bool,
   volunteer: PropTypes.bool,
   onClickVolunteer: PropTypes.func,
-  thirdPartyOptin: PropTypes.bool,
-  setThirdPartyOptin: PropTypes.func,
   country: PropTypes.string,
   onChangeCountry: PropTypes.func,
   updateStateFromValue: PropTypes.func,
-  getValueFromState: PropTypes.func,
   validationError: PropTypes.func,
   setRef: PropTypes.func
 }

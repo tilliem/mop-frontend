@@ -41,7 +41,6 @@ class SignatureAddForm extends React.Component {
     this.submit = this.submit.bind(this)
     this.validationError = this.validationError.bind(this)
     this.updateStateFromValue = this.updateStateFromValue.bind(this)
-    this.getValueFromState = this.getValueFromState.bind(this)
   }
 
   getOsdiSignature() {
@@ -108,17 +107,13 @@ class SignatureAddForm extends React.Component {
     return osdiSignature
   }
 
-  getValueFromState(field) {
-    return this.state[field]
-  }
-
   validationError(key) {
     if (this.state.validationTried) {
       if (Object.keys(this.state.required).indexOf(key) > -1) {
         const regex = this.validationRegex[key]
         if (!this.state[key] || (regex && !regex.test(String(this.state[key])))) {
           return (
-            <div className='alert alert-danger' role='alert'>{this.state.required[key]}</div>
+            <div className='alert alert-danger red' role='alert'>{this.state.required[key]}</div>
           )
         }
       }
@@ -229,12 +224,7 @@ class SignatureAddForm extends React.Component {
         country={this.state.country}
         onChangeCountry={event => this.setState({ country: event.target.value })}
         updateStateFromValue={this.updateStateFromValue}
-        getValueFromState={this.getValueFromState}
         validationError={this.validationError}
-        thirdPartyOptin={this.thirdparty_optin}
-        setThirdPartyOptin={evt =>
-          this.setState({ thirdparty_optin: evt.target.checked })
-        }
         showOptinWarning={showOptinWarning}
         showOptinCheckbox={showOptinCheckbox}
         setRef={setRef}

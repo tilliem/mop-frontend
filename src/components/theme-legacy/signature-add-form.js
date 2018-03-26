@@ -15,8 +15,6 @@ const SignatureAddForm = ({
   query,
   volunteer,
   onClickVolunteer,
-  thirdPartyOptin,
-  setThirdPartyOptin,
   country,
   onChangeCountry,
   showOptinWarning,
@@ -260,16 +258,15 @@ const SignatureAddForm = ({
           <div>
             <label
               id='checkbox_label'
-              htmlFor='checkbox'
+              htmlFor='thirdparty_optin'
               className='bump-top-1'
             >
               <input
                 type='checkbox'
+                id='thirdparty_optin'
                 name='thirdparty_optin'
-                value='1'
                 className='moveon-track-click'
-                checked={thirdPartyOptin}
-                onChange={setThirdPartyOptin}
+                onChange={updateStateFromValue('thirdparty_optin')}
               />{' '}
               Receive campaign updates from{' '}
               {creator.organization || 'this organization'}.
@@ -329,8 +326,6 @@ SignatureAddForm.propTypes = {
   hiddenOptin: PropTypes.bool,
   volunteer: PropTypes.bool,
   onClickVolunteer: PropTypes.func,
-  thirdPartyOptin: PropTypes.bool,
-  setThirdPartyOptin: PropTypes.func,
   country: PropTypes.string,
   onChangeCountry: PropTypes.func,
   updateStateFromValue: PropTypes.func,
