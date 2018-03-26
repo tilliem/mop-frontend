@@ -118,7 +118,7 @@ class SignatureAddForm extends React.Component {
         const regex = this.validationRegex[key]
         if (!this.state[key] || (regex && !regex.test(String(this.state[key])))) {
           return (
-            <div className='alert alert-danger' role='alert'>{this.state.required[key]}</div>
+            <div className='alert alert-danger red' role='alert'>{this.state.required[key]}</div>
           )
         }
       }
@@ -231,10 +231,6 @@ class SignatureAddForm extends React.Component {
         updateStateFromValue={this.updateStateFromValue}
         getValueFromState={this.getValueFromState}
         validationError={this.validationError}
-        thirdPartyOptin={this.thirdparty_optin}
-        setThirdPartyOptin={evt =>
-          this.setState({ thirdparty_optin: evt.target.checked })
-        }
         showOptinWarning={showOptinWarning}
         showOptinCheckbox={showOptinCheckbox}
         setRef={setRef}
