@@ -25,14 +25,11 @@ const SignatureAddForm = ({
 }) => (
   <form onSubmit={submit} className='sign-form'>
     <h4>SIGN THIS PETITION</h4>
-    {!user.signonId ? (
+    {user.signonId ? (
       // Recognized
-      // TODO: Needs design
       <div>
-        <strong>Welcome back {user.given_name}!</strong>
-        <div>
-          (Not {user.given_name}? <a onClick={onUnrecognize}>Click here.</a>)
-        </div>
+        <p>Welcome back {user.given_name}!</p>
+        <p>(Not {user.given_name}? <a onClick={onUnrecognize}>Click here.</a>)</p>
       </div>
     ) : (
       // Anonymous
