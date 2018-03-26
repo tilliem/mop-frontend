@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import SignatureListPage from 'LegacyTheme/signature-list-page.js'
+import SignatureListPage from 'Theme/signature-list-page'
+import { NextButton, PreviousButton, Pager } from 'Theme/signature-list-pagination'
 import { loadPetitionSignatures } from '../actions/petitionActions.js'
 
 class SignatureList extends React.Component {
@@ -46,17 +47,16 @@ class SignatureList extends React.Component {
         <div id='pet-signers-loading' className='bump-top-1'><b>Loading...</b></div>
       )
     }
-    const startIndex = ((page - 1) * 10)
+    const startIndex = (page - 1) * 10
     const startNumber = signatureCount - startIndex
-    const previousButton = ((page < 2) ? '' : (
-      <li className='previous'>
-        <a onClick={this.previousPage}>&lt; &lt; Previous</a>
-      </li>
-    ))
-    const nextButton = (((startIndex + 10) >= signatureCount) ? '' :
-      <li className='next'>
-        <a onClick={this.nextPage}>Next &gt; &gt;</a>
-      </li>
+    const previousButton = (
+      <PreviousButton onClick={this.previousPage} visible={page >= 2} />
+    )
+    const nextButton = (
+      <NextButton
+        onClick={this.nextPage}
+        visible={startIndex + 10 < signatureCount}
+      />
     )
     return (
       <div>
@@ -64,10 +64,10 @@ class SignatureList extends React.Component {
           signatures={signatures[page]}
           startNumber={startNumber}
         />
-        <ul className='pager'>
-          {previousButton}
-          {nextButton}
-        </ul>
+        <Pager
+          previousButton={previousButton}
+          nextButton={nextButton}
+        />
       </div>
     )
   }
