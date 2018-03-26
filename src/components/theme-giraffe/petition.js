@@ -12,6 +12,8 @@ import {
 } from 'GiraffeUI/petition'
 import { Modal } from 'GiraffeUI/modal'
 
+import { Share } from './petition-share'
+
 import { text2paraJsx, splitIntoSpansJsx, ellipsize } from '../../lib'
 import SignatureAddForm from '../../containers/signature-add-form'
 import SignatureList from '../../containers/signature-list'
@@ -19,6 +21,7 @@ import SignatureList from '../../containers/signature-list'
 const Petition = ({
   petition: p,
   query,
+  user,
   petitionBy,
   outOfDate,
   isSignModalOpen,
@@ -33,6 +36,7 @@ const Petition = ({
         heading={splitIntoSpansJsx(p.title)}
         currentSignatures={p.total_signatures}
         goalSignatures={p.signature_goal}
+        renderShare={<Share className='petition-card' user={user} petition={p} />}
         renderSignersButton={({ className, CaretRight }) => (
           <Scrollchor
             className={className}
@@ -65,7 +69,7 @@ const Petition = ({
           name={petitionBy}
           link={`/contact_creator.html?petition_id=${p.petition_id}`}
         />
-        <Details.Share className='petition-details' hasLabels />
+        <Share className='petition-details' hasLabels user={user} petition={p} />
         <Details.Disclaimer />
       </Details>
     </InfoColumn>
@@ -88,6 +92,7 @@ const Petition = ({
 
 Petition.propTypes = {
   petition: PropTypes.object.isRequired,
+  user: PropTypes.object,
   query: PropTypes.object,
   petitionBy: PropTypes.string,
   outOfDate: PropTypes.string,
