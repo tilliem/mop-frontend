@@ -8,9 +8,9 @@ import {
   Details,
   Container,
   SignColumn,
-  InfoColumn
+  InfoColumn,
+  MobileSign
 } from 'GiraffeUI/petition'
-import { Modal } from 'GiraffeUI/modal'
 
 import { Share } from './petition-share'
 
@@ -24,10 +24,8 @@ const Petition = ({
   user,
   petitionBy,
   outOfDate,
-  isSignModalOpen,
   onClickFloatingSign,
-  setRef,
-  closeModal
+  setRef
 }) => (
   <Container>
     <PetitionMessage outOfDate={outOfDate} petition={p} isFwd={query.fwd} />
@@ -56,6 +54,10 @@ const Petition = ({
         </Card.Description>
       </Card>
 
+      <MobileSign>
+        <SignatureAddForm setRef={setRef({ isMobile: true })} petition={p} query={query} />
+      </MobileSign>
+
       <Details>
         <Details.Narrative heading='Background'>
           <div dangerouslySetInnerHTML={{ __html: p.description }} />
@@ -74,19 +76,11 @@ const Petition = ({
       </Details>
     </InfoColumn>
     <SignColumn>
-      <SignatureAddForm setRef={setRef} petition={p} query={query} />
+      <SignatureAddForm setRef={setRef({ isMobile: false })} petition={p} query={query} />
     </SignColumn>
-    <button onClick={onClickFloatingSign} className='sign-form__modal-toggle'>
+    <button onClick={onClickFloatingSign} className='sign-form__fixed-button'>
       Sign Now
     </button>
-    <Modal
-      heading='Sign Now'
-      className='sign-form-modal'
-      onClose={closeModal}
-      visible={isSignModalOpen}
-    >
-      <SignatureAddForm petition={p} query={query} />
-    </Modal>
   </Container>
 )
 
@@ -96,9 +90,7 @@ Petition.propTypes = {
   query: PropTypes.object,
   petitionBy: PropTypes.string,
   outOfDate: PropTypes.string,
-  isSignModalOpen: PropTypes.bool,
   onClickFloatingSign: PropTypes.func,
-  closeModal: PropTypes.func,
   setRef: PropTypes.func
 }
 
