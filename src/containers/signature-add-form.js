@@ -41,7 +41,6 @@ class SignatureAddForm extends React.Component {
     this.submit = this.submit.bind(this)
     this.validationError = this.validationError.bind(this)
     this.updateStateFromValue = this.updateStateFromValue.bind(this)
-    this.getValueFromState = this.getValueFromState.bind(this)
   }
 
   getOsdiSignature() {
@@ -106,10 +105,6 @@ class SignatureAddForm extends React.Component {
     }
     // Console.log('signature!', osdiSignature)
     return osdiSignature
-  }
-
-  getValueFromState(field) {
-    return this.state[field]
   }
 
   validationError(key) {
@@ -229,7 +224,6 @@ class SignatureAddForm extends React.Component {
         country={this.state.country}
         onChangeCountry={event => this.setState({ country: event.target.value })}
         updateStateFromValue={this.updateStateFromValue}
-        getValueFromState={this.getValueFromState}
         validationError={this.validationError}
         showOptinWarning={showOptinWarning}
         showOptinCheckbox={showOptinCheckbox}

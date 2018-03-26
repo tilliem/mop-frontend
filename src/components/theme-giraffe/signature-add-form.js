@@ -12,8 +12,6 @@ const SignatureAddForm = ({
   user,
   volunteer,
   onClickVolunteer,
-  thirdPartyOptin,
-  setThirdPartyOptin,
   country,
   onChangeCountry,
   showOptinWarning,
@@ -22,13 +20,12 @@ const SignatureAddForm = ({
   requireAddressFields,
   onUnrecognize,
   updateStateFromValue,
-  getValueFromState: getValue,
   validationError,
   setRef
 }) => (
   <form onSubmit={submit} className='sign-form'>
     <h4>SIGN THIS PETITION</h4>
-    {user.signonId ? (
+    {!user.signonId ? (
       // Recognized
       // TODO: Needs design
       <div>
@@ -44,7 +41,6 @@ const SignatureAddForm = ({
           name='name'
           label='Name*'
           setRef={setRef}
-          value={getValue('name')}
           onChange={updateStateFromValue('name')}
         />
         {validationError('name')}
@@ -52,7 +48,6 @@ const SignatureAddForm = ({
           type='email'
           name='email'
           label='Email*'
-          value={getValue('email')}
           onChange={updateStateFromValue('email')}
         />
         {validationError('email')}
@@ -63,14 +58,12 @@ const SignatureAddForm = ({
       <div>
         <CountrySelect
           className='override-collapse'
-          value={country}
           onChange={onChangeCountry}
         />
         <InputBlock
           name='address1'
           label={requireAddressFields ? 'Address*' : 'Address'}
           onChange={updateStateFromValue('address1')}
-          value={getValue('address1')}
           setRef={setRef}
         />
         {validationError('address1')}
@@ -78,18 +71,15 @@ const SignatureAddForm = ({
           name='address2'
           label='Address (cont.)'
           onChange={updateStateFromValue('address2')}
-          value={getValue('address2')}
         />
         <InputBlock
           name='city'
           label={petition.needs_full_addresses ? 'City*' : 'City'}
           onChange={updateStateFromValue('city')}
-          value={getValue('city')}
         />
         {validationError('city')}
         {country === 'United States' ? (
           <StateSelect
-            value={getValue('state')}
             onChange={updateStateFromValue('state')}
           />
         ) : (
@@ -97,7 +87,6 @@ const SignatureAddForm = ({
             name={'region'}
             label={'Region'}
             onChange={updateStateFromValue('region')}
-            value={getValue('region')}
           />
         )}
         {validationError('state')}
@@ -109,7 +98,6 @@ const SignatureAddForm = ({
               ? updateStateFromValue('zip')
               : updateStateFromValue('postal')
           }
-          value={getValue(country === 'United States' ? 'zip' : 'postal')}
         />
         {validationError('zip')}
       </div>
@@ -119,7 +107,6 @@ const SignatureAddForm = ({
     <InputBlock
       name='comment'
       label='Comment (Optional)'
-      value={getValue('comment')}
     >
       <textarea
         rows='10'
@@ -146,7 +133,6 @@ const SignatureAddForm = ({
           name='phone'
           label='Phone*'
           onChange={updateStateFromValue('phone')}
-          value={getValue('phone')}
           className='override-collapse'
         />
         {validationError('phone')}
@@ -199,12 +185,9 @@ SignatureAddForm.propTypes = {
   hiddenOptin: PropTypes.bool,
   volunteer: PropTypes.bool,
   onClickVolunteer: PropTypes.func,
-  thirdPartyOptin: PropTypes.bool,
-  setThirdPartyOptin: PropTypes.func,
   country: PropTypes.string,
   onChangeCountry: PropTypes.func,
   updateStateFromValue: PropTypes.func,
-  getValueFromState: PropTypes.func,
   validationError: PropTypes.func,
   setRef: PropTypes.func
 }
