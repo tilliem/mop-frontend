@@ -3,7 +3,6 @@ import { Link } from 'react-router'
 import PropTypes from 'prop-types'
 
 import CaretRightSvg from '../svgs/caret-right.svg'
-import { Share } from './share'
 
 export const Details = ({ children }) => (
   <div className='petition-details col-10 col-lg-12 my-5'>
@@ -45,8 +44,6 @@ export const Author = ({ name, link }) => (
 )
 Author.propTypes = { name: PropTypes.string, link: PropTypes.string }
 Details.Author = Author
-
-Details.Share = Share
 
 export const Disclaimer = ({ children }) => (
   <div className='petition-details__disclaimer'>{children}</div>
