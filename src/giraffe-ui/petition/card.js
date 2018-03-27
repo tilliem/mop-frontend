@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 
 import { formatNumber, percent } from '../../lib'
 
+import { Card } from '../card'
 import CaretRightSvg from 'GiraffeUI/svgs/caret-right.svg'
 
-export const Card = ({
+export const PetitionCard = ({
   heading,
   children,
   currentSignatures,
@@ -13,38 +14,34 @@ export const Card = ({
   renderShare,
   renderSignersButton
 }) => (
-  <div className='petition-card col-12'>
-    <div className='petition-card__content'>
-      <div className='petition-card__heading'>{heading}</div>
+  <Card className='petition-card' heading={heading}>
+    {children}
 
-      <div className='petition-card__body'>{children}</div>
-
-      <div className='petition-card__range'>
-        <div className='petition-card__range__current'>
-          {formatNumber(currentSignatures)}
-        </div>
-        <div className='petition-card__range__max'>
-          {formatNumber(goalSignatures)}
-        </div>
-        <div className='petition-card__range__bar'>
-          <div className='petition-card__range__bar__max' />
-          <div
-            className='petition-card__range__bar__current'
-            style={{ width: percent(currentSignatures, goalSignatures) }}
-          />
-        </div>
+    <div className='petition-card__range'>
+      <div className='petition-card__range__current'>
+        {formatNumber(currentSignatures)}
       </div>
-
-      {renderSignersButton({
-        className: 'mo-btn petition-card__cta',
-        CaretRight: CaretRightSvg
-      })}
-      {renderShare}
+      <div className='petition-card__range__max'>
+        {formatNumber(goalSignatures)}
+      </div>
+      <div className='petition-card__range__bar'>
+        <div className='petition-card__range__bar__max' />
+        <div
+          className='petition-card__range__bar__current'
+          style={{ width: percent(currentSignatures, goalSignatures) }}
+        />
+      </div>
     </div>
-  </div>
+
+    {renderSignersButton({
+      className: 'mo-btn petition-card__cta',
+      CaretRight: CaretRightSvg
+    })}
+    {renderShare}
+  </Card>
 )
 
-Card.propTypes = {
+PetitionCard.propTypes = {
   children: PropTypes.node,
   renderShare: PropTypes.node,
   heading: PropTypes.node,
@@ -61,12 +58,12 @@ export const Media = ({ imageUrl }) => (
   </div>
 )
 Media.propTypes = { imageUrl: PropTypes.string }
-Card.Media = Media
+PetitionCard.Media = Media
 
 export const Description = ({ children }) => (
   <div className='petition-card__description'>{children}</div>
 )
 Description.propTypes = { children: PropTypes.node }
-Card.Description = Description
+PetitionCard.Description = Description
 
-export default Card
+export default PetitionCard

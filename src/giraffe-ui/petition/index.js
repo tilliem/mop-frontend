@@ -1,5 +1,5 @@
 export { Share } from './share'
-export { Card } from './card'
+export { PetitionCard } from './card'
 export { Details } from './details'
 export { InputBlock } from './input-block'
 export { CountrySelect } from './country-select'

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Scrollchor from 'react-scrollchor'
 
 import {
-  Card,
+  PetitionCard,
   Details,
   Container,
   SignColumn,
@@ -30,7 +30,7 @@ const Petition = ({
   <Container>
     <PetitionMessage outOfDate={outOfDate} petition={p} isFwd={query.fwd} />
     <InfoColumn>
-      <Card
+      <PetitionCard
         heading={splitIntoSpansJsx(p.title)}
         currentSignatures={p.total_signatures}
         goalSignatures={p.signature_goal}
@@ -47,12 +47,12 @@ const Petition = ({
       >
         <p>To be delivered to {p.target.map(t => t.name).join(', ')}</p>
 
-        {p.featured_image_url && <Card.Media imageUrl={p.featured_image_url} />}
+        {p.featured_image_url && <PetitionCard.Media imageUrl={p.featured_image_url} />}
 
-        <Card.Description>
+        <PetitionCard.Description>
           {text2paraJsx(ellipsize(p.summary, 500))}
-        </Card.Description>
-      </Card>
+        </PetitionCard.Description>
+      </PetitionCard>
 
       <MobileSign>
         <SignatureAddForm setRef={setRef({ isMobile: true })} petition={p} query={query} />
