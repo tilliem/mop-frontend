@@ -19,6 +19,7 @@ const SignatureAddForm = ({
   onChangeCountry,
   showOptinWarning,
   showOptinCheckbox,
+  thirdPartyOptin,
   hiddenOptin,
   showAddressFields,
   requireAddressFields,
@@ -267,6 +268,7 @@ const SignatureAddForm = ({
                 name='thirdparty_optin'
                 className='moveon-track-click'
                 onChange={updateStateFromValue('thirdparty_optin')}
+                defaultChecked={thirdPartyOptin}
               />{' '}
               Receive campaign updates from{' '}
               {creator.organization || 'this organization'}.
@@ -323,6 +325,7 @@ SignatureAddForm.propTypes = {
   onUnrecognize: PropTypes.func,
   showOptinWarning: PropTypes.bool,
   showOptinCheckbox: PropTypes.bool,
+  thirdPartyOptin: PropTypes.bool,
   hiddenOptin: PropTypes.bool,
   volunteer: PropTypes.bool,
   onClickVolunteer: PropTypes.func,

@@ -220,7 +220,7 @@ class SignatureAddForm extends React.Component {
         onUnrecognize={() => { dispatch(sessionActions.unRecognize()) }}
         volunteer={this.state.volunteer}
         onClickVolunteer={this.volunteer}
-
+        thirdPartyOptin={this.state.thirdparty_optin}
         country={this.state.country}
         onChangeCountry={event => this.setState({ country: event.target.value })}
         updateStateFromValue={this.updateStateFromValue}

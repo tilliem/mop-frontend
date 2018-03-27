@@ -16,6 +16,7 @@ const SignatureAddForm = ({
   onChangeCountry,
   showOptinWarning,
   showOptinCheckbox,
+  thirdPartyOptin,
   showAddressFields,
   requireAddressFields,
   onUnrecognize,
@@ -144,6 +145,7 @@ const SignatureAddForm = ({
         type='checkbox'
         label={`Receive campaign updates from ${creator.organization || 'this organization'}`}
         onChange={updateStateFromValue('thirdparty_optin')}
+        defaultChecked={thirdPartyOptin}
       />
     )}
 
@@ -179,6 +181,7 @@ SignatureAddForm.propTypes = {
   onUnrecognize: PropTypes.func,
   showOptinWarning: PropTypes.bool,
   showOptinCheckbox: PropTypes.bool,
+  thirdPartyOptin: PropTypes.bool,
   hiddenOptin: PropTypes.bool,
   volunteer: PropTypes.bool,
   onClickVolunteer: PropTypes.func,
