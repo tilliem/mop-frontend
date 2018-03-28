@@ -8,7 +8,7 @@ import SignatureList from '../../containers/signature-list'
 import PetitionMessage from 'LegacyTheme/petition-message'
 import { Link } from 'react-router'
 
-const Petition = ({ petition: p, query, petitionBy, outOfDate }) => (
+const Petition = ({ petition: p, query, petitionBy, outOfDate, adminLink }) => (
   <div className='container'>
     <PetitionMessage petition={p} outOfDate={outOfDate} isFwd={query.fwd} />
     <div className='row'>
@@ -16,6 +16,11 @@ const Petition = ({ petition: p, query, petitionBy, outOfDate }) => (
 
       <div className='span8 pull-right petition-info-top'>
         <div className='percent-95 padding-left-15 form-wrapper responsive padding-bottom-1 padding-left-2 padding-right-3' style={{ marginLeft: '-20px', position: 'relative' }}>
+          {adminLink && (
+            <a style={{ float: 'right' }} href={adminLink}>
+              zoom &#x270e;
+            </a>
+          )}
           <div className='petition-top hidden-phone'>
             <h1 id='petition-title' className='moveon-bright-red big-title'>{p.title}</h1>
             <p id='by' className='byline lh-20'>
@@ -85,7 +90,8 @@ Petition.propTypes = {
   petition: PropTypes.object.isRequired,
   query: PropTypes.object,
   petitionBy: PropTypes.string,
-  outOfDate: PropTypes.string
+  outOfDate: PropTypes.string,
+  adminLink: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
 }
 
 export default Petition
