@@ -267,7 +267,7 @@ const SignatureAddForm = ({
                 id='thirdparty_optin'
                 name='thirdparty_optin'
                 className='moveon-track-click'
-                onChange={updateStateFromValue('thirdparty_optin', true)}
+                onChange={updateStateFromValue('thirdparty_optin', /* isCheckbox: */true)}
                 defaultChecked={thirdPartyOptin}
               />{' '}
               Receive campaign updates from{' '}

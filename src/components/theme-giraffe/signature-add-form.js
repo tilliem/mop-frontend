@@ -144,7 +144,7 @@ const SignatureAddForm = ({
         name='thirdparty_optin'
         type='checkbox'
         label={`Receive campaign updates from ${creator.organization || 'this organization'}`}
-        onChange={updateStateFromValue('thirdparty_optin', true)}
+        onChange={updateStateFromValue('thirdparty_optin', /* isCheckbox: */true)}
         defaultChecked={thirdPartyOptin}
       />
     )}
