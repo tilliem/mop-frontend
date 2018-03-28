@@ -131,9 +131,10 @@ class SignatureAddForm extends React.Component {
     ).reduce((a, b) => a && b, true)
   }
 
-  updateStateFromValue(field) {
+  updateStateFromValue(field, isCheckbox = false) {
     return (event) => {
-      this.setState({ [field]: event.target.value })
+      const value = isCheckbox ? event.target.checked : event.target.value
+      this.setState({ [field]: value })
     }
   }
 
@@ -220,7 +221,7 @@ class SignatureAddForm extends React.Component {
         onUnrecognize={() => { dispatch(sessionActions.unRecognize()) }}
         volunteer={this.state.volunteer}
         onClickVolunteer={this.volunteer}
-
+        thirdPartyOptin={this.state.thirdparty_optin}
         country={this.state.country}
         onChangeCountry={event => this.setState({ country: event.target.value })}
         updateStateFromValue={this.updateStateFromValue}
