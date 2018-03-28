@@ -8,7 +8,7 @@ import { createMockStore } from 'redux-test-utils'
 import Home from '../../src/containers/home'
 import BillBoard from 'LegacyTheme/billboard'
 import SearchBar from '../../src/containers/searchbar'
-import RecentVictoryList from 'LegacyTheme/recentvictory'
+import Victories from '../../src/containers/victories'
 import TopPetitions from '../../src/containers/top-petitions'
 
 
@@ -36,7 +36,7 @@ describe('<Home />', () => {
   it('renders a recent victory list inside .front-content', () => {
     const myComponent = <Home params={{}} />
     const context = mount(<Provider store={baseStore} children={myComponent} />)
-    expect(context.find('.front-content').find(RecentVictoryList)).to.have.length(1)
+    expect(context.find('.front-content').find(Victories)).to.have.length(1)
   })
 
   it('renders top petitions', () => {

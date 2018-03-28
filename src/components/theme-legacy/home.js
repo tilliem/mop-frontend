@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import BillBoard from 'LegacyTheme/billboard'
 import SearchBar from '../../containers/searchbar'
-import RecentVictoryList from 'LegacyTheme/recentvictory'
+import Victories from '../../containers/victories'
 import TopPetitions from '../../containers/top-petitions'
 import OrganizationHeader from 'LegacyTheme/organization-header'
 
@@ -24,7 +24,7 @@ export const Home = ({ isOrganization, orgName, orgData, isPac }) => (
         fullWidth={isOrganization}
         source='petitionshomepage'
       />
-      {isOrganization ? null : <RecentVictoryList />}
+      {isOrganization ? null : <Victories />}
     </div>
   </div>
 )
