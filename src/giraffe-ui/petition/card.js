@@ -14,7 +14,7 @@ export const PetitionCard = ({
   renderShare,
   renderSignersButton
 }) => (
-  <Card className='petition-card' heading={heading}>
+  <Card className='col-12 petition-card' heading={heading}>
     {children}
 
     <div className='petition-card__range'>
