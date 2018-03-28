@@ -2,36 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import BillBoard from 'LegacyTheme/billboard.js'
-import SearchBar from './searchbar'
-import RecentVictoryList from 'LegacyTheme/recentvictory'
-import TopPetitions from './top-petitions'
-import OrganizationHeader from 'LegacyTheme/organization-header'
+import { Home as HomeComponent } from 'LegacyTheme/home'
 
 const Home = ({ params, nav, isPac }) => {
-  const { organization } = params
-  const isOrganization = Boolean(organization)
-  const orgData = (nav && nav.orgs && nav.orgs[organization]) || {}
-  return (
-    <div className='moveon-petitions container background-moveon-white bump-top-1'>
-      {isOrganization ? null : <BillBoard />}
-      <div>
-        <SearchBar isLong />
-      </div>
+  const orgName = params.organization
+  const orgProps = {
+    orgName,
+    isOrganization: Boolean(orgName),
+    orgData: (nav && nav.orgs && nav.orgs[orgName]) || {}
+  }
 
-      {isOrganization ? <OrganizationHeader orgData={orgData} /> : null}
-
-      <div className='row front-content'>
-        <TopPetitions
-          pac={isPac}
-          megapartner={organization || ''}
-          fullWidth={isOrganization}
-          source='petitionshomepage'
-        />
-        {isOrganization ? null : <RecentVictoryList />}
-      </div>
-    </div>
-  )
+  return <HomeComponent {...orgProps} isPac={isPac} />
 }
 
 Home.propTypes = {
