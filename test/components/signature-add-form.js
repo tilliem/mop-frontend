@@ -65,12 +65,15 @@ describe('<SignatureAddForm />', () => {
       const context = mount(<SignatureAddForm {...propsProfileOpposite} store={store} />)
       const component = unwrapReduxComponent(context)
       expect(Boolean(component.props.user.anonymous)).to.be.equal(false)
+      // Do not display because logged in and petition doesn't need addresses
       expect(context.find('input[name="name"]').length).to.equal(0)
       expect(context.find('input[name="email"]').length).to.equal(0)
-      expect(context.find('input[name="address1"]').length).to.equal(1)
-      expect(context.find('input[name="address2"]').length).to.equal(1)
-      expect(context.find('input[name="city"]').length).to.equal(1)
-      expect(context.find('input[name="zip"]').length).to.equal(1)
+      expect(context.find('input[name="address1"]').length).to.equal(0)
+      expect(context.find('input[name="address2"]').length).to.equal(0)
+      expect(context.find('input[name="city"]').length).to.equal(0)
+      expect(context.find('input[name="zip"]').length).to.equal(0)
+      // DOES display comment
+      expect(context.find('textarea[name="comment"]').length).to.equal(1)
     })
 
     it('local petition with user fields displaying', () => {
