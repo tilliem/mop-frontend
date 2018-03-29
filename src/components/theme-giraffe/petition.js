@@ -22,6 +22,7 @@ const Petition = ({
   petition: p,
   query,
   user,
+  adminLink,
   petitionBy,
   outOfDate,
   onClickFloatingSign,
@@ -46,6 +47,12 @@ const Petition = ({
         )}
       >
         <p>To be delivered to {p.target.map(t => t.name).join(', ')}</p>
+
+        {adminLink && (
+          <a style={{ position: 'absolute', top: 10, right: 10 }} href={adminLink}>
+            zoom &#x270e;
+          </a>
+        )}
 
         {p.featured_image_url && <PetitionCard.Media imageUrl={p.featured_image_url} />}
 
@@ -87,6 +94,7 @@ const Petition = ({
 Petition.propTypes = {
   petition: PropTypes.object.isRequired,
   user: PropTypes.object,
+  adminLink: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   query: PropTypes.object,
   petitionBy: PropTypes.string,
   outOfDate: PropTypes.string,

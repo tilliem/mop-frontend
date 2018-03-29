@@ -19,7 +19,7 @@ function generateMailMessage(
       .map(t => t.name)
       .join(' and ') +
     (fullTarget.length > 3 ? `, and ${fullTarget.length} others` : '')
-  const tooLong = 400 // 1024 for the whole message, so how about 450 for each
+  const tooLong = 600 // 2024 for the whole message, so how about 600 for each
   const petitionAbout = about.length < tooLong ? `\n${about}` : ''
   const petitionStatement = statement.length < tooLong ? `"${statement}"\n` : ''
   return `Hi,

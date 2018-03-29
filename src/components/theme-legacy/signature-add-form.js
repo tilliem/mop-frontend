@@ -19,6 +19,7 @@ const SignatureAddForm = ({
   onChangeCountry,
   showOptinWarning,
   showOptinCheckbox,
+  thirdPartyOptin,
   hiddenOptin,
   showAddressFields,
   requireAddressFields,
@@ -32,18 +33,6 @@ const SignatureAddForm = ({
       style={{ paddingRight: 15, position: 'relative', top: -10 }}
     >
       <div className='petition-top visible-phone' style={{ paddingLeft: 20 }}>
-        {user.admin_petition_link ? (
-          <a
-            style={{ float: 'right' }}
-            href={`${user.admin_petition_link}?petition_id=${
-              petition.petition_id
-            }`}
-          >
-            zoom&nbsp;&#x270e;
-          </a>
-        ) : (
-          ''
-        )}
         <p
           id='to-target'
           className='lh-14 bump-top-1 bump-bottom-1 margin-0 disclaimer'
@@ -266,7 +255,8 @@ const SignatureAddForm = ({
                 id='thirdparty_optin'
                 name='thirdparty_optin'
                 className='moveon-track-click'
-                onChange={updateStateFromValue('thirdparty_optin')}
+                onChange={updateStateFromValue('thirdparty_optin', /* isCheckbox: */true)}
+                defaultChecked={thirdPartyOptin}
               />{' '}
               Receive campaign updates from{' '}
               {creator.organization || 'this organization'}.
@@ -323,6 +313,7 @@ SignatureAddForm.propTypes = {
   onUnrecognize: PropTypes.func,
   showOptinWarning: PropTypes.bool,
   showOptinCheckbox: PropTypes.bool,
+  thirdPartyOptin: PropTypes.bool,
   hiddenOptin: PropTypes.bool,
   volunteer: PropTypes.bool,
   onClickVolunteer: PropTypes.func,

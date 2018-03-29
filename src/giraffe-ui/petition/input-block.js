@@ -9,7 +9,8 @@ export const InputBlock = ({
   onChange,
   type,
   className,
-  setRef
+  setRef,
+  ...rest
 }) => (
   <div
     className={cx(
@@ -25,6 +26,7 @@ export const InputBlock = ({
         onChange={onChange}
         onBlur={onChange}
         ref={setRef}
+        {...rest}
       />
     )}
     <label htmlFor={name}>{label}</label>

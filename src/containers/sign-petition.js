@@ -16,6 +16,7 @@ class SignPetition extends React.Component {
       width: 0
     }
     this.setRef = this.setRef.bind(this)
+    this.getAdminLink = this.getAdminLink.bind(this)
     this.onClickFloatingSign = this.onClickFloatingSign.bind(this)
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
   }
@@ -55,6 +56,15 @@ class SignPetition extends React.Component {
       this[`${f}-commentInput`] ||
       null
     if (firstInput) firstInput.focus()
+  }
+
+  getAdminLink() {
+    const { user, petition } = this.props
+    if (!user || !user.custom_fields || !user.custom_fields.admin) return false
+
+    return `${user.custom_fields.admin_petition_baseurl}?petition_id=${
+      petition.petition_id
+    }`
   }
 
   setRef({ isMobile }) {
@@ -99,6 +109,7 @@ class SignPetition extends React.Component {
         <Petition
           petition={this.props.petition}
           user={this.props.user}
+          adminLink={this.getAdminLink()}
           query={this.props.location.query}
           petitionBy={petitionBy}
           outOfDate={outOfDate}
