@@ -250,16 +250,27 @@ SignatureAddForm.propTypes = {
   setRef: PropTypes.func
 }
 
+function showAddressFields(user, petition) {
+  if (!user.signonId) return true
+
+  const userHasAddress = user.postal_addresses && user.postal_addresses.length
+
+  if (petition.needs_full_addresses && !userHasAddress) {
+    return true
+  }
+  return false
+}
+
 function mapStateToProps(store, ownProps) {
   const user = store.userStore
   const { petition, query } = ownProps
   const creator = (petition._embedded && petition._embedded.creator || {})
   const source = query.source || ''
+
   const newProps = {
     user,
-    showAddressFields: (!(user.signonId) || !(user.postal_addresses && user.postal_addresses.length)),
-    requireAddressFields: (petition.needs_full_addresses
-                           && !(user.postal_addresses && user.postal_addresses.length)),
+    showAddressFields: showAddressFields(user, petition),
+    requireAddressFields: petition.needs_full_addresses && showAddressFields(user, petition),
     fromCreator: (/^c\./.test(source) || /^s\.icn/.test(source)),
     fromMailing: /\.imn/.test(source)
   }
