@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { Home as HomeComponent } from 'LegacyTheme/home'
+import { Home as HomeComponent } from 'Theme/home'
 
 const Home = ({ params, nav, isPac }) => {
   const orgName = params.organization
