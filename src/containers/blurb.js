@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { text2paraJsx, ellipsize } from '../lib'
 
-import { Blurb as BlurbComponent } from 'LegacyTheme/blurb'
+import { Blurb as BlurbComponent } from 'Theme/blurb'
 
 const Blurb = ({ petition, source }) => {
   const url = `/sign/${petition.name}?source=${source}`
