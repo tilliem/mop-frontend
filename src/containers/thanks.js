@@ -111,6 +111,7 @@ class Thanks extends React.Component {
         petition={this.props.petition}
         prefix={this.state.pre}
         trackingParams={this.trackingParamsString}
+        recordShare={this.recordShare('email', `${this.state.pre}.em.mt`)}
       />
     )
   }
