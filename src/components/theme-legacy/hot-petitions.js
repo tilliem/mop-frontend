@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import PetitionPreview from './petition-preview'
+import Blurb from '../../containers/blurb'
 
 const HotPetitions = ({ fullWidth, topPetitions, source }) => (
   <div
@@ -14,7 +14,7 @@ const HotPetitions = ({ fullWidth, topPetitions, source }) => (
     </div>
     {topPetitions &&
       topPetitions.map(petition => (
-        <PetitionPreview
+        <Blurb
           key={petition.petition_id}
           petition={petition}
           source={source}

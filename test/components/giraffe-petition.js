@@ -21,7 +21,7 @@ describe('<Petition /> (Giraffe)', () => {
     const petition = shallow(<Petition {...props} />).children()
     const infocolumn = petition.find('InfoColumn')
     expect(infocolumn.length).to.equal(1)
-    const card = infocolumn.find('Card')
+    const card = infocolumn.find('PetitionCard')
     expect(card.length).to.equal(1)
     const description = card.find('Description')
     expect(description.length).to.equal(1)
