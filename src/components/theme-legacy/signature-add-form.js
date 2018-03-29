@@ -33,18 +33,6 @@ const SignatureAddForm = ({
       style={{ paddingRight: 15, position: 'relative', top: -10 }}
     >
       <div className='petition-top visible-phone' style={{ paddingLeft: 20 }}>
-        {user.admin_petition_link ? (
-          <a
-            style={{ float: 'right' }}
-            href={`${user.admin_petition_link}?petition_id=${
-              petition.petition_id
-            }`}
-          >
-            zoom&nbsp;&#x270e;
-          </a>
-        ) : (
-          ''
-        )}
         <p
           id='to-target'
           className='lh-14 bump-top-1 bump-bottom-1 margin-0 disclaimer'
