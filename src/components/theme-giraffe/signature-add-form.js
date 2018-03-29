@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 
 import { InputBlock, CountrySelect, StateSelect } from 'GiraffeUI/petition'
-import { Button } from 'GiraffeUI/button'
+import { Submit as Button } from 'GiraffeUI/button'
 
 const SignatureAddForm = ({
   submit,
@@ -77,6 +77,7 @@ const SignatureAddForm = ({
         {validationError('city')}
         {country === 'United States' ? (
           <StateSelect
+            label='State*'
             onChange={updateStateFromValue('state')}
           />
         ) : (
