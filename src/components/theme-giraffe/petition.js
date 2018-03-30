@@ -1,5 +1,4 @@
 import React from 'react'
-import cx from 'classnames'
 import PropTypes from 'prop-types'
 import Scrollchor from 'react-scrollchor'
 import Waypoint from 'react-waypoint'
