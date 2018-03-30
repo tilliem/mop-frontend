@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { loadStaticPage } from '../actions/staticPageActions'
 
-import StaticComponent from 'LegacyTheme/static'
+import StaticComponent from 'Theme/static'
 
 const getId = routes => routes && routes[routes.length - 1].wordpressId
 
