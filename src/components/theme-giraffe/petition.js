@@ -12,7 +12,8 @@ import {
   Container,
   SignColumn,
   InfoColumn,
-  MobileSign
+  MobileSign,
+  FloatingSignButton
 } from 'GiraffeUI/petition'
 import PetitionMessage from 'Theme/petition-message'
 
@@ -103,13 +104,10 @@ const Petition = ({
       </Waypoint>
     </SignColumn>
 
-    <div
-      className={cx('sign-form__fixed-button', {
-        'sign-form__fixed-button--hidden': !isFloatingSignVisible
-      })}
-    >
-      <button onClick={onClickFloatingSign}>Sign Now</button>
-    </div>
+    <FloatingSignButton
+      onClick={onClickFloatingSign}
+      visible={isFloatingSignVisible}
+    />
   </Container>
 )
 
