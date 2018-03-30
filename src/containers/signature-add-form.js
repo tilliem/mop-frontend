@@ -203,11 +203,21 @@ class SignatureAddForm extends React.Component {
   }
 
   render() {
-    const { dispatch, petition, user, query, showAddressFields, requireAddressFields, showOptinCheckbox, showOptinWarning, setRef } = this.props
-    const creator = (petition._embedded && petition._embedded.creator || {})
-    const petitionBy = creator.name + (creator.organization
-                                       ? `, ${creator.organization}`
-                                       : '')
+    const {
+      dispatch,
+      petition,
+      user,
+      query,
+      showAddressFields,
+      requireAddressFields,
+      showOptinCheckbox,
+      showOptinWarning,
+      setRef,
+      innerRef
+    } = this.props
+    const creator = (petition._embedded && petition._embedded.creator) || {}
+    const petitionBy =
+      creator.name + (creator.organization ? `, ${creator.organization}` : '')
     return (
       <SignatureAddFormComponent
         submit={this.submit}
@@ -229,6 +239,7 @@ class SignatureAddForm extends React.Component {
         showOptinWarning={showOptinWarning}
         showOptinCheckbox={showOptinCheckbox}
         setRef={setRef}
+        innerRef={innerRef}
       />
     )
   }
@@ -247,7 +258,8 @@ SignatureAddForm.propTypes = {
   showOptinWarning: PropTypes.bool,
   showOptinCheckbox: PropTypes.bool,
   hiddenOptin: PropTypes.bool,
-  setRef: PropTypes.func
+  setRef: PropTypes.func,
+  innerRef: PropTypes.func
 }
 
 function shouldShowAddressFields(user, petition) {
