@@ -1,6 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-import { Victories as VictoriesComponent } from 'LegacyTheme/victories'
+import { Victories as VictoriesComponent } from 'Theme/victories'
 
 const victories = [
   {
@@ -97,6 +98,12 @@ const victories = [
   }
 ]
 
-export const Victories = () => <VictoriesComponent victories={victories} />
+export const Victories = ({ className }) => (
+  <VictoriesComponent className={className} victories={victories} />
+)
+
+Victories.propTypes = {
+  className: PropTypes.string
+}
 
 export default Victories
