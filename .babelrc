@@ -1,7 +1,8 @@
 {
   "presets" : ["es2015", "react"],
   "plugins": [
-    ["transform-object-rest-spread", { "useBuiltIns": false }]
+    ["transform-object-rest-spread", { "useBuiltIns": false }],
+    "syntax-dynamic-import"
   ],
   "env": {
     "test": {

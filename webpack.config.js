@@ -59,6 +59,7 @@ var config = {
   plugins : [
     new HtmlWebpackPlugin({
       template: 'local/index.html',
+      chunksSortMode: 'none',
       inject: 'body',
       //hash: true,
       filename: 'index.html',
