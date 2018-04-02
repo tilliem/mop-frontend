@@ -5,19 +5,21 @@ import { IndexRoute, Route, Router, browserHistory, hashHistory, match } from 'r
 import { Config } from './config'
 import { trackPage } from './actions/sessionActions'
 import { loadOrganization } from './actions/navActions.js'
-import Home from './containers/home'
-import PacHome from './containers/pac-home'
-import SignPetition from './containers/sign-petition'
-import ThanksShim from './loaders/thanks-shim'
-import SearchPage from './containers/search'
-import PetitionCreatorDashboard from './containers/petition-creator-dashboard'
-import PetitionReport from './containers/petition-report'
-import CreatePetitionPage from './containers/create-petition'
 import Wrapper from './containers/wrapper'
-import ForgotPassword from './containers/forgot-password'
-import Register from './containers/register'
-import Login from './containers/login'
+import ThanksShim from './loaders/thanks-shim'
 import Static from './containers/static'
+import {
+  LoadableHome,
+  LoadablePacHome,
+  LoadableSearch,
+  LoadableDashboard,
+  LoadableSign,
+  LoadableCreate,
+  LoadableRegister,
+  LoadableLogin,
+  LoadableForgotPassword,
+  LoadablePetitionReport
+} from './loaders/index'
 
 
 const baseAppPath = window.baseAppPath || process.env.BASE_APP_PATH || '/'
@@ -76,22 +78,22 @@ export const routes = (store) => {
   }
   const routeHierarchy = (
     <Route path={baseAppPath} component={Wrapper}>
-      <IndexRoute prodReady component={Home} />
-      <Route path='pac/' component={PacHome} />
-      <Route path='sign/:petition_slug' component={SignPetition} />
-      <Route path=':organization/sign/:petition_slug' component={SignPetition} onEnter={orgLoader} />
+      <IndexRoute prodReady component={LoadableHome} />
+      <Route path='pac/' component={LoadablePacHome} />
+      <Route path='sign/:petition_slug' component={LoadableSign} />
+      <Route path=':organization/sign/:petition_slug' component={LoadableSign} onEnter={orgLoader} />
       <Route path='thanks.html' component={ThanksShim} prodReady minimalNav />
       <Route path=':organization/thanks.html' component={ThanksShim} onEnter={orgLoader} minimalNav />
-      <Route path='find' component={SearchPage} />
-      <Route path='dashboard.html' component={PetitionCreatorDashboard} />
-      <Route path='create_start.html' component={CreatePetitionPage} minimalNav />
+      <Route path='find' component={LoadableSearch} />
+      <Route path='dashboard.html' component={LoadableDashboard} />
+      <Route path='create_start.html' component={LoadableCreate} minimalNav />
       <Route path='petition_report.html' component={PetitionReport} />
-      <Route path=':organization/create_start.html' component={CreatePetitionPage} onEnter={orgLoader} minimalNav />
-      <Route path='login/' component={Login} />
-      <Route path='login/index.html' component={Login} />
-      <Route path='login/register.html' component={Register} />
-      <Route path='login/forgot_password.html' component={ForgotPassword} />
-      <Route path=':organization/' component={Home} onEnter={orgLoader} />
+      <Route path=':organization/create_start.html' component={LoadableCreate} onEnter={orgLoader} minimalNav />
+      <Route path='login/' component={LoadableLogin} />
+      <Route path='login/index.html' component={LoadableLogin} />
+      <Route path='login/register.html' component={LoadableRegister} />
+      <Route path='login/forgot_password.html' component={LoadableForgotPassword} />
+      <Route path=':organization/' component={LoadableHome} onEnter={orgLoader} />
 
       {/* Static pages with content from wordpress api */}
       <Route path='about.html' component={Static} wordpressId={60931} />
