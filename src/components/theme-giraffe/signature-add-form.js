@@ -22,15 +22,18 @@ const SignatureAddForm = ({
   onUnrecognize,
   updateStateFromValue,
   validationError,
-  setRef
+  setRef,
+  innerRef
 }) => (
-  <form onSubmit={submit} className='sign-form'>
+  <form ref={innerRef} onSubmit={submit} className='sign-form'>
     <h4>SIGN THIS PETITION</h4>
     {user.signonId ? (
       // Recognized
       <div>
         <p>Welcome back {user.given_name}!</p>
-        <p>(Not {user.given_name}? <a onClick={onUnrecognize}>Click here.</a>)</p>
+        <p>
+          (Not {user.given_name}? <a onClick={onUnrecognize}>Click here.</a>)
+        </p>
       </div>
     ) : (
       // Anonymous
@@ -103,10 +106,7 @@ const SignatureAddForm = ({
     ) : (
       ''
     )}
-    <InputBlock
-      name='comment'
-      label='Comment (Optional)'
-    >
+    <InputBlock name='comment' label='Comment (Optional)'>
       <textarea
         rows='10'
         name='comment'
@@ -144,8 +144,12 @@ const SignatureAddForm = ({
       <InputBlock
         name='thirdparty_optin'
         type='checkbox'
-        label={`Receive campaign updates from ${creator.organization || 'this organization'}`}
-        onChange={updateStateFromValue('thirdparty_optin', /* isCheckbox: */true)}
+        label={`Receive campaign updates from ${creator.organization ||
+          'this organization'}`}
+        onChange={updateStateFromValue(
+          'thirdparty_optin',
+          /* isCheckbox: */ true
+        )}
         defaultChecked={thirdPartyOptin}
       />
     )}
@@ -190,7 +194,8 @@ SignatureAddForm.propTypes = {
   onChangeCountry: PropTypes.func,
   updateStateFromValue: PropTypes.func,
   validationError: PropTypes.func,
-  setRef: PropTypes.func
+  setRef: PropTypes.func,
+  innerRef: PropTypes.func
 }
 
 export default SignatureAddForm

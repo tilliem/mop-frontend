@@ -1,7 +1,9 @@
 import React from 'react'
-import PetitionMessage from 'Theme/petition-message'
 import PropTypes from 'prop-types'
 import Scrollchor from 'react-scrollchor'
+import Waypoint from 'react-waypoint'
+
+import { text2paraJsx, splitIntoSpansJsx, ellipsize } from '../../lib'
 
 import {
   PetitionCard,
@@ -9,12 +11,12 @@ import {
   Container,
   SignColumn,
   InfoColumn,
-  MobileSign
+  MobileSign,
+  FloatingSignButton
 } from 'GiraffeUI/petition'
+import PetitionMessage from 'Theme/petition-message'
 
 import { Share } from './petition-share'
-
-import { text2paraJsx, splitIntoSpansJsx, ellipsize } from '../../lib'
 import SignatureAddForm from '../../containers/signature-add-form'
 import SignatureList from '../../containers/signature-list'
 
@@ -25,7 +27,10 @@ const Petition = ({
   adminLink,
   petitionBy,
   outOfDate,
+  isFloatingSignVisible,
   onClickFloatingSign,
+  hideFloatingSign,
+  showFloatingSign,
   setRef
 }) => (
   <Container>
@@ -62,7 +67,13 @@ const Petition = ({
       </PetitionCard>
 
       <MobileSign>
-        <SignatureAddForm setRef={setRef({ isMobile: true })} petition={p} query={query} />
+        <Waypoint onEnter={hideFloatingSign} onLeave={showFloatingSign} topOffset='57px'>
+          <SignatureAddForm
+            setRef={setRef({ isMobile: true })}
+            petition={p}
+            query={query}
+          />
+        </Waypoint>
       </MobileSign>
 
       <Details>
@@ -83,11 +94,19 @@ const Petition = ({
       </Details>
     </InfoColumn>
     <SignColumn>
-      <SignatureAddForm setRef={setRef({ isMobile: false })} petition={p} query={query} />
+      <Waypoint onEnter={hideFloatingSign} onLeave={showFloatingSign} topOffset='120px'>
+        <SignatureAddForm
+          setRef={setRef({ isMobile: false })}
+          petition={p}
+          query={query}
+        />
+      </Waypoint>
     </SignColumn>
-    <button onClick={onClickFloatingSign} className='sign-form__fixed-button'>
-      Sign Now
-    </button>
+
+    <FloatingSignButton
+      onClick={onClickFloatingSign}
+      visible={isFloatingSignVisible}
+    />
   </Container>
 )
 
@@ -98,8 +117,11 @@ Petition.propTypes = {
   query: PropTypes.object,
   petitionBy: PropTypes.string,
   outOfDate: PropTypes.string,
+  setRef: PropTypes.func,
   onClickFloatingSign: PropTypes.func,
-  setRef: PropTypes.func
+  isFloatingSignVisible: PropTypes.bool,
+  hideFloatingSign: PropTypes.func,
+  showFloatingSign: PropTypes.func
 }
 
 export default Petition

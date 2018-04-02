@@ -13,7 +13,8 @@ class SignPetition extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      width: 0
+      width: 0,
+      floatingSignVisible: false
     }
     this.setRef = this.setRef.bind(this)
     this.getAdminLink = this.getAdminLink.bind(this)
@@ -113,7 +114,10 @@ class SignPetition extends React.Component {
           query={this.props.location.query}
           petitionBy={petitionBy}
           outOfDate={outOfDate}
+          isFloatingSignVisible={this.state.floatingSignVisible}
           onClickFloatingSign={this.onClickFloatingSign}
+          hideFloatingSign={() => this.setState({ floatingSignVisible: false })}
+          showFloatingSign={() => this.setState({ floatingSignVisible: true })}
           setRef={this.setRef}
         />
       </div>
