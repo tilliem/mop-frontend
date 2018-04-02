@@ -5,10 +5,10 @@ import { getRegions, armedForcesRegions } from '../../lib'
 
 import CaretDownSvg from '../svgs/caret-down.svg'
 
-export const StateSelect = ({ value, onChange, className, onlyStates }) => (
-  <div className={cx('input-block', className, { active: !!value })}>
-    <select name='state' id='state' className={className} onChange={onChange}>
-      <option />
+export const StateSelect = ({ label, placeholder, onChange, className, onlyStates }) => (
+  <div className={cx('input-block', className)}>
+    <select name='state' id='state' onChange={onChange}>
+      <option>{placeholder}</option>
       {getRegions(onlyStates).map(([val, text]) => (
         <option key={val} value={val}>
           {text}
@@ -22,7 +22,7 @@ export const StateSelect = ({ value, onChange, className, onlyStates }) => (
         ))}
     </select>
     <CaretDownSvg className='select-caret' />
-    <label htmlFor='country'>State*</label>
+    {label && <label htmlFor='country'>{label}</label>}
   </div>
 )
 
@@ -30,5 +30,7 @@ StateSelect.propTypes = {
   onChange: PropTypes.func,
   value: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   className: PropTypes.string,
-  onlyStates: PropTypes.bool
+  onlyStates: PropTypes.bool,
+  label: PropTypes.string,
+  placeholder: PropTypes.string
 }

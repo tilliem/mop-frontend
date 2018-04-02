@@ -25,11 +25,12 @@ describe('<SearchBar />', () => {
   it('basic loading, long searchbar', () => {
     const context = mount(<SearchBar isLong store={baseStore} />)
     const component = unwrapReduxComponent(context)
-    expect(context.find('#search-bar-large').length).to.equal(1)
     expect(component.props.query).to.equal(undefined)
     expect(component.props.isLong).to.equal(true)
     expect(component.props.selectState).to.equal(undefined)
-    expect(context.find('#searchValue').length).to.equal(1)
+    expect(context.find('input[type="text"]').length).to.equal(1)
+    expect(context.find('select').length).to.equal(1)
+    expect(context.find('button[type="submit"]').length).to.equal(1)
   })
 
   it('prepopulates query if passed in', () => {

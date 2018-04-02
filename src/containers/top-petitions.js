@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import HotPetitons from 'LegacyTheme/hot-petitions'
+import HotPetitons from 'Theme/hot-petitions'
 import { loadTopPetitions } from '../actions/petitionActions.js'
 
 class TopPetitions extends React.Component {
@@ -12,12 +12,13 @@ class TopPetitions extends React.Component {
   }
 
   render() {
-    const { topPetitions, source, fullWidth } = this.props
+    const { topPetitions, source, fullWidth, className } = this.props
     return (
       <HotPetitons
         fullWidth={fullWidth}
         topPetitions={topPetitions}
         source={source}
+        className={className}
       />
     )
   }
@@ -29,7 +30,8 @@ TopPetitions.propTypes = {
   source: PropTypes.string,
   topPetitions: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   loadPetitions: PropTypes.func,
-  fullWidth: PropTypes.bool
+  fullWidth: PropTypes.bool,
+  className: PropTypes.string
 }
 
 const mapStateToProps = (store, ownProps) => {

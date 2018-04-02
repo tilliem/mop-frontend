@@ -5,10 +5,9 @@ import { actions as petitionActions } from '../actions/petitionActions.js'
 import { appLocation } from '../routes.js'
 
 import ShortSearchBar from 'LegacyTheme/short-search-bar'
-import LongSearchBar from 'LegacyTheme/long-search-bar'
+import LongSearchBar from 'Theme/long-search-bar'
 
 class SearchBar extends React.Component {
-
   constructor(props) {
     super(props)
     this.state = {
@@ -62,14 +61,24 @@ class SearchBar extends React.Component {
   }
 
   render() {
-    const { isLong } = this.props
+    const { isLong, className } = this.props
 
-    return (
-      <div>
-        {isLong ? <LongSearchBar submit={this.submitQuery} queryValue={this.state.query} stateValue={this.state.selectState} changeQueryValue={this.selectQuery} changeQueryState={this.selectState} /> :
-          <ShortSearchBar submit={this.submitQuery} change={this.selectQuery} query={this.state.query} />}
-        <div className='clear'></div>
-      </div>
+    return isLong ? (
+      <LongSearchBar
+        className={className}
+        submit={this.submitQuery}
+        queryValue={this.state.query}
+        stateValue={this.state.selectState}
+        changeQueryValue={this.selectQuery}
+        changeQueryState={this.selectState}
+      />
+    ) : (
+      <ShortSearchBar
+        classNames={className}
+        submit={this.submitQuery}
+        change={this.selectQuery}
+        query={this.state.query}
+      />
     )
   }
 }
@@ -79,7 +88,8 @@ SearchBar.propTypes = {
   query: PropTypes.string,
   currentPage: PropTypes.string,
   dispatch: PropTypes.func,
-  selectState: PropTypes.string
+  selectState: PropTypes.string,
+  className: PropTypes.string
 }
 
 export default connect()(SearchBar)
