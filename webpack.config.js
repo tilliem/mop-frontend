@@ -29,7 +29,7 @@ var config = {
     //NOTE: when process.env.PROD is true this will be the minified file
     //TODO: maybe we should hash this and figure out a way to pass the hashed version to it
     filename: APP_ENTRY + '.' + THEME + '.js',
-    chunkFilename: 'chunk-[id]' + '.' + THEME + '.js?v=[hash]'
+    chunkFilename: 'chunk-[id]' + '.' + THEME + '.js?v=[chunkhash]'
   },
   externals: {
     'react': 'React',
