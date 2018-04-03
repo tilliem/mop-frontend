@@ -5,7 +5,7 @@ import 'whatwg-fetch'
 import { connect } from 'react-redux'
 
 import Petition from 'Theme/petition'
-import { thanksLoader } from '../loaders/petition.js'
+import { LoadableThanks } from '../loaders/'
 import { actions as petitionActions } from '../actions/petitionActions.js'
 import { appLocation } from '../routes.js'
 
@@ -32,7 +32,7 @@ class SignPetition extends React.Component {
 
   componentDidMount() {
     // Lazy-load thanks page component
-    thanksLoader()
+    LoadableThanks.preload()
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
   }
