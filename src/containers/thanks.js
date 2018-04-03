@@ -38,7 +38,7 @@ function getTrackingParams(signatureMessage, user) {
 class Thanks extends React.Component {
   constructor(props) {
     super(props)
-    const { petition, signatureMessage, user, location } = props
+    const { petition, fromSource, signatureMessage, user } = props
 
     this.trackingParams = getTrackingParams(signatureMessage, user)
     this.trackingParamsString = stringifyParams(this.trackingParams)
@@ -52,7 +52,7 @@ class Thanks extends React.Component {
 
     this.state = {
       sharedSocially: false,
-      pre: getPre(location.query.from_source, petition, this.isCreator)
+      pre: getPre(fromSource, petition, this.isCreator)
     }
 
     this.recordShare = this.recordShare.bind(this)
@@ -64,18 +64,8 @@ class Thanks extends React.Component {
   }
 
   componentDidMount() {
-    const { dispatch, petition, nextPetitionsLoaded, location } = this.props
-
-    if (!petition) {
-      if (location.query.name) {
-        dispatch(petitionActions.loadPetition(location.query.name))
-      } else if (location.query.petition_id) {
-        dispatch(petitionActions.loadPetition(location.query.petition_id))
-      }
-    }
-
-    if (!nextPetitionsLoaded) {
-      dispatch(petitionActions.loadTopPetitions(petition.entity === 'pac' ? 1 : 0, '', false))
+    if (!this.props.nextPetitionsLoaded) {
+      this.props.dispatch(petitionActions.loadTopPetitions(this.props.petition.entity === 'pac' ? 1 : 0, '', false))
     }
   }
 
@@ -168,33 +158,19 @@ Thanks.propTypes = {
   petition: PropTypes.object,
   user: PropTypes.object,
   signatureMessage: PropTypes.object,
+  fromSource: PropTypes.string,
   nextPetitionsLoaded: PropTypes.bool,
   nextPetition: PropTypes.object,
-  dispatch: PropTypes.func,
-  location: PropTypes.object
+  dispatch: PropTypes.func
 }
 
-function mapStateToProps(store, ownProps) {
+function mapStateToProps(store) {
   const { nextPetitionsLoaded, nextPetitions, petitions } = store.petitionStore
-
-  const pkey = ownProps.location.query.name || ownProps.location.query.petition_id
-  const petition = pkey && petitions[pkey]
-
   let nextPetition = null
   if (nextPetitions && nextPetitions.length && nextPetitions[0]) {
     nextPetition = petitions[nextPetitions[0]]
   }
-
-  return {
-    petition,
-    user: store.userStore,
-    signatureMessage: (petition
-                        && petition.petition_id
-                        && store.petitionStore.signatureMessages
-                        && store.petitionStore.signatureMessages[petition.petition_id]),
-    nextPetition,
-    nextPetitionsLoaded
-  }
+  return { nextPetition, nextPetitionsLoaded }
 }
 
 export default connect(mapStateToProps)(Thanks)

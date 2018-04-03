@@ -6,13 +6,13 @@ import { Config } from './config'
 import { trackPage } from './actions/sessionActions'
 import { loadOrganization } from './actions/navActions.js'
 import Wrapper from './containers/wrapper'
+import ThanksShim from './loaders/thanks-shim'
 import {
   LoadableHome,
   LoadablePacHome,
   LoadableSearch,
   LoadableDashboard,
   LoadableSign,
-  LoadableThanks,
   LoadableCreate,
   LoadableRegister,
   LoadableLogin,
@@ -82,8 +82,8 @@ export const routes = (store) => {
       <Route path='pac/' component={LoadablePacHome} />
       <Route path='sign/:petition_slug' component={LoadableSign} />
       <Route path=':organization/sign/:petition_slug' component={LoadableSign} onEnter={orgLoader} />
-      <Route path='thanks.html' component={LoadableThanks} prodReady minimalNav />
-      <Route path=':organization/thanks.html' component={LoadableThanks} onEnter={orgLoader} minimalNav />
+      <Route path='thanks.html' component={ThanksShim} prodReady minimalNav />
+      <Route path=':organization/thanks.html' component={ThanksShim} onEnter={orgLoader} minimalNav />
       <Route path='find' component={LoadableSearch} />
       <Route path='dashboard.html' component={LoadableDashboard} />
       <Route path='create_start.html' component={LoadableCreate} minimalNav />
