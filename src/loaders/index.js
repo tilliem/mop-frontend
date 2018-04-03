@@ -1,8 +1,7 @@
 /* eslint-disable new-cap */
-import React from 'react'
 import Loadable from 'react-loadable'
 
-const Loading = () => <h1>Loading</h1>
+import Loading from 'LegacyTheme/loading'
 
 export const LoadableSign = Loadable({
   loader: () => import('../containers/sign-petition'),
