@@ -6,7 +6,7 @@
   ],
   "env": {
     "test": {
-      "plugins": ["webpack-alias"]
+      "plugins": ["webpack-alias", "dynamic-import-node"]
     }
   }
 }
