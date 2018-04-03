@@ -104,7 +104,7 @@ var config = {
         'PROD': process.env.PROD
       }
     }),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ]
 };
 
