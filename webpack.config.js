@@ -1,3 +1,4 @@
+/* eslint-disable */
 var webpack = require('webpack');
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -8,6 +9,8 @@ var APP_ENTRY = process.env.APP_ENTRY || "main";
 
 var THEME = process.env.THEME || "legacy";
 var THEME_DIR = path.resolve(__dirname, 'src/components/theme-' + THEME);
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 var config = {
   entry: {
@@ -100,8 +103,8 @@ var config = {
         'USE_HASH_BROWSING': JSON.stringify(process.env.USE_HASH_BROWSING || false),
         'PROD': process.env.PROD
       }
-    })
-
+    }),
+    new BundleAnalyzerPlugin(),
   ]
 };
 
