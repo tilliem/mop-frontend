@@ -57,3 +57,8 @@ export const LoadableDashboard = Loadable({
   loader: () => import('../containers/petition-creator-dashboard'),
   loading: Loading
 })
+
+export const LoadableStatic = Loadable({
+  loader: () => import('../containers/static'),
+  loading: Loading
+})
