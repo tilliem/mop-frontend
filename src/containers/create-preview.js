@@ -5,6 +5,7 @@ import { appLocation } from '../routes.js'
 
 import { submitPetition } from '../actions/createPetitionActions'
 
+import { CreatePreviewUser } from 'LegacyTheme/create-preview-user'
 import { CreatePreviewRegister } from 'LegacyTheme/create-preview-register'
 import { CreatePreview as CreatePreviewComponent } from 'LegacyTheme/create-preview'
 
@@ -24,7 +25,7 @@ class CreatePreview extends React.Component {
 
   renderUserForm() {
     const { user } = this.props
-    const Form = CreatePreviewRegister
+    const Form = user.isAuthenticated ? CreatePreviewUser : CreatePreviewRegister
 
     return <Form successCallback={this.submitPetition} user={user} />
   }

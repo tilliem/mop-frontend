@@ -55,6 +55,41 @@ export function register(fields, successCallback) {
   }
 }
 
+export function update(fields, successCallback) {
+  return dispatch => {
+    dispatch({
+      type: actionTypes.UPDATE_SUBMIT
+    })
+    dispatch({
+      type: actionTypes.UPDATE_SUCCESS
+    })
+    successCallback()
+    // return fetch(`${Config.API_URI}/user`, {
+    //   method: 'POST',
+    //   credentials: 'same-origin',
+    //   body: JSON.stringify({ user: fields })
+    // })
+    //   .then(res => res.json())
+    //   .then(handleErrors)
+    //   .then(() => {
+    //     dispatch({
+    //       type: actionTypes.UPDATE_SUCCESS
+    //     })
+    //     successCallback()
+    //   })
+    //   .catch(err => {
+    //     let formErrors = [{ message: 'server error: account could not be updated' }]
+    //     if (err && err.fields) {
+    //       formErrors = parseServerErrors(err.fields)
+    //     }
+    //     dispatch({
+    //       type: actionTypes.UPDATE_FAILURE,
+    //       formErrors
+    //     })
+    //   })
+  }
+}
+
 export function login(fields, successCallback) {
   return dispatch => {
     dispatch({
@@ -125,6 +160,7 @@ export function forgotPassword(email) {
 export const actions = {
   register,
   login,
+  update,
   loadUserPetitions,
   forgotPassword
 }
