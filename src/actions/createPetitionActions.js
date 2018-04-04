@@ -3,6 +3,8 @@ import Config from '../config.js'
 
 export const actionTypes = {
   CREATE_PETITION_PREVIEW_SUBMIT: 'CREATE_PETITION_PREVIEW_SUBMIT',
+  CREATE_SUCCESS: 'CREATE_PETITION_SUCCESS',
+  CREATE_FAILURE: 'CREATE_PETITION_FAILURE',
   FETCH_TARGETS_REQUEST: 'FETCH_TARGETS_REQUEST',
   FETCH_TARGETS_SUCCESS: 'FETCH_TARGETS_SUCCESS',
   FETCH_TARGETS_FAILURE: 'FETCH_TARGETS_FAILURE'
@@ -15,6 +17,40 @@ export function previewSubmit({ title, summary, description, target }) {
     summary,
     description,
     target
+  }
+}
+
+function handleErrors(response) {
+  if (!response.ok) {
+    throw Error(response.statusText)
+  }
+  return response
+}
+
+export function submitPetition() {
+  return (dispatch, getState) => {
+    const { petitionCreateStore: petitionFields } = getState()
+    console.log('hey hey hey, lets submit the petition')
+    console.log(petitionFields)
+    return fetch(`${Config.API_URI}/users/petitions.json`, {
+      method: 'POST',
+      body: JSON.stringify({ petition: petitionFields })
+    })
+      .then(handleErrors)
+      .then(res => res.json())
+      .then(res => {
+        console.warn(res)
+        dispatch({
+          type: actionTypes.CREATE_SUCCESS,
+          nice: 'nice2'
+        })
+      })
+      .catch(err => {
+        dispatch({
+          type: actionTypes.CREATE_FAILURE
+        })
+        throw err
+      })
   }
 }
 
@@ -44,10 +80,9 @@ export function loadTargets(group, geoState) {
       })
     }
 
-
-    return fetch(url)
-      .then(
-        (response) => response.json().then((json) => {
+    return fetch(url).then(
+      response =>
+        response.json().then(json => {
           dispatch({
             type: actionTypes.FETCH_TARGETS_SUCCESS,
             targets: json,
@@ -56,14 +91,14 @@ export function loadTargets(group, geoState) {
             storeKey
           })
         }),
-        (err) => {
-          dispatch({
-            type: actionTypes.FETCH_TARGETS_FAILURE,
-            error: err,
-            group,
-            geoState
-          })
-        }
-      )
+      err => {
+        dispatch({
+          type: actionTypes.FETCH_TARGETS_FAILURE,
+          error: err,
+          group,
+          geoState
+        })
+      }
+    )
   }
 }
