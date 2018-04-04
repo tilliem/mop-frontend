@@ -17,6 +17,9 @@ var config = {
     host: "0.0.0.0",
     historyApiFallback: {
       disableDotRule: true
+    },
+    proxy: {
+      "/api": "http://localhost:8000"
     }
   },
   devtool: 'sourcemap',
