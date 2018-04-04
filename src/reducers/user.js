@@ -92,6 +92,13 @@ export default function userReducer(state = initialUserState, action) {
     case accountActionTypes.REGISTER_FAILURE:
       return { ...state, isSubmittingRegister: false, registerErrors: action.formErrors }
 
+    case accountActionTypes.LOGIN_SUBMIT:
+      return { ...state, isSubmittingLogin: true, loginErrors: null }
+    case accountActionTypes.LOGIN_SUCCESS:
+      return { ...state, isSubmittingLogin: false, loginErrors: null }
+    case accountActionTypes.LOGIN_FAILURE:
+      return { ...state, isSubmittingLogin: false, loginErrors: action.formErrors }
+
     default:
       return state
   }

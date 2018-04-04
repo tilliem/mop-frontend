@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 
 import LoginForm from 'LegacyTheme/login-form'
 
+import { actions as accountActions } from '../actions/accountActions'
+import { appLocation } from '../routes'
 import { isValidEmail } from '../lib'
 
 class Login extends React.Component {
@@ -17,10 +19,10 @@ class Login extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
+    if (nextProps.formErrors.length) {
       this.setState({ presubmitErrors: null })
+      this.password.value = ''
     }
-    this.password.value = ''
   }
 
   /**
@@ -53,20 +55,20 @@ class Login extends React.Component {
    * @returns {Array} an jsx array of errors
    */
   errorList() {
-    const errors = this.state.presubmitErrors || this.props.loginErrors || []
+    const errors = this.state.presubmitErrors || this.props.formErrors || []
     return errors.map((error, idx) => <li key={idx}>{error.message}</li>)
   }
 
   handleSubmit(event) {
     event.preventDefault()
     if (!this.validateForm()) return
-    // Not implemented yet
+
     const fields = {
       email: this.email.value,
       password: this.password.value
     }
-    console.log(fields)
-    // this.props.dispatch(sessionActions.login(fields))
+    const { successCallback, dispatch } = this.props
+    dispatch(accountActions.login(fields, successCallback))
   }
 
   render() {
@@ -76,22 +78,29 @@ class Login extends React.Component {
           errorList={this.errorList}
           handleSubmit={this.handleSubmit}
           setRef={input => input && (this[input.name] = input)}
+          isSubmitting={this.props.isSubmitting}
         />
       </div>
     )
   }
 }
 
+Login.defaultProps = {
+  // TODO: Figure out the default page and/or where they were trying to go
+  successCallback: () => appLocation.push('/sign/georgia-add-outkast-to')
+}
+
 Login.propTypes = {
-  loginErrors: PropTypes.array,
+  formErrors: PropTypes.array,
   dispatch: PropTypes.func,
-  isSubmitting: PropTypes.bool
+  isSubmitting: PropTypes.bool,
+  successCallback: PropTypes.func
 }
 
 function mapStateToProps({ userStore = {} }) {
   return {
-    loginErrors: userStore.loginErrors || [],
-    isSubmitting: !!userStore.isSubmitting
+    formErrors: userStore.loginErrors || [],
+    isSubmitting: !!userStore.isSubmittingLogin
   }
 }
 
