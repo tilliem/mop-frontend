@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import RegisterForm from 'LegacyTheme/register-form'
-import { actions as accountActions } from '../actions/accountActions'
 
+import { actions as accountActions } from '../actions/accountActions'
+import { appLocation } from '../routes'
 import { isValidEmail } from '../lib'
 
 class Register extends React.Component {
@@ -19,11 +20,11 @@ class Register extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
+    if (nextProps.formErrors.length) {
       this.setState({ presubmitErrors: null })
+      this.password.value = ''
+      this.passwordConfirm.value = ''
     }
-    this.password.value = ''
-    this.passwordConfirm.value = ''
   }
 
     /**
@@ -73,7 +74,9 @@ class Register extends React.Component {
         fields[zip.name] = zip.value
         fields[phone.name] = phone.value
       }
-      this.props.dispatch(accountActions.register(fields, this.props.registerCallback))
+
+      const { successCallback, dispatch } = this.props
+      dispatch(accountActions.register(fields, successCallback))
     }
   }
 
@@ -99,19 +102,24 @@ class Register extends React.Component {
   }
 }
 
+Register.defaultProps = {
+  // TODO: Implement no-petition.html
+  successCallback: () => appLocation.push('/sign/georgia-add-outkast-to')
+}
+
 Register.propTypes = {
   formErrors: PropTypes.array,
   dispatch: PropTypes.func,
   isSubmitting: PropTypes.bool,
   form: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
   includeZipAndPhone: PropTypes.bool,
-  registerCallback: PropTypes.func
+  successCallback: PropTypes.func
 }
 
-function mapStateToProps({ accountRegisterStore = {} }) {
+function mapStateToProps({ userStore = {} }) {
   return {
-    formErrors: accountRegisterStore.formErrors || [],
-    isSubmitting: !!accountRegisterStore.isSubmitting
+    formErrors: userStore.registerErrors || [],
+    isSubmitting: !!userStore.isSubmittingRegister
   }
 }
 

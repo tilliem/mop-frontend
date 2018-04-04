@@ -84,19 +84,14 @@ export default function userReducer(state = initialUserState, action) {
       // TODO: merge in new ids, so we can support pagination
       newData.petitions = action.petitions.map(p => p.petition_id)
       return { ...state, ...newData }
-    default:
-      return state
-  }
-}
 
-export function accountRegisterReducer(state = {}, action) {
-  switch (action.type) {
     case accountActionTypes.REGISTER_SUBMIT:
-      return { ...state, isSubmitting: true }
+      return { ...state, isSubmittingRegister: true, registerErrors: null }
     case accountActionTypes.REGISTER_SUCCESS:
-      return { ...state, isSubmitting: false }
+      return { ...state, isSubmittingRegister: false, registerErrors: null }
     case accountActionTypes.REGISTER_FAILURE:
-      return { ...state, isSubmitting: false, formErrors: action.formErrors }
+      return { ...state, isSubmittingRegister: false, registerErrors: action.formErrors }
+
     default:
       return state
   }

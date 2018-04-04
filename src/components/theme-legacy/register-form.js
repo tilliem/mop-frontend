@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const RegisterForm = ({ errorList, handleSubmit, setRef }) => (
+const RegisterForm = ({ errorList, handleSubmit, setRef, isSubmitting }) => (
   <div className='moveon-petitions'>
     <div className='container'>
       <div className='row'>
@@ -51,7 +51,8 @@ const RegisterForm = ({ errorList, handleSubmit, setRef }) => (
               <div>
                 <div className='bump-bottom-2'>
                   <input
-                    value='Register'
+                    value={isSubmitting ? 'Please wait...' : 'Register'}
+                    disabled={isSubmitting}
                     className='button bump-top-2'
                     type='submit'
                   />
@@ -98,7 +99,7 @@ RegisterForm.propTypes = {
   errorList: PropTypes.func,
   handleSubmit: PropTypes.func,
   setRef: PropTypes.func,
-  isSubmitting: PropTypes.bool // Not used yet
+  isSubmitting: PropTypes.bool
 }
 
 export default RegisterForm

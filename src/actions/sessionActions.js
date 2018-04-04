@@ -17,7 +17,7 @@ export function unRecognize() {
   }
 }
 
-function callSessionApi(tokens) {
+function callSessionApi(tokens = {}) {
   return (dispatch) => {
     const args = Object.keys(tokens)
       .map((k) => ((tokens[k]) ? `${encodeURIComponent(k)}=${encodeURIComponent(tokens[k])}` : ''))
@@ -104,5 +104,6 @@ export const trackPage = () => {
 
 export const actions = {
   unRecognize,
-  loadSession
+  loadSession,
+  callSessionApi
 }
