@@ -10,18 +10,18 @@ export const actionTypes = {
   USER_SESSION_FAILURE: 'USER_SESSION_FAILURE'
 }
 
+/**
+ * Asynchronously POST to the logout api, mark user as anonymous in the userStore,
+ * and (optionally) push a new route
+ */
 export function unRecognize({ redirect } = {}) {
   return (dispatch) => {
     fetch(`${Config.API_URI}/user/session/logout`, {
       method: 'POST',
       credentials: 'include'
     })
-    .then(() => {
-      dispatch({
-        type: actionTypes.UNRECOGNIZE_USER_SESSION
-      })
-      if (redirect) appLocation.push(redirect)
-    })
+    dispatch({ type: actionTypes.UNRECOGNIZE_USER_SESSION })
+    if (redirect) appLocation.push(redirect)
   }
 }
 
