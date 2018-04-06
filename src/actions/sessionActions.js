@@ -1,6 +1,7 @@
 import 'whatwg-fetch'
 
 import Config from '../config.js'
+import { appLocation } from '../routes'
 
 export const actionTypes = {
   ANONYMOUS_SESSION_START: 'ANONYMOUS_SESSION_START',
@@ -9,10 +10,17 @@ export const actionTypes = {
   USER_SESSION_FAILURE: 'USER_SESSION_FAILURE'
 }
 
-export function unRecognize() {
+export function unRecognize({ redirect } = {}) {
   return (dispatch) => {
-    dispatch({
-      type: actionTypes.UNRECOGNIZE_USER_SESSION
+    fetch(`${Config.API_URI}/user/session/logout`, {
+      method: 'POST',
+      credentials: 'include'
+    })
+    .then(() => {
+      dispatch({
+        type: actionTypes.UNRECOGNIZE_USER_SESSION
+      })
+      if (redirect) appLocation.push(redirect)
     })
   }
 }
