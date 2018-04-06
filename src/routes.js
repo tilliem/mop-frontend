@@ -18,6 +18,7 @@ import ForgotPassword from './containers/forgot-password'
 import Register from './containers/register'
 import Login from './containers/login'
 import Static from './containers/static'
+import NoPetition from 'LegacyTheme/no-petition'
 
 
 const baseAppPath = window.baseAppPath || process.env.BASE_APP_PATH || '/'
@@ -94,6 +95,8 @@ export const routes = (store) => {
 
       {/* Authenticated routes (check happens in Wrapper) */}
       <Route path='dashboard.html' component={PetitionCreatorDashboard} authenticated />
+      <Route path='no_petition.html' component={NoPetition} authenticated />
+
       {/* Static pages with content from wordpress api */}
       <Route path='about.html' component={Static} wordpressId={60931} />
       <Route path='brandmerge.html' component={Static} wordpressId={61002} />
