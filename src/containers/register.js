@@ -103,8 +103,7 @@ class Register extends React.Component {
 }
 
 Register.defaultProps = {
-  // TODO: Implement no-petition.html
-  successCallback: () => appLocation.push('/sign/georgia-add-outkast-to')
+  successCallback: () => appLocation.push('/no_petition.html')
 }
 
 Register.propTypes = {

@@ -87,7 +87,8 @@ export default function userReducer(state = initialUserState, action) {
       return { ...state, ...newData }
 
     case accountActionTypes.REGISTER_SUBMIT:
-      return { ...state, isSubmittingRegister: true, registerErrors: null }
+      // Purposefully destroying current state
+      return { isSubmittingRegister: true, registerErrors: null }
     case accountActionTypes.REGISTER_SUCCESS:
       return { ...state, isSubmittingRegister: false, registerErrors: null }
     case accountActionTypes.REGISTER_FAILURE:
