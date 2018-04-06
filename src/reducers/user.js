@@ -83,6 +83,7 @@ export default function userReducer(state = initialUserState, action) {
     case accountActionTypes.FETCH_USER_PETITIONS_SUCCESS:
       // TODO: merge in new ids, so we can support pagination
       newData.petitions = action.petitions.map(p => p.petition_id)
+      newData.hasFetchedPetitions = true
       return { ...state, ...newData }
 
     case accountActionTypes.REGISTER_SUBMIT:
