@@ -5,7 +5,7 @@ import classNames from 'classnames'
 
 import NavLink from 'LegacyTheme/nav-link'
 
-const Nav = ({ user, nav, organization, minimal, toggleOpen, isOpenMobile, entity }) => {
+const Nav = ({ user, nav, organization, minimal, toggleOpen, isOpenMobile, entity, onLogout }) => {
   const cobrand = ((organization) ? nav.orgs[organization] : nav.partnerCobrand)
 
   const ulClassNames = classNames({
@@ -19,7 +19,7 @@ const Nav = ({ user, nav, organization, minimal, toggleOpen, isOpenMobile, entit
         <NavLink to='/admin'>Admin</NavLink>
         <NavLink to='/campaign_tips.html'>Campaign Tips</NavLink>
         <NavLink to='/edit_account.html'>Edit account</NavLink>
-        <NavLink to='/login/do_logout.html?redirect=/index.html'>Logout</NavLink>
+        <NavLink onClick={onLogout}>Logout</NavLink>
         <NavLink to='https://civic.moveon.org/donatec4/creditcard.html?cpn_id=511'>Donate</NavLink>
       </ul>
     </div>
@@ -113,7 +113,8 @@ Nav.propTypes = {
   minimal: PropTypes.bool,
   toggleOpen: PropTypes.func,
   isOpenMobile: PropTypes.bool,
-  entity: PropTypes.string
+  entity: PropTypes.string,
+  onLogout: PropTypes.func
 }
 
 export default Nav
