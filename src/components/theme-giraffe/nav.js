@@ -2,13 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Logo from 'GiraffeUI/logo'
-import {
-  Primary,
-  Secondary,
-  NavLink,
-  Header,
-  MoNav
-} from 'GiraffeUI/nav'
+import { Primary, Secondary, NavLink, Header, MoNav } from 'GiraffeUI/nav'
 
 import DocumentSvg from 'GiraffeUI/svgs/document-add.svg'
 
@@ -28,27 +22,28 @@ const Nav = ({
           <NavLink to='/create_start.html?source=topnav'>
             Start A Petition
           </NavLink>
-          <NavLink to='/dashboard.html?source=topnav'>Manage Petitions</NavLink>
         </Primary.Section>
 
         <Primary.Section name='Campaigns'>
-          <NavLink to='/'>Sublink 1</NavLink>
-          <NavLink to='/'>Sublink 2</NavLink>
-          <NavLink to='/'>Sublink 3</NavLink>
+          <NavLink to='https://moveon.org/browse-campaigns'>
+            Browse Campaigns
+          </NavLink>
+          <NavLink to='https://moveon.org/campaign-tips'>Campaign Tips</NavLink>
+          <NavLink to='https://moveon.org/our-impact'>Our Impact</NavLink>
         </Primary.Section>
 
         {/* More Top level */}
-        <NavLink to='/'>Events</NavLink>
-        <NavLink to='/about.html'>About Us</NavLink>
+        <NavLink to='https://moveon.org/events'>Events</NavLink>
+        <NavLink to='https://front.moveon.org/about'>About Us</NavLink>
       </Primary>
       <Secondary>
         <Secondary.Top>
-          <NavLink to='/'>News</NavLink>
-          <NavLink to='/'>Store</NavLink>
+          <NavLink to='https://front.moveon.org/blog'>News</NavLink>
+          <NavLink to='https://store.moveon.org'>Store</NavLink>
         </Secondary.Top>
         <Secondary.Bottom>
-          <NavLink to='/'>Join</NavLink>
-          <NavLink to='https://civic.moveon.org/donatec4/creditcard.html?cpn_id=511'>
+          <NavLink to='https://front.moveon.org/#join'>Join</NavLink>
+          <NavLink to='https://act.moveon.org/donate/pac-donation'>
             Donate
           </NavLink>
           <NavLink to='/create_start.html?source=topnav'>
