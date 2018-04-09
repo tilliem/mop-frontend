@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Scrollchor from 'react-scrollchor'
 import Waypoint from 'react-waypoint'
 
-import { text2paraJsx, splitIntoSpansJsx, ellipsize } from '../../lib'
+import { text2paraJsx, splitIntoSpansJsx } from '../../lib'
 
 import {
   PetitionCard,
@@ -61,9 +61,11 @@ const Petition = ({
 
         {p.featured_image_url && <PetitionCard.Media imageUrl={p.featured_image_url} />}
 
-        <PetitionCard.Description>
-          {text2paraJsx(ellipsize(p.summary, 500))}
-        </PetitionCard.Description>
+        {p.summary && (
+          <PetitionCard.Description>
+            {text2paraJsx(p.summary)}
+          </PetitionCard.Description>
+        )}
       </PetitionCard>
 
       <MobileSign>

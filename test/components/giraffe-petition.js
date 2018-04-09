@@ -7,7 +7,7 @@ import Petition from '../../src/components/theme-giraffe/petition'
 
 const props = {
   query: {},
-  petition: { title: 'test', target: [] },
+  petition: { title: 'test', summary: 'hello', target: [] },
   setRef: () => {}
 }
 
