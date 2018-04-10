@@ -7,15 +7,14 @@ import { loadTopPetitions } from '../actions/petitionActions.js'
 
 class TopPetitions extends React.Component {
   componentDidMount() {
-    const { pac, megapartner, loadPetitions } = this.props
-    loadPetitions(pac, megapartner)
+    const { pac, loadPetitions } = this.props
+    loadPetitions(pac)
   }
 
   render() {
-    const { topPetitions, source, fullWidth, className } = this.props
+    const { topPetitions, source, className } = this.props
     return (
       <HotPetitons
-        fullWidth={fullWidth}
         topPetitions={topPetitions}
         source={source}
         className={className}
@@ -26,20 +25,16 @@ class TopPetitions extends React.Component {
 
 TopPetitions.propTypes = {
   pac: PropTypes.bool,
-  megapartner: PropTypes.string,
   source: PropTypes.string,
   topPetitions: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   loadPetitions: PropTypes.func,
-  fullWidth: PropTypes.bool,
   className: PropTypes.string
 }
 
 const mapStateToProps = (store, ownProps) => {
-  const { pac, megapartner } = ownProps
   const topPetitionsState = store.petitionStore.topPetitions || {}
 
-  // eslint-disable-next-line no-unneeded-ternary
-  const topPetitionsKey = `${pac ? 1 : 0}--${megapartner ? megapartner : ''}`
+  const topPetitionsKey = `${ownProps.pac ? 1 : 0}--`
   const topPetitionIds = topPetitionsState[topPetitionsKey] || []
 
   return {
@@ -50,8 +45,7 @@ const mapStateToProps = (store, ownProps) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  loadPetitions: (pac, megapartner) =>
-    dispatch(loadTopPetitions(pac, megapartner))
+  loadPetitions: pac => dispatch(loadTopPetitions(pac))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopPetitions)

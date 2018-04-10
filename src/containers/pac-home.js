@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Home from './home'
+import { Home } from 'Theme/home'
 
 const PacHome = ({ params }) => <Home params={params} isPac />
 
