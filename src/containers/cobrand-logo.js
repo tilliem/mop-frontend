@@ -17,8 +17,9 @@ class CobrandLogo extends React.Component {
   }
 
   render() {
-    const { cobrand } = this.props
-    if (!cobrand) return null
+    const { cobrand, shouldLink } = this.props
+    // Don’t render if org has no logo
+    if (!cobrand || !cobrand.logo_image_url) return null
 
     if (cobrand.browser_url) {
       return <Link to={cobrand.browser_url}>{this.renderLogo()}</Link>
@@ -35,7 +36,6 @@ const getCobrandFromPetition = (petition = {}) => {
   if (!branding) return null
 
   const { organization_logo_image_url, organization, browser_url } = branding
-  if (!organization_logo_image_url) return null
 
   return {
     logo_image_url: organization_logo_image_url, // format of the org api
