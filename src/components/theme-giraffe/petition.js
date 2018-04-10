@@ -83,7 +83,7 @@ const Petition = ({
           <div dangerouslySetInnerHTML={{ __html: p.description }} />
         </Details.Narrative>
 
-        <Details.Comments heading='What Others Are Saying'>
+        <Details.Comments heading='Most Recent Signers'>
           <SignatureList petition={p} signatureCount={p.total_signatures} />
         </Details.Comments>
 
