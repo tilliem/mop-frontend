@@ -3,6 +3,7 @@ import { IndexRoute, Route, Router, browserHistory, hashHistory, match } from 'r
 
 
 import { Config } from './config'
+import { scrollToTop } from './lib'
 import { trackPage } from './actions/sessionActions'
 import { loadOrganization } from './actions/navActions.js'
 import Home from './containers/home'
@@ -75,7 +76,7 @@ export const routes = (store) => {
     }
   }
   const routeHierarchy = (
-    <Route path={baseAppPath} component={Wrapper}>
+    <Route path={baseAppPath} component={Wrapper} onChange={scrollToTop}>
       <IndexRoute prodReady component={Home} />
       <Route path='pac/' component={PacHome} />
       <Route path='sign/:petition_slug' component={SignPetition} />
