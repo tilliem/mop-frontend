@@ -17,11 +17,12 @@ class CobrandLogo extends React.Component {
   }
 
   render() {
-    const { cobrand, shouldLink } = this.props
+    const { cobrand, link } = this.props
     // Don’t render if org has no logo
     if (!cobrand || !cobrand.logo_image_url) return null
 
-    if (cobrand.browser_url) {
+    // `props.link` (defaults to false) will give the logo a link to the partner’s homepage, if defined
+    if (cobrand.browser_url && link) {
       return <Link to={cobrand.browser_url}>{this.renderLogo()}</Link>
     }
 
@@ -47,7 +48,7 @@ const getCobrandFromPetition = (petition = {}) => {
 const mapStateToProps = ({ navStore, petitionStore }, { params }) => {
   let cobrand
 
-  // Will be present we are at an org url
+  // Will be present we are at an org url (mega-partner)
   const orgName = params && params.organization
 
   // Will be present if we are viewing a petition
@@ -58,14 +59,15 @@ const mapStateToProps = ({ navStore, petitionStore }, { params }) => {
     // check the url for an organization
     cobrand = navStore.orgs[orgName]
   } else if (petition) {
-    // check the currently viewed petition
+    // check the currently viewed petition, for non-megapartner orgs
     cobrand = getCobrandFromPetition(petition)
   }
   return { cobrand }
 }
 
 CobrandLogo.propTypes = {
-  cobrand: PropTypes.object
+  cobrand: PropTypes.object,
+  link: PropTypes.bool
 }
 
 export default withRouter(connect(mapStateToProps)(CobrandLogo))
