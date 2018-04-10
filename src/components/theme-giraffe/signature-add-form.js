@@ -138,7 +138,7 @@ const SignatureAddForm = ({
       </div>
     )}
 
-    <Button onClick={submit}>SUBMIT</Button>
+    <Button onClick={submit}>SIGN THE PETITION</Button>
 
     {showOptinCheckbox && (
       <InputBlock
