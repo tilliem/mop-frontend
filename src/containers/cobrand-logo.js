@@ -45,7 +45,7 @@ const getCobrandFromPetition = (petition = {}) => {
 }
 
 const mapStateToProps = ({ navStore, petitionStore }, { params }) => {
-  let cobrand = {}
+  let cobrand
 
   // Will be present we are at an org url
   const orgName = params && params.organization
