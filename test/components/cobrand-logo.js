@@ -41,9 +41,16 @@ describe('<CobrandLogo />', () => {
   const brandWithFluff = { ...brandOnly, fluff: true }
   const wrongBrand = { ...brandWithFluff, organization: 'not me' }
 
-  it('sets cobrand using sponsor in loaded petition', () => {
+  it('doesn’t render if no org', () => {
     const context = mount(
-      <CobrandLogo {...getParams({ embed: { sponsor: brandOnly } })} />
+      <CobrandLogo link {...getParams({ embed: { creator: { name: 'someone' } } })} />
+    )
+    expect(context.html()).to.equal(null)
+  })
+
+  it('sets cobrand using sponsor in loaded petition with link', () => {
+    const context = mount(
+      <CobrandLogo link {...getParams({ embed: { sponsor: brandOnly } })} />
     )
     expect(context.find(Link).prop('to')).to.equal('http://example.com')
     expect(context.find('img').html()).to.equal(
@@ -51,11 +58,11 @@ describe('<CobrandLogo />', () => {
     )
   })
 
-  it('sets cobrand using creator in loaded petition', () => {
+  it('sets cobrand using creator in loaded petition without link', () => {
     const context = mount(
       <CobrandLogo {...getParams({ embed: { creator: brandOnly } })} />
     )
-    expect(context.find(Link).prop('to')).to.equal('http://example.com')
+    expect(context.find(Link).length).to.equal(0)
     expect(context.find('img').html()).to.equal(
       '<img class="org_logo" src="yes.jpg" alt="Move On logo">'
     )
@@ -69,13 +76,12 @@ describe('<CobrandLogo />', () => {
         })}
       />
     )
-    expect(context.find(Link).prop('to')).to.equal('http://example.com')
     expect(context.find('img').html()).to.equal(
       '<img class="org_logo" src="yes.jpg" alt="Move On logo">'
     )
   })
 
-  it('sets cobrand using an org url, overriding loaded petition', () => {
+  it('sets cobrand using orgStore, overriding loaded petition', () => {
     const urlOrg = {
       logo_image_url: 'org.jpg',
       organization: 'Another org',
@@ -86,7 +92,6 @@ describe('<CobrandLogo />', () => {
         {...getParams({ embed: { creator: brandOnly }, org: urlOrg })}
       />
     )
-    expect(context.find(Link).prop('to')).to.equal('http://example2.com')
     expect(context.find('img').html()).to.equal(
       '<img class="org_logo" src="org.jpg" alt="Another org logo">'
     )
