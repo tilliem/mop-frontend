@@ -19,6 +19,7 @@ import PetitionMessage from 'Theme/petition-message'
 import { Share } from './petition-share'
 import SignatureAddForm from '../../containers/signature-add-form'
 import SignatureList from '../../containers/signature-list'
+import CobrandLogo from '../../containers/cobrand-logo'
 
 const Petition = ({
   petition: p,
@@ -89,6 +90,7 @@ const Petition = ({
 
         <Details.Author
           name={petitionBy}
+          logo={<CobrandLogo />}
           link={`/contact_creator.html?petition_id=${p.petition_id}`}
         />
         <Share className='petition-details' hasLabels user={user} petition={p} />
