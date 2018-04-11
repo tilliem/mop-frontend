@@ -1,7 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import 'whatwg-fetch'
 import { connect } from 'react-redux'
 
 import Petition from 'Theme/petition'

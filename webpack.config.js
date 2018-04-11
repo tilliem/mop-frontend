@@ -14,7 +14,8 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 var config = {
   entry: {
-    javascript: APP_DIR + '/apps/' + APP_ENTRY + '.js'
+    polyfills: APP_DIR + '/apps/polyfills.js',
+    [APP_ENTRY]: APP_DIR + '/apps/' + APP_ENTRY + '.js'
   },
   devServer: {
     host: "0.0.0.0",
@@ -28,7 +29,7 @@ var config = {
     publicPath: process.env.PUBLIC_ROOT || "/",
     //NOTE: when process.env.PROD is true this will be the minified file
     //TODO: maybe we should hash this and figure out a way to pass the hashed version to it
-    filename: APP_ENTRY + '.' + THEME + '.js',
+    filename: '[name].' + THEME + '.js',
     chunkFilename: 'chunk-[id]' + '.' + THEME + '.js?v=[chunkhash]'
   },
   externals: {
@@ -63,8 +64,7 @@ var config = {
     new HtmlWebpackPlugin({
       template: 'local/index.html',
       chunksSortMode: 'none',
-      inject: 'body',
-      //hash: true,
+      inject: false,
       filename: 'index.html',
       staticPath: (process.env.STATIC_ROOT || ''),
       theme: THEME,
