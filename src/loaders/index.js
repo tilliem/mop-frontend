@@ -4,7 +4,7 @@ import Loadable from 'react-loadable'
 import Loading from 'LegacyTheme/loading'
 
 export const LoadableHome = Loadable({
-  loader: () => import('Theme/home'),
+  loader: () => import('../containers/home'),
   loading: Loading
 })
 
