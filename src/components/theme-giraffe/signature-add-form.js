@@ -157,8 +157,8 @@ const SignatureAddForm = ({
     {showOptinWarning ? (
       <div className='sign-form__agreement'>
         Note: This petition is a project of {creator.organization} and
-        MoveOn.org. By signing, you agree to receive email messages from
-        {creator.organization}, MoveOn Political Action, and MoveOn Civic
+        MoveOn.org. By signing, you agree to receive email messages
+        from {creator.organization}, MoveOn Political Action, and MoveOn Civic
         Action. You may unsubscribe at any time.
       </div>
     ) : (
