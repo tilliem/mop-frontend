@@ -216,8 +216,7 @@ class SignatureAddForm extends React.Component {
       innerRef
     } = this.props
     const creator = (petition._embedded && petition._embedded.creator) || {}
-    const petitionBy =
-      creator.name + (creator.organization ? `, ${creator.organization}` : '')
+    const petitionBy = creator.name || petition.contact_name
     return (
       <SignatureAddFormComponent
         submit={this.submit}
