@@ -3,11 +3,6 @@ import Loadable from 'react-loadable'
 
 import Loading from 'LegacyTheme/loading'
 
-export const LoadableSign = Loadable({
-  loader: () => import('../containers/sign-petition'),
-  loading: Loading
-})
-
 export const LoadableHome = Loadable({
   loader: () => import('../containers/home'),
   loading: Loading

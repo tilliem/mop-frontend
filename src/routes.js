@@ -7,12 +7,12 @@ import { trackPage } from './actions/sessionActions'
 import { loadOrganization } from './actions/navActions.js'
 import Wrapper from './containers/wrapper'
 import ThanksShim from './loaders/thanks-shim'
+import Sign from './containers/sign-petition'
 import {
   LoadableHome,
   LoadablePacHome,
   LoadableSearch,
   LoadableDashboard,
-  LoadableSign,
   LoadableCreate,
   LoadableRegister,
   LoadableLogin,
@@ -79,9 +79,12 @@ export const routes = (store) => {
   const routeHierarchy = (
     <Route path={baseAppPath} component={Wrapper}>
       <IndexRoute prodReady component={LoadableHome} />
+
+      {/* Sign pages are popular entry page, so they get included in the main bundle (not Loadable) */}
+      <Route path='sign/:petition_slug' component={Sign} />
+      <Route path=':organization/sign/:petition_slug' component={Sign} onEnter={orgLoader} />
+
       <Route path='pac/' component={LoadablePacHome} />
-      <Route path='sign/:petition_slug' component={LoadableSign} />
-      <Route path=':organization/sign/:petition_slug' component={LoadableSign} onEnter={orgLoader} />
       <Route path='thanks.html' component={ThanksShim} prodReady minimalNav />
       <Route path=':organization/thanks.html' component={ThanksShim} onEnter={orgLoader} minimalNav />
       <Route path='find' component={LoadableSearch} />
