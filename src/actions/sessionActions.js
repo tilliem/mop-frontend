@@ -90,7 +90,7 @@ export const trackPage = () => {
       window.analytics.page({
         // overrides any canonical url set
         location: href,
-        page: pathname,
+        path: pathname,
         url: href
       })
     } else if (window.gtag) {

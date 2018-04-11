@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 import PropTypes from 'prop-types'
 
 export const Submit = ({ children, onClick }) => (
-  <button className='mo-btn' onClick={onClick} type='submit'>
+  <button className='btn' onClick={onClick} type='submit'>
     {children}
   </button>
 )

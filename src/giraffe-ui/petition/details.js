@@ -32,17 +32,20 @@ export const Comments = ({ children, heading }) => (
 Comments.propTypes = { children: PropTypes.node, heading: PropTypes.string }
 Details.Comments = Comments
 
-export const Author = ({ name, link }) => (
+export const Author = ({ name, link, logo }) => (
   <div className='petition-details__author'>
     <h4 className='petition-details__author__heading'>Author</h4>
-    <div className='petition-details__author__name'>{name}</div>
+    <div className='petition-details__author__name'>
+      {logo && <div>{logo}</div>}
+      {name}
+    </div>
     <Link to={link} className='petition-details__author__cta'>
       CONTACT
       <CaretRightSvg />
     </Link>
   </div>
 )
-Author.propTypes = { name: PropTypes.string, link: PropTypes.string }
+Author.propTypes = { name: PropTypes.string, link: PropTypes.string, logo: PropTypes.node }
 Details.Author = Author
 
 export const Disclaimer = ({ children }) => (

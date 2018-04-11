@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Scrollchor from 'react-scrollchor'
 import Waypoint from 'react-waypoint'
 
-import { text2paraJsx, splitIntoSpansJsx, ellipsize } from '../../lib'
+import { text2paraJsx, splitIntoSpansJsx } from '../../lib'
 
 import {
   PetitionCard,
@@ -19,6 +19,7 @@ import PetitionMessage from 'Theme/petition-message'
 import { Share } from './petition-share'
 import SignatureAddForm from '../../containers/signature-add-form'
 import SignatureList from '../../containers/signature-list'
+import CobrandLogo from '../../containers/cobrand-logo'
 
 const Petition = ({
   petition: p,
@@ -61,9 +62,11 @@ const Petition = ({
 
         {p.featured_image_url && <PetitionCard.Media imageUrl={p.featured_image_url} />}
 
-        <PetitionCard.Description>
-          {text2paraJsx(ellipsize(p.summary, 500))}
-        </PetitionCard.Description>
+        {p.summary && (
+          <PetitionCard.Description>
+            {text2paraJsx(p.summary)}
+          </PetitionCard.Description>
+        )}
       </PetitionCard>
 
       <MobileSign>
@@ -81,12 +84,13 @@ const Petition = ({
           <div dangerouslySetInnerHTML={{ __html: p.description }} />
         </Details.Narrative>
 
-        <Details.Comments heading='What Others Are Saying'>
+        <Details.Comments heading='Most Recent Signers'>
           <SignatureList petition={p} signatureCount={p.total_signatures} />
         </Details.Comments>
 
         <Details.Author
           name={petitionBy}
+          logo={<CobrandLogo />}
           link={`/contact_creator.html?petition_id=${p.petition_id}`}
         />
         <Share className='petition-details' hasLabels user={user} petition={p} />

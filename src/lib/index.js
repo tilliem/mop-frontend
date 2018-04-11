@@ -129,3 +129,5 @@ export const getPageLoadTime = () => {
   }
   return null
 }
+
+export const scrollToTop = () => window && window.scrollTo(0, 0)
