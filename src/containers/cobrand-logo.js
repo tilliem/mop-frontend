@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React from 'react'
-import { Link, withRouter } from 'react-router'
+import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -17,14 +17,9 @@ class CobrandLogo extends React.Component {
   }
 
   render() {
-    const { cobrand, link } = this.props
+    const { cobrand } = this.props
     // Don’t render if org has no logo
     if (!cobrand || !cobrand.logo_image_url) return null
-
-    // `props.link` (defaults to false) will give the logo a link to the partner’s homepage, if defined
-    if (cobrand.browser_url && link) {
-      return <Link to={cobrand.browser_url}>{this.renderLogo()}</Link>
-    }
 
     return this.renderLogo()
   }
@@ -36,12 +31,11 @@ const getCobrandFromPetition = (petition = {}) => {
   const branding = sponsor || creator
   if (!branding) return null
 
-  const { organization_logo_image_url, organization, browser_url } = branding
+  const { organization_logo_image_url, organization } = branding
 
   return {
     logo_image_url: organization_logo_image_url, // format of the org api
-    organization,
-    browser_url
+    organization
   }
 }
 
