@@ -12,7 +12,7 @@ class Wrapper extends React.Component {
   }
 
   render() {
-    const { petitionEntity, location, children, params, routes } = this.props
+    const { petitionEntity, location, children, routes } = this.props
     let entity = petitionEntity
     if (location.pathname.indexOf('/pac/') !== -1) {
       entity = 'pac'
@@ -21,7 +21,6 @@ class Wrapper extends React.Component {
     return (
       <WrapperComponent
         entity={entity}
-        organization={(params && params.organization) || ''}
         minimalNav={!!routes[routes.length - 1].minimalNav}
       >
         {children}
@@ -34,7 +33,6 @@ Wrapper.propTypes = {
   petitionEntity: PropTypes.string,
   location: PropTypes.object,
   children: PropTypes.object.isRequired,
-  params: PropTypes.object,
   routes: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired
 }
