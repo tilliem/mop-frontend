@@ -88,7 +88,7 @@ const Petition = ({
 
         <Details.Author
           name={petitionBy}
-          logo={<CobrandLogo link />}
+          logo={<CobrandLogo />}
           link={`/contact_creator.html?petition_id=${p.petition_id}`}
         />
         <Share className='petition-details' hasLabels user={user} petition={p} />
