@@ -6,7 +6,7 @@ import { Config } from './config'
 import { scrollToTop } from './lib'
 import { trackPage } from './actions/sessionActions'
 import { loadOrganization } from './actions/navActions.js'
-import Home from './containers/home'
+import { Home } from 'Theme/home'
 import PacHome from './containers/pac-home'
 import SignPetition from './containers/sign-petition'
 import ThanksShim from './loaders/thanks-shim'
@@ -92,7 +92,6 @@ export const routes = (store) => {
       <Route path='login/index.html' component={Login} />
       <Route path='login/register.html' component={Register} />
       <Route path='login/forgot_password.html' component={ForgotPassword} />
-      <Route path=':organization/' component={Home} onEnter={orgLoader} />
 
       {/* Static pages with content from wordpress api */}
       <Route path='about.html' component={Static} wordpressId={60931} />

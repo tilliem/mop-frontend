@@ -2,12 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Blurb from '../../containers/blurb'
 
-const HotPetitions = ({ fullWidth, topPetitions, source }) => (
+const HotPetitions = ({ topPetitions, source }) => (
   <div
     id='campaign-widget'
-    className={
-      fullWidth ? 'span12 widget clearfix' : 'span6 widget clearfix pull-right'
-    }
+    className='span6 widget clearfix pull-right'
   >
     <div className='widget-top'>
       <h3>Hot Petitions</h3>
@@ -24,7 +22,6 @@ const HotPetitions = ({ fullWidth, topPetitions, source }) => (
 )
 
 HotPetitions.propTypes = {
-  fullWidth: PropTypes.bool,
   topPetitions: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   source: PropTypes.string
 }
