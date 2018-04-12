@@ -15,8 +15,12 @@ function run() {
   )
 }
 
-const loadedStates = ['complete', 'loaded', 'interactive']
-if (loadedStates.includes(document.readyState) && document.body) {
+if (
+  document.body &&
+  (document.readyState === 'complete' ||
+    document.readyState === 'loaded' ||
+    document.readyState === 'interactive')
+) {
   run()
 } else {
   window.addEventListener('DOMContentLoaded', run, false)
