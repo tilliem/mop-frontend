@@ -98,8 +98,7 @@ class SignPetition extends React.Component {
     const creator = (p._embedded && p._embedded.creator) || {
       name: p.contact_name
     }
-    const petitionBy =
-      creator.name + (creator.organization ? `, ${creator.organization}` : '')
+    const petitionBy = creator.name || p.contact_name
     const outOfDate =
       p.tags && p.tags.filter(t => t.name === 'possibly_out_of_date').length
 
