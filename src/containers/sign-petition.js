@@ -51,11 +51,16 @@ class SignPetition extends React.Component {
   onClickFloatingSign() {
     const f = this.state.width < 768 ? 'mobile' : 'desktop'
     // Forms are hidden per petition settings or user state, so we find the first rendered
+    const name = this[`${f}-nameInput`]
+    const address = this[`${f}-address1Input`]
+    const comment = this[`${f}-commentInput`]
+
     const firstInput =
-      this[`${f}-nameInput`] ||
-      this[`${f}-countryInput`] ||
-      this[`${f}-commentInput`] ||
+      (document.body.contains(name) && name) ||
+      (document.body.contains(address) && address) ||
+      (document.body.contains(comment) && comment) ||
       null
+
     if (firstInput) firstInput.focus()
   }
 
