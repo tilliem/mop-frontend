@@ -13,7 +13,7 @@ class SignPetition extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      width: 0,
+      deviceSize: null,
       floatingSignVisible: false
     }
     this.setRef = this.setRef.bind(this)
@@ -49,7 +49,7 @@ class SignPetition extends React.Component {
   }
 
   onClickFloatingSign() {
-    const f = this.state.width < 768 ? 'mobile' : 'desktop'
+    const f = this.state.deviceSize
     // Forms are hidden per petition settings or user state, so we find the first rendered
     const name = this[`${f}-nameInput`]
     const address = this[`${f}-address1Input`]
@@ -79,7 +79,7 @@ class SignPetition extends React.Component {
   }
 
   updateWindowDimensions() {
-    this.setState({ width: window.innerWidth })
+    this.setState({ deviceSize: window.innerWidth < 768 ? 'mobile' : 'desktop' })
   }
 
   checkOrgPathMatches(petition, orgPath) {
@@ -122,6 +122,7 @@ class SignPetition extends React.Component {
           onClickFloatingSign={this.onClickFloatingSign}
           hideFloatingSign={() => this.setState({ floatingSignVisible: false })}
           showFloatingSign={() => this.setState({ floatingSignVisible: true })}
+          floatingSignTarget={`${this.state.deviceSize}-sign`}
           setRef={this.setRef}
         />
       </div>

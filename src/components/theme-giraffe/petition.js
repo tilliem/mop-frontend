@@ -32,6 +32,7 @@ const Petition = ({
   onClickFloatingSign,
   hideFloatingSign,
   showFloatingSign,
+  floatingSignTarget,
   setRef
 }) => (
   <Container>
@@ -72,6 +73,7 @@ const Petition = ({
       <MobileSign>
         <Waypoint onEnter={hideFloatingSign} onLeave={showFloatingSign} topOffset='57px'>
           <SignatureAddForm
+            id='mobile-sign'
             setRef={setRef({ isMobile: true })}
             petition={p}
             query={query}
@@ -100,6 +102,7 @@ const Petition = ({
     <SignColumn>
       <Waypoint onEnter={hideFloatingSign} onLeave={showFloatingSign} topOffset='120px'>
         <SignatureAddForm
+          id='desktop-sign'
           setRef={setRef({ isMobile: false })}
           petition={p}
           query={query}
@@ -110,6 +113,7 @@ const Petition = ({
     <FloatingSignButton
       onClick={onClickFloatingSign}
       visible={isFloatingSignVisible}
+      scrollTarget={floatingSignTarget}
     />
   </Container>
 )
@@ -125,7 +129,8 @@ Petition.propTypes = {
   onClickFloatingSign: PropTypes.func,
   isFloatingSignVisible: PropTypes.bool,
   hideFloatingSign: PropTypes.func,
-  showFloatingSign: PropTypes.func
+  showFloatingSign: PropTypes.func,
+  floatingSignTarget: PropTypes.string
 }
 
 export default Petition
