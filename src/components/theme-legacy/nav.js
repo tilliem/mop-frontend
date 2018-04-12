@@ -4,10 +4,9 @@ import { Link } from 'react-router'
 import classNames from 'classnames'
 
 import NavLink from 'LegacyTheme/nav-link'
+import CobrandLogo from '../../containers/cobrand-logo'
 
-const Nav = ({ user, nav, organization, minimal, toggleOpen, isOpenMobile, entity, onLogout }) => {
-  const cobrand = ((organization) ? nav.orgs[organization] : nav.partnerCobrand)
-
+const Nav = ({ user, minimal, toggleOpen, onLogout, isOpenMobile, entity }) => {
   const ulClassNames = classNames({
     nav: true,
     'collapse nav-collapse': !isOpenMobile
@@ -43,11 +42,6 @@ const Nav = ({ user, nav, organization, minimal, toggleOpen, isOpenMobile, entit
     <Link className='icon-link-narrow icon-managepetitions' to='/dashboard.html?source=topnav'>Manage Petitions</Link>
   )
 
-  const partnerLogoLinks = (
-    (cobrand)
-      ? (<Link to={cobrand.browser_url}><img className='org_logo' src={cobrand.logo_image_url} alt={`${cobrand.organization} logo`} /></Link>
-        ) : null)
-
   return (
     <div>
       <div className='container' id='header'>
@@ -67,7 +61,7 @@ const Nav = ({ user, nav, organization, minimal, toggleOpen, isOpenMobile, entit
             <div>
               <div className='pull-left top-icons hidden-phone'>
                 <div className='pull-left span2 petitions-partner-logo bump-top-1 margin-right-2 hidden-phone'>
-                 {partnerLogoLinks}
+                  <CobrandLogo />
                 </div>
                 <Link className='icon-link-narrow icon-start' to='/create_start.html?source=topnav'>Start a petition</Link>
                 {user.given_name ? userDashboardLink : guestDashboardLink}
@@ -98,7 +92,7 @@ const Nav = ({ user, nav, organization, minimal, toggleOpen, isOpenMobile, entit
       <div className='container visible-phone'>
         <div className='row pull-left'>
           <div className='pull-left span2 petitions-partner-logo bump-top-1 margin-right-2'>
-            {partnerLogoLinks}
+            <CobrandLogo />
           </div>
         </div>
       </div>
@@ -108,8 +102,7 @@ const Nav = ({ user, nav, organization, minimal, toggleOpen, isOpenMobile, entit
 
 Nav.propTypes = {
   user: PropTypes.object,
-  nav: PropTypes.object,
-  organization: PropTypes.string,
+  cobrand: PropTypes.object,
   minimal: PropTypes.bool,
   toggleOpen: PropTypes.func,
   isOpenMobile: PropTypes.bool,

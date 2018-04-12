@@ -42,7 +42,7 @@ const victories = [
       alt: 'Tribune'
     },
     title: 'VICTORY: New York Times Works to Inform Readers on Budget',
-    text: `The New York Times&#39; tendency to report on budget numbers without
+    text: `The New York Times’ tendency to report on budget numbers without
         contextualizing them was a problem - especially in light of the recent
         federal budget crisis. MoveOn member (and former staffer) Daniel Mintz
         and Robert Naiman of Just Foreign Policy started MoveOn Petitions to
