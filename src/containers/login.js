@@ -67,7 +67,13 @@ class Login extends React.Component {
       email: this.email.value,
       password: this.password.value
     }
-    const { successCallback, dispatch } = this.props
+    const { dispatch, location } = this.props
+
+    let successCallback = this.props.successCallback
+    if (location.query.redirect) {
+      successCallback = () => appLocation.push(location.query.redirect)
+    }
+
     dispatch(accountActions.login(fields, successCallback))
   }
 
@@ -86,13 +92,13 @@ class Login extends React.Component {
 }
 
 Login.defaultProps = {
-  // TODO: Figure out the default page and/or where they were trying to go
-  successCallback: () => appLocation.push('/sign/georgia-add-outkast-to')
+  successCallback: () => appLocation.push('/dashboard.html')
 }
 
 Login.propTypes = {
   formErrors: PropTypes.array,
   dispatch: PropTypes.func,
+  location: PropTypes.object,
   isSubmitting: PropTypes.bool,
   successCallback: PropTypes.func
 }

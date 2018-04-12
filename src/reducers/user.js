@@ -83,17 +83,20 @@ export default function userReducer(state = initialUserState, action) {
     case accountActionTypes.FETCH_USER_PETITIONS_SUCCESS:
       // TODO: merge in new ids, so we can support pagination
       newData.petitions = action.petitions.map(p => p.petition_id)
+      newData.hasFetchedPetitions = true
       return { ...state, ...newData }
 
     case accountActionTypes.REGISTER_SUBMIT:
-      return { ...state, isSubmittingRegister: true, registerErrors: null }
+      // Purposefully destroying current state
+      return { isSubmittingRegister: true, registerErrors: null }
     case accountActionTypes.REGISTER_SUCCESS:
       return { ...state, isSubmittingRegister: false, registerErrors: null }
     case accountActionTypes.REGISTER_FAILURE:
       return { ...state, isSubmittingRegister: false, registerErrors: action.formErrors }
 
     case accountActionTypes.LOGIN_SUBMIT:
-      return { ...state, isSubmittingLogin: true, loginErrors: null }
+      // Purposefully destroying current state
+      return { isSubmittingLogin: true, loginErrors: null }
     case accountActionTypes.LOGIN_SUCCESS:
       return { ...state, isSubmittingLogin: false, loginErrors: null }
     case accountActionTypes.LOGIN_FAILURE:

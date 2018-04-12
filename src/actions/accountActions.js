@@ -93,7 +93,7 @@ export function loadUserPetitions() {
     dispatch({
       type: actionTypes.FETCH_USER_PETITIONS_REQUEST
     })
-    return fetch(`${Config.API_URI}/user/petitions.json`)
+    return fetch(`${Config.API_URI}/user/petitions.json`, { credentials: 'include' })
       .then(response => response.json())
       .then(
         json => {

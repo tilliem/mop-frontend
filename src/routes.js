@@ -18,6 +18,7 @@ import ForgotPassword from './containers/forgot-password'
 import Register from './containers/register'
 import Login from './containers/login'
 import Static from './containers/static'
+import NoPetition from 'LegacyTheme/no-petition'
 
 
 const baseAppPath = window.baseAppPath || process.env.BASE_APP_PATH || '/'
@@ -83,7 +84,6 @@ export const routes = (store) => {
       <Route path='thanks.html' component={ThanksShim} prodReady minimalNav />
       <Route path=':organization/thanks.html' component={ThanksShim} onEnter={orgLoader} minimalNav />
       <Route path='find' component={SearchPage} />
-      <Route path='dashboard.html' component={PetitionCreatorDashboard} />
       <Route path='create_start.html' component={CreatePetitionPage} minimalNav />
       <Route path='petition_report.html' component={PetitionReport} />
       <Route path=':organization/create_start.html' component={CreatePetitionPage} onEnter={orgLoader} minimalNav />
@@ -92,6 +92,10 @@ export const routes = (store) => {
       <Route path='login/register.html' component={Register} />
       <Route path='login/forgot_password.html' component={ForgotPassword} />
       <Route path=':organization/' component={Home} onEnter={orgLoader} />
+
+      {/* Authenticated routes (check happens in Wrapper) */}
+      <Route path='dashboard.html' component={PetitionCreatorDashboard} authenticated />
+      <Route path='no_petition.html' component={NoPetition} authenticated />
 
       {/* Static pages with content from wordpress api */}
       <Route path='about.html' component={Static} wordpressId={60931} />

@@ -8,9 +8,15 @@ import PetitionOverview from 'LegacyTheme/petition-overview'
 import { actions as accountActions } from '../actions/accountActions.js'
 
 class PetitionCreatorDashboard extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const { dispatch } = this.props
     dispatch(accountActions.loadUserPetitions())
+  }
+
+  componentDidUpdate() {
+    if (this.props.hasFetched && !this.props.petition) {
+      appLocation.push('/no_petition.html')
+    }
   }
 
   onSelectPetition(e) {
@@ -43,6 +49,7 @@ class PetitionCreatorDashboard extends Component {
 }
 PetitionCreatorDashboard.propTypes = {
   userPetitions: PropTypes.array,
+  hasFetched: PropTypes.bool,
   location: PropTypes.object,
   petition: PropTypes.object,
   dispatch: PropTypes.func
@@ -64,6 +71,7 @@ function mapStateToProps(store, ownProps) {
   )
   return {
     userPetitions,
+    hasFetched: store.userStore.hasFetchedPetitions,
     petition: getCurrentPetition(
       userPetitions,
       store.petitionStore.petitions,
