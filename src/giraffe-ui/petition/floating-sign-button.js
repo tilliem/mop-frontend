@@ -9,7 +9,11 @@ export const FloatingSignButton = ({ onClick, visible, scrollTarget }) => (
       'sign-form__fixed-button--hidden': !visible
     })}
   >
-    <Scrollchor animate={{ offset: -150 }} to={scrollTarget} afterAnimate={onClick}>
+    <Scrollchor
+      animate={{ offset: -150 }}
+      to={scrollTarget}
+      afterAnimate={onClick}
+    >
       <button>Sign Now</button>
     </Scrollchor>
   </div>
