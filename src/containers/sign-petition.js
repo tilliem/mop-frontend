@@ -99,7 +99,8 @@ class SignPetition extends React.Component {
       return false
     }
     // URL has org that doesn't match petition
-    if (orgPath && orgPath !== creator.source) {
+    // 2018/2018r are because of this https://github.com/MoveOnOrg/mop-frontend/issues/440
+    if (orgPath && orgPath !== creator.source && orgPath !== '2018' && orgPath !== '2018r') {
       appLocation.push(`/sign/${petition.name}`)
       return false
     }
