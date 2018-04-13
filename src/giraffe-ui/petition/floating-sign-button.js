@@ -9,7 +9,7 @@ export const FloatingSignButton = ({ getScrollProps, visible }) => (
       'sign-form__fixed-button--hidden': !visible
     })}
   >
-    <Scrollchor {...getScrollProps()}>
+    <Scrollchor disableHistory {...getScrollProps()}>
       <button>Sign Now</button>
     </Scrollchor>
   </div>

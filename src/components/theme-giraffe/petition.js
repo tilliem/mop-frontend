@@ -47,6 +47,7 @@ const Petition = ({
             className={className}
             to='#comments'
             animate={{ offset: -150 }}
+            disableHistory
           >
             MOST RECENT SIGNERS <CaretRight />
           </Scrollchor>
