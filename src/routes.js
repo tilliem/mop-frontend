@@ -23,6 +23,9 @@ import {
   LoadablePetitionReport
 } from './loaders/index'
 
+import { Error404 } from 'Theme/error404'
+import { Error500 } from 'Theme/error500'
+
 
 const baseAppPath = window.baseAppPath || process.env.BASE_APP_PATH || '/'
 
@@ -82,7 +85,7 @@ export const routes = (store) => {
     <Route path={baseAppPath} component={Wrapper} onChange={scrollToTop}>
       <IndexRoute prodReady component={LoadableHome} />
 
-      {/* Sign pages are popular entry page, so they get included in the main bundle (not Loadable) */}
+      {/* Sign pages are popular entry pages, so they get included in the main bundle (not Loadable) */}
       <Route path='sign/:petition_slug' component={Sign} />
       <Route path=':organization/sign/:petition_slug' component={Sign} onEnter={orgLoader} />
 
@@ -113,6 +116,13 @@ export const routes = (store) => {
       <Route path='privacy.html' component={LoadableStatic} wordpressId={60950} />
       <Route path='terms.html' component={LoadableStatic} wordpressId={60951} />
       <Route path='victories.html' component={LoadableStatic} wordpressId={61001} />
+
+      {/* Mostly errors will be shown by Wrapper, but these are nice for development */}
+      <Route path='404' component={Error404} />
+      <Route path='500' component={Error500} />
+
+      {/* Important: THIS HAS TO BE LAST */}
+      <Route path='*' exact component={Error404} />
     </Route>
   )
   updateHistoryObject(appLocation, routeHierarchy)
