@@ -13,12 +13,13 @@ class SignPetition extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      width: 0,
+      deviceSize: null,
       floatingSignVisible: false
     }
     this.setRef = this.setRef.bind(this)
+    this.focusSign = this.focusSign.bind(this)
     this.getAdminLink = this.getAdminLink.bind(this)
-    this.onClickFloatingSign = this.onClickFloatingSign.bind(this)
+    this.getScrollToSignFormProps = this.getScrollToSignFormProps.bind(this)
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
   }
 
@@ -48,20 +49,14 @@ class SignPetition extends React.Component {
     window.removeEventListener('resize', this.updateWindowDimensions)
   }
 
-  onClickFloatingSign() {
-    const f = this.state.width < 768 ? 'mobile' : 'desktop'
-    // Forms are hidden per petition settings or user state, so we find the first rendered
-    const name = this[`${f}-nameInput`]
-    const address = this[`${f}-address1Input`]
-    const comment = this[`${f}-commentInput`]
-
-    const firstInput =
-      (document.body.contains(name) && name) ||
-      (document.body.contains(address) && address) ||
-      (document.body.contains(comment) && comment) ||
-      null
-
-    if (firstInput) firstInput.focus()
+  getScrollToSignFormProps() {
+    const f = this.state.deviceSize
+    const offset = f === 'mobile' ? -65 : -150
+    return {
+      to: `${f}-sign`,
+      animate: { offset },
+      afterAnimate: this.focusSign
+    }
   }
 
   getAdminLink() {
@@ -78,8 +73,24 @@ class SignPetition extends React.Component {
     return input => input && (this[`${formName}-${input.name}Input`] = input)
   }
 
+  focusSign() {
+    const f = this.state.deviceSize
+    // Forms are hidden per petition settings or user state, so we find the first rendered
+    const name = this[`${f}-nameInput`]
+    const address = this[`${f}-address1Input`]
+    const comment = this[`${f}-commentInput`]
+
+    const firstInput =
+      (document.body.contains(name) && name) ||
+      (document.body.contains(address) && address) ||
+      (document.body.contains(comment) && comment) ||
+      null
+
+    if (firstInput) firstInput.focus()
+  }
+
   updateWindowDimensions() {
-    this.setState({ width: window.innerWidth })
+    this.setState({ deviceSize: window.innerWidth < 768 ? 'mobile' : 'desktop' })
   }
 
   checkOrgPathMatches(petition, orgPath) {
@@ -119,7 +130,7 @@ class SignPetition extends React.Component {
           petitionBy={petitionBy}
           outOfDate={outOfDate}
           isFloatingSignVisible={this.state.floatingSignVisible}
-          onClickFloatingSign={this.onClickFloatingSign}
+          scrollToSignFormProps={this.getScrollToSignFormProps}
           hideFloatingSign={() => this.setState({ floatingSignVisible: false })}
           showFloatingSign={() => this.setState({ floatingSignVisible: true })}
           setRef={this.setRef}
