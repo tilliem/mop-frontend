@@ -29,10 +29,9 @@ const Petition = ({
   petitionBy,
   outOfDate,
   isFloatingSignVisible,
-  onClickFloatingSign,
+  scrollToSignFormProps,
   hideFloatingSign,
   showFloatingSign,
-  floatingSignTarget,
   setRef
 }) => (
   <Container>
@@ -111,9 +110,8 @@ const Petition = ({
     </SignColumn>
 
     <FloatingSignButton
-      onClick={onClickFloatingSign}
+      getScrollProps={scrollToSignFormProps}
       visible={isFloatingSignVisible}
-      scrollTarget={floatingSignTarget}
     />
   </Container>
 )
@@ -126,11 +124,10 @@ Petition.propTypes = {
   petitionBy: PropTypes.string,
   outOfDate: PropTypes.string,
   setRef: PropTypes.func,
-  onClickFloatingSign: PropTypes.func,
+  scrollToSignFormProps: PropTypes.func,
   isFloatingSignVisible: PropTypes.bool,
   hideFloatingSign: PropTypes.func,
-  showFloatingSign: PropTypes.func,
-  floatingSignTarget: PropTypes.string
+  showFloatingSign: PropTypes.func
 }
 
 export default Petition
