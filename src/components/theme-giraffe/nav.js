@@ -43,7 +43,7 @@ const Nav = ({
         </Secondary.Top>
         <Secondary.Bottom>
           <NavLink to='https://front.moveon.org/#join'>Join</NavLink>
-          <NavLink to='https://act.moveon.org/donate/pac-donation'>
+          <NavLink to='https://act.moveon.org/donate/civ-donation?utm_source=petitions_nav&source=petitions_nav'>
             Donate
           </NavLink>
           <NavLink to='/create_start.html?source=topnav'>
