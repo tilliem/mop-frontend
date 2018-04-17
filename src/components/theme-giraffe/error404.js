@@ -1,13 +1,21 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-export const Error404 = () => (
+export const Error404 = ({ error: { description } }) => (
   <div className='container'>
     <div className='row my-5'>
       <div className='col-12'>
-        <h1 className='text-align-center'>Oops — looks like what you’re looking for isn’t here!</h1>
+        <h1 className='text-align-center'>
+          Oops — looks like what you’re looking for isn’t here!
+        </h1>
         <p className='text-align-center'>
-          Email us at <a href='mailto:help@moveon.org'>help@moveon.org</a> so we
-          can help you find your way.
+          {description}
+          {!description && (
+            <span>
+              Email us at <a href='mailto:help@moveon.org'>help@moveon.org</a>{' '}
+              so we can help you find your way.
+            </span>
+          )}
         </p>
         <img
           src='https://static.moveon.org/giraffe/images/error404.svg'
@@ -17,3 +25,6 @@ export const Error404 = () => (
     </div>
   </div>
 )
+
+Error404.defaultProps = { error: {} }
+Error404.propTypes = { error: PropTypes.object }
